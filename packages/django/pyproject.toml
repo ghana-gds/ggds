@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.25"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
@@ -8,6 +8,8 @@ version = "0.1.0"
 description = "Ghana Government Design System (GGDS) for Django: page parts as template tags, a form renderer, and the GGDS styles and script."
 readme = "README.md"
 license = "Apache-2.0"
+# Copied in from the repository root by scripts/package-files.mjs (pnpm run pack:django); not committed here.
+license-files = ["LICENSE", "LICENSE.md"]
 requires-python = ">=3.10"
 dependencies = ["django>=5.0"]
 classifiers = ["Framework :: Django", "Framework :: Django :: 5.0", "Framework :: Django :: 6.0"]

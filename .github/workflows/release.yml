@@ -1,10 +1,14 @@
 # Pushing a tag such as v0.1.0 publishes that version:
 #   1. builds and tests it;
 #   2. publishes @ggds/tokens, themes, css, js and astro to npm, with provenance (skipping any already published);
-#   3. makes a GitHub release with ggds-<version>.zip, SHA256SUMS and integrity.json.
+#   3. makes a GitHub release with ggds-<version>.zip, SHA256SUMS, integrity.json and the ggds-django files;
+#   4. publishes ggds-django to PyPI (job "pypi").
 #
-# The tag must match the version in every package.json. npm authentication: trusted publishing (set it up for
-# each package on npmjs.com, workflow file release.yml), or an NPM_TOKEN secret until that is set up.
+# The tag must match the version in every package.json and in packages/django/pyproject.toml.
+# npm authentication: trusted publishing (set it up for each package on npmjs.com, workflow file release.yml,
+# environment npm), or an NPM_TOKEN secret until that is set up.
+# PyPI authentication: trusted publishing only (on pypi.org: project ggds-django, owner ghana-gds, repository
+# ggds, workflow release.yml, environment pypi). No token is stored anywhere.
 name: Release
 
 on:
@@ -35,11 +39,19 @@ jobs:
             v=$(node -p "require('./packages/$p/package.json').version")
             [ "$v" = "$tag" ] || { echo "::error::packages/$p is $v, tag is $tag"; exit 1; }
           done
+          v=$(sed -n 's/^version = "\(.*\)"/\1/p' packages/django/pyproject.toml)
+          [ "$v" = "$tag" ] || { echo "::error::packages/django is $v, tag is $tag"; exit 1; }
 
+      - uses: astral-sh/setup-uv@v6
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test
       - run: pnpm run release
+      - run: pnpm run pack:django
+      - uses: actions/upload-artifact@v5
+        with:
+          name: pypi
+          path: release/pypi/
 
       - name: Publish to npm
         run: pnpm run publish:npm
@@ -49,8 +61,24 @@ jobs:
       - name: Make the GitHub release
         run: |
           gh release create "$GITHUB_REF_NAME" \
-            "release/ggds-${GITHUB_REF_NAME#v}.zip" release/SHA256SUMS release/integrity.json \
-            --title "GGDS ${GITHUB_REF_NAME#v}" --notes "See CHANGELOG.md for what changed. Download ggds-${GITHUB_REF_NAME#v}.zip and copy its ggds folder into your website, or install from npm: npm install @ggds/css" \
+            "release/ggds-${GITHUB_REF_NAME#v}.zip" release/SHA256SUMS release/integrity.json release/pypi/* \
+            --title "GGDS ${GITHUB_REF_NAME#v}" --notes "See CHANGELOG.md for what changed. Download ggds-${GITHUB_REF_NAME#v}.zip and copy its ggds folder into your website, or install from npm (npm install @ggds/css) or, for Django, from PyPI (pip install ggds-django)." \
             --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
+
+  # ggds-django to PyPI, in its own job and environment: only this job can publish to PyPI.
+  pypi:
+    needs: release
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write   # PyPI trusted publishing
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          name: pypi
+          path: dist/
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/

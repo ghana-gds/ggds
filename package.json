@@ -25,7 +25,8 @@
     "pack:npm": "node scripts/publish-npm.mjs",
     "publish:npm": "node scripts/publish-npm.mjs --publish",
     "build:django": "node packages/django/build.mjs",
-    "test:django": "node scripts/test-django.mjs"
+    "test:django": "node scripts/test-django.mjs",
+    "pack:django": "node scripts/pack-django.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

@@ -21,11 +21,14 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
+      # uv makes ggds-django's Python environment; without it pnpm test skips the Django tests and example pages.
+      - uses: astral-sh/setup-uv@v6
       - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test
       - run: pnpm run release
       - run: pnpm run pack:npm
+      - run: pnpm run pack:django
       - uses: actions/upload-artifact@v5
         if: failure()
         with:
