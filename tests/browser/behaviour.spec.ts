@@ -44,14 +44,31 @@ test.describe('without JavaScript', () => {
   });
 });
 
+const NARROW_PATHS = ['/examples/page/1-default.html', '/examples/hero/1-default.html', '/index.html', '/get-started.html',
+  '/foundations.html', '/themes.html', '/components/index.html', '/components/header.html', ...(EXAMPLE_SITES ? ['/agencies/mocdti.html'] : [])];
+
 test('no horizontal scrolling at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
-  const paths = ['/examples/page/1-default.html', '/examples/hero/1-default.html', '/themes.html', ...(EXAMPLE_SITES ? ['/agencies/mocdti.html'] : [])];
-  for (const path of paths) {
+  for (const path of NARROW_PATHS) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, path).toBeLessThanOrEqual(0);
   }
+});
+
+// Phones and Linux have wider fallback fonts than macOS: the same check with a wide font, so a page that only
+// just fits on one computer fails here instead of on someone's phone (or in CI). The test font is added with the
+// page's Content Security Policy bypassed, for this check only.
+test('no horizontal scrolling at 320px with a wide font', async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 320, height: 800 }, bypassCSP: true });
+  const page = await context.newPage();
+  for (const path of NARROW_PATHS) {
+    await page.goto(path);
+    await page.addStyleTag({ content: '*{font-family:Verdana,"DejaVu Sans",sans-serif !important}' });
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `${path} with a wide font`).toBeLessThanOrEqual(0);
+  }
+  await context.close();
 });
 
 test.describe('header layout, as on the MoCDTI platform', () => {

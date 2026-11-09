@@ -392,7 +392,8 @@
 /* Previous and next */
 .docs-pager {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr): a column may be narrower than its longest word, which then wraps (wide fallback fonts). */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--ggds-space-4);
   margin-top: var(--ggds-space-12);
   padding-top: var(--ggds-space-6);
@@ -661,4 +662,19 @@
 .docs-pairs__tokens {
   overflow-wrap: anywhere;
   font-size: var(--ggds-font-size-xs);
+}
+
+/* Previous and next stack on phones: each is a full-width target, and no long name can push the page wider. */
+@media (max-width: 47.99rem) {
+  .docs-pager {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .docs-pager__link--next {
+    grid-column: 1;
+  }
+}
+
+.docs-pager__link {
+  overflow-wrap: anywhere;
 }
