@@ -1,0 +1,79 @@
+/* CoverageMap, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c, and --mast, --centre… on the figure) come from config/agency.ts by data-c, and delays from
+   data-k (styles/global.css): the CSP drops style attributes. */
+.coverage-map { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .coverage-map { margin-inline: auto 0; } }
+.cm-art { display: block; width: 100%; height: auto; overflow: visible; }
+.cm-hill-far { fill: rgb(255 255 255 / 0.06); }
+.cm-ground { fill: url(#cm-earth); }
+.cm-ground-edge { fill: none; stroke: white; stroke-opacity: 0.35; stroke-width: 2; }
+
+.cm-wall, .cm-roof { fill: rgb(0 0 0 / 0.28); stroke: white; stroke-opacity: 0.7; stroke-width: 2; stroke-linejoin: round; }
+.cm-roof { fill: rgb(255 255 255 / 0.12); }
+.cm-window, .cm-screen { fill: rgb(255 255 255 / 0.15); stroke: white; stroke-opacity: 0.5; transition: fill 0.4s, stroke 0.4s; }
+.cm-window { transition-delay: calc(var(--k) * 0.2s); }
+.cm-door, .cm-mast path, .cm-sat path, .cm-dish path, .cm-body-line { fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cm-dish path:first-child { fill: rgb(0 0 0 / 0.28); }
+.cm-dish circle { fill: white; }
+.cm-mast .cm-brace { stroke-opacity: 0.55; stroke-width: 1.5; }
+.cm-antenna { fill: rgb(0 0 0 / 0.3); stroke: white; stroke-width: 2; transition: fill 0.4s; }
+.cm-light { fill: var(--ggds-color-flag-gold, #fcd116); animation: cm-blink 1.6s steps(2) infinite; }
+@keyframes cm-blink { 50% { opacity: 0.25; } }
+.cm-panel { fill: rgb(255 255 255 / 0.12); stroke: white; stroke-width: 2; transition: fill 0.4s; }
+.cm-body, .cm-head, .cm-laptop { fill: rgb(0 0 0 / 0.3); stroke: white; stroke-width: 2; stroke-linejoin: round; transition: fill 0.4s; }
+.cm-place { fill: white; font-size: 14px; font-weight: 700; paint-order: stroke; stroke: rgb(0 0 0 / 0.45); stroke-width: 3px; stroke-linejoin: round; }
+
+/* Only the lit area's drawing shows; its objects take its colour. */
+.cm-role { opacity: 0; transition: opacity 0.4s; }
+[data-kind='mast'] .cm-signal, [data-kind='satellite'] .cm-sat-beam, [data-kind='skills'] .cm-code { opacity: 1; }
+
+.cm-signal path { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center; opacity: 0; }
+[data-kind='mast'] .cm-signal path { animation: cm-wave 2.1s ease-out infinite; animation-delay: calc(var(--k) * 0.7s); }
+@keyframes cm-wave { 0% { transform: scale(0.5); opacity: 0; } 15% { opacity: 1; } 100% { transform: scale(3.4); opacity: 0; } }
+[data-kind='mast'] .cm-antenna { fill: var(--mast); }
+[data-kind='mast'] .cm-window { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-opacity: 1; }
+
+.cm-sat-beam path { fill: none; stroke: var(--c); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 10 20; }
+[data-kind='satellite'] .cm-sat-beam path { animation: cm-flow 1.2s linear infinite; animation-delay: calc(var(--k) * 0.5s); }
+@keyframes cm-flow { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+[data-kind='satellite'] .cm-panel, [data-kind='satellite'] .cm-body { fill: var(--satellite); }
+
+[data-kind='centre'] .cm-centre .cm-wall { fill: color-mix(in srgb, var(--centre) 45%, transparent); stroke-opacity: 1; }
+[data-kind='centre'] .cm-screen { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-opacity: 1; }
+
+[data-kind='skills'] .cm-laptop { fill: var(--skills); }
+.cm-bubble rect { fill: var(--c); stroke: white; stroke-width: 2; }
+.cm-bubble path { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.cm-bubble { transform-box: fill-box; transform-origin: center bottom; }
+[data-kind='skills'] .cm-bubble { animation: cm-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(var(--k) * 0.35s); }
+@keyframes cm-pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+.cm-caption { opacity: 0; transition: opacity 0.4s; }
+.cm-caption[data-on] { opacity: 1; }
+.cm-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.cm-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.cm-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.cm-links-html { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.cm-links-html a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.cm-links-html a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.cm-links-html a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.cm-links-html a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.cm-links-html a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.cm-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.cm-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.cm-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .coverage-map * { animation: none !important; transition: none !important; }
+  .cm-signal path:nth-child(1) { opacity: 1; transform: scale(0.9); }
+  .cm-signal path:nth-child(2) { opacity: 0.7; transform: scale(1.7); }
+  .cm-signal path:nth-child(3) { opacity: 0.4; transform: scale(2.5); }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-coverage] [data-c]{--c:#fff}[data-coverage] [data-c="0"]{--c:#c2410c}[data-coverage]{--mast:#c2410c}[data-coverage] [data-c="mast"]{--c:#c2410c}[data-coverage] [data-c="1"]{--c:#7e22ce}[data-coverage]{--satellite:#7e22ce}[data-coverage] [data-c="satellite"]{--c:#7e22ce}[data-coverage] [data-c="2"]{--c:#0f766e}[data-coverage]{--centre:#0f766e}[data-coverage] [data-c="centre"]{--c:#0f766e}[data-coverage] [data-c="3"]{--c:#be123c}[data-coverage]{--skills:#be123c}[data-coverage] [data-c="skills"]{--c:#be123c}

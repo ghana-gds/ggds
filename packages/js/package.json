@@ -1,0 +1,47 @@
+{
+  "name": "@ggds/js",
+  "version": "0.1.0",
+  "description": "Optional progressive enhancement for GGDS components. ES modules, no dependencies, CSP-safe.",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "progressive-enhancement",
+    "csp"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/js"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./auto": "./dist/auto.js",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "./dist/auto.js"
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

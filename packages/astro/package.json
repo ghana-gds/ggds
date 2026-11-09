@@ -1,0 +1,45 @@
+{
+  "name": "@ggds/astro",
+  "version": "0.1.0",
+  "description": "GGDS page parts as Astro components. They output the same markup as the GGDS documentation.",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "astro",
+    "astro-component",
+    "withastro"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/astro"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "exports": {
+    "./*.astro": "./src/*.astro",
+    "./icons.mjs": "./icons.mjs"
+  },
+  "files": [
+    "src",
+    "icons.mjs"
+  ],
+  "peerDependencies": {
+    "astro": ">=5",
+    "@ggds/css": "workspace:^"
+  },
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

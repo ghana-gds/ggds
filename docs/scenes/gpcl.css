@@ -1,0 +1,105 @@
+/* DeliveryScene, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c) come from config/agency.ts by data-c, and delays from data-k (styles/global.css): the CSP
+   drops style attributes. */
+.delivery-scene { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .delivery-scene { margin-inline: auto 0; } }
+.ds-art { display: block; width: 100%; height: auto; overflow: visible; }
+
+.ds-way { fill: none; stroke: white; stroke-opacity: 0.3; stroke-width: 2; stroke-dasharray: 4 7; }
+.ds-street { stroke: white; stroke-opacity: 0.3; stroke-width: 2; stroke-dasharray: 10 10; }
+.ds-ground { stroke: white; stroke-opacity: 0.55; stroke-width: 2.5; stroke-linecap: round; }
+.ds-globe circle, .ds-globe ellipse, .ds-globe path { fill: none; stroke: white; stroke-opacity: 0.55; stroke-width: 2; }
+.ds-globe circle { fill: rgb(255 255 255 / 0.08); stroke-opacity: 0.7; }
+
+.ds-wall { fill: rgb(0 0 0 / 0.28); stroke: white; stroke-opacity: 0.7; stroke-width: 2.5; stroke-linejoin: round; }
+.ds-roof { fill: var(--ggds-color-flag-gold, #fcd116); fill-opacity: 0.85; stroke: white; stroke-opacity: 0.7; stroke-width: 2; stroke-linejoin: round; }
+.ds-cornice { fill: rgb(255 255 255 / 0.16); stroke: white; stroke-opacity: 0.7; stroke-width: 2; }
+.ds-clock { fill: rgb(255 255 255 / 0.9); }
+.ds-hands { fill: none; stroke: var(--ggds-color-institution-deep, #0b2f2a); stroke-width: 2.5; stroke-linecap: round; }
+.ds-entry { fill: rgb(255 255 255 / 0.1); stroke: white; stroke-opacity: 0.6; stroke-width: 2; }
+.ds-box { fill: rgb(255 255 255 / 0.1); stroke: white; stroke-opacity: 0.5; stroke-width: 1.5; }
+.ds-window { fill: rgb(255 255 255 / 0.1); stroke: white; stroke-opacity: 0.6; stroke-width: 2; }
+.ds-sill { stroke: white; stroke-opacity: 0.7; stroke-width: 4; stroke-linecap: round; }
+.ds-door { fill: rgb(255 255 255 / 0.12); stroke: white; stroke-opacity: 0.6; stroke-width: 1.5; }
+.ds-pane { fill: var(--ggds-color-flag-gold, #fcd116); fill-opacity: 0.7; }
+
+/* Only the lit service's drawing shows. */
+.ds-role { opacity: 0; transition: opacity 0.4s; }
+[data-kind='send'] .ds-send, [data-kind='track'] .ds-track,
+[data-kind='box'] .ds-boxing, [data-kind='money'] .ds-money { opacity: 1; }
+
+.ds-trail { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; }
+[data-kind='send'] .ds-send .ds-trail, [data-kind='money'] .ds-money .ds-trail { animation: ds-draw 1.6s ease-out both; }
+@keyframes ds-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* A parcel or note travelling along its way. */
+.ds-mover { offset-rotate: 0deg; offset-distance: 100%; }
+.ds-send .ds-mover { offset-path: path('M322 232 Q372 92 430 124'); }
+.ds-track .ds-mover { offset-path: path('M222 432 H476 V414'); }
+.ds-money .ds-mover { offset-path: path('M452 172 Q436 292 318 318'); }
+.ds-mover rect { fill: var(--ggds-color-flag-gold, #fcd116); stroke: rgb(0 0 0 / 0.5); stroke-width: 1.5; }
+.ds-mover path { fill: none; stroke: rgb(0 0 0 / 0.5); stroke-width: 1.5; }
+[data-kind='send'] .ds-send .ds-mover { animation: ds-go 2.4s ease-in-out infinite; }
+/* Tracking: the item goes once, the line following it and each checkpoint ticking as it passes. */
+[data-kind='track'] .ds-track .ds-trail { animation: ds-draw 2.2s linear both; }
+[data-kind='track'] .ds-track .ds-mover { animation: ds-once 2.2s linear both; }
+@keyframes ds-once { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+[data-kind='money'] .ds-money .ds-mover { animation: ds-go 1.6s ease-in-out infinite; animation-delay: calc(var(--k) * 0.8s); }
+@keyframes ds-go { 0% { offset-distance: 0%; opacity: 0; } 10% { opacity: 1; } 80% { offset-distance: 100%; opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.ds-note rect { fill: var(--c); stroke: white; stroke-width: 1.5; }
+.ds-note circle { fill: none; stroke: white; stroke-width: 1.5; }
+
+.ds-ring { fill: color-mix(in srgb, var(--c) 30%, transparent); stroke: var(--c); stroke-width: 3; }
+.ds-check circle { fill: var(--c); stroke: white; stroke-width: 2; }
+.ds-check path { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+[data-kind='track'] .ds-check { animation: ds-pop 0.4s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(0.5s + var(--k) * 0.52s); }
+.ds-pin { fill: var(--c); stroke: white; stroke-width: 2; }
+[data-kind='track'] .ds-pin { animation: ds-pop 0.5s 2.1s cubic-bezier(0.3, 1.6, 0.6, 1) both; }
+@keyframes ds-pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+.ds-box-lit { fill: color-mix(in srgb, var(--c) 45%, transparent); stroke: var(--c); stroke-width: 2.5; }
+.ds-flap { fill: var(--c); stroke: white; stroke-width: 1.5; transform-origin: left center; }
+.ds-letter rect { fill: white; stroke: var(--c); stroke-width: 2; }
+.ds-letter { --from: translate(-96px, -24px); }
+.ds-letter path { fill: none; stroke: var(--c); stroke-width: 1.8; stroke-linejoin: round; }
+[data-kind='box'] .ds-flap { animation: ds-flap 2.8s ease-in-out infinite; }
+[data-kind='box'] .ds-letter { animation: ds-drop 2.8s ease-in-out infinite; }
+@keyframes ds-flap { 0%, 10% { transform: scaleX(1); } 25%, 70% { transform: scaleX(-0.9); } 85%, 100% { transform: scaleX(1); } }
+@keyframes ds-drop { 0%, 15% { transform: var(--from); opacity: 0; } 25% { opacity: 1; } 62% { transform: translate(0, 0) scale(0.8); opacity: 1; } 72%, 100% { transform: translate(0, 0) scale(0.3); opacity: 0; } }
+
+.ds-window-lit { fill: color-mix(in srgb, var(--c) 35%, transparent); stroke: var(--c); stroke-width: 3; }
+
+.ds-check, .ds-pin, .ds-flap, .ds-letter { transform-box: fill-box; }
+.ds-check, .ds-pin, .ds-letter { transform-origin: center; }
+.ds-pin { transform-origin: center bottom; }
+
+.ds-caption { opacity: 0; transition: opacity 0.4s; }
+.ds-caption[data-on] { opacity: 1; }
+.ds-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.ds-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.ds-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.ds-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.ds-links a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.ds-links a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.ds-links a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.ds-links a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.ds-links a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.ds-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.ds-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.ds-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .delivery-scene * { animation: none !important; transition: none !important; }
+  .ds-send .ds-mover { offset-distance: 100%; }
+  .ds-track .ds-mover { offset-distance: 100%; opacity: 0; }
+  .ds-money .ds-mover { offset-distance: 60%; }
+  .ds-money .ds-note + .ds-note { offset-distance: 25%; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-delivery] [data-c]{--c:#fff}[data-delivery] [data-c="0"]{--c:#c2410c}[data-delivery]{--send:#c2410c}[data-delivery] [data-c="send"]{--c:#c2410c}[data-delivery] [data-c="1"]{--c:#0f766e}[data-delivery]{--track:#0f766e}[data-delivery] [data-c="track"]{--c:#0f766e}[data-delivery] [data-c="2"]{--c:#7c3aed}[data-delivery]{--box:#7c3aed}[data-delivery] [data-c="box"]{--c:#7c3aed}[data-delivery] [data-c="3"]{--c:#15803d}[data-delivery]{--money:#15803d}[data-delivery] [data-c="money"]{--c:#15803d}

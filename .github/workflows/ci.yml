@@ -1,0 +1,33 @@
+# Every push and pull request: build, unit tests, then accessibility and behaviour tests in Chrome.
+# The example sites need the MoCDTI platform folder (GGDS_PLATFORM_DIR), which is not in this repository, so
+# CI skips them; run the full suite locally before a release.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
+      - run: pnpm run release
+      - run: pnpm run pack:npm
+      - uses: actions/upload-artifact@v5
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/

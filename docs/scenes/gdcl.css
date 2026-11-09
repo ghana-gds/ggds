@@ -1,0 +1,85 @@
+/* DigitalCentres, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c) come from config/agency.ts by data-c, and delays from data-k (styles/global.css): the CSP
+   drops style attributes. */
+.digital-centres { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .digital-centres { margin-inline: auto 0; } }
+.dc-art { display: block; width: 100%; height: auto; overflow: visible; }
+.dc-ground { stroke: white; stroke-opacity: 0.35; stroke-width: 2; }
+
+.dc-post { stroke: white; stroke-opacity: 0.6; stroke-width: 3; }
+.dc-sign { fill: var(--ggds-color-flag-gold, #fcd116); }
+.dc-sign-text { fill: #1a1a1a; font-size: 15px; font-weight: 800; }
+.dc-parapet { fill: rgb(255 255 255 / 0.25); stroke: white; stroke-opacity: 0.6; stroke-width: 2; }
+.dc-shell { fill: rgb(0 0 0 / 0.28); stroke: white; stroke-opacity: 0.7; stroke-width: 2.5; }
+.dc-slab { stroke: white; stroke-opacity: 0.6; stroke-width: 3; }
+
+.dc-room { fill: rgb(255 255 255 / 0.06); stroke: white; stroke-opacity: 0.2; transition: fill 0.4s, stroke 0.4s; }
+.dc-line, .dc-person, .dc-walker, .dc-write, .dc-steps, .dc-flag-pole {
+  fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.dc-line { stroke-opacity: 0.45; transition: stroke-opacity 0.4s; }
+.dc-screen { fill: rgb(255 255 255 / 0.12); stroke: white; stroke-opacity: 0.45; stroke-width: 2; stroke-linejoin: round; }
+.dc-bar { fill: white; fill-opacity: 0.3; transform-box: fill-box; transform-origin: bottom; }
+.dc-table, .dc-board { fill: rgb(0 0 0 / 0.25); }
+.dc-write { stroke: var(--c); stroke-width: 3; stroke-dasharray: 10; stroke-dashoffset: 10; }
+.dc-steps { stroke: var(--ggds-color-flag-gold, #fcd116); stroke-dasharray: 3 9; opacity: 0; }
+
+/* People only show in the lit space; its room fills with the space's colour. */
+.dc-person, .dc-group { opacity: 0; transition: opacity 0.4s; }
+.dc-space[data-on] .dc-room { fill: color-mix(in srgb, var(--c) 55%, transparent); stroke: var(--c); stroke-opacity: 1; }
+.dc-space[data-on] .dc-line { stroke-opacity: 0.9; }
+.dc-space[data-on] .dc-person, .dc-space[data-on] .dc-group { opacity: 1; }
+.dc-space[data-on] .dc-person { animation: dc-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(var(--k) * 0.15s); }
+.dc-space[data-on][data-room='office'] .dc-person { animation-delay: calc(var(--k) * 0.2s); }
+.dc-person { transform-box: fill-box; transform-origin: bottom; }
+@keyframes dc-pop { from { transform: scale(0); } to { transform: scale(1); } }
+.dc-space[data-on] .dc-screen { fill: white; animation: dc-blink 1.6s steps(2) infinite; animation-delay: calc(var(--k) * 0.5s); }
+.dc-space[data-on] .dc-laptop { animation-delay: calc(var(--k) * 0.4s); }
+@keyframes dc-blink { 50% { fill: var(--ggds-color-flag-gold, #fcd116); } }
+.dc-space[data-on] .dc-bar { fill: var(--ggds-color-flag-gold, #fcd116); fill-opacity: 1; animation: dc-grow 0.6s ease-out both; animation-delay: calc(var(--k) * 0.25s); }
+@keyframes dc-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.dc-space[data-on] .dc-write { animation: dc-draw 0.5s ease-out both; animation-delay: calc(0.3s + var(--k) * 0.5s); }
+@keyframes dc-draw { to { stroke-dashoffset: 0; } }
+.dc-space[data-on] .dc-steps { opacity: 1; animation: dc-march 1s linear infinite; }
+@keyframes dc-march { to { stroke-dashoffset: -12; } }
+
+.dc-flag { fill: var(--ggds-color-flag-gold, #fcd116); }
+.dc-flag-pole { stroke: var(--ggds-color-flag-gold, #fcd116); }
+.dc-space[data-on] .dc-group { animation: dc-walk 1.8s ease-out both; }
+.dc-space[data-on] .dc-walker { animation: dc-bob 0.45s ease-in-out 4 alternate; animation-delay: calc(var(--k) * 0.12s); }
+@keyframes dc-walk { from { transform: translateX(-60px); } to { transform: translateX(0); } }
+@keyframes dc-bob { to { transform: translateY(-3px); } }
+
+.dc-label path { stroke: white; stroke-opacity: 0.4; stroke-width: 2; }
+.dc-label circle { fill: var(--c); stroke: white; stroke-width: 1.5; }
+.dc-label text { fill: white; fill-opacity: 0.7; font-size: 14px; font-weight: 700; transition: fill-opacity 0.4s; }
+.dc-label[data-on] text { fill-opacity: 1; }
+.dc-label[data-on] path { stroke: var(--c); stroke-opacity: 1; }
+
+.dc-caption { opacity: 0; transition: opacity 0.4s; }
+.dc-caption[data-on] { opacity: 1; }
+.dc-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.dc-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.dc-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.dc-links-html { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.dc-links-html a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.dc-links-html a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.dc-links-html a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.dc-links-html a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.dc-links-html a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.dc-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.dc-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.dc-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .digital-centres * { animation: none !important; transition: none !important; }
+  .dc-space[data-on] .dc-write { stroke-dashoffset: 0; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-centres] [data-c]{--c:#fff}[data-centres] [data-c="0"]{--c:#1f6fb2}[data-centres]{--office:#1f6fb2}[data-centres] [data-c="office"]{--c:#1f6fb2}[data-centres] [data-c="1"]{--c:#b5541a}[data-centres]{--cowork:#b5541a}[data-centres] [data-c="cowork"]{--c:#b5541a}[data-centres] [data-c="2"]{--c:#6b4fbb}[data-centres]{--meeting:#6b4fbb}[data-centres] [data-c="meeting"]{--c:#6b4fbb}[data-centres] [data-c="3"]{--c:#b02a5b}[data-centres]{--training:#b02a5b}[data-centres] [data-c="training"]{--c:#b02a5b}[data-centres] [data-c="4"]{--c:#7a5c00}[data-centres]{--tour:#7a5c00}[data-centres] [data-c="tour"]{--c:#7a5c00}

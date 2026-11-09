@@ -1,0 +1,48 @@
+---
+/**
+ * GGDS hero: the top of a homepage, in the institution's dark shade. Leads with the visitor's task: purpose line,
+ * question, search and common tasks. Slots: "art" (a drawing beside the text: decorative unless artDecorative is
+ * false, for a drawing with links) and "after" (anything below the tasks, such as a hotline card).
+ */
+interface Task { label: string; href: string; tag?: string | undefined; attrs?: Record<string, unknown> | undefined }
+interface Props {
+  hub?: boolean | undefined;
+  purpose?: string | undefined;
+  title: string;
+  lede?: string | undefined;
+  ledeAttrs?: Record<string, unknown> | undefined;
+  search?: { action: string; label: string; placeholder?: string | undefined; inputAttrs?: Record<string, unknown> | undefined; formAttrs?: Record<string, unknown> | undefined; buttonAttrs?: Record<string, unknown> | undefined };
+  tasksLabel?: string | undefined;
+  tasks?: Task[] | undefined;
+  artDecorative?: boolean | undefined;
+  class?: string | undefined;
+  [attr: string]: unknown;
+}
+const { hub = false, purpose, title, lede, ledeAttrs = {}, search, tasksLabel = 'Common tasks:', tasks = [], artDecorative = true, class: extra = '', ...rest } = Astro.props;
+const hasArt = Astro.slots.has('art');
+import { icon } from '../icons.mjs';
+---
+<section class:list={['ggds-hero', hub && 'ggds-hero--hub', hasArt && 'ggds-hero--art', extra]} aria-labelledby="hero-title" {...rest}>
+  <div class="ggds-hero__inner">
+    <div class="ggds-hero__body">
+      {purpose && <p class="ggds-hero__purpose">{purpose}</p>}
+      <h1 class="ggds-hero__title" id="hero-title">{title}</h1>
+      {lede && <p class="ggds-hero__lede" {...ledeAttrs}>{lede}</p>}
+      {search && (
+        <form class="ggds-hero__search" action={search.action} method="get" role="search" {...(search.formAttrs ?? {})}>
+          <label class="ggds-visually-hidden" for="hero-q">{search.label}</label>
+          <input class="ggds-hero__input" id="hero-q" name="q" type="search" required minlength="2" enterkeyhint="search" autocomplete="off" placeholder={search.placeholder} {...(search.inputAttrs ?? {})} />
+          <button class="ggds-hero__button" type="submit" {...(search.buttonAttrs ?? {})}><Fragment set:html={icon('search', 'ggds-hero__button-icon')} /><span class="ggds-hero__button-label">Search</span></button>
+        </form>
+      )}
+      {tasks.length > 0 && <>
+        <p class="ggds-hero__tasks-label" id="hero-tasks">{tasksLabel}</p>
+        <ul class="ggds-hero__tasks" aria-labelledby="hero-tasks">
+          {tasks.map((t) => <li><a class="ggds-hero__task" href={t.href} {...(t.attrs ?? {})}>{t.label}{t.tag && <> <span class="ggds-hero__task-tag">{t.tag}</span></>}</a></li>)}
+        </ul>
+      </>}
+      <slot name="after" />
+    </div>
+    {hasArt && <div class="ggds-hero__art" aria-hidden={artDecorative ? 'true' : undefined}><slot name="art" /></div>}
+  </div>
+</section>

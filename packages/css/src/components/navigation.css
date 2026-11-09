@@ -1,0 +1,110 @@
+/* Breadcrumbs, pagination and tab links: navigation patterns built from plain links. */
+
+/* Breadcrumbs */
+.ggds-breadcrumbs {
+  margin-bottom: var(--ggds-space-4);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.ggds-breadcrumbs__item + .ggds-breadcrumbs__item::before {
+  content: "";
+  width: 0.4em;
+  height: 0.4em;
+  margin-inline: var(--ggds-space-2);
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.ggds-breadcrumbs__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+/* Pagination */
+.ggds-pagination {
+  margin-block: var(--ggds-space-8);
+}
+
+.ggds-pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-pagination__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ggds-size-target);
+  min-height: var(--ggds-size-target);
+  padding-inline: var(--ggds-space-3);
+  border-radius: var(--ggds-radius-sm);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-pagination__link:hover {
+  background: var(--ggds-color-brand-50);
+}
+
+.ggds-pagination__link[aria-current="page"],
+.ggds-pagination__link[aria-current="page"]:visited {
+  background: var(--ggds-color-brand-700);
+  color: var(--ggds-color-text-inverse);
+  text-decoration: none;
+}
+
+.ggds-pagination__ellipsis {
+  padding-inline: var(--ggds-space-2);
+}
+
+/* Tab links: section navigation that looks like tabs. Each "tab" is a link to its own URL, so it works without
+   JavaScript, can be bookmarked, and is announced as a link, not as an ARIA tab. */
+.ggds-tab-links {
+  margin-bottom: var(--ggds-space-6);
+  border-bottom: 1px solid var(--ggds-color-border-strong);
+}
+
+.ggds-tab-links__list {
+  display: flex;
+  gap: var(--ggds-space-1);
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.ggds-tab-links__link,
+.ggds-tab-links__link:visited {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+  padding-inline: var(--ggds-space-4);
+  color: var(--ggds-color-link);
+  white-space: nowrap;
+}
+
+.ggds-tab-links__link[aria-current="page"] {
+  color: var(--ggds-color-text);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+  box-shadow: inset 0 -4px 0 var(--ggds-color-brand-700);
+}

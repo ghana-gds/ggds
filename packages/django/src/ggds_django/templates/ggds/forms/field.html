@@ -1,0 +1,29 @@
+{% load ggds %}{% with kind=field|ggds_kind described=field|ggds_described_by %}
+{% if kind == "choices" %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
+  <fieldset class="ggds-fieldset"{% if described %} aria-describedby="{{ described }}"{% endif %}>
+    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</legend>
+    {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+    <div class="ggds-choices">
+      {% for choice in field|ggds_choices %}<div class="ggds-choice">{{ choice.input }}<label class="ggds-choice__label" for="{{ choice.id }}">{{ choice.label }}</label></div>
+      {% endfor %}
+    </div>
+  </fieldset>
+</div>
+{% elif kind == "checkbox" %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
+  {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+  <div class="ggds-choices">
+    <div class="ggds-choice">{{ field|ggds_widget }}<label class="ggds-choice__label" for="{{ field.id_for_label }}">{{ field.label }}</label></div>
+  </div>
+</div>
+{% else %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
+  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</label>
+  {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+  {{ field|ggds_widget }}
+</div>
+{% endif %}{% endwith %}

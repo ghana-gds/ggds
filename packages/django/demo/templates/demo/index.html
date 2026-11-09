@@ -1,0 +1,11 @@
+{% extends "demo/base.html" %}{% load ggds %}
+{% block hero %}{% ggds_hero title="What do you need help with?" purpose="An example site, rendered by Django with ggds-django." lede="Every part of this page comes from a GGDS template tag or the GGDS form renderer." search_action="search.html" search_label="Search this website" tasks=tasks %}{% endblock %}
+{% block content %}
+<h2>Pages in this example</h2>
+<ul class="ggds-card-grid">
+  <li class="ggds-card"><h3 class="ggds-card__title"><a class="ggds-card__link" href="form.html">A form</a></h3><p class="ggds-card__body">Rendered with <code>{% templatetag openvariable %} form {% templatetag closevariable %}</code> and the GGDS form renderer.</p></li>
+  <li class="ggds-card"><h3 class="ggds-card__title"><a class="ggds-card__link" href="form-errors.html">The form after a failed submit</a></h3><p class="ggds-card__body">The error summary and each field's error, wired together.</p></li>
+  <li class="ggds-card"><h3 class="ggds-card__title"><a class="ggds-card__link" href="search.html">A paginated list</a></h3><p class="ggds-card__body">Breadcrumbs and pagination from Django's Paginator.</p></li>
+</ul>
+<p><a href="../get-started.html#django">Back to Get started</a></p>
+{% endblock %}

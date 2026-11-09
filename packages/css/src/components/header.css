@@ -1,0 +1,299 @@
+/*
+ * Header, as on the MoCDTI platform: the flag colours as a thin rule, then one row with the institution's logo,
+ * name and country, the main navigation and Search. Sticky, white, with a rule in the institution's colour.
+ *
+ * Below 80rem the navigation does not fit beside the name. Without JavaScript it is a visible list under the row.
+ * With @ggds/js a menu button shows and hides it in place: the menu pushes the page down instead of covering it,
+ * so keyboard focus can never land on content hidden behind it (WCAG 2.4.11; the platform's full-screen drawer
+ * fails this, defect A1).
+ */
+.ggds-header {
+  container: ggds-header / inline-size; /* the header spans the page, so its width is the viewport's */
+  position: sticky;
+  top: 0;
+  z-index: var(--ggds-layer-sticky);
+  background: var(--ggds-color-surface);
+  border-bottom: 3px solid var(--ggds-color-institution);
+}
+
+/* National colours as a thin rule only, never as text. */
+.ggds-header::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--ggds-color-flag-red) 0 33.33%,
+    var(--ggds-color-flag-gold) 33.33% 66.66%,
+    var(--ggds-color-flag-green) 66.66% 100%);
+}
+
+.ggds-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--ggds-space-3);
+  min-height: 4rem;
+}
+
+.ggds-header__identity {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--ggds-space-3);
+  min-width: 0; /* long institution names wrap instead of pushing the buttons off a 320px screen */
+  min-height: var(--ggds-size-target);
+  padding-block: var(--ggds-space-2);
+  color: var(--ggds-color-text);
+  text-decoration: none;
+}
+
+.ggds-header__identity:visited {
+  color: var(--ggds-color-text);
+}
+
+.ggds-header__identity:hover .ggds-header__name {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* An approved logo, drawn round on white as on the platform. */
+.ggds-header__logo {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ggds-radius-round);
+  background: var(--ggds-color-surface);
+  object-fit: contain;
+}
+
+/* No approved logo yet: the institution's initials in a round badge keep the layout (the platform's Logo.astro). */
+.ggds-header__monogram {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ggds-radius-round);
+  background: var(--ggds-color-brand-900);
+  color: var(--ggds-color-text-inverse);
+  font-size: 0.8rem;
+  font-weight: var(--ggds-font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.ggds-header__text {
+  display: block;
+  min-width: 0;
+  line-height: var(--ggds-line-height-tight);
+}
+
+.ggds-header__name {
+  display: block;
+  overflow-wrap: break-word;
+  color: var(--ggds-color-institution);
+  font-size: 0.95rem;
+  font-weight: var(--ggds-font-weight-bold);
+  letter-spacing: -0.01em;
+}
+
+/* A long name (a ministry's) is set smaller on phones so it fits in three lines. */
+.ggds-header__name--long {
+  font-size: 0.8rem;
+}
+
+.ggds-header__country {
+  display: none;
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-xs);
+}
+
+/* Search and the menu button: quiet icon buttons. */
+.ggds-header__search,
+.ggds-header__menu-button {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ggds-space-2);
+  min-width: var(--ggds-size-target);
+  min-height: var(--ggds-size-target);
+  padding: 0 var(--ggds-space-2);
+  border: 0;
+  border-radius: var(--ggds-radius-md);
+  background: transparent;
+  color: var(--ggds-color-link);
+  font: inherit;
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ggds-header__search:visited {
+  color: var(--ggds-color-link);
+}
+
+.ggds-header__search:hover,
+.ggds-header__menu-button:hover {
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-link-hover);
+}
+
+.ggds-header__icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+/* "Search" shows from 90rem, as on the platform; below, the icon shows and the word stays for screen readers. */
+.ggds-header__search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* With six or more sections the word would push the row past the container, so the icon stays alone. */
+@container ggds-header (min-width: 90rem) {
+  .ggds-header__inner:not(:has(.ggds-header__list > li:nth-child(6))) .ggds-header__search-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+}
+
+.ggds-header__menu-button[hidden] {
+  display: none;
+}
+
+.ggds-header__menu-button .ggds-header__icon--close,
+.ggds-header__menu-button[aria-expanded="true"] .ggds-header__icon--menu {
+  display: none;
+}
+
+.ggds-header__menu-button[aria-expanded="true"] .ggds-header__icon--close {
+  display: block;
+}
+
+.ggds-header__menu-button[aria-expanded="true"] {
+  background: var(--ggds-color-surface-sunken);
+}
+
+/* Navigation: a list under the row on narrow screens, inline from 80rem. */
+.ggds-header__nav {
+  flex: 1 0 100%;
+  order: 1;
+  border-top: 1px solid var(--ggds-color-border-subtle);
+}
+
+.ggds-header__list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: var(--ggds-space-2) 0;
+  list-style: none;
+}
+
+.ggds-header__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+  padding-inline: var(--ggds-space-3);
+  border-radius: var(--ggds-radius-md);
+  color: var(--ggds-color-text);
+  font-size: 0.95rem;
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ggds-header__link:visited {
+  color: var(--ggds-color-text);
+}
+
+.ggds-header__link:hover {
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-brand-800);
+}
+
+.ggds-header__link[aria-current] {
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-link);
+  box-shadow: inset 3px 0 0 var(--ggds-color-link);
+}
+
+@media (min-width: 48rem) {
+  .ggds-header__inner {
+    min-height: 4.5rem;
+  }
+
+  .ggds-header__name--long {
+    font-size: 0.95rem;
+  }
+
+  .ggds-header__country {
+    display: block;
+  }
+}
+
+/* Narrow screens with JavaScript: collapsed until the menu button opens it; long menus scroll inside it. */
+@media (max-width: 79.99rem) {
+  .ggds-header__nav--collapsible:not(.is-open) {
+    display: none;
+  }
+
+  .ggds-header__nav--collapsible.is-open {
+    max-height: calc(100dvh - 5rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+@media (min-width: 80rem) {
+  .ggds-header__inner {
+    flex-wrap: nowrap;
+  }
+
+  .ggds-header__identity {
+    flex: none;
+    margin-inline-end: var(--ggds-space-3);
+  }
+
+  .ggds-header__name {
+    max-width: 14rem;
+  }
+
+  .ggds-header__nav {
+    flex: 1 1 auto;
+    order: 0;
+    min-width: 0;
+    border-top: 0;
+  }
+
+  .ggds-header__list {
+    flex-direction: row;
+    gap: var(--ggds-space-1);
+    padding: 0;
+  }
+
+  .ggds-header__link {
+    padding-inline: 0.625rem;
+  }
+
+  .ggds-header__link[aria-current] {
+    box-shadow: inset 0 -3px 0 var(--ggds-color-link);
+  }
+
+  .ggds-header__menu-button {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ggds-header__link[aria-current] {
+    text-decoration: underline;
+  }
+}

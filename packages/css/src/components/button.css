@@ -1,0 +1,87 @@
+/* Buttons. Use <button> for actions and <a class="ggds-button"> only for navigation that looks like an action. */
+.ggds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ggds-space-2);
+  min-height: var(--ggds-size-target);
+  padding: var(--ggds-space-2) var(--ggds-space-6);
+  border: 2px solid transparent;
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-brand-700);
+  color: var(--ggds-color-text-inverse);
+  font-weight: var(--ggds-font-weight-bold);
+  line-height: var(--ggds-line-height-tight);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--ggds-motion-duration-fast) var(--ggds-motion-easing-standard);
+}
+
+.ggds-button:visited {
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-button:hover {
+  background: var(--ggds-color-brand-900);
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-button--secondary {
+  border-color: var(--ggds-color-brand-700);
+  background: var(--ggds-color-surface);
+  color: var(--ggds-color-brand-700);
+}
+
+.ggds-button--secondary:visited {
+  color: var(--ggds-color-brand-700);
+}
+
+.ggds-button--secondary:hover {
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-brand-900);
+}
+
+.ggds-button--quiet {
+  padding-inline: var(--ggds-space-3);
+  background: transparent;
+  color: var(--ggds-color-link);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.ggds-button--quiet:visited {
+  color: var(--ggds-color-link);
+}
+
+.ggds-button--quiet:hover {
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-link-hover);
+}
+
+.ggds-button--warning {
+  background: var(--ggds-color-status-danger-strong);
+}
+
+.ggds-button--warning:hover {
+  background: var(--ggds-color-text);
+}
+
+.ggds-button:disabled,
+.ggds-button[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ggds-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-3) var(--ggds-space-4);
+}
+
+@media (forced-colors: active) {
+  .ggds-button {
+    border-color: ButtonText;
+  }
+}

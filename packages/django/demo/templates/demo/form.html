@@ -1,0 +1,9 @@
+{% extends "demo/base.html" %}{% load ggds %}
+{% block content %}
+{% ggds_breadcrumbs crumbs %}
+<h1>Make a complaint</h1>
+<form method="get" action="form-errors.html" novalidate>
+{{ form }}
+<button class="ggds-button" type="submit">Send complaint</button>
+</form>
+{% endblock %}

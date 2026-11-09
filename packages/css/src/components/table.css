@@ -1,0 +1,37 @@
+/* Data table in a scrollable, keyboard-focusable region, so wide tables never make the page scroll sideways
+   at 320px (WCAG 1.4.10). Give the region role="region", tabindex="0" and aria-labelledby the caption. */
+.ggds-table-wrap {
+  max-width: 100%;
+  margin-bottom: var(--ggds-space-6);
+  overflow-x: auto;
+}
+
+.ggds-table {
+  width: 100%;
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-table__caption {
+  margin-bottom: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-base);
+  font-weight: var(--ggds-font-weight-bold);
+  text-align: start;
+}
+
+.ggds-table th,
+.ggds-table td {
+  padding: var(--ggds-space-2) var(--ggds-space-3);
+  border-bottom: 1px solid var(--ggds-color-border-strong);
+  text-align: start;
+  vertical-align: top;
+}
+
+.ggds-table thead th {
+  border-bottom-width: 2px;
+  border-bottom-color: var(--ggds-color-text);
+}
+
+.ggds-table .ggds-table__numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}

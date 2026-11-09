@@ -1,0 +1,79 @@
+/* NameTree, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Each branch's flow is delayed by its data-k (styles/global.css): the CSP drops style attributes. */
+.name-tree { max-width: 36rem; margin-inline: auto; }
+@media (min-width: 64rem) { .name-tree { margin-inline: auto 0; } }
+.tree-art { display: block; width: 100%; height: auto; overflow: visible; }
+.tree-orbit { fill: none; stroke: white; stroke-opacity: 0.14; stroke-dasharray: 2 7; }
+.tree-link { fill: none; stroke: white; stroke-opacity: 0.28; stroke-width: 1.5; transition: stroke 0.3s, stroke-opacity 0.3s; }
+.tree-flow {
+  fill: none; stroke: white; stroke-opacity: 0.7; stroke-width: 2.5; stroke-linecap: round;
+  stroke-dasharray: 5 95; stroke-dashoffset: 100; opacity: 0;
+  animation: tree-flow 4.4s linear infinite; animation-delay: calc(var(--k, 0) * 0.55s);
+}
+.tree-flow-down { animation-duration: 2.2s; stroke: var(--ggds-color-flag-gold, #fcd116); }
+@keyframes tree-flow {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  10% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* An opaque base under the glassy face, so the branch running to the chip's centre does not show through. */
+.chip-base { fill: var(--ggds-color-brand-900, #0b1d3a); }
+.chip-face { fill: rgb(255 255 255 / 0.07); stroke: rgb(255 255 255 / 0.35); stroke-width: 1.25; transition: fill 0.3s, stroke 0.3s; }
+.tree-chip[data-closed] .chip-face { stroke-dasharray: 5 4; }
+.tree-chip text { fill: white; }
+.chip-label { font: 700 17px/1 ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; letter-spacing: -0.01em; }
+.chip-note { font-size: 11.5px; fill-opacity: 0.72; }
+.chip-lock circle { fill: var(--ggds-color-brand-900, #0b1d3a); stroke: rgb(255 255 255 / 0.55); }
+.chip-lock rect { fill: rgb(255 255 255 / 0.85); }
+.chip-lock path { fill: none; stroke: rgb(255 255 255 / 0.85); stroke-width: 1.6; }
+.tree-chip { transition: transform 0.3s; }
+
+.tree-branch[data-lit] .tree-link { stroke: var(--ggds-color-flag-gold, #fcd116); stroke-opacity: 0.9; stroke-width: 2; }
+.tree-branch[data-lit] .tree-flow {
+  stroke: var(--ggds-color-flag-gold, #fcd116); stroke-opacity: 1; stroke-width: 3.5;
+  animation-duration: 1.6s; animation-delay: 0s;
+}
+.tree-branch[data-lit] .chip-face { fill: rgb(252 209 22 / 0.16); stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 2; }
+.tree-branch[data-lit] .chip-label { fill: var(--ggds-color-flag-gold, #fcd116); }
+
+.root-halo { fill: none; stroke: white; stroke-opacity: 0.12; stroke-width: 1; }
+.tree-root[data-lit] .root-halo { stroke: var(--ggds-color-flag-gold, #fcd116); stroke-opacity: 0.7; stroke-width: 2; }
+.root-ring path { fill: none; stroke-width: 6; stroke-linecap: round; }
+.root-ring { transform-box: view-box; transform-origin: 280px 272px; animation: tree-spin 60s linear infinite; }
+@keyframes tree-spin { to { transform: rotate(360deg); } }
+.root-core { fill: var(--ggds-color-brand-900, #0b1d3a); stroke: rgb(255 255 255 / 0.3); }
+.root-label { fill: white; font: 800 34px/1 ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; letter-spacing: -0.02em; }
+.root-note { fill: white; fill-opacity: 0.72; font-size: 11px; }
+
+.bar-shadow { fill: rgb(0 0 0 / 0.3); filter: blur(6px); }
+.bar-body { fill: white; }
+.bar-lock rect { fill: var(--ggds-color-flag-green, #006b3f); }
+.bar-lock path { fill: none; stroke: var(--ggds-color-flag-green, #006b3f); stroke-width: 2; }
+.bar-text { font: 600 19px/1 ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; }
+.bar-scheme { fill: #6b7280; font-weight: 400; }
+.bar-name { fill: var(--ggds-color-brand-900, #0b1d3a); }
+.bar-end { fill: var(--ggds-color-brand-700, #1d4ed8); font-weight: 800; }
+.bar-caret { fill: var(--ggds-color-brand-700, #1d4ed8); animation: tree-blink 1s steps(1) infinite; }
+@keyframes tree-blink { 50% { opacity: 0; } }
+
+.tree-caption {
+  margin-top: 0.75rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 0.5rem 1.25rem; font-size: 0.875rem; color: rgb(255 255 255 / 0.8);
+}
+.tree-legend { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend-open, .legend-closed { width: 1.5rem; height: 0.875rem; border-radius: 0.3rem; border: 1.5px solid rgb(255 255 255 / 0.6); }
+.legend-closed { border-style: dashed; }
+.tree-caption a { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; }
+.tree-caption a:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.tree-caption a::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .tree-flow { animation: none; opacity: 0; }
+  .root-ring, .bar-caret { animation: none; }
+  .tree-link, .chip-face, .tree-chip { transition: none; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+

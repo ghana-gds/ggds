@@ -1,0 +1,90 @@
+/* DataShield, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Each flow is delayed by its data-k (styles/global.css): the CSP drops style attributes. */
+.data-shield { max-width: 36rem; margin-inline: auto; }
+@media (min-width: 64rem) { .data-shield { margin-inline: auto 0; } }
+.ds-art { display: block; width: 100%; height: auto; overflow: visible; }
+.ds-shield { fill: url(#ds-shield); stroke: rgb(255 255 255 / 0.4); stroke-width: 2; stroke-linejoin: round; }
+.ds-shield-inner { fill: none; stroke: rgb(255 255 255 / 0.18); stroke-dasharray: 3 6; }
+.ds-card { fill: white; }
+.ds-avatar { fill: color-mix(in srgb, var(--ggds-color-brand-700, #4338ca) 16%, white); }
+.ds-avatar-person { fill: none; stroke: var(--ggds-color-brand-700, #4338ca); stroke-width: 2.2; stroke-linecap: round; }
+.ds-title { fill: var(--ggds-color-text, #111827); font-size: 14.5px; font-weight: 800; }
+.ds-sub { fill: #6b7280; font-size: 11px; }
+.ds-rule { stroke: #e5e7eb; }
+.ds-field { fill: #6b7280; font-size: 11.5px; font-weight: 600; }
+.ds-mask { fill: #d9dbe3; transition: opacity 0.4s; }
+.ds-value { fill: var(--ggds-color-text, #111827); font: 600 12px ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; opacity: 0; transition: opacity 0.4s; }
+.ds-strike { stroke: #d64545; stroke-width: 2; opacity: 0; }
+.ds-tick { opacity: 0; transition: opacity 0.4s 0.5s; }
+.ds-tick circle { fill: #2e9d4f; }
+.ds-tick path { fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.ds-toggle rect { fill: #2e9d4f; transition: fill 0.4s; }
+.ds-toggle circle { fill: white; transition: transform 0.4s cubic-bezier(0.5, 0, 0.2, 1); }
+
+.ds-line { fill: none; stroke: white; stroke-opacity: 0.25; stroke-width: 1.5; }
+.ds-flow {
+  fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 4 96; stroke-dashoffset: 100; animation: ds-flow 2.6s linear infinite;
+  animation-delay: calc(var(--k) * 0.45s);
+}
+@keyframes ds-flow { to { stroke-dashoffset: 0; } }
+.ds-org circle { fill: rgb(255 255 255 / 0.08); stroke: rgb(255 255 255 / 0.4); stroke-width: 1.5; }
+.ds-org-icon path, .ds-org-icon rect { fill: none; stroke: white; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ds-org text { fill: white; fill-opacity: 0.8; font-size: 12px; font-weight: 600; }
+.ds-stop { opacity: 0; transform-box: fill-box; transition: opacity 0.3s; }
+.ds-stop path:first-child { fill: #d64545; stroke: white; stroke-width: 2.5; stroke-linejoin: round; }
+.ds-stop-bar { stroke: white; stroke-width: 4.5; stroke-linecap: round; }
+
+.ds-badge { opacity: 0; transition: opacity 0.4s; }
+.ds-badge-informed rect { fill: var(--ggds-color-flag-gold, #fcd116); }
+.ds-badge-informed circle { fill: var(--ggds-color-text, #111827); }
+.ds-badge-informed path { stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 2; stroke-linecap: round; }
+.ds-badge-informed text { fill: var(--ggds-color-text, #111827); font-size: 11px; font-weight: 800; }
+.ds-badge-access > circle:first-child { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-width: 2.5; }
+.ds-badge-access path { fill: none; stroke: var(--ggds-color-text, #111827); stroke-width: 1.8; }
+.ds-badge-access circle + path + circle { fill: var(--ggds-color-text, #111827); }
+.ds-complain-line { fill: none; stroke: white; stroke-opacity: 0.7; stroke-width: 2; stroke-dasharray: 4 5; }
+.ds-badge-complain rect, .ds-badge-complain g path { fill: white; }
+.ds-badge-complain text { fill: var(--ggds-color-text, #111827); font-size: 12.5px; font-weight: 800; }
+
+/* Each right's state. */
+[data-right='informed'] .ds-badge-informed,
+[data-right='access'] .ds-badge-access,
+[data-right='complain'] .ds-badge-complain { opacity: 1; }
+[data-right='access'] .ds-mask { opacity: 0; }
+[data-right='access'] .ds-value { opacity: 1; }
+[data-right='access'] .ds-flow { animation-direction: reverse; stroke: white; }
+[data-right='correct'] .ds-row[data-fix] .ds-mask { opacity: 0; }
+[data-right='correct'] .ds-row[data-fix] .ds-value { opacity: 1; }
+[data-right='correct'] .ds-row[data-fix] .ds-strike { animation: ds-strike 2.6s ease-in-out forwards; }
+@keyframes ds-strike { 0%, 15% { opacity: 1; } 40%, 100% { opacity: 0; } }
+[data-right='correct'] .ds-tick { opacity: 1; }
+[data-right='consent'] .ds-toggle rect { fill: #9ca3af; }
+[data-right='consent'] .ds-toggle circle { transform: translateX(-18px); }
+[data-right='consent'] .ds-flow, [data-right='object'] .ds-flow { animation-play-state: paused; opacity: 0; }
+[data-right='consent'] .ds-line, [data-right='object'] .ds-line { stroke-dasharray: 3 5; }
+[data-right='object'] .ds-stop { opacity: 1; }
+
+.ds-caption { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; text-align: center; }
+.ds-now { margin: 0; min-height: 3rem; max-width: 30rem; color: rgb(255 255 255 / 0.85); }
+.ds-now strong { display: block; color: white; font-size: 1.125rem; }
+.ds-rights { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.ds-rights button {
+  min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px; color: white; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); cursor: pointer; transition: background 0.3s, border-color 0.3s;
+}
+.ds-rights button:hover { background: rgb(255 255 255 / 0.16); }
+.ds-rights button[aria-pressed='true'] { background: rgb(252 209 22 / 0.18); border-color: var(--ggds-color-flag-gold, #fcd116); }
+.ds-rights button:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.ds-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.ds-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.ds-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-flow { animation: none; opacity: 0; }
+  .ds-mask, .ds-value, .ds-tick, .ds-toggle rect, .ds-toggle circle, .ds-badge, .ds-stop { transition: none; }
+  [data-right='correct'] .ds-row[data-fix] .ds-strike { animation: none; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+

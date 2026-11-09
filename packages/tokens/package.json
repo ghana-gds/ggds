@@ -1,0 +1,49 @@
+{
+  "name": "@ggds/tokens",
+  "version": "0.1.0",
+  "description": "GGDS design tokens: DTCG JSON source, CSS custom properties, JSON, MoCDTI platform aliases, and the institution colour rule.",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "design-tokens",
+    "dtcg",
+    "css-custom-properties"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "tokens.json",
+    "lib.mjs",
+    "institution.mjs",
+    "dist"
+  ],
+  "exports": {
+    "./tokens.json": "./tokens.json",
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.flat.json": "./dist/tokens.json",
+    "./compat-site.css": "./dist/compat-site.css",
+    "./lib.mjs": "./lib.mjs",
+    "./institution.mjs": "./institution.mjs",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,9 @@
+{% extends "demo/base.html" %}{% load ggds %}
+{% block content %}
+{% ggds_breadcrumbs crumbs %}
+<h1>Search results</h1>
+<ul class="ggds-card-grid">{% for item in page_obj %}
+  <li class="ggds-card"><h2 class="ggds-card__title"><a class="ggds-card__link" href="index.html">Result {{ item }}</a></h2><p class="ggds-card__body">An example result.</p></li>{% endfor %}
+</ul>
+{% ggds_pagination page_obj label="Pages of results" %}
+{% endblock %}

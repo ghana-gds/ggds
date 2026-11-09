@@ -1,0 +1,89 @@
+/* NetworkHub, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c, and --host on the figure) come from config/agency.ts by data-c, and delays from data-k
+   (styles/global.css): the CSP drops style attributes. */
+.network-hub { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .network-hub { margin-inline: auto 0; } }
+.nh-art { display: block; width: 100%; height: auto; overflow: visible; }
+.nh-links path { fill: none; stroke: white; stroke-opacity: 0.3; stroke-width: 2; stroke-dasharray: 4 7; }
+
+.nh-cloud-back { fill: var(--ggds-color-institution-deep, #0b2f2a); }
+.nh-cloud { fill: rgb(255 255 255 / 0.12); stroke: white; stroke-opacity: 0.55; stroke-width: 2; }
+.nh-rack { fill: rgb(0 0 0 / 0.3); stroke: white; stroke-opacity: 0.7; stroke-width: 2.5; }
+.nh-slot { fill: rgb(255 255 255 / 0.1); stroke: white; stroke-opacity: 0.35; }
+.nh-vent { stroke: white; stroke-opacity: 0.35; stroke-width: 2; stroke-dasharray: 2 3; }
+.nh-led { fill: var(--ggds-color-flag-gold, #fcd116); animation: nh-blink 1.6s steps(2) infinite; animation-delay: calc(var(--k) * 0.4s); }
+@keyframes nh-blink { 50% { opacity: 0.25; } }
+.nh-hub-label, .nh-node text { fill: white; font-size: 14px; font-weight: 700; paint-order: stroke; stroke: rgb(0 0 0 / 0.45); stroke-width: 3px; stroke-linejoin: round; }
+
+.nh-node > circle { fill: rgb(0 0 0 / 0.3); stroke: white; stroke-opacity: 0.6; stroke-width: 2; }
+.nh-node path, .nh-icon { fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Only the lit role's drawing shows. */
+.nh-role { opacity: 0; transition: opacity 0.4s; }
+[data-role='certify'] .nh-certify, [data-role='standard'] .nh-standard,
+[data-role='protect'] .nh-protect, [data-role='host'] .nh-host { opacity: 1; }
+
+.nh-flow { fill: none; stroke: var(--c); stroke-width: 7; stroke-linecap: round; stroke-dasharray: 14 36; }
+[data-role='host'] .nh-flow { animation: nh-flow 1.4s linear infinite; animation-delay: calc(var(--k) * 0.35s); }
+.nh-rack, .nh-cloud { transition: fill 0.4s, stroke 0.4s; }
+[data-role='host'] .nh-rack { stroke: var(--host); stroke-opacity: 1; }
+[data-role='host'] .nh-cloud { fill: color-mix(in srgb, var(--host) 30%, transparent); stroke: var(--host); stroke-opacity: 1; }
+@keyframes nh-flow { from { stroke-dashoffset: 50; } to { stroke-dashoffset: 0; } }
+
+.nh-standard circle { fill: var(--c); stroke: white; stroke-width: 2; }
+.nh-standard > g > path, .nh-sheet-tick { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10; }
+.nh-sheet { fill: white; stroke: var(--c); stroke-width: 3; }
+.nh-sheet-tick { stroke: var(--c); stroke-width: 3; }
+.nh-sheet-line { stroke: rgb(0 0 0 / 0.3); stroke-width: 3; stroke-linecap: round; }
+[data-role='standard'] .nh-standard > g > path { animation: nh-draw 0.5s ease-out both; animation-delay: calc(var(--k) * 0.25s); }
+[data-role='standard'] .nh-sheet-tick { animation: nh-draw 0.5s ease-out both; animation-delay: calc(0.3s + var(--k) * 0.45s); }
+@keyframes nh-draw { from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
+
+.nh-badge circle { fill: var(--c); stroke: white; stroke-width: 2; }
+.nh-badge path { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.nh-badge .nh-ribbon { fill: var(--c); stroke-width: 1.5; }
+[data-role='certify'] .nh-badge { animation: nh-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(var(--k) * 0.4s); }
+@keyframes nh-pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+.nh-shield { fill: color-mix(in srgb, var(--c) 22%, transparent); stroke: var(--c); stroke-width: 3; }
+.nh-threat path { fill: var(--c); stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
+.nh-spark { fill: none; stroke: white; stroke-width: 2.5; opacity: 0; }
+[data-role='protect'] .nh-threat { animation: nh-threat 2.4s ease-in infinite; }
+[data-role='protect'] .nh-spark { animation: nh-spark 2.4s ease-out infinite; }
+@keyframes nh-threat {
+  0% { transform: translateX(80px); opacity: 0; }
+  15% { opacity: 1; }
+  55% { transform: translate(0, 0); opacity: 1; }
+  70%, 100% { transform: translate(0, 0) scale(0.2); opacity: 0; }
+}
+@keyframes nh-spark { 0%, 52% { opacity: 0; transform: scale(0.4); } 60% { opacity: 0.9; } 85%, 100% { opacity: 0; transform: scale(1.4); } }
+.nh-threat, .nh-spark, .nh-badge { transform-box: fill-box; transform-origin: center; }
+
+.nh-caption { opacity: 0; transition: opacity 0.4s; }
+.nh-caption[data-on] { opacity: 1; }
+.nh-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.nh-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.nh-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.nh-links-html { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.nh-links-html a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.nh-links-html a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.nh-links-html a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.nh-links-html a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.nh-links-html a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.nh-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.nh-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.nh-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .network-hub * { animation: none !important; transition: none !important; }
+  .nh-threat { opacity: 0; }
+  .nh-spark { opacity: 0; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-network] [data-c]{--c:#fff}[data-network] [data-c="0"]{--c:#3fb36f}[data-network]{--certify:#3fb36f}[data-network] [data-c="certify"]{--c:#3fb36f}[data-network] [data-c="1"]{--c:#3a9fd6}[data-network]{--standard:#3a9fd6}[data-network] [data-c="standard"]{--c:#3a9fd6}[data-network] [data-c="2"]{--c:#e0524f}[data-network]{--protect:#e0524f}[data-network] [data-c="protect"]{--c:#e0524f}[data-network] [data-c="3"]{--c:#e89a1c}[data-network]{--host:#e89a1c}[data-network] [data-c="host"]{--c:#e89a1c}

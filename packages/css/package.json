@@ -1,0 +1,54 @@
+{
+  "name": "@ggds/css",
+  "version": "0.1.0",
+  "description": "GGDS component CSS. Framework-neutral; no runtime dependencies.",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "css",
+    "components"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/css"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "exports": {
+    ".": "./dist/ggds.css",
+    "./ggds.css": "./dist/ggds.css",
+    "./ggds.min.css": "./dist/ggds.min.css",
+    "./ggds-components.css": "./dist/ggds-components.css",
+    "./ggds-components.min.css": "./dist/ggds-components.min.css",
+    "./core.css": "./dist/core.css",
+    "./core.min.css": "./dist/core.min.css",
+    "./components/*.css": "./dist/components/*.css",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@ggds/tokens": "workspace:^"
+  },
+  "type": "module",
+  "style": "./dist/ggds.css",
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

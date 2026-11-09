@@ -1,0 +1,63 @@
+/* SpectrumTuner, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c, and the first band's --band on the figure) come from config/agency.ts by data-c, and delays
+   from data-k (styles/global.css): the CSP drops style attributes. The script retunes them through the CSSOM,
+   which the CSP allows. */
+.spectrum { max-width: 36rem; margin-inline: auto; }
+@media (min-width: 64rem) { .spectrum { margin-inline: auto 0; } }
+.spec-art { display: block; width: 100%; height: auto; overflow: visible; }
+.rib-shadow { fill: rgb(0 0 0 / 0.3); filter: blur(6px); }
+.rib-divider { stroke: rgb(0 0 0 / 0.25); stroke-width: 1; }
+.rib-label { fill: white; font-size: 12.5px; font-weight: 700; paint-order: stroke; stroke: rgb(0 0 0 / 0.3); stroke-width: 2.5px; transition: font-size 0.3s; }
+.rib-label[data-on] { font-size: 14px; font-weight: 800; }
+.rib-tick { stroke: white; stroke-opacity: 0.35; }
+.rib-axis { fill: white; fill-opacity: 0.65; font-size: 11.5px; }
+.spec-needle { transition: transform 0.7s cubic-bezier(0.5, 0, 0.2, 1); }
+.needle-window { fill: none; stroke: white; stroke-width: 2.5; }
+.spec-needle path { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
+
+.spec-mast path { fill: none; stroke: white; stroke-opacity: 0.75; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mast-light { fill: var(--ggds-color-flag-red, #ce1126); animation: spec-blink 1.6s ease-in-out infinite; }
+@keyframes spec-blink { 50% { opacity: 0.25; } }
+.mast-arc {
+  fill: none; stroke: var(--band); stroke-width: 2.5; stroke-linecap: round; opacity: 0;
+  transform-box: fill-box; transform-origin: left center; animation: spec-arc 2.4s ease-out infinite; animation-delay: calc(var(--k) * 0.8s);
+}
+@keyframes spec-arc { 0% { opacity: 0.9; transform: scale(0.6); } 100% { opacity: 0; transform: scale(2.2); } }
+.spec-feed { fill: none; stroke: var(--band); stroke-opacity: 0.5; stroke-width: 2; stroke-dasharray: 3 5; transition: stroke 0.6s; }
+
+.spec-wave, .spec-wave-glow { --lambda: 104px; fill: none; stroke: var(--band); stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.6s; }
+.spec-wave { stroke-width: 3.5; animation: spec-slide 1.4s linear infinite; }
+.spec-wave-glow { stroke-width: 12; stroke-opacity: 0.22; animation: spec-slide 1.4s linear infinite; }
+@keyframes spec-slide { from { transform: translateX(0); } to { transform: translateX(var(--lambda)); } }
+
+.rx-halo { fill: none; stroke: var(--band); stroke-opacity: 0.45; stroke-width: 2; stroke-dasharray: 2 6; transition: stroke 0.6s; }
+.rx-body { fill: rgb(255 255 255 / 0.08); stroke: var(--band); stroke-width: 2.5; transition: stroke 0.6s; }
+.rx-icon { fill: none; stroke: white; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.4s; }
+.rx-icon[data-on] { opacity: 1; }
+.rx-caption { opacity: 0; transition: opacity 0.4s; }
+.rx-caption[data-on] { opacity: 1; }
+.rx-label { fill: white; font-size: 17px; font-weight: 800; }
+.rx-note { fill: white; fill-opacity: 0.7; font-size: 12px; }
+
+.spec-caption { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.spec-bands { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.spec-bands a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.spec-bands a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.spec-bands a[data-on] { background: color-mix(in srgb, var(--c) 30%, transparent); border-color: var(--c); }
+.spec-bands a:hover { color: white; background: color-mix(in srgb, var(--c) 40%, transparent); }
+.spec-bands a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.spec-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.spec-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.spec-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .spec-needle, .rib-label, .rx-icon, .rx-caption, .spec-wave, .spec-wave-glow, .spec-feed, .rx-halo, .rx-body { transition: none; }
+  .spec-wave, .spec-wave-glow, .mast-arc, .mast-light { animation: none; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-spectrum] [data-c]{--c:#fff}[data-spectrum] [data-c="0"]{--c:#d64545}[data-spectrum] [data-c="1"]{--c:#e08a2c}[data-spectrum] [data-c="2"]{--c:#c9a227}[data-spectrum] [data-c="3"]{--c:#2e9d4f}[data-spectrum] [data-c="4"]{--c:#2b9cc4}[data-spectrum]{--band:#d64545}

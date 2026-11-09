@@ -1,0 +1,53 @@
+---
+/**
+ * GGDS footer: the woven flag band, then the institution (logo, name, purpose, contact details), its main sections
+ * with up to five of their most-used pages, and a bottom bar with the copyright line and the required links.
+ * Slots: "logo", "contact" (more contact lines, social links) and "bar" (more <li> items in the bottom bar).
+ */
+interface Link { label: string; href: string; attrs?: Record<string, unknown> | undefined }
+interface Props {
+  name: string;
+  purpose?: string | undefined;
+  contact?: { address?: string | undefined; email?: string | undefined; phone?: string | undefined; phoneHref?: string | undefined; moreHref?: string | undefined; moreLabel?: string | undefined };
+  sections?: (Link & { links: Link[] })[];
+  bar?: Link[] | undefined;
+  year?: number | undefined;
+  class?: string | undefined;
+  [attr: string]: unknown;
+}
+const { name, purpose, contact, sections = [], bar = [], year = new Date().getFullYear(), class: extra = '', ...rest } = Astro.props;
+---
+<footer class:list={['ggds-footer', extra]} {...rest}>
+  <div class="ggds-container ggds-footer__main">
+    <div>
+      <p class="ggds-footer__identity"><slot name="logo" /><span>{name}</span></p>
+      {purpose && <p class="ggds-footer__purpose">{purpose}</p>}
+      {contact && (contact.address || contact.email || contact.phone) && (
+        <address class="ggds-footer__contact">
+          {contact.address && <span>{contact.address}</span>}
+          {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
+          {contact.phone && <span>General enquiries: {contact.phoneHref ? <a href={contact.phoneHref}>{contact.phone}</a> : contact.phone}</span>}
+        </address>
+      )}
+      {contact?.moreHref && <p class="ggds-footer__more"><a href={contact.moreHref}>{contact.moreLabel ?? 'All contact details and offices'}</a></p>}
+      <slot name="contact" />
+    </div>
+    <div class="ggds-footer__sections">
+      {sections.map((s) => (
+        <nav class="ggds-footer__section" aria-label={s.label}>
+          <p class="ggds-footer__heading"><a href={s.href} {...(s.attrs ?? {})}>{s.label}</a></p>
+          <ul class="ggds-footer__list">
+            {s.links.slice(0, 5).map((l) => <li><a href={l.href} {...(l.attrs ?? {})}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </div>
+  </div>
+  <div class="ggds-footer__bottom">
+    <ul class="ggds-container ggds-footer__bar">
+      <li>© {year} {name}</li>
+      {bar.map((l) => <li><a href={l.href} {...(l.attrs ?? {})}>{l.label}</a></li>)}
+      <slot name="bar" />
+    </ul>
+  </div>
+</footer>

@@ -1,0 +1,33 @@
+<!-- title: Form after a failed submit; layout: main; height: 640 -->
+<div class="ggds-error-summary" data-ggds-module="error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1">
+  <h2 class="ggds-error-summary__title" id="error-summary-title">There is a problem</h2>
+  <ul class="ggds-error-summary__list">
+    <li><a href="#name">Enter your full name</a></li>
+    <li><a href="#reply-sms">Select how we should reply</a></li>
+  </ul>
+</div>
+<h1>Report a problem</h1>
+<form action="./" method="post" novalidate>
+  <div class="ggds-field ggds-field--error">
+    <label class="ggds-label" for="name">Full name</label>
+    <p class="ggds-error-message" id="name-error"><span class="ggds-visually-hidden">Error:</span> Enter your full name</p>
+    <input class="ggds-input ggds-input--width-long" id="name" name="name" type="text" autocomplete="name" aria-invalid="true" aria-describedby="name-error">
+  </div>
+  <div class="ggds-field ggds-field--error">
+    <fieldset class="ggds-fieldset" aria-describedby="reply-error">
+      <legend class="ggds-fieldset__legend">How should we reply?</legend>
+      <p class="ggds-error-message" id="reply-error"><span class="ggds-visually-hidden">Error:</span> Select how we should reply</p>
+      <div class="ggds-choices">
+        <div class="ggds-choice">
+          <input class="ggds-choice__input" id="reply-sms" name="reply" type="radio" value="sms">
+          <label class="ggds-choice__label" for="reply-sms">SMS</label>
+        </div>
+        <div class="ggds-choice">
+          <input class="ggds-choice__input" id="reply-email" name="reply" type="radio" value="email">
+          <label class="ggds-choice__label" for="reply-email">Email</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <button class="ggds-button" type="submit">Send report</button>
+</form>

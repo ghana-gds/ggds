@@ -1,0 +1,51 @@
+/* Prose: styles for rich text from a CMS. GGDS does not sanitise HTML: the application must, before rendering.
+   Elements styled here: p, h2–h4, ul, ol, li, a, strong, em, blockquote, table. Wrap CMS tables in
+   .ggds-table-wrap when sanitising; the fallback below keeps unwrapped tables from breaking narrow screens. */
+.ggds-prose {
+  max-width: var(--ggds-measure);
+}
+
+.ggds-prose > :first-child {
+  margin-top: 0;
+}
+
+.ggds-prose h2 {
+  margin-top: var(--ggds-space-8);
+  font-size: var(--ggds-font-size-xl);
+}
+
+.ggds-prose h3 {
+  margin-top: var(--ggds-space-6);
+}
+
+.ggds-prose ul,
+.ggds-prose ol {
+  margin: 0 0 var(--ggds-space-4);
+  padding-inline-start: var(--ggds-space-6);
+}
+
+.ggds-prose li + li {
+  margin-top: var(--ggds-space-1);
+}
+
+.ggds-prose blockquote {
+  margin: 0 0 var(--ggds-space-4);
+  padding-inline-start: var(--ggds-space-4);
+  border-inline-start: 4px solid var(--ggds-color-border-strong);
+  color: var(--ggds-color-text-muted);
+}
+
+.ggds-prose table {
+  width: 100%;
+  margin-bottom: var(--ggds-space-6);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-prose th,
+.ggds-prose td {
+  padding: var(--ggds-space-2) var(--ggds-space-3);
+  border-bottom: 1px solid var(--ggds-color-border-strong);
+  text-align: start;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}

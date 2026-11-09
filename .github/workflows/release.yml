@@ -1,0 +1,56 @@
+# Pushing a tag such as v0.1.0 publishes that version:
+#   1. builds and tests it;
+#   2. publishes @ggds/tokens, themes, css, js and astro to npm, with provenance (skipping any already published);
+#   3. makes a GitHub release with ggds-<version>.zip, SHA256SUMS and integrity.json.
+#
+# The tag must match the version in every package.json. npm authentication: trusted publishing (set it up for
+# each package on npmjs.com, workflow file release.yml), or an NPM_TOKEN secret until that is set up.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write   # create the GitHub release
+  id-token: write   # npm trusted publishing and provenance
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Check the tag matches every package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          for p in tokens themes css js astro; do
+            v=$(node -p "require('./packages/$p/package.json').version")
+            [ "$v" = "$tag" ] || { echo "::error::packages/$p is $v, tag is $tag"; exit 1; }
+          done
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test
+      - run: pnpm run release
+
+      - name: Publish to npm
+        run: pnpm run publish:npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Make the GitHub release
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "release/ggds-${GITHUB_REF_NAME#v}.zip" release/SHA256SUMS release/integrity.json \
+            --title "GGDS ${GITHUB_REF_NAME#v}" --notes "See CHANGELOG.md for what changed. Download ggds-${GITHUB_REF_NAME#v}.zip and copy its ggds folder into your website, or install from npm: npm install @ggds/css" \
+            --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}

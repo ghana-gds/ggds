@@ -1,0 +1,24 @@
+<section class="ggds-hero{% if hub %} ggds-hero--hub{% endif %}{% if art %} ggds-hero--art{% endif %}" aria-labelledby="hero-title">
+  <div class="ggds-hero__inner">
+    <div class="ggds-hero__body">
+      {% if purpose %}<p class="ggds-hero__purpose">{{ purpose }}</p>{% endif %}
+      <h1 class="ggds-hero__title" id="hero-title">{{ title }}</h1>
+      {% if lede %}<p class="ggds-hero__lede">{{ lede }}</p>{% endif %}
+      {% if search_action %}
+      <form class="ggds-hero__search" action="{{ search_action }}" method="get" role="search">
+        <label class="ggds-visually-hidden" for="hero-q">{{ search_label }}</label>
+        <input class="ggds-hero__input" id="hero-q" name="q" type="search" required minlength="2" enterkeyhint="search" autocomplete="off"{% if search_placeholder %} placeholder="{{ search_placeholder }}"{% endif %}>
+        <button class="ggds-hero__button" type="submit">{{ search_icon }}<span class="ggds-hero__button-label">Search</span></button>
+      </form>
+      {% endif %}
+      {% if tasks %}
+      <p class="ggds-hero__tasks-label" id="hero-tasks">{{ tasks_label }}</p>
+      <ul class="ggds-hero__tasks" aria-labelledby="hero-tasks">
+        {% for t in tasks %}<li><a class="ggds-hero__task" href="{{ t.href }}">{{ t.label }}{% if t.tag %} <span class="ggds-hero__task-tag">{{ t.tag }}</span>{% endif %}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+    {% if art %}<div class="ggds-hero__art"{% if art_decorative %} aria-hidden="true"{% endif %}>{{ art }}</div>{% endif %}
+  </div>
+</section>

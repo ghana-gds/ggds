@@ -1,0 +1,46 @@
+---
+/**
+ * GGDS government website banner. Works without JavaScript (<details>), never sticky.
+ * official: this page is served from the official address. host: the official address to name ("" when there is
+ * none the banner may name). register: the list of official government websites to check against.
+ */
+interface Props {
+  official?: boolean | undefined;
+  shortName: string;
+  host: string;
+  addressNote?: string | undefined;
+  register?: { href: string; label: string } | null;
+  class?: string | undefined;
+  [attr: string]: unknown;
+}
+const { official = false, shortName, host, addressNote = '', register = null, class: extra = '', ...rest } = Astro.props;
+---
+<section class:list={['ggds-banner', !official && 'ggds-banner--unofficial', extra]} aria-label="Official government website" {...rest}>
+  <details class="ggds-banner__details ggds-container">
+    <summary class="ggds-banner__summary">
+      <svg class="ggds-banner__flag" viewBox="0 0 30 20" aria-hidden="true" focusable="false"><rect class="ggds-banner__flag-red" width="30" height="6.67"/><rect class="ggds-banner__flag-gold" y="6.67" width="30" height="6.67"/><rect class="ggds-banner__flag-green" y="13.33" width="30" height="6.67"/><polygon class="ggds-banner__flag-star" points="15,6.8 15.73,8.99 18.04,9.01 16.19,10.39 16.88,12.59 15,11.25 13.12,12.59 13.81,10.39 11.96,9.01 14.27,8.99"/></svg>
+      <span class="ggds-banner__text">{official ? 'An official website of the Government of Ghana' : `This copy is not the official ${shortName} website`}</span>
+      {' '}<span class="ggds-banner__toggle">How to tell</span>
+    </summary>
+    <div class="ggds-banner__content">
+      <div class="ggds-banner__item">
+        <p class="ggds-banner__heading">Check the address</p>
+        <p>
+          {!host ? <>The {shortName} has not confirmed its official address yet.</>
+            : official ? <>The official address of this website is <strong>{host}</strong>.</>
+            : <>The official {shortName} website is <strong>{host}</strong>{addressNote}.</>}
+          {' '}Most government websites end in <strong>.gov.gh</strong>, but some official websites do not.
+          {register && <> You can check it on <a href={register.href}>{register.label}</a>.</>}
+        </p>
+      </div>
+      <div class="ggds-banner__item">
+        <p class="ggds-banner__heading">A padlock is not proof</p>
+        <p>A padlock or <strong>https://</strong> before the address means your connection to the website is private. It does not show who runs the website.</p>
+      </div>
+      <div class="ggds-banner__item">
+        <p class="ggds-banner__heading">We will never ask for your PIN</p>
+        <p>Government officials will never ask for your PIN, password or mobile money code, by phone, by SMS or on a website.</p>
+      </div>
+    </div>
+  </details>
+</section>

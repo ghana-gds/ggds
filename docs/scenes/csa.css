@@ -1,0 +1,96 @@
+/* CyberWatch, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c) come from config/agency.ts by data-c: the CSP drops style attributes. The shield is the
+   flag gold of the Authority's seal; red is kept for the attack alone, green for safe. */
+.cyber-watch { --cw-gold: var(--ggds-color-flag-gold, #fcd116); --cw-attack: #ef5350; --cw-safe: #3fa66b; max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .cyber-watch { margin-inline: auto 0; } }
+.cw-art { display: block; width: 100%; height: auto; overflow: hidden; }
+.cw-orbit { fill: none; stroke: white; stroke-opacity: 0.12; stroke-width: 1.2; stroke-dasharray: 2 7; }
+
+.cw-link { fill: none; stroke: white; stroke-opacity: 0.14; stroke-width: 1.5; transition: stroke 0.4s, stroke-opacity 0.4s; }
+.cw-link[data-on] { stroke: var(--cw-gold); stroke-opacity: 0.9; stroke-width: 2.5; stroke-dasharray: 4 6; animation: cw-respond 1.2s linear infinite; }
+@keyframes cw-respond { to { stroke-dashoffset: -20; } }
+
+.cw-gold-stop { stop-color: var(--cw-gold); }
+/* Solid behind the tinted shield, so the lines to the items stop at its edge. */
+.cw-shield-back { fill: var(--ggds-color-institution-deep, #1d1a4f); }
+.cw-shield { fill: url(#cw-shield); stroke: var(--cw-gold); stroke-width: 3; stroke-linejoin: round; }
+.cw-shield-inner { fill: none; stroke: var(--cw-gold); stroke-opacity: 0.45; stroke-width: 1.5; stroke-linejoin: round; }
+.cw-hub-name { fill: white; font-size: 24px; font-weight: 800; letter-spacing: 0.04em; }
+.cw-hub-team { fill: var(--cw-gold); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
+.cw-hub-pulse { fill: none; stroke: var(--cw-gold); stroke-width: 2; opacity: 0; animation: cw-pulse 2.4s ease-out infinite; }
+@keyframes cw-pulse { from { r: 66px; opacity: 0.6; } to { r: 104px; opacity: 0; } }
+
+.cw-item { opacity: 0.55; transition: opacity 0.4s; }
+.cw-item[data-on] { opacity: 1; }
+.cw-tile { fill: rgb(0 0 0 / 0.28); stroke: var(--c); stroke-width: 2.5; }
+.cw-glyph { fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.cw-glyph-warn { stroke: var(--cw-attack); }
+.cw-item[data-kind="provider"] .cw-seal { stroke: var(--cw-gold); }
+.cw-ping { fill: none; stroke: var(--c); stroke-width: 2; opacity: 0; }
+.cw-item[data-on] .cw-ping { animation: cw-ping 2.4s ease-out infinite; }
+@keyframes cw-ping { from { r: 42px; opacity: 0.8; } to { r: 66px; opacity: 0; } }
+
+/* The attack comes in along the line, meets the gold ring and fades; then the item is marked safe. */
+.cw-attack-trail { stroke: var(--cw-attack); stroke-width: 2; stroke-dasharray: 2 5; opacity: 0; }
+.cw-attack { opacity: 0; }
+.cw-attack circle { fill: var(--cw-attack); stroke: white; stroke-width: 1.5; }
+.cw-attack path { stroke: white; stroke-width: 1.8; stroke-linecap: round; }
+.cw-item[data-on] .cw-attack { animation: cw-attack 4.2s ease-in both; }
+.cw-item[data-on] .cw-attack-trail { animation: cw-trail 4.2s ease-in both; }
+@keyframes cw-attack {
+  0% { transform: translateX(120px); opacity: 0; }
+  10% { opacity: 1; }
+  35% { transform: translateX(56px); opacity: 1; }
+  48% { transform: translateX(66px); opacity: 0; }
+  100% { transform: translateX(66px); opacity: 0; }
+}
+@keyframes cw-trail { 0%, 5% { opacity: 0; } 15%, 35% { opacity: 0.8; } 50%, 100% { opacity: 0; } }
+.cw-guard { fill: none; stroke: var(--cw-gold); stroke-width: 3; opacity: 0; }
+.cw-item[data-on] .cw-guard { animation: cw-guard 4.2s ease-out both; }
+.cw-item[data-on][data-kind="provider"] .cw-guard { animation: none; }
+@keyframes cw-guard { 0%, 30% { opacity: 0; } 36% { opacity: 1; } 70%, 100% { opacity: 0.35; } }
+
+.cw-safe { opacity: 0; transition: opacity 0.4s; }
+.cw-item[data-on] .cw-safe { opacity: 1; transition-delay: 1.6s; }
+.cw-safe circle { fill: var(--cw-safe); stroke: white; stroke-width: 2; }
+.cw-item[data-kind="provider"] .cw-safe circle { fill: var(--cw-gold); }
+.cw-item[data-kind="provider"] .cw-safe path { stroke: #1d1a4f; }
+.cw-safe path { fill: none; stroke: white; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+.cw-caption { opacity: 0; transition: opacity 0.4s; }
+.cw-caption[data-on] { opacity: 1; }
+.cw-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.cw-cap-note { fill: white; fill-opacity: 0.85; font-size: 14px; }
+
+.cw-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.85rem; }
+.cw-links, .cw-channels { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.cw-links a, .cw-channels a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.cw-links a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.cw-links a[data-on] { background: color-mix(in srgb, var(--c) 24%, transparent); border-color: var(--c); }
+.cw-links a:hover, .cw-channels a:hover { color: white; background: color-mix(in srgb, var(--c) 34%, transparent); }
+.cw-links a:focus-visible, .cw-channels a:focus-visible, .cw-more:focus-visible, .cw-report-title:focus-visible {
+  outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px;
+}
+.cw-report { display: grid; justify-items: center; gap: 0.5rem; padding-top: 0.75rem; border-top: 1px solid rgb(255 255 255 / 0.15); width: 100%; }
+.cw-report-title { display: inline-flex; align-items: center; min-height: 1.5rem; color: var(--ggds-color-flag-gold, #fcd116); font-weight: 800; font-size: 0.95rem; text-decoration: none; }
+.cw-report-title:hover { text-decoration: underline; color: var(--ggds-color-flag-gold, #fcd116); }
+.cw-channels a svg { color: var(--c); }
+.cw-ch-value { font-weight: 800; }
+.cw-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.cw-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.cw-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+/* Still: the first item shown protected, its attack already stopped. */
+@media (prefers-reduced-motion: reduce) {
+  .cw-link[data-on], .cw-hub-pulse, .cw-item[data-on] .cw-ping { animation: none; }
+  .cw-item[data-on] .cw-attack, .cw-item[data-on] .cw-attack-trail { animation: none; opacity: 0; }
+  .cw-item[data-on] .cw-guard { animation: none; opacity: 0.6; }
+  .cw-item, .cw-caption, .cw-link, .cw-safe, .cw-item[data-on] .cw-safe { transition: none; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-watch] [data-c]{--c:#fff}[data-watch] [data-c="t0"]{--c:#5bb8c6}[data-watch] [data-c="t1"]{--c:#a5a7f0}[data-watch] [data-c="t2"]{--c:#7cc49a}[data-watch] [data-c="t3"]{--c:#d9b93a}[data-watch] [data-c="t4"]{--c:#f8d014}[data-watch] [data-c]{--c:#fff}[data-watch] [data-c="c0"]{--c:#f8d014}[data-watch] [data-c="c1"]{--c:#f8d014}[data-watch] [data-c="c2"]{--c:#f8d014}[data-watch] [data-c="c3"]{--c:#f8d014}[data-watch] [data-c="c4"]{--c:#f8d014}[data-watch] [data-c="c5"]{--c:#f8d014}

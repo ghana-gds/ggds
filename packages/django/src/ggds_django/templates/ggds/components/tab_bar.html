@@ -1,0 +1,6 @@
+<nav class="ggds-tab-bar" aria-label="Quick links">
+  <ul class="ggds-tab-bar__list">
+    {% for t in tabs %}<li><a class="ggds-tab-bar__link" href="{{ t.href }}"{% if t.current %} aria-current="page"{% endif %}>{{ t.icon_svg }}<span>{{ t.label }}</span></a></li>
+    {% endfor %}
+  </ul>
+</nav>

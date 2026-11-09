@@ -1,0 +1,50 @@
+{
+  "name": "@ggds/themes",
+  "version": "0.1.0",
+  "description": "GGDS institution themes: MoCDTI by default, and each MoCDTI agency as a theme. Identity colours only.",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "themes",
+    "css"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/themes"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "themes.json",
+    "index.mjs",
+    "dist"
+  ],
+  "exports": {
+    ".": "./index.mjs",
+    "./themes.json": "./dist/themes.json",
+    "./themes.css": "./dist/themes.css",
+    "./*.css": "./dist/*.css",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@ggds/tokens": "workspace:^"
+  },
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

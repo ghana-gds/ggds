@@ -1,0 +1,17 @@
+/* Tag: a short status label ("Approved", "In force", "Closed"). The text carries the meaning; colour supports it. */
+.ggds-tag {
+  display: inline-block;
+  padding: 0.125rem var(--ggds-space-2);
+  border: 1px solid currentColor;
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-status-neutral-subtle);
+  color: var(--ggds-color-status-neutral-strong);
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+  line-height: var(--ggds-line-height-body);
+}
+
+.ggds-tag--info { background: var(--ggds-color-status-info-subtle); color: var(--ggds-color-status-info-strong); }
+.ggds-tag--success { background: var(--ggds-color-status-success-subtle); color: var(--ggds-color-status-success-strong); }
+.ggds-tag--warning { background: var(--ggds-color-status-warning-subtle); color: var(--ggds-color-status-warning-strong); }
+.ggds-tag--danger { background: var(--ggds-color-status-danger-subtle); color: var(--ggds-color-status-danger-strong); }

@@ -1,0 +1,20 @@
+/* Skip link: the first focusable element on every page (NITA S&A 6.4.20 "Skip Navigation", WCAG 2.4.1). */
+.ggds-skip-link {
+  position: absolute;
+  inset-inline-start: var(--ggds-space-2);
+  inset-block-start: var(--ggds-space-2);
+  z-index: var(--ggds-layer-toast);
+  padding: var(--ggds-space-3) var(--ggds-space-4);
+  background: var(--ggds-color-focus-ring);
+  color: var(--ggds-color-focus-halo);
+  font-weight: var(--ggds-font-weight-bold);
+  transform: translateY(-200%);
+}
+
+.ggds-skip-link:visited {
+  color: var(--ggds-color-focus-halo);
+}
+
+.ggds-skip-link:focus {
+  transform: none;
+}

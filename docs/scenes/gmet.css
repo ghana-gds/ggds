@@ -1,0 +1,119 @@
+/* WeatherMap, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c, and --warning, --forecast… on the figure) come from config/agency.ts by data-c, and delays
+   from data-k and data-j (styles/global.css): the CSP drops style attributes. */
+.weather-map { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .weather-map { margin-inline: auto 0; } }
+.wm-art { display: block; width: 100%; height: auto; overflow: visible; }
+
+.wm-map path { fill: rgb(255 255 255 / 0.1); stroke: white; stroke-opacity: 0.4; stroke-width: 1.4; stroke-linejoin: round; transition: fill 0.5s; }
+[data-kind='warning'] .wm-map path { fill: color-mix(in srgb, var(--warning) 30%, transparent); animation: wm-alarm 1.6s ease-in-out infinite; }
+[data-kind='forecast'] .wm-map path { fill: color-mix(in srgb, var(--forecast) 22%, transparent); }
+[data-kind='seasonal'] .wm-map path { fill: color-mix(in srgb, var(--seasonal) 32%, transparent); }
+@keyframes wm-alarm { 50% { fill: color-mix(in srgb, var(--warning) 12%, transparent); } }
+
+.wm-sea path { fill: none; stroke: white; stroke-opacity: 0.3; stroke-width: 2; stroke-linecap: round; transition: stroke 0.4s, stroke-opacity 0.4s; }
+[data-kind='marine'] .wm-sea path { stroke: var(--c); stroke-opacity: 1; stroke-width: 3; animation: wm-swell 2.4s ease-in-out infinite; animation-delay: calc(var(--k) * -0.6s); }
+@keyframes wm-swell { 50% { transform: translate(-6px, 3px); } }
+
+/* Only the lit service's drawing shows. */
+.wm-kind { opacity: 0; transition: opacity 0.4s; }
+[data-kind='warning'] .wm-warning, [data-kind='forecast'] .wm-forecast, [data-kind='marine'] .wm-marine,
+[data-kind='seasonal'] .wm-seasonal, [data-kind='stations'] .wm-stations { opacity: 1; }
+
+.wm-cloud { stroke: white; stroke-width: 2.5; stroke-linejoin: round; }
+.wm-storm-cloud { fill: color-mix(in srgb, var(--c) 55%, #1a1a2e); }
+.wm-rain-cloud { fill: color-mix(in srgb, var(--c) 45%, #1a1a2e); }
+.wm-bolt { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-width: 1.5; stroke-linejoin: round; }
+[data-kind='warning'] .wm-bolt { animation: wm-flash 1.6s steps(1) infinite; }
+@keyframes wm-flash { 0%, 30%, 45% { opacity: 1; } 20%, 38%, 60%, 100% { opacity: 0.15; } }
+.wm-streaks path, .wm-drops path { stroke: white; stroke-width: 2.5; stroke-linecap: round; }
+.wm-drops path { stroke-width: 3; }
+[data-kind='warning'] .wm-streaks path { animation: wm-fall 0.9s linear infinite; animation-delay: calc(var(--k) * 0.17s); }
+[data-kind='seasonal'] .wm-drops path { animation: wm-fall 0.9s linear infinite; animation-delay: calc(var(--k) * 0.3s + var(--j) * 0.15s); }
+@keyframes wm-fall { from { transform: translateY(-8px); opacity: 0; } 30% { opacity: 1; } to { transform: translateY(26px); opacity: 0; } }
+.wm-sign path:first-child { fill: var(--c); stroke: white; stroke-width: 4; stroke-linejoin: round; }
+.wm-sign-mark { fill: none; stroke: white; stroke-width: 9; stroke-linecap: round; }
+[data-kind='warning'] .wm-sign { animation: wm-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; }
+
+.wm-arc { fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-opacity: 0.7; stroke-width: 2; stroke-dasharray: 4 7; }
+.wm-disc { fill: var(--ggds-color-flag-gold, #fcd116); stroke: white; stroke-width: 2; }
+.wm-rays, .wm-horizon { fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 3.5; stroke-linecap: round; }
+.wm-horizon { stroke: white; stroke-width: 3; }
+.wm-moon { fill: white; stroke: var(--c); stroke-width: 2; }
+.wm-star { fill: var(--ggds-color-flag-gold, #fcd116); }
+.wm-phase { opacity: 0.35; }
+[data-kind='forecast'] .wm-phase { animation: wm-phase 3.6s ease-in-out infinite; animation-delay: calc(var(--k) * 1.2s); }
+@keyframes wm-phase { 0%, 100% { opacity: 0.35; } 12%, 30% { opacity: 1; } 42% { opacity: 0.35; } }
+
+.wm-wind path { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 60 40; }
+[data-kind='marine'] .wm-wind path { animation: wm-blow 1.4s linear infinite; animation-delay: calc(var(--k) * -0.7s); }
+@keyframes wm-blow { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+.wm-hull { fill: var(--c); stroke: white; stroke-width: 2; stroke-linejoin: round; }
+.wm-mast { stroke: white; stroke-width: 2.5; }
+.wm-sail { fill: white; }
+.wm-sail-b { fill-opacity: 0.75; }
+[data-kind='marine'] .wm-boat { animation: wm-bob 2.4s ease-in-out infinite; }
+@keyframes wm-bob { 50% { transform: translateY(4px) rotate(-4deg); } }
+
+.wm-sprout path { fill: var(--c); stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+[data-kind='seasonal'] .wm-sprout { animation: wm-grow 0.8s cubic-bezier(0.3, 1.4, 0.6, 1) both; animation-delay: calc(0.5s + var(--k) * 0.35s); }
+@keyframes wm-grow { from { transform: scale(0); } to { transform: scale(1); } }
+.wm-card { fill: white; stroke: var(--c); stroke-width: 3; }
+.wm-card-top { fill: var(--c); }
+.wm-rings { stroke: white; stroke-width: 5; stroke-linecap: round; }
+.wm-cell { fill: rgb(0 0 0 / 0.12); }
+.wm-cell-on { fill: var(--c); }
+[data-kind='seasonal'] .wm-cell-on { animation: wm-in 0.3s ease-out both; animation-delay: calc(0.2s + var(--k) * 0.15s); }
+@keyframes wm-in { from { opacity: 0; } to { opacity: 1; } }
+
+.wm-bar { fill: var(--c); }
+.wm-axis { stroke: rgb(0 0 0 / 0.35); stroke-width: 2.5; stroke-linecap: round; }
+[data-kind='stations'] .wm-bar { animation: wm-rise 0.6s ease-out both; animation-delay: calc(0.2s + var(--k) * 0.2s); }
+@keyframes wm-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.wm-feed { fill: none; stroke: var(--c); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 10 22; }
+[data-kind='stations'] .wm-feed { animation: wm-feed 1.2s linear infinite; }
+@keyframes wm-feed { from { stroke-dashoffset: 0; } to { stroke-dashoffset: 32; } }
+@keyframes wm-pop { from { transform: scale(0); } to { transform: scale(1); } }
+.wm-sign, .wm-sprout, .wm-boat, .wm-spin { transform-box: fill-box; transform-origin: center; }
+.wm-sprout { transform-origin: bottom center; }
+.wm-bar { transform-box: fill-box; transform-origin: bottom; }
+
+.wm-station path, .wm-station circle, .wm-screen { fill: none; stroke: white; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.wm-station .wm-ground { stroke-opacity: 0.5; }
+.wm-screen { fill: rgb(0 0 0 / 0.25); }
+.wm-louvre { stroke-opacity: 0.6; stroke-width: 1.5 !important; }
+.wm-vane path, .wm-station .wm-vane { fill: white; }
+.wm-spin circle { fill: white; }
+.wm-spin { animation: wm-spin 3s linear infinite; transform-origin: 0 0; transform-box: view-box; }
+[data-kind='stations'] .wm-spin { animation-duration: 1s; }
+@keyframes wm-spin { to { transform: rotate(360deg); } }
+.wm-signal path { stroke: var(--ggds-color-flag-gold, #fcd116) !important; opacity: 0; }
+[data-kind='stations'] .wm-signal path { animation: wm-in 0.8s ease-in-out infinite alternate; }
+
+.wm-caption { opacity: 0; transition: opacity 0.4s; }
+.wm-caption[data-on] { opacity: 1; }
+.wm-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.wm-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.wm-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.wm-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.wm-links a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.wm-links a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.wm-links a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.wm-links a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.wm-links a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.wm-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.wm-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.wm-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .weather-map * { animation: none !important; transition: none !important; }
+  .wm-phase { opacity: 1; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-weather-map] [data-c]{--c:#fff}[data-weather-map] [data-c="0"]{--c:#c62828}[data-weather-map]{--warning:#c62828}[data-weather-map] [data-c="warning"]{--c:#c62828}[data-weather-map] [data-c="1"]{--c:#b45309}[data-weather-map]{--forecast:#b45309}[data-weather-map] [data-c="forecast"]{--c:#b45309}[data-weather-map] [data-c="2"]{--c:#0e7c86}[data-weather-map]{--marine:#0e7c86}[data-weather-map] [data-c="marine"]{--c:#0e7c86}[data-weather-map] [data-c="3"]{--c:#2e7d32}[data-weather-map]{--seasonal:#2e7d32}[data-weather-map] [data-c="seasonal"]{--c:#2e7d32}[data-weather-map] [data-c="4"]{--c:#7b4fa8}[data-weather-map]{--stations:#7b4fa8}[data-weather-map] [data-c="stations"]{--c:#7b4fa8}

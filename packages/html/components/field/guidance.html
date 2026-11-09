@@ -1,0 +1,14 @@
+<!-- name: Text input, textarea, select and file upload; status: beta; order: 20; group: Forms; related: choices, error-summary, button; summary: A single form question with a label, an optional hint and an error message. -->
+<p class="ggds-lead">A single form question with a label, an optional hint and an error message.</p>
+<h2>When to use</h2>
+<ul><li>To ask one question with a typed or chosen answer.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For a choice from a short list. Use <a href="choices.html">radios or checkboxes</a>.</li></ul>
+<h2>How to use</h2>
+<ul><li>Every field has a visible label.</li><li>Put extra help in a hint under the label, and connect it with <code>aria-describedby</code>.</li><li>On error: add <code>ggds-field--error</code>, an error message starting with a hidden "Error:", and <code>aria-invalid="true"</code> on the input. Also list it in the error summary.</li><li>Use <code>autocomplete</code> for personal details such as name, phone and email.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Say how to fix an error: "Enter your phone number".</li><li>Size the input to the answer: short for a code, long for a name.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use placeholder text instead of a label.</li><li>Write "Invalid input".</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<ul><li>Text is at least 16px, so phones do not zoom in.</li></ul>

@@ -1,0 +1,54 @@
+/* Disclosure (single expandable section) and accordion (a stack of them), built on <details>/<summary>:
+   keyboard and screen-reader support come from the browser, and it works without JavaScript. */
+.ggds-disclosure {
+  border-bottom: 1px solid var(--ggds-color-border-strong);
+}
+
+.ggds-accordion > .ggds-disclosure:first-child {
+  border-top: 1px solid var(--ggds-color-border-strong);
+}
+
+.ggds-disclosure__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ggds-space-4);
+  min-height: var(--ggds-size-target);
+  padding-block: var(--ggds-space-3);
+  color: var(--ggds-color-link);
+  font-weight: var(--ggds-font-weight-bold);
+  cursor: pointer;
+  list-style: none;
+}
+
+.ggds-disclosure__summary::-webkit-details-marker {
+  display: none;
+}
+
+.ggds-disclosure__summary::after {
+  content: "";
+  flex: none;
+  width: 0.6em;
+  height: 0.6em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+  transition: transform var(--ggds-motion-duration-fast) var(--ggds-motion-easing-standard);
+}
+
+.ggds-disclosure[open] > .ggds-disclosure__summary::after {
+  transform: translateY(25%) rotate(-135deg);
+}
+
+.ggds-disclosure__summary:hover {
+  color: var(--ggds-color-link-hover);
+  text-decoration: underline;
+}
+
+.ggds-disclosure__content {
+  padding-bottom: var(--ggds-space-4);
+}
+
+.ggds-disclosure__content > :last-child {
+  margin-bottom: 0;
+}

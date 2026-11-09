@@ -1,0 +1,23 @@
+{% load ggds %}<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }} | Example Agency (Django example)</title>
+  <meta name="robots" content="noindex, nofollow">
+  {% ggds_assets theme="nca" %}
+</head>
+<body>
+{% ggds_skip_link %}
+{% ggds_banner short_name="Example Agency" host="example.gov.gh" register_href="../register.html" %}
+{% ggds_header name="Example Agency" nav=nav search_url="search.html" home="index.html" %}
+<main id="main" tabindex="-1">
+{% block hero %}{% endblock %}
+<div class="ggds-container ggds-main">
+{% block content %}{% endblock %}
+</div>
+</main>
+{% ggds_footer name="Example Agency" purpose="An example site rendered by Django with ggds-django." sections=sections links=bar contact_url="form.html" %}
+{% ggds_tab_bar tabs %}
+</body>
+</html>

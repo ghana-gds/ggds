@@ -1,0 +1,52 @@
+/* Notices: information, success, warning and danger. Always start with a visible or visually hidden text
+   label ("Warning:") so meaning never depends on colour alone (WCAG 1.4.1). */
+.ggds-notice {
+  margin-bottom: var(--ggds-space-6);
+  padding: var(--ggds-space-4);
+  border-inline-start: 6px solid var(--ggds-color-status-info-strong);
+  background: var(--ggds-color-status-info-subtle);
+  color: var(--ggds-color-text);
+}
+
+.ggds-notice__title {
+  margin: 0 0 var(--ggds-space-1);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-notice > :last-child {
+  margin-bottom: 0;
+}
+
+.ggds-notice--success {
+  border-color: var(--ggds-color-status-success-strong);
+  background: var(--ggds-color-status-success-subtle);
+}
+
+.ggds-notice--warning {
+  border-color: var(--ggds-color-status-warning-strong);
+  background: var(--ggds-color-status-warning-subtle);
+}
+
+.ggds-notice--danger {
+  border-color: var(--ggds-color-status-danger-strong);
+  background: var(--ggds-color-status-danger-subtle);
+}
+
+/* Site-wide urgent notice under the header (e.g. an emergency). */
+.ggds-notice--urgent {
+  margin: 0;
+  border: 0;
+  background: var(--ggds-color-status-danger-strong);
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-notice--urgent a,
+.ggds-notice--urgent a:visited {
+  color: var(--ggds-color-text-inverse);
+}
+
+@media (forced-colors: active) {
+  .ggds-notice {
+    border: 2px solid CanvasText;
+  }
+}

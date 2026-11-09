@@ -1,0 +1,14 @@
+<!-- name: Header and main navigation; status: beta; order: 2; group: Page structure; related: banner, tab-bar, footer; summary: Your institution's logo and name, the main sections and search, at the top of every page. -->
+<p class="ggds-lead">Your institution's logo and name, the main sections and search, at the top of every page.</p>
+<h2>When to use</h2>
+<ul><li>On every page, straight after the banner.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For links within one section. Use <a href="tab-links.html">tab links</a> or a list on the page instead.</li></ul>
+<h2>How to use</h2>
+<ul><li>Use your approved logo. Until you have one, use your initials in the round badge (<code>ggds-header__monogram</code>).</li><li>If your name is longer than 45 characters, add <code>ggds-header__name--long</code>. It sets the name smaller on phones.</li><li>Mark the section the visitor is in with <code>aria-current="page"</code>.</li><li>Point Search at your website's search page.</li><li>Below 1280px wide, the sections move behind a menu button. The menu pushes the page down instead of covering it. Without JavaScript the sections show as a list under the name.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Keep to six sections or fewer, with short names.</li><li>Name sections after what people do: "Services", "Complaints".</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Name sections after departments people do not know.</li><li>Add a second row of links to the header.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<ul><li>The menu never covers the page, so keyboard users never land on content they cannot see. Escape closes it.</li><li>The header stays at the top as people scroll; the page leaves room so focused links are never hidden under it.</li></ul>

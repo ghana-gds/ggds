@@ -1,0 +1,34 @@
+<footer class="ggds-footer">
+  <div class="ggds-container ggds-footer__main">
+    <div>
+      <p class="ggds-footer__identity">{% if logo_url %}<img class="ggds-footer__logo" src="{{ logo_url }}" alt="{{ logo_alt }}" width="48" height="48">{% elif initials %}<span class="ggds-header__monogram" aria-hidden="true">{{ initials }}</span>{% endif %}<span>{{ name }}</span></p>
+      {% if purpose %}<p class="ggds-footer__purpose">{{ purpose }}</p>{% endif %}
+      {% if has_contact %}
+      <address class="ggds-footer__contact">
+        {% if address %}<span>{{ address }}</span>{% endif %}
+        {% if email %}<a href="mailto:{{ email }}">{{ email }}</a>{% endif %}
+        {% if phone %}<span>General enquiries: {{ phone }}</span>{% endif %}
+      </address>
+      {% endif %}
+      {% if contact_url %}<p class="ggds-footer__more"><a href="{{ contact_url }}">All contact details and offices</a></p>{% endif %}
+    </div>
+    <div class="ggds-footer__sections">
+      {% for s in sections %}
+      <nav class="ggds-footer__section" aria-label="{{ s.label }}">
+        <p class="ggds-footer__heading"><a href="{{ s.href }}">{{ s.label }}</a></p>
+        <ul class="ggds-footer__list">
+          {% for l in s.links %}<li><a href="{{ l.href }}">{{ l.label }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="ggds-footer__bottom">
+    <ul class="ggds-container ggds-footer__bar">
+      <li>© {{ year }} {{ name }}</li>
+      {% for l in links %}<li><a href="{{ l.href }}">{{ l.label }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</footer>

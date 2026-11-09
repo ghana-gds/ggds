@@ -1,0 +1,68 @@
+/*
+ * Tab bar: phone-only quick links fixed to the bottom of the screen, within reach of a thumb (the MoCDTI
+ * platform's TabBar.astro). Home and Search, with up to three of the site's main sections between them. Hidden
+ * from 48rem, where the header shows the navigation. It repeats links that are also in the header, so it is a
+ * separate <nav> with its own label.
+ */
+.ggds-tab-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: var(--ggds-layer-sticky);
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--ggds-color-border-subtle);
+  background: color-mix(in srgb, var(--ggds-color-surface) 96%, transparent);
+}
+
+.ggds-tab-bar__list {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-tab-bar__link,
+.ggds-tab-bar__link:visited {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  min-height: 56px;
+  color: var(--ggds-color-text-muted);
+  font-size: 0.7rem;
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+}
+
+.ggds-tab-bar__link:hover {
+  color: var(--ggds-color-link-hover);
+}
+
+.ggds-tab-bar__link[aria-current] {
+  color: var(--ggds-color-link);
+}
+
+.ggds-tab-bar__icon {
+  width: 22px;
+  height: 22px;
+}
+
+@media (min-width: 48rem) {
+  .ggds-tab-bar {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ggds-tab-bar__link[aria-current] {
+    text-decoration: underline;
+  }
+}
+
+@media print {
+  .ggds-tab-bar {
+    display: none;
+  }
+}

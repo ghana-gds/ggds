@@ -1,0 +1,19 @@
+node_modules/
+dist/
+site/
+test-results/
+playwright-report/
+.DS_Store
+
+# Copied into each package when it is packed (scripts/package-files.mjs)
+packages/*/LICENSE
+packages/*/LICENSE.md
+
+# Release files (scripts/release.mjs)
+release/
+
+# ggds-django: its Python environment, and the files build.mjs copies in (pnpm run build)
+packages/django/.venv/
+packages/django/src/ggds_django/static/
+packages/django/src/ggds_django/icons.json
+__pycache__/

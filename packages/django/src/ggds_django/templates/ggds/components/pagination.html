@@ -1,0 +1,8 @@
+{% if show %}<nav class="ggds-pagination" aria-label="{{ label }}">
+  <ul class="ggds-pagination__list">
+    {% if previous %}<li><a class="ggds-pagination__link" href="{{ previous }}" rel="prev">Previous<span class="ggds-visually-hidden"> page</span></a></li>{% endif %}
+    {% for p in pages %}{% if p.gap %}<li class="ggds-pagination__ellipsis" aria-hidden="true">…</li>{% else %}<li><a class="ggds-pagination__link" href="{{ p.href }}" aria-label="Page {{ p.number }}"{% if p.current %} aria-current="page"{% endif %}>{{ p.number }}</a></li>{% endif %}
+    {% endfor %}
+    {% if next %}<li><a class="ggds-pagination__link" href="{{ next }}" rel="next">Next<span class="ggds-visually-hidden"> page</span></a></li>{% endif %}
+  </ul>
+</nav>{% endif %}

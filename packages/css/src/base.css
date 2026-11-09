@@ -1,0 +1,159 @@
+/* Base: element defaults, focus, links, layout helpers. Uses only --ggds-* tokens. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: 6rem; /* links and focused elements scroll clear of the sticky header (WCAG 2.4.11) */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--ggds-font-family-sans);
+  font-size: var(--ggds-font-size-base);
+  line-height: var(--ggds-line-height-body);
+  color: var(--ggds-color-text);
+  background: var(--ggds-color-surface);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0 0 var(--ggds-space-4);
+  line-height: var(--ggds-line-height-tight);
+  font-weight: var(--ggds-font-weight-bold);
+  color: var(--ggds-color-text);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--ggds-font-size-3xl); }
+h2 { font-size: var(--ggds-font-size-2xl); }
+h3 { font-size: var(--ggds-font-size-lg); }
+h4 { font-size: var(--ggds-font-size-base); }
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+p {
+  margin: 0 0 var(--ggds-space-4);
+}
+
+a {
+  color: var(--ggds-color-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:visited {
+  color: var(--ggds-color-link-visited);
+}
+
+a:hover {
+  color: var(--ggds-color-link-hover);
+  text-decoration-thickness: 2px;
+}
+
+/* One focus style everywhere: a gold ring with a dark band inside it, visible on light and dark surfaces. */
+:focus-visible {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ggds-color-focus-halo);
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+code {
+  font-family: var(--ggds-font-family-mono);
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/* Hidden visually, still read by screen readers. */
+.ggds-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.ggds-container {
+  width: 100%;
+  max-width: var(--ggds-size-content-max);
+  margin-inline: auto;
+  /* Clear of a phone's notch or rounded corners in landscape. */
+  padding-inline: max(var(--ggds-size-gutter), env(safe-area-inset-left)) max(var(--ggds-size-gutter), env(safe-area-inset-right));
+}
+
+.ggds-main {
+  display: block;
+  padding-block: var(--ggds-space-8) var(--ggds-space-12);
+}
+
+.ggds-main:focus {
+  outline: none;
+}
+
+.ggds-measure {
+  max-width: var(--ggds-measure);
+}
+
+.ggds-lead {
+  font-size: var(--ggds-font-size-lg);
+  color: var(--ggds-color-text-muted);
+}
+
+@media print {
+  .ggds-no-print {
+    display: none !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+  }
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

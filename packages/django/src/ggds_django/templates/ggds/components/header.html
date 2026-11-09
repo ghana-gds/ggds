@@ -1,0 +1,20 @@
+<header class="ggds-header">
+  <div class="ggds-container ggds-header__inner">
+    <a class="ggds-header__identity" href="{{ home }}">
+      {% if logo_url %}<img class="ggds-header__logo" src="{{ logo_url }}" alt="{{ logo_alt }}" width="44" height="44">{% else %}<span class="ggds-header__monogram" aria-hidden="true">{{ initials }}</span>{% endif %}
+      <span class="ggds-header__text">
+        <span class="ggds-header__name{% if long %} ggds-header__name--long{% endif %}">{{ name }}</span>
+        {% if country %}<span class="ggds-header__country">{{ country }}</span>{% endif %}
+        <span class="ggds-visually-hidden"> – home</span>
+      </span>
+    </a>
+    <nav class="ggds-header__nav" id="{{ nav_id }}" aria-label="Main">
+      <ul class="ggds-header__list">
+        {% for item in items %}<li><a class="ggds-header__link" href="{{ item.href }}"{% if item.current %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% if search_url %}<a class="ggds-header__search" href="{{ search_url }}">{{ search_icon }}<span class="ggds-header__search-label">Search</span></a>{% endif %}
+    <button type="button" class="ggds-header__menu-button" aria-controls="{{ nav_id }}" aria-expanded="false" hidden>{{ menu_icons }}<span class="ggds-visually-hidden">Menu</span></button>
+  </div>
+</header>

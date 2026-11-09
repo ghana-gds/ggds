@@ -1,0 +1,58 @@
+/* ParcelRoutes, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c) come from config/agency.ts by data-c: the CSP drops style attributes. */
+.parcel-routes { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .parcel-routes { margin-inline: auto 0; } }
+.pr-art { display: block; width: 100%; height: auto; overflow: visible; }
+.pr-map path { fill: rgb(255 255 255 / 0.07); stroke: rgb(255 255 255 / 0.28); stroke-width: 1.2; stroke-linejoin: round; }
+
+.pr-lens-leader { fill: none; stroke: white; stroke-opacity: 0.5; stroke-width: 1.5; stroke-dasharray: 3 4; }
+.pr-lens-spot { fill: none; stroke: white; stroke-opacity: 0.6; stroke-width: 1.5; }
+.pr-lens-bg { fill: rgb(0 0 0 / 0.25); }
+.pr-lens-rim { fill: none; stroke: white; stroke-opacity: 0.7; stroke-width: 3; }
+.pr-lens-label { fill: white; fill-opacity: 0.8; font-size: 13px; font-weight: 700; }
+
+.pr-route { opacity: 0.35; transition: opacity 0.4s; }
+.pr-route[data-on] { opacity: 1; }
+.pr-path { fill: none; stroke: var(--c); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.pr-route[data-kind='air'] .pr-path { stroke-dasharray: 2 7; stroke-width: 3.5; }
+.pr-route[data-kind='bike'] .pr-path { stroke-width: 4; }
+.pr-flow { fill: none; stroke: white; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 3 97; opacity: 0; }
+.pr-route[data-on] .pr-flow { opacity: 0.9; animation: pr-flow 2.2s linear infinite; }
+@keyframes pr-flow { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+.pr-stop { fill: white; stroke: var(--c); stroke-width: 2; }
+
+.pr-place circle { fill: white; stroke: rgb(0 0 0 / 0.35); stroke-width: 2; }
+.pr-place text { fill: white; font-size: 14px; font-weight: 700; paint-order: stroke; stroke: rgb(0 0 0 / 0.45); stroke-width: 3px; stroke-linejoin: round; }
+.pr-place text[data-abroad] { font-weight: 600; fill-opacity: 0.85; font-style: italic; }
+
+.pr-parcel rect { fill: var(--ggds-color-flag-gold, #fcd116); stroke: rgb(0 0 0 / 0.5); stroke-width: 1.5; }
+.pr-parcel path { fill: none; stroke: rgb(0 0 0 / 0.5); stroke-width: 1.5; }
+.pr-parcel-halo { fill: rgb(252 209 22 / 0.25); stroke: var(--ggds-color-flag-gold, #fcd116); stroke-opacity: 0.7; }
+
+.pr-caption { opacity: 0; transition: opacity 0.4s; }
+.pr-caption[data-on] { opacity: 1; }
+.pr-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.pr-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.pr-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.pr-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.pr-links a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.pr-links a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.pr-links a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.pr-links a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.pr-links a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.pr-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.pr-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.pr-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-route, .pr-caption { transition: none; }
+  .pr-route[data-on] .pr-flow { animation: none; opacity: 0; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-routes] [data-c]{--c:#fff}[data-routes] [data-c="0"]{--c:#5ab8e0}[data-routes]{--air:#5ab8e0}[data-routes] [data-c="air"]{--c:#5ab8e0}[data-routes] [data-c="1"]{--c:#f0a830}[data-routes]{--road:#f0a830}[data-routes] [data-c="road"]{--c:#f0a830}[data-routes] [data-c="2"]{--c:#4cc27a}[data-routes]{--bike:#4cc27a}[data-routes] [data-c="bike"]{--c:#4cc27a}

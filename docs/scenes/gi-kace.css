@@ -1,0 +1,94 @@
+/* SkillsPath, copied from the MoCDTI platform by scripts/sync-scenes.mjs. Do not edit. */
+/* Colours (--c, and --course, --programme… on the figure) come from config/agency.ts by data-c, and delays
+   from data-k and data-j (styles/global.css): the CSP drops style attributes. The screen's frame takes the lit
+   item's colour. */
+[data-kind='course'] { --lit: var(--course); } [data-kind='certify'] { --lit: var(--certify); }
+[data-kind='programme'] { --lit: var(--programme); } [data-kind='test'] { --lit: var(--test); }
+[data-kind='research'] { --lit: var(--research); }
+.skills-path { max-width: 34rem; margin-inline: auto; }
+@media (min-width: 64rem) { .skills-path { margin-inline: auto 0; } }
+.sp-art { display: block; width: 100%; height: auto; overflow: visible; }
+
+.sp-screen { fill: rgb(0 0 0 / 0.3); stroke: var(--lit); stroke-width: 3; transition: stroke 0.4s; }
+.sp-pane { fill: rgb(255 255 255 / 0.06); stroke: white; stroke-opacity: 0.25; }
+.sp-led { fill: var(--ggds-color-flag-gold, #fcd116); }
+
+/* Only the lit item's drawing shows. */
+.sp-show { opacity: 0; transition: opacity 0.4s; }
+[data-kind='course'] .sp-course, [data-kind='certify'] .sp-certify, [data-kind='programme'] .sp-programme,
+[data-kind='test'] .sp-test, [data-kind='research'] .sp-research { opacity: 1; }
+@keyframes sp-draw { from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
+@keyframes sp-pop { from { transform: scale(0); } to { transform: scale(1); } }
+.sp-cap, .sp-badge, .sp-fill, .sp-mini { transform-box: fill-box; transform-origin: center; }
+
+.sp-sign { fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.sp-code { fill: none; stroke: var(--c); stroke-width: 9; stroke-linecap: round; stroke-dasharray: 10; }
+.sp-code.sp-alt { stroke: white; stroke-opacity: 0.8; }
+[data-kind='course'] .sp-code { animation: sp-draw 0.5s ease-out both; animation-delay: calc(var(--k) * 0.35s); }
+
+.sp-paper { fill: white; stroke: var(--c); stroke-width: 4; }
+.sp-head { stroke: var(--c); stroke-width: 9; stroke-linecap: round; }
+.sp-line { stroke: rgb(0 0 0 / 0.25); stroke-width: 6; stroke-linecap: round; }
+.sp-seal, .sp-ribbon { fill: var(--c); stroke: white; stroke-width: 2; stroke-linejoin: round; }
+.sp-tick, .sp-check { fill: none; stroke: white; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10; }
+[data-kind='certify'] .sp-tick { animation: sp-draw 0.5s ease-out 0.6s both; }
+
+.sp-mini { fill: var(--c); stroke: white; stroke-width: 1.5; }
+[data-kind='programme'] .sp-mini { animation: sp-light 0.4s ease-out both; animation-delay: calc(var(--k) * 0.12s + var(--j) * 0.3s); }
+@keyframes sp-light { from { opacity: 0.2; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+
+.sp-window { fill: white; stroke: var(--c); stroke-width: 4; }
+.sp-test .sp-window + .sp-bar { stroke: var(--c); stroke-width: 3; }
+.sp-dot { fill: var(--c); }
+.sp-box { fill: var(--c); }
+.sp-check { stroke-width: 3.5; }
+[data-kind='test'] .sp-check { animation: sp-draw 0.4s ease-out both; animation-delay: calc(0.2s + var(--k) * 0.45s); }
+.sp-bug path, .sp-bug ellipse, .sp-bug circle { fill: none; stroke: rgb(0 0 0 / 0.55); stroke-width: 3; stroke-linecap: round; }
+.sp-bug .sp-strike { stroke: var(--c); stroke-width: 6; stroke-dasharray: 10; }
+[data-kind='test'] .sp-strike { animation: sp-draw 0.4s ease-out 1.6s both; }
+
+.sp-bulb { fill: var(--c); stroke: white; stroke-width: 3; stroke-linejoin: round; }
+.sp-halo { fill: var(--c); opacity: 0.2; }
+.sp-base, .sp-axis { fill: none; stroke: white; stroke-width: 4; stroke-linecap: round; stroke-opacity: 0.8; }
+.sp-rays { fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 4; stroke-linecap: round; }
+.sp-rise { fill: none; stroke: var(--c); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10; }
+[data-kind='research'] .sp-halo { animation: sp-glow 1.6s ease-in-out infinite alternate; }
+[data-kind='research'] .sp-rise { animation: sp-draw 1.2s ease-out 0.5s both; }
+@keyframes sp-glow { to { opacity: 0.5; } }
+
+.sp-learner > circle, .sp-learner > path { fill: rgb(255 255 255 / 0.16); stroke: white; stroke-opacity: 0.7; stroke-width: 2; }
+.sp-fill circle, .sp-fill path { fill: none; stroke: white; stroke-opacity: 0.35; stroke-width: 2; stroke-dasharray: 4 5; transition: fill 0.4s, stroke 0.4s; }
+[data-kind='programme'] .sp-fill { animation: sp-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(0.3s + var(--k) * 0.25s); }
+[data-kind='programme'] .sp-fill :is(circle, path) { fill: var(--programme); stroke: white; stroke-opacity: 0.8; stroke-dasharray: none; }
+.sp-cap path { fill: var(--c); stroke: white; stroke-width: 1.6; stroke-linejoin: round; }
+.sp-cap .sp-tassel { fill: none; stroke: var(--ggds-color-flag-gold, #fcd116); stroke-width: 2.4; stroke-linecap: round; }
+.sp-badge circle { fill: var(--c); stroke: white; stroke-width: 1.6; }
+.sp-badge path { fill: none; stroke: white; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+[data-kind='course'] .sp-cap, [data-kind='certify'] .sp-badge { animation: sp-pop 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) both; animation-delay: calc(0.4s + var(--k) * 0.3s); }
+
+.sp-caption { opacity: 0; transition: opacity 0.4s; }
+.sp-caption[data-on] { opacity: 1; }
+.sp-cap-label { fill: white; font-size: 22px; font-weight: 800; }
+.sp-cap-note { fill: white; fill-opacity: 0.75; font-size: 13px; }
+
+.sp-caption-html { margin-top: 0.5rem; display: grid; justify-items: center; gap: 0.75rem; }
+.sp-links-html { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.sp-links-html a {
+  display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.25rem; padding: 0 0.85rem; border-radius: 999px;
+  color: white; text-decoration: none; font-size: 0.875rem; font-weight: 600;
+  background: rgb(255 255 255 / 0.08); border: 1px solid rgb(255 255 255 / 0.22); transition: background 0.3s, border-color 0.3s;
+}
+.sp-links-html a::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--c); }
+.sp-links-html a[data-on] { background: color-mix(in srgb, var(--c) 28%, transparent); border-color: var(--c); }
+.sp-links-html a:hover { color: white; background: color-mix(in srgb, var(--c) 38%, transparent); }
+.sp-links-html a:focus-visible { outline: 3px solid var(--ggds-color-flag-gold, #fcd116); outline-offset: 2px; }
+.sp-more { display: inline-flex; align-items: center; min-height: 1.5rem; color: white; font-weight: 700; font-size: 0.875rem; }
+.sp-more:hover { color: var(--ggds-color-flag-gold, #fcd116); }
+.sp-more::after { content: ' →'; color: var(--ggds-color-flag-gold, #fcd116); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-path * { animation: none !important; transition: none !important; }
+}
+
+/* Scene colours (the platform's config/agency.ts) */
+[data-courses] [data-c]{--c:#fff}[data-courses] [data-c="0"]{--c:#d4621f}[data-courses]{--course:#d4621f}[data-courses] [data-c="course"]{--c:#d4621f}[data-courses] [data-c="1"]{--c:#2f9e5b}[data-courses]{--certify:#2f9e5b}[data-courses] [data-c="certify"]{--c:#2f9e5b}[data-courses] [data-c="2"]{--c:#d43f87}[data-courses]{--programme:#d43f87}[data-courses] [data-c="programme"]{--c:#d43f87}[data-courses] [data-c="3"]{--c:#1f93a8}[data-courses]{--test:#1f93a8}[data-courses] [data-c="test"]{--c:#1f93a8}[data-courses] [data-c="4"]{--c:#8f5bd6}[data-courses]{--research:#8f5bd6}[data-courses] [data-c="research"]{--c:#8f5bd6}

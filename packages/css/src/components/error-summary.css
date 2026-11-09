@@ -1,0 +1,29 @@
+/* Error summary: at the top of the page after a failed submit, each error linking to its field (WCAG 3.3.1). */
+.ggds-error-summary {
+  margin-bottom: var(--ggds-space-8);
+  padding: var(--ggds-space-4) var(--ggds-space-6);
+  border: 4px solid var(--ggds-color-status-danger-strong);
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-surface);
+}
+
+.ggds-error-summary:focus {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 0;
+}
+
+.ggds-error-summary__title {
+  margin-bottom: var(--ggds-space-3);
+  font-size: var(--ggds-font-size-xl);
+}
+
+.ggds-error-summary__list {
+  margin: 0;
+  padding-inline-start: var(--ggds-space-6);
+}
+
+.ggds-error-summary__list a,
+.ggds-error-summary__list a:visited {
+  color: var(--ggds-color-status-danger-strong);
+  font-weight: var(--ggds-font-weight-bold);
+}

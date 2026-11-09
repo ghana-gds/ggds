@@ -1,0 +1,7 @@
+{% if items %}<div class="ggds-error-summary" role="alert" tabindex="-1" data-ggds-module="error-summary">
+  <h2 class="ggds-error-summary__title">{{ title }}</h2>
+  <ul class="ggds-error-summary__list">
+    {% for item in items %}<li>{% if item.href %}<a href="{{ item.href }}">{{ item.text }}</a>{% else %}{{ item.text }}{% endif %}</li>
+    {% endfor %}
+  </ul>
+</div>{% endif %}
