@@ -13,7 +13,6 @@ const SAMPLE = /^\/agencies\/(nca|mocdti)\//;
 export const PAGES = walk(site).filter((f) => f.endsWith('.html')).map((f) => `/${relative(site, f)}`)
   .filter((p) => !/^\/agencies\/[a-z0-9-]+\//.test(p) || SAMPLE.test(p)).sort();
 
-// The example sites are built from the MoCDTI platform folder (GGDS_PLATFORM_DIR). Without it (in CI, for instance)
-// the build skips them, and the tests that open them are skipped too.
+// The example sites are built from docs/example-sites.json. Without it the build skips them, and so do these tests.
 export const EXAMPLE_SITES = existsSync(join(site, 'agencies'));
-export const NO_EXAMPLE_SITES = 'example sites not built: no MoCDTI platform folder';
+export const NO_EXAMPLE_SITES = 'example sites not built: no docs/example-sites.json';

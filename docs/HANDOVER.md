@@ -10,8 +10,8 @@ Ready-made styles and page parts for Government of Ghana websites: design tokens
 the HTML for each component, and packages for Astro and Django. Every part works without JavaScript and under a
 strict Content Security Policy, meets WCAG 2.2 AA in automated tests, and fits a 320px screen.
 
-It was taken from the shared website platform MoCDTI built for the ministry and its 11 agencies, and made to work
-for any government institution. NITA is its custodian (decision D-02).
+It was designed for any government institution, alongside a new website platform for MoCDTI and its 11 agencies
+that is not yet live. The themes and example sites are examples only: none of them is a live website. NITA is its custodian (decision D-02).
 
 ## Where things are
 
@@ -20,8 +20,11 @@ for any government institution. NITA is its custodian (decision D-02).
 | `packages/tokens` | Design tokens (`tokens.json`) → CSS custom properties. `institution.mjs` makes a theme from an institution's colour and rejects colours too light to read. |
 | `packages/themes` | Ready-made institution themes (MoCDTI is the default), from the platform's agency profiles |
 | `packages/css` | All component styles, in cascade layers; also one file per component (`dist/components/`) |
+| `packages/icons` | `@ggds/icons`: the icons. The drawings are `src/*.svg` and `catalogue.json` holds categories and keywords; `build.mjs` checks every drawing against the icon rules and makes every format |
 | `packages/js` | The optional script: phone menu and error summary (TypeScript) |
 | `packages/html` | The canonical HTML and guidance for each of the 23 components and the patterns; the documentation is built from it (not published) |
+| `docs/starter.mjs` | The agency website starter: every page, its script (`assets/site.js`: form checks; `assets/search.js`) and its README. `docs/build.mjs` writes it to `site/starter/` (the preview, with a bar back to the documentation) and zips it, without that bar, into `site/downloads/`; `scripts/release.mjs` adds the zip to each release. `tests/unit/starter.test.mjs` unzips it and checks every link inside it |
+| `packages/react` | `@ggds/react`: page parts and form fields as React components (TypeScript, `src/` → `dist/`), and a live example built with Vite (`demo/` → `site/examples/react/`). `tests/unit/react.test.mjs` checks they render the documentation's HTML, and that every React snippet in the docs type-checks |
 | `packages/astro` | `@ggds/astro`: the page parts as Astro components |
 | `packages/django` | `ggds-django`: template tags, a form renderer and the static files, for Django and Wagtail |
 | `packages/wordpress` | GGDS for WordPress: a classic theme (`ggds/`), its build, and a Docker set-up for its tests (`pnpm run test:wordpress`) |
@@ -58,7 +61,7 @@ What the tests guard:
 
 ## Release
 
-Set the same version in `packages/{tokens,themes,css,js,astro,html}/package.json`,
+Set the same version in `packages/{tokens,icons,themes,css,js,astro,react,html}/package.json`,
 `packages/django/pyproject.toml` and `packages/django/src/ggds_django/__init__.py`, move the "Unreleased" changes
 in `CHANGELOG.md` under the new version, then push a tag such as `v0.1.2`. The release workflow tests the build,
 publishes the npm packages under `@ggds` with provenance and `ggds-django` to PyPI, and makes a GitHub release with
@@ -67,14 +70,16 @@ the rules on the [Versions and support](https://ghana-gds.github.io/ggds/version
 of release may change.
 
 The documentation website, [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/), is published from
-`main` by the `docs` job in `ci.yml`, after every test passes. It is built without the platform, so it has no
-example sites (see "Wording to approve" below). A `.gov.gh` address can replace it later (decision D-08).
+`main` by the `docs` job in `ci.yml`, after every test passes. It includes the showcase (`docs/showcase.mjs`), not
+the 12 example sites (see "Example sites" below). A `.gov.gh` address can replace it later (decision D-08).
 
 Publishing:
 
 - npm: done. `@ggds/tokens`, `@ggds/themes`, `@ggds/css`, `@ggds/js` and `@ggds/astro` are published from
   0.1.1, using an `NPM_TOKEN` secret. Move to trusted publishing on npmjs.com (workflow `release.yml`, environment
   `npm`) and delete the token: npm is restricting tokens that skip two-factor authentication.
+- `@ggds/icons` and `@ggds/react` are new in 0.3.0. Trusted publishing can only be set up for a package that exists, so
+  publish its first version with the token (or by hand), then add it to trusted publishing like the others.
 - PyPI: `ggds-django` publishes from 0.2.0 by trusted publishing (project `ggds-django`, owner `ghana-gds`,
   repository `ggds`, workflow `release.yml`, environment `pypi`). No token is stored. 0.1.0 and 0.1.1 were never
   on PyPI.
@@ -122,11 +127,11 @@ GGDS reads the platform in three places, from `GGDS_PLATFORM_DIR` (default `../a
 
 - `pnpm run sync:themes` refreshes the institution themes from the agency profiles (the build fails if they drift);
 - `pnpm run sync:scenes` copies each agency's hero drawing, rendered by the platform's dev server;
-- the documentation build makes the 12 example sites from the agencies' settings, and checks the menus against the
-  platform's.
+- `pnpm run sync:examples` copies the settings the 12 example sites need into `docs/example-sites.json`, cleaned
+  for publishing, and checks the menus and colours against the platform's.
 
-Without the platform, those steps are skipped and everything else builds and tests. CI cannot reach the platform,
-so the example-site checks run on a developer's machine only.
+Without the platform, those steps are skipped and everything else builds and tests, the example sites included.
+Only the check that `docs/example-sites.json` is up to date needs the platform, so it runs on a developer's machine.
 
 [`PLATFORM-MIGRATION.md`](PLATFORM-MIGRATION.md) maps each GGDS component to the platform code it replaced.
 
@@ -140,8 +145,14 @@ so the example-site checks run on a developer's machine only.
   components if other sites need them.
 - **Platform test.** One platform unit test (`agency-profile.test.ts`, NCA identity) expects NCA's logo without the
   small logo file the profile now has. It failed before GGDS work began; update the test.
-- **Wording to approve.** The banner text (D-03) and the "Example only" notices on the example sites. Until the
-  notices are approved, the published documentation leaves the example sites out (`EXAMPLES` in `docs/build.mjs`).
+- **Wording to approve.** The banner text (D-03).
+- **Example sites.** Not published for now: "What you can build" is the showcase, and MoCDTI and its agencies are
+  themes. Publish them when the real sites go live, by building with `GGDS_AGENCY_SITES=1`. They are built from `docs/example-sites.json`, a cleaned copy of
+  the agencies' platform settings made by `pnpm run sync:examples` (run it when a setting changes; a unit test
+  fails while the copy is out of date). They keep the agencies' names, colours, sections and tasks, and leave out
+  everything that would pass them off as the real sites: logos, contact details, web addresses and the
+  identification banner. Each page says "Example built with GGDS" in its header, has an "Example site" bar at the
+  top and bottom, and is kept out of search engines.
 - **Example sites' drawings.** The agencies' hero drawings copied from the platform (`docs/scenes/`) still move
   without end, as on the live platform sites. Give them the same 5-second limit as `ggds-hero-art`, on the platform.
 - **Figma library.** Not made yet: it needs the Figma connector authorised for a designer's Figma account. The

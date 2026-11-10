@@ -4,7 +4,14 @@
 .docs-draft {
   border-bottom: 1px solid var(--ggds-color-border-subtle);
   background: var(--ggds-color-status-warning-subtle);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
+}
+
+/* On phones, one line: the status and a link to what it means. */
+@media (max-width: 47.99rem) {
+  .docs-draft__more {
+    display: none;
+  }
 }
 
 .docs-draft p {
@@ -27,6 +34,7 @@
   display: flex;
   align-items: baseline;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0 var(--ggds-space-4);
 }
 
@@ -55,6 +63,15 @@
 .docs-layout {
   display: grid;
   gap: var(--ggds-space-8);
+}
+
+/* On phones and tablets the component's own content comes first, and the list of components after it. */
+@media (max-width: 63.99rem) {
+  .docs-layout > .docs-sidenav {
+    order: 2;
+    padding-top: var(--ggds-space-8);
+    border-top: 1px solid var(--ggds-color-border-subtle);
+  }
 }
 
 @media (min-width: 64rem) {
@@ -116,16 +133,97 @@
 }
 
 .docs-code {
-  max-height: 28rem;
+  max-height: 32rem;
   margin: 0;
-  padding: var(--ggds-space-4);
+  padding: var(--ggds-space-4) var(--ggds-space-5, 1.25rem);
   overflow: auto;
-  border-radius: var(--ggds-radius-sm);
-  background: var(--ggds-color-surface-sunken);
+  border-radius: 0 0 var(--ggds-radius-md) var(--ggds-radius-md);
+  background: var(--docs-code-bg);
+  color: var(--docs-code-text);
   font-family: var(--ggds-font-family-mono);
   font-size: var(--ggds-font-size-sm);
-  line-height: 1.5;
+  line-height: 1.65;
   white-space: pre;
+  tab-size: 2;
+  scrollbar-color: #4a5d72 transparent;
+}
+
+/* Code: a dark panel with a bar that names the language and holds the Copy button (docs/highlight.mjs adds the
+   bar and the colours when the site is built; docs.js adds the button). Each colour has at least 4.5:1 contrast. */
+:root {
+  --docs-code-bg: #0f1e2e;
+  --docs-code-bar: #0a1622;
+  --docs-code-text: #e6edf3;
+}
+
+.docs-codeblock {
+  margin: 0 0 var(--ggds-space-6);
+  border: 1px solid #22364b;
+  border-radius: var(--ggds-radius-md);
+  box-shadow: var(--ggds-shadow-1);
+}
+
+.docs-codeblock__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ggds-space-3);
+  min-height: 2.75rem;
+  padding: 0 var(--ggds-space-2) 0 var(--ggds-space-4);
+  border-bottom: 1px solid #22364b;
+  border-radius: var(--ggds-radius-md) var(--ggds-radius-md) 0 0;
+  background:
+    linear-gradient(90deg, var(--ggds-color-flag-red) 0 33.33%, var(--ggds-color-flag-gold) 0 66.66%, var(--ggds-color-flag-green) 0) top / 100% 2px no-repeat,
+    var(--docs-code-bar);
+}
+
+.docs-codeblock__lang {
+  color: #c8d4e0;
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+  letter-spacing: 0.02em;
+}
+
+.docs-code:focus-visible {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.tk-tag { color: #7ee0a3; }
+.tk-attr { color: #ffd866; }
+.tk-str { color: #a5d6ff; }
+.tk-kw { color: #ff9d9d; }
+.tk-fn { color: #c6b6ff; }
+.tk-num { color: #f7b37a; }
+.tk-comment, .tk-doctype { color: #9fb0c2; font-style: italic; }
+.tk-punct { color: #a8b9cb; }
+.tk-tpl { color: #ffb86b; }
+
+@media (forced-colors: active) {
+  .docs-code, .docs-codeblock__bar { border: 1px solid CanvasText; }
+  [class^="tk-"] { color: CanvasText; }
+}
+
+/* Code in a sentence: a tinted chip, so names of files, classes and commands stand out. */
+.ggds-main :not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--ggds-color-border-subtle);
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-brand-900);
+  font-size: 0.875em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.ggds-main a > code,
+.ggds-main a :not(pre) > code {
+  color: inherit;
+}
+
+.docs-example__actions {
+  margin: var(--ggds-space-2) 0 var(--ggds-space-3);
 }
 
 .docs-swatch {
@@ -306,14 +404,45 @@
 /* "On this page": a box above the content, beside it on wide screens */
 .docs-contents {
   margin-bottom: var(--ggds-space-6);
-  padding: var(--ggds-space-4);
+  padding: var(--ggds-space-2) var(--ggds-space-4);
   border-left: 3px solid var(--ggds-color-brand-700);
   background: var(--ggds-color-surface-sunken);
 }
 
 .docs-contents__title {
-  margin: 0 0 var(--ggds-space-2);
+  display: flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
   font-weight: var(--ggds-font-weight-bold);
+  cursor: pointer;
+}
+
+.docs-contents__details[open] .docs-contents__title {
+  margin-bottom: var(--ggds-space-2);
+}
+
+/* An arrow that says the box opens, pointing up once it is open. */
+.docs-contents__title {
+  gap: var(--ggds-space-3);
+  list-style: none;
+}
+
+.docs-contents__title::-webkit-details-marker {
+  display: none;
+}
+
+.docs-contents__title::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-25%) rotate(45deg);
+}
+
+.docs-contents__details[open] > .docs-contents__title::after {
+  transform: translateY(25%) rotate(-135deg);
 }
 
 .docs-contents__list {
@@ -428,20 +557,17 @@
   font-weight: var(--ggds-font-weight-regular);
 }
 
-/* Copy button */
-.docs-copy-bar {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: var(--ggds-space-1);
-}
-
+/* Copy button, in the code bar */
 .docs-copy {
-  min-height: var(--ggds-size-target);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  min-height: 2.25rem;
   padding: var(--ggds-space-1) var(--ggds-space-3);
-  border: 1px solid var(--ggds-color-border-control);
-  border-radius: var(--ggds-radius-md);
-  background: var(--ggds-color-surface);
-  color: var(--ggds-color-link);
+  border: 1px solid #3a5068;
+  border-radius: var(--ggds-radius-sm);
+  background: transparent;
+  color: #e6edf3;
   font: inherit;
   font-size: var(--ggds-font-size-sm);
   font-weight: var(--ggds-font-weight-bold);
@@ -449,11 +575,17 @@
 }
 
 .docs-copy:hover {
-  background: var(--ggds-color-brand-50);
+  border-color: #e6edf3;
+  background: #1c3047;
 }
 
-.ggds-prose pre.docs-code {
-  margin-bottom: var(--ggds-space-4);
+.docs-copy:focus-visible {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 1px;
+}
+
+.ggds-prose .docs-codeblock pre.docs-code {
+  margin-bottom: 0;
 }
 
 /* Homepage proof */
@@ -764,10 +896,10 @@
 
 .docs-roles__list {
   display: flex;
-  gap: var(--ggds-space-1);
+  flex-wrap: wrap;
+  gap: 0 var(--ggds-space-1);
   margin: 0;
   padding: 0;
-  overflow-x: auto;
   list-style: none;
 }
 
@@ -812,7 +944,7 @@
 }
 .docs-icons {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
   gap: var(--ggds-space-4);
   margin: 0 0 var(--ggds-space-8);
   padding: 0;
@@ -830,4 +962,422 @@
 .docs-icons__svg {
   inline-size: var(--ggds-size-icon-xl);
   block-size: var(--ggds-size-icon-xl);
+}
+
+.docs-icons__item[hidden] { display: none; }
+
+.docs-icons__name {
+  font-size: var(--ggds-font-size-sm);
+  text-align: center;
+}
+
+/* At least 24px to press (WCAG 2.5.8). */
+.docs-icons__file {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: 24px;
+  padding-inline: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.docs-icons__count:empty { display: none; }
+
+/* Homepage: screenshots of example sites, each linked to its site. */
+.docs-shots {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ggds-space-4);
+  margin: var(--ggds-space-6) 0 var(--ggds-space-2);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .docs-shots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .docs-shots {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.docs-shots__link {
+  display: block;
+  color: var(--ggds-color-link);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: underline;
+}
+
+.docs-shots__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: var(--ggds-space-2);
+  border: 1px solid var(--ggds-color-border-subtle);
+  border-radius: var(--ggds-radius-lg);
+}
+
+.docs-shots__link:hover .docs-shots__img {
+  border-color: var(--ggds-color-link);
+}
+
+.docs-shots__note {
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+}
+
+/* What you can build: the showcase (docs/showcase.mjs), big screenshots, three across on wide screens. */
+.docs-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ggds-space-8) var(--ggds-space-6);
+  margin: var(--ggds-space-4) 0 var(--ggds-space-8);
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .docs-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 64rem) {
+  .docs-showcase { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .docs-showcase--more { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.docs-showcase--single { display: block; margin: 0; }
+
+.docs-showcase__group {
+  margin: var(--ggds-space-8) 0 0;
+  font-size: var(--ggds-font-size-lg);
+}
+
+.docs-showcase__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ggds-space-1);
+  color: var(--ggds-color-text);
+  text-decoration: none;
+}
+
+/* The example in a small browser window, its top edge in the example's colour (showcase-tiles.css). */
+.docs-showcase__frame {
+  --docs-sc: var(--ggds-color-brand-700);
+  position: relative;
+  display: block;
+  margin-bottom: var(--ggds-space-2);
+  overflow: hidden;
+  border: 1px solid var(--ggds-color-border-subtle);
+  border-top: 3px solid var(--docs-sc);
+  border-radius: var(--ggds-radius-lg);
+  background: var(--ggds-color-surface);
+  box-shadow: var(--ggds-shadow-1);
+}
+
+.docs-showcase__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  height: 1.5rem;
+  padding: 0 var(--ggds-space-3);
+  background: var(--ggds-color-surface-sunken);
+  border-bottom: 1px solid var(--ggds-color-border-subtle);
+}
+
+.docs-showcase__dots {
+  flex: none;
+  width: 2rem;
+  height: 0.5rem;
+  background:
+    radial-gradient(circle at 0.25rem 50%, #f2675f 0.22rem, transparent 0.24rem),
+    radial-gradient(circle at 1rem 50%, #f7c04a 0.22rem, transparent 0.24rem),
+    radial-gradient(circle at 1.75rem 50%, #5ac05a 0.22rem, transparent 0.24rem);
+}
+
+.docs-showcase__address {
+  overflow: hidden;
+  color: var(--ggds-color-text-muted);
+  font-size: 0.7rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.docs-showcase__screen {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  background: var(--ggds-color-surface);
+}
+
+/* A full-page screenshot, showing its top; it scrolls to the bottom when the tile is pointed at or focused. */
+.docs-showcase__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+
+.docs-showcase__placeholder {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: var(--docs-sc);
+}
+
+/* A phone-first example: a phone on the example's colour. */
+.docs-showcase__frame--phone {
+  display: grid;
+  aspect-ratio: 16 / 12.5;
+  place-items: center;
+  border-top-width: 1px;
+  background: linear-gradient(135deg, var(--docs-sc), #0f172a);
+}
+
+.docs-showcase__frame--phone .docs-showcase__bar { display: none; }
+
+.docs-showcase__frame--phone .docs-showcase__screen {
+  height: 86%;
+  aspect-ratio: 9 / 18;
+  border: 6px solid #0f172a;
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 30px rgb(0 0 0 / .35);
+}
+
+/* What it is built from: slides up over the picture. */
+.docs-showcase__peek {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ggds-space-1);
+  padding: var(--ggds-space-6) var(--ggds-space-3) var(--ggds-space-3);
+  background: linear-gradient(transparent, rgb(10 22 34 / .92) 40%);
+  color: #ffffff;
+  font-size: 0.75rem;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.docs-showcase__peek-pages {
+  width: 100%;
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.docs-showcase__chip {
+  padding: 0.1rem 0.45rem;
+  border: 1px solid rgb(255 255 255 / .55);
+  border-radius: var(--ggds-radius-pill);
+}
+
+.docs-showcase__link:is(:hover, :focus-visible) .docs-showcase__frame {
+  border-color: var(--docs-sc);
+  box-shadow: var(--ggds-shadow-2);
+}
+
+.docs-showcase__link:is(:hover, :focus-visible) .docs-showcase__peek {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .docs-showcase__frame { transition: transform .25s ease-out, box-shadow .25s ease-out, border-color .25s ease-out; }
+  .docs-showcase__img { transition: object-position .6s ease-out; }
+  .docs-showcase__peek { transition: opacity .25s ease-out, transform .3s ease-out; }
+  .docs-showcase__link:is(:hover, :focus-visible) .docs-showcase__frame { transform: translateY(-4px); }
+  /* The page scrolls past once, top to bottom, in 4 seconds, and stops: then moves back when the pointer leaves. */
+  .docs-showcase__link:is(:hover, :focus-visible) .docs-showcase__img {
+    object-position: 50% 100%;
+    transition: object-position 4s cubic-bezier(.45, 0, .55, 1) .2s;
+  }
+}
+
+@media (forced-colors: active) {
+  .docs-showcase__frame { border: 1px solid CanvasText; }
+  .docs-showcase__peek { background: Canvas; color: CanvasText; }
+}
+
+.docs-showcase__kind {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ggds-space-1);
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.docs-showcase__name {
+  color: var(--ggds-color-link);
+  font-size: var(--ggds-font-size-lg);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: .15em;
+}
+
+.docs-showcase__summary {
+  margin: var(--ggds-space-2) 0 0;
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+}
+
+/* The showcase page: each example with what it is built from, what is behind it, its pages and its HTML. */
+.docs-scx {
+  padding: var(--ggds-space-8) 0;
+  border-top: 1px solid var(--ggds-color-border-subtle);
+}
+
+.docs-scx__title { margin-top: 0; }
+
+.docs-scx__grid {
+  display: grid;
+  gap: var(--ggds-space-6);
+}
+
+@media (min-width: 64rem) {
+  .docs-scx__grid { grid-template-columns: 22rem minmax(0, 1fr); align-items: start; }
+}
+
+.docs-scx__info { min-width: 0; }
+.docs-scx__info h4 { margin: 0 0 var(--ggds-space-2); font-size: var(--ggds-font-size-base); }
+.docs-scx__info p, .docs-scx__info ul, .docs-scx__info ol { margin-top: 0; }
+
+.docs-section-head--sub {
+  margin-top: var(--ggds-space-12);
+}
+
+.docs-section-head--sub h3 {
+  margin: 0 0 var(--ggds-space-2);
+}
+
+@media (min-width: 64rem) {
+  .docs-shots--small {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* "Back to top" at the end of every page. */
+.docs-top {
+  margin-top: var(--ggds-space-12);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+
+/* HTML / JSX switch in a code bar (docs.js) */
+.docs-switch {
+  display: inline-flex;
+  padding: 2px;
+  border: 1px solid #3a5068;
+  border-radius: var(--ggds-radius-sm);
+}
+
+.docs-switch__button {
+  min-height: 2rem;
+  padding: 0 var(--ggds-space-3);
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: #c8d4e0;
+  font: inherit;
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+  cursor: pointer;
+}
+
+.docs-switch__button:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.docs-switch__button[aria-pressed="true"] {
+  background: var(--ggds-color-flag-gold);
+  color: #0a1622;
+}
+
+.docs-switch__button:focus-visible {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 1px;
+}
+
+/* Without JavaScript both versions show: space them apart. */
+.docs-codeblock--switch > pre + .docs-codeblock__bar {
+  border-top: 1px solid #22364b;
+  border-radius: 0;
+}
+
+.docs-codeblock__bar[hidden] {
+  display: none;
+}
+
+/* "Find your setup": each framework's logo in its own colours, on a light tile (React's on its dark one). */
+.docs-stack-logo {
+  border: 1px solid var(--ggds-color-border-subtle);
+  background: #ffffff;
+}
+
+.docs-stack-logo > svg {
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  stroke: none;
+}
+
+@media (min-width: 48rem) {
+  .docs-stack-logo > svg {
+    inline-size: 2rem;
+    block-size: 2rem;
+  }
+}
+
+.ggds-card:has(.ggds-card__link:hover) .docs-stack-logo {
+  border-color: currentColor;
+  background: #ffffff;
+}
+
+.docs-stack-logo--react,
+.ggds-card:has(.ggds-card__link:hover) .docs-stack-logo--react {
+  border-color: #20232a;
+  background: #20232a;
+}
+
+.docs-logo-credit {
+  margin-top: calc(-1 * var(--ggds-space-4));
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+}
+
+@media (forced-colors: active) {
+  .docs-stack-logo path { fill: CanvasText; }
+}
+
+/* The agency website starter: a band with the download. */
+.docs-starter {
+  margin: var(--ggds-space-8) 0;
+  padding: var(--ggds-space-8);
+  border-radius: var(--ggds-radius-lg);
+  background:
+    linear-gradient(90deg, var(--ggds-color-flag-red) 0 33.33%, var(--ggds-color-flag-gold) 0 66.66%, var(--ggds-color-flag-green) 0) top / 100% 4px no-repeat,
+    var(--ggds-color-brand-50);
+  border: 1px solid var(--ggds-color-border-subtle);
+}
+
+.docs-starter h2 { margin-top: 0; }
+
+.docs-starter__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  margin: 0 0 var(--ggds-space-2);
+  color: var(--ggds-color-brand-800);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.docs-starter__small {
+  margin: 0;
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
 }

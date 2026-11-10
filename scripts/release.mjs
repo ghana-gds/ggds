@@ -8,6 +8,7 @@
 //   ggds/tokens.css
 //   ggds/themes/<slug>.css, themes.css  institution themes
 //   ggds/auto.js, index.js, menu.js, error-summary.js   the optional script: keep the four together
+//   ggds/icons/sprite.svg, icons/svg/<name>.svg, icons/ggds-icons.svg   the icons: a sprite, single files, a design sheet
 //   ggds/LICENSE, LICENSE.md, README.txt
 //
 // Next to the zip: SHA256SUMS (checksums for the zip and every file in it) and integrity.json (the "integrity"
@@ -25,7 +26,7 @@ const out = join(root, 'release');
 const dir = join(out, 'ggds');
 const zipName = `ggds-${version}.zip`;
 
-const need = [join(pkg('css'), 'dist', 'ggds.min.css'), join(pkg('themes'), 'dist', 'themes.css'), join(pkg('js'), 'dist', 'auto.js')];
+const need = [join(pkg('icons'), 'dist', 'sprite.svg'), join(pkg('css'), 'dist', 'ggds.min.css'), join(pkg('themes'), 'dist', 'themes.css'), join(pkg('js'), 'dist', 'auto.js')];
 for (const f of need) if (!existsSync(f)) throw new Error(`${relative(root, f)} is missing: run pnpm run build first`);
 
 rmSync(out, { recursive: true, force: true });
@@ -39,6 +40,8 @@ for (const f of readdirSync(join(pkg('themes'), 'dist')).filter((f) => f.endsWit
   cpSync(join(pkg('themes'), 'dist', f), join(dir, 'themes', f));
 }
 for (const f of readdirSync(join(pkg('js'), 'dist')).filter((f) => f.endsWith('.js'))) cpSync(join(pkg('js'), 'dist', f), join(dir, f));
+mkdirSync(join(dir, 'icons'));
+for (const f of ['sprite.svg', 'ggds-icons.svg', 'catalogue.json', 'svg']) cpSync(join(pkg('icons'), 'dist', f), join(dir, 'icons', f), { recursive: true });
 for (const f of ['LICENSE', 'LICENSE.md']) cpSync(join(root, f), join(dir, f));
 writeFileSync(join(dir, 'README.txt'), `GGDS ${version}: Ghana Government Design System
 https://github.com/ghana-gds/ggds
@@ -50,6 +53,12 @@ Copy this "ggds" folder into your website, then add to every page:
   <script type="module" src="/ggds/auto.js"></script>     (optional: every part works without it)
 
 Copy the HTML for each part from the GGDS documentation.
+
+Icons: icons/svg has one file per icon; icons/sprite.svg has them all, used like this:
+
+  <svg class="ggds-icon" aria-hidden="true"><use href="/ggds/icons/sprite.svg#arrow-right"/></svg>
+
+Designers: import icons/ggds-icons.svg into Figma or another design tool for every icon, named and labelled.
 The files work under a strict Content Security Policy: style-src 'self'; script-src 'self'.
 
 Licence: Apache-2.0 (LICENSE). The flag, the coat of arms and institutions' logos are not covered (LICENSE.md).
@@ -70,11 +79,17 @@ if (!existsSync(join(wpTheme, 'assets', 'ggds.min.css'))) throw new Error('packa
 for (const f of ['LICENSE', 'LICENSE.md']) cpSync(join(root, f), join(wpTheme, f));
 execFileSync('zip', ['-X', '-q', '-r', join(out, wpName), 'ggds', '-x', 'ggds/.*'], { cwd: pkg('wordpress') });
 
-const sums = [join(out, zipName), join(out, wpName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
+// The agency website starter (docs/starter.mjs), as the documentation offers it: built by pnpm run build.
+const starterName = `ggds-agency-starter-${version}.zip`;
+const starterZip = join(root, 'site', 'downloads', starterName);
+if (!existsSync(starterZip)) throw new Error(`site/downloads/${starterName} is missing: run pnpm run build first`);
+cpSync(starterZip, join(out, starterName));
+
+const sums = [join(out, zipName), join(out, wpName), join(out, starterName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
 writeFileSync(join(out, 'SHA256SUMS'), `${sums.join('\n')}\n`);
 const integrity = Object.fromEntries(all.filter((f) => /\.(css|js)$/.test(f))
   .map((f) => [relative(dir, f), `sha384-${digest('sha384', 'base64', f)}`]));
 writeFileSync(join(out, 'integrity.json'), `${JSON.stringify({ version, files: integrity }, null, 2)}\n`);
 
 const size = statSync(join(out, zipName)).size;
-console.log(`release: ${zipName} (${all.length} files, ${(size / 1024).toFixed(0)} KB), ${wpName}, SHA256SUMS, integrity.json → ${out}`);
+console.log(`release: ${zipName} (${all.length} files, ${(size / 1024).toFixed(0)} KB), ${wpName}, ${starterName}, SHA256SUMS, integrity.json → ${out}`);

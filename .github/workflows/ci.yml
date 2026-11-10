@@ -1,8 +1,7 @@
 # Every push and pull request: build, unit tests, then accessibility and behaviour tests in Chrome.
 # After the tests pass on main, the documentation website is published to GitHub Pages
-# (https://ghana-gds.github.io/ggds/), without the example sites.
-# The example sites need the MoCDTI platform folder (GGDS_PLATFORM_DIR), which is not in this repository, so
-# CI skips them; run the full suite locally before a release.
+# (https://ghana-gds.github.io/ggds/), with the showcase. The agency example sites are built only with
+# GGDS_AGENCY_SITES=1, until the real sites go live.
 name: CI
 
 on:

@@ -4,7 +4,7 @@
 
 export const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-// Icons are shared with @ggds/astro, so the documentation and the Astro components draw the same ones.
+// Icons come from @ggds/icons through @ggds/astro, so the documentation and the Astro components draw the same ones.
 import { icon } from '../packages/astro/icons.mjs';
 export { icon };
 

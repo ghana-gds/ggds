@@ -1,17 +1,20 @@
-// Evidence that GGDS can run the 12 MoCDTI agency websites: reads each agency's real settings from the shared
-// platform (agencies/<slug>/profile.json and site.json, packages/agency-schema/modules.json) and renders that
-// agency's shared page parts with GGDS, in its own colour. It also computes every agency colour with both GGDS
-// (packages/tokens/institution.mjs) and the platform (packages/design-tokens/agency-colour.mjs) and fails the
-// build if they differ.
+// Evidence that GGDS can run the 12 MoCDTI agency websites: renders each agency's shared page parts with GGDS, in
+// its own colour, from its settings on the shared platform (agencies/<slug>/profile.json and site.json,
+// packages/agency-schema/modules.json).
 //
-// The platform is found at GGDS_PLATFORM_DIR, default ../agencies/platform next to this repository.
+// The build reads a cleaned copy of those settings, docs/example-sites.json, so the example sites build anywhere,
+// including on GitHub. `pnpm run sync:examples` makes the copy from the platform (GGDS_PLATFORM_DIR, default
+// ../agencies/platform): only names, colours, sections, common tasks and descriptions, with no logos, contact
+// details or web addresses. It also checks every agency colour with both GGDS (packages/tokens/institution.mjs)
+// and the platform (packages/design-tokens/agency-colour.mjs), and the sections against the platform's nav.ts.
+// GGDS_EXAMPLE_UNVERIFIED=1 reads the platform directly instead, with logos and contacts, for agency reviews only.
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { getTheme } from '../packages/themes/index.mjs';
 import { institutionPalette } from '../packages/tokens/institution.mjs';
 import { contrast } from '../packages/tokens/lib.mjs';
-import { HERO_ART, banner, esc, footer, header, hero, mark, tabBar } from './parts.mjs';
+import { HERO_ART, esc, footer, header, hero, mark, tabBar } from './parts.mjs';
 import { fileFor, innerMain, pageKind } from './example-pages.mjs';
 import { UNVERIFIED, hideContacts, maskText } from './contacts.mjs';
 
@@ -74,7 +77,6 @@ export function navFor(registry, profile, site) {
   });
 }
 
-const bareHost = (url) => new URL(url).host.replace(/^www\./, '');
 
 /** The sub-menu links in the platform's nav.ts, so a hand copy here cannot silently fall behind. */
 function checkSections(dir) {
@@ -97,10 +99,12 @@ const SCENES = fileURLToPath(new URL('./scenes/', import.meta.url));
 /** Email addresses and full phone numbers in agency-written text, hidden unless GGDS_EXAMPLE_UNVERIFIED=1. */
 const mask = maskText;
 
-export async function loadAgencies(root) {
-  const dir = platformDir(root);
+export const SNAPSHOT = fileURLToPath(new URL('./example-sites.json', import.meta.url));
+
+/** Every agency's settings as the platform holds them (fixtures left out), or null without the platform. */
+export async function readPlatform(dir) {
   const agenciesDir = join(dir, 'agencies');
-  if (!existsSync(agenciesDir)) return { dir, agencies: [], platformPalette: null };
+  if (!existsSync(agenciesDir)) return null;
   checkSections(dir);
   const registry = readJson(join(dir, 'packages', 'agency-schema', 'modules.json')).modules;
   const { agencyPalette } = await import(pathToFileURL(join(dir, 'packages', 'design-tokens', 'agency-colour.mjs')).href);
@@ -113,18 +117,57 @@ export async function loadAgencies(root) {
       return { slug: d.name, profile, site };
     })
     .filter((a) => a.profile.status !== 'fixture')
-    .sort((a, b) => a.profile.identity.legalName.localeCompare(b.profile.identity.legalName))
-    .map((a) => {
-      const ggds = institutionPalette(a.profile.identity.themeColor);
-      const platform = agencyPalette(a.profile.identity.themeColor);
-      // The agency's GGDS theme must give the same colours as its profile does today.
-      const theme = getTheme(a.slug);
-      const themeMatch = theme.accent === ggds.accent && theme.deep === ggds.deep;
-      const tabs = TABS.filter((t) => pathEnabled(registry, a.profile.modules, t.href)).slice(0, 3);
-      return { ...a, ggds, platform, tabs, nav: navFor(registry, a.profile, a.site), match: themeMatch && ggds.accent === platform.accent && ggds.deep === platform.deep };
-    });
-  const mismatches = agencies.filter((a) => !a.match);
-  if (mismatches.length) throw new Error(`Institution colours differ from the platform for: ${mismatches.map((a) => a.slug).join(', ')}`);
+    .sort((a, b) => a.profile.identity.legalName.localeCompare(b.profile.identity.legalName));
+  for (const a of agencies) {
+    const ggds = institutionPalette(a.profile.identity.themeColor);
+    const platform = agencyPalette(a.profile.identity.themeColor);
+    if (ggds.accent !== platform.accent || ggds.deep !== platform.deep) throw new Error(`Institution colours differ from the platform for ${a.slug}`);
+  }
+  return { registry, agencies };
+}
+
+/** Every string in a value, with email addresses and phone numbers hidden. */
+const maskAll = (v) => (typeof v === 'string' ? maskText(v) : Array.isArray(v) ? v.map(maskAll)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, maskAll(x)])) : v);
+/** Only the named keys of an object that it has. */
+const pick = (o, keys) => (o ? Object.fromEntries(keys.filter((k) => o[k] !== undefined).map((k) => [k, o[k]])) : undefined);
+
+/**
+ * What the example sites may publish of the platform's settings: what the pages use, and nothing that would
+ * pass them off as the real sites or that an agency has not confirmed (logos, contact details, web addresses).
+ */
+export function cleanForPublishing({ registry, agencies }) {
+  return maskAll({
+    note: 'Made by pnpm run sync:examples from the MoCDTI platform. Do not edit: run it again. See docs/agencies.mjs.',
+    registry: registry.map((m) => ({ key: m.key, paths: m.paths })),
+    agencies: agencies.map(({ slug, profile, site }) => ({
+      slug,
+      profile: {
+        identity: pick(profile.identity, ['legalName', 'shortName', 'themeColor', 'purposeStatement']),
+        modules: profile.modules,
+        remit: profile.remit && { summary: profile.remit.summary, topics: (profile.remit.topics ?? []).map((t) => ({ label: t.label })) },
+      },
+      site: site && {
+        home: pick(site.home, ['heading', 'lede', 'tasksHeading', 'shortcuts', 'tasks']),
+        nav: site.nav, search: pick(site.search, ['example']), hub: pick(site.hub, ['featured']),
+      },
+    })),
+  });
+}
+
+export async function loadAgencies(root) {
+  const dir = platformDir(root);
+  const source = UNVERIFIED ? await readPlatform(dir) : existsSync(SNAPSHOT) ? readJson(SNAPSHOT) : null;
+  if (!source) return { dir, agencies: [] };
+  const { registry } = source;
+  const agencies = source.agencies.map((a) => {
+    const ggds = institutionPalette(a.profile.identity.themeColor);
+    // The agency's GGDS theme must give the same colours as its settings do.
+    const theme = getTheme(a.slug);
+    if (theme.accent !== ggds.accent || theme.deep !== ggds.deep) throw new Error(`themes/${a.slug}.css differs from the agency's colour: run pnpm run sync:themes`);
+    const tabs = TABS.filter((t) => pathEnabled(registry, a.profile.modules, t.href)).slice(0, 3);
+    return { ...a, profile: { domains: {}, ...a.profile }, ggds, tabs, nav: navFor(registry, a.profile, a.site) };
+  });
   return { dir, agencies };
 }
 
@@ -185,13 +228,9 @@ export function writeAgencyPages({ siteDir, agencies, platformDirectory, shell }
   };
 
   for (const a of agencies) {
-    const { identity, domains, contact } = a.profile;
+    const { identity, contact } = a.profile;
     const short = identity.shortName;
     const hub = a.profile.modules.hub === true;
-    // A compromised website is never named, as on the platform (profile.schema.json: nothing links to it).
-    const officialUrl = domains.public || (domains.legacyCompromised ? '' : domains.legacy);
-    const host = officialUrl ? bareHost(officialUrl) : '';
-    const addressNote = domains.public ? '' : ' (the agency has not yet confirmed its public address; this is its current site)';
     const ratio = (x, y) => contrast(x, y).toFixed(2);
     const home = a.site?.home ?? {};
     const others = hub ? members(a) : [];
@@ -255,11 +294,11 @@ export function writeAgencyPages({ siteDir, agencies, platformDirectory, shell }
     </ul>
   </div>
 </nav>`;
+      // No identification banner and no web address: the banner tells people a site is official, and these are not.
       return `
 <a class="ggds-skip-link" href="#main">Skip to main content</a>
 ${exit('top')}
-${banner({ unofficial: true, shortName: short, host, addressNote, registerHref: `${up}register.html` })}
-${header({ name: identity.legalName, country: identity.countryLabel ?? 'Republic of Ghana', logo: markFor(a, 'ggds-header__logo', 44), nav: nav.map((s) => ({ ...s, href: link(s.href) })), current: current ? link(current) : undefined, navId: 'agency-nav', home: link('/'), search: link('/search/') })}
+${header({ name: identity.legalName, country: 'Example built with GGDS', logo: markFor(a, 'ggds-header__logo', 44), nav: nav.map((s) => ({ ...s, href: link(s.href) })), current: current ? link(current) : undefined, navId: 'agency-nav', home: link('/'), search: link('/search/') })}
 <main id="main" tabindex="-1">
 ${main}
 </main>
@@ -321,7 +360,7 @@ ${tabBar([
     <h2 id="evidence-h">About this example</h2>
     <div class="ggds-notice ggds-notice--warning">
       <p class="ggds-notice__title"><span class="ggds-visually-hidden">Warning:</span> Example only. This is not the ${esc(short)} website.</p>
-      <p>A website built with GGDS from the ${esc(short)}'s name, colour, sections and common tasks${UNVERIFIED ? ', logo and contact details' : ''}. The ${esc(short)} has not yet confirmed these details${UNVERIFIED ? '' : ', so its logo and contact details are left out'}. Every link opens an example page with placeholder words.</p>
+      <p>A website built with GGDS from the ${esc(short)}'s name, colour, sections and common tasks${UNVERIFIED ? ', logo and contact details' : ''}. The ${esc(short)} has not yet confirmed these details${UNVERIFIED ? '' : ', so its logo, contact details and web address are left out, and so is the banner that marks official government websites'}. Every link opens an example page with placeholder words.</p>
     </div>
     <p>Theme: <code>themes/${a.slug}.css</code>. Name on white: ${ratio(a.ggds.accent, '#ffffff')}:1. White on the hero and footer: ${ratio('#ffffff', a.ggds.deep)}:1.</p>
   </section>
@@ -343,10 +382,10 @@ ${tabBar([
     title: 'Example sites',
     body: `
 <h1>Example sites</h1>
-<p class="ggds-lead ggds-measure">Twelve government homepages built with GGDS: a ministry and its agencies. Each uses its own <a href="../themes.html">theme</a>, logo, contact details and common tasks, and shares everything else.</p>
+<p class="ggds-lead ggds-measure">Twelve government homepages built with GGDS: a ministry and its agencies. Each uses its own <a href="../themes.html">theme</a>, sections and common tasks, and shares everything else.</p>
 <div class="ggds-notice ggds-notice--warning">
   <p class="ggds-notice__title"><span class="ggds-visually-hidden">Warning:</span> Examples only</p>
-  <p>None of these is a live website. No institution has confirmed its details yet, so logos and contact details are left out.</p>
+  <p>None of these is a real website. They show what GGDS can do with each institution's name, colour and sections. No institution has confirmed its details yet, so logos, contact details and web addresses are left out, and so is the banner that marks official government websites.</p>
 </div>
 <ul class="ggds-card-grid docs-home-section">${cards}
 </ul>`,

@@ -1,5 +1,6 @@
 node_modules/
 dist/
+packages/react/demo-dist/
 site/
 test-results/
 playwright-report/
@@ -22,3 +23,5 @@ __pycache__/
 packages/wordpress/ggds/assets/
 packages/wordpress/ggds/LICENSE
 packages/wordpress/ggds/LICENSE.md
+packages/react/.typecheck/
+.starter-build/

@@ -12,7 +12,7 @@ const pages = existsSync(site) ? walk(site).filter((f) => f.endsWith('.html')) :
 // The example sites are built from the MoCDTI platform folder (GGDS_PLATFORM_DIR). Without it (in CI, for
 // instance) the build skips them, and so do the tests that read them.
 const exampleSites = existsSync(join(site, 'agencies'));
-const needsExampleSites = { skip: !exampleSites && 'example sites not built: no MoCDTI platform folder' };
+const needsExampleSites = { skip: !exampleSites && 'example sites not built: no docs/example-sites.json' };
 
 test('the site was built', () => {
   assert.ok(pages.length > 40, `${pages.length} pages; run pnpm run build`);
@@ -115,10 +115,24 @@ test('each example site shows the drawing its live site shows, with its styleshe
   }
 });
 
-test('no example site names a compromised website', needsExampleSites, () => {
-  const html = readFileSync(new URL('../../site/agencies/gifec.html', import.meta.url), 'utf8');
-  assert.doesNotMatch(html, /gifec\.gov\.gh/);
-  assert.match(html, /has not confirmed its official address yet/);
+test('no example site page could pass for the real site: no official banner, web address or "Republic of Ghana"', { skip: needsExampleSites.skip || process.env.GGDS_EXAMPLE_UNVERIFIED === '1' }, () => {
+  const dir = fileURLToPath(new URL('../../site/agencies/', import.meta.url));
+  for (const f of readdirSync(dir, { recursive: true }).filter((f) => f.endsWith('.html'))) {
+    const html = readFileSync(join(dir, f), 'utf8');
+    assert.doesNotMatch(html, /class="ggds-banner/, `${f}: identification banner`);
+    assert.doesNotMatch(html, /Republic of Ghana|An official website/, `${f}: official wording`);
+    assert.doesNotMatch(html.replace(/<[^>]+>/g, ' '), /\b[\w-]+\.(?:gov|org|com)\.gh\b/, `${f}: a web address`);
+    if (f !== 'index.html') assert.match(html, /Example built with GGDS/, `${f}: example label in the header`);
+  }
+});
+
+test('the example sites\' saved settings hold only what may be published, and match the platform', async () => {
+  const { SNAPSHOT, cleanForPublishing, platformDir, readPlatform } = await import('../../docs/agencies.mjs');
+  const text = readFileSync(SNAPSHOT, 'utf8');
+  assert.doesNotMatch(text, /"(logo|contact|domains|legacy\w*|headOffice|email|phone)"/, 'no logos, contacts or addresses');
+  assert.doesNotMatch(text, /[\w.+-]+@[\w-]+\.[\w.]+|https?:\/\//, 'no email or web addresses');
+  const platform = process.env.GGDS_EXAMPLE_UNVERIFIED === '1' ? null : await readPlatform(platformDir(fileURLToPath(new URL('../../', import.meta.url))));
+  if (platform) assert.equal(text, `${JSON.stringify(cleanForPublishing(platform), null, 2)}\n`, 'out of date: run pnpm run sync:examples');
 });
 
 test('every component page has its reference sections and a way to report a problem', () => {
@@ -136,4 +150,36 @@ test('there are pattern pages, each with a live example', () => {
   const files = readdirSync(dir).filter((f) => f.endsWith('.html') && f !== 'index.html');
   assert.ok(files.length >= 3, `${files.length} patterns`);
   for (const f of files) assert.match(readFileSync(join(dir, f), 'utf8'), /<iframe class="docs-frame/, `${f}: no example`);
+});
+
+test('every code colour has at least 4.5:1 contrast on the code background, and every code block names its language', async () => {
+  const { CODE_COLOURS } = await import('../../docs/highlight.mjs');
+  const { contrast } = await import('../../packages/tokens/lib.mjs');
+  const { background, ...colours } = CODE_COLOURS;
+  for (const [name, colour] of Object.entries(colours)) assert.ok(contrast(colour, background) >= 4.5, `${name}: ${contrast(colour, background).toFixed(2)}:1`);
+  const css = readFileSync(join(site, 'assets', 'docs.css'), 'utf8');
+  for (const [name, colour] of Object.entries(colours)) if (!['text', 'lang', 'doctype'].includes(name)) assert.match(css, new RegExp(`\\.tk-${name}[^{]*\\{ color: ${colour};`), `docs.css .tk-${name}`);
+  for (const p of pages) {
+    const html = readFileSync(p, 'utf8');
+    const blocks = (html.match(/<pre class="docs-code"/g) ?? []).length;
+    const named = (html.match(/<div class="docs-codeblock__bar" data-lang="[a-z]+"><span class="docs-codeblock__lang">[^<]+<\/span>/g) ?? []).length;
+    assert.equal(named, blocks, `${p.slice(site.length)}: every code block has its language bar`);
+  }
+});
+
+test('every JSX version of the HTML parses, so it pastes into a React component', async () => {
+  const { default: ts } = await import('typescript');
+  const unesc = (t) => t.replace(/<[^>]+>/g, '').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, '&');
+  let count = 0;
+  for (const p of pages) {
+    const html = readFileSync(p, 'utf8');
+    for (const [, inner] of html.matchAll(/data-lang="jsx"[\s\S]*?<pre[^>]*><code>([\s\S]*?)<\/code><\/pre>/g)) {
+      count++;
+      const jsx = unesc(inner);
+      const file = ts.createSourceFile('x.tsx', `const x = (${jsx});`, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+      assert.deepEqual(file.parseDiagnostics.map((d) => ts.flattenDiagnosticMessageText(d.messageText, ' ')), [], `${p.slice(site.length)}:\n${jsx.slice(0, 300)}`);
+      assert.doesNotMatch(jsx, /\sclass=|\sfor=|<!--/, `${p.slice(site.length)}: HTML left in the JSX`);
+    }
+  }
+  assert.ok(count > 50, `${count} JSX snippets`);
 });
