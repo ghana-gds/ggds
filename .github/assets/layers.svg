@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1244" height="170" viewBox="0 0 1244 170" role="img" aria-labelledby="t">
+  <title id="t">How GGDS fits together: Tokens, then Styles, then Components, then Patterns, then Your website</title>
+  <g font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif">
+  <g transform="translate(0 0)">
+    <rect width="220" height="170" rx="18" fill="#ffffff" stroke="#dbe2ea" stroke-width="1.5"/>
+    <circle cx="44" cy="46" r="24" fill="#e5f0f7" fill-opacity="1"/>
+    <g transform="translate(30 32) scale(1.1666666666666667)" fill="none" stroke="#005f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></g>
+    <text x="24" y="104" fill="#0f172a" font-size="22" font-weight="800">Tokens</text>
+    <text x="24" y="128" fill="#374151" font-size="14">colours, type, spacing</text>
+    <text x="24" y="150" fill="#6b7280" font-size="12.5" font-weight="700">@ggds/tokens</text>
+  </g>
+  <g transform="translate(226 73) scale(1)" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g>
+  <g transform="translate(256 0)">
+    <rect width="220" height="170" rx="18" fill="#ffffff" stroke="#dbe2ea" stroke-width="1.5"/>
+    <circle cx="44" cy="46" r="24" fill="#e5f0f7" fill-opacity="1"/>
+    <g transform="translate(30 32) scale(1.1666666666666667)" fill="none" stroke="#005f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></g>
+    <text x="24" y="104" fill="#0f172a" font-size="22" font-weight="800">Styles</text>
+    <text x="24" y="128" fill="#374151" font-size="14">one stylesheet, any site</text>
+    <text x="24" y="150" fill="#6b7280" font-size="12.5" font-weight="700">@ggds/css</text>
+  </g>
+  <g transform="translate(482 73) scale(1)" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g>
+  <g transform="translate(512 0)">
+    <rect width="220" height="170" rx="18" fill="#ffffff" stroke="#dbe2ea" stroke-width="1.5"/>
+    <circle cx="44" cy="46" r="24" fill="#e5f0f7" fill-opacity="1"/>
+    <g transform="translate(30 32) scale(1.1666666666666667)" fill="none" stroke="#005f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></g>
+    <text x="24" y="104" fill="#0f172a" font-size="22" font-weight="800">Components</text>
+    <text x="24" y="128" fill="#374151" font-size="14">30 tested parts</text>
+    <text x="24" y="150" fill="#6b7280" font-size="12.5" font-weight="700">header, forms, cards…</text>
+  </g>
+  <g transform="translate(738 73) scale(1)" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g>
+  <g transform="translate(768 0)">
+    <rect width="220" height="170" rx="18" fill="#ffffff" stroke="#dbe2ea" stroke-width="1.5"/>
+    <circle cx="44" cy="46" r="24" fill="#e5f0f7" fill-opacity="1"/>
+    <g transform="translate(30 32) scale(1.1666666666666667)" fill="none" stroke="#005f8f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3H9z"/><path d="M9 4.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5.5a1 1 0 0 0-1-1h-3"/><path d="M9 11h6M9 15h4"/></g>
+    <text x="24" y="104" fill="#0f172a" font-size="22" font-weight="800">Patterns</text>
+    <text x="24" y="128" fill="#374151" font-size="14">10 whole tasks</text>
+    <text x="24" y="150" fill="#6b7280" font-size="12.5" font-weight="700">apply, complain, search…</text>
+  </g>
+  <g transform="translate(994 73) scale(1)" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g>
+  <g transform="translate(1024 0)">
+    <rect width="220" height="170" rx="18" fill="#005f8f" stroke="#005f8f" stroke-width="1.5"/>
+    <circle cx="44" cy="46" r="24" fill="#ffffff" fill-opacity="0.15"/>
+    <g transform="translate(30 32) scale(1.1666666666666667)" fill="none" stroke="#fcd116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16M6 20V9l6-4 6 4v11"/><path d="M10 20v-5h4v5"/></g>
+    <text x="24" y="104" fill="#ffffff" font-size="22" font-weight="800">Your website</text>
+    <text x="24" y="128" fill="#d6e6f2" font-size="14">in your colour</text>
+    <text x="24" y="150" fill="#fcd116" font-size="12.5" font-weight="700">any framework</text>
+  </g>
+  </g>
+</svg>

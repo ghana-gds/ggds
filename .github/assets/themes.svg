@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1312" height="150" viewBox="0 0 1312 150" role="img" aria-labelledby="t">
+  <title id="t">12 institution themes: MoCDTI, CSA, DPC, GDCL, GDNR, GIFEC, GMet, Ghana Post, GI-KACE, NCA, NITA, PCSRC</title>
+  <rect width="100%" height="150" rx="16" fill="#ffffff" stroke="#dbe2ea"/>
+  <g font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif">
+  <g transform="translate(24 24)">
+    <rect width="98" height="72" rx="10" fill="#005f8f"/>
+    <rect y="62" width="98" height="10" fill="#005d8c"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">MoCDTI</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#005f8f</text>
+  </g>
+  <g transform="translate(130 24)">
+    <rect width="98" height="72" rx="10" fill="#222164"/>
+    <rect y="62" width="98" height="10" fill="#222164"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">CSA</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#222164</text>
+  </g>
+  <g transform="translate(236 24)">
+    <rect width="98" height="72" rx="10" fill="#1276bc"/>
+    <rect y="62" width="98" height="10" fill="#0e5c93"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">DPC</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#1276bc</text>
+  </g>
+  <g transform="translate(342 24)">
+    <rect width="98" height="72" rx="10" fill="#006e35"/>
+    <rect y="62" width="98" height="10" fill="#006732"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">GDCL</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#006e35</text>
+  </g>
+  <g transform="translate(448 24)">
+    <rect width="98" height="72" rx="10" fill="#1848f0"/>
+    <rect y="62" width="98" height="10" fill="#1744e2"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">GDNR</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#1848f0</text>
+  </g>
+  <g transform="translate(554 24)">
+    <rect width="98" height="72" rx="10" fill="#003f87"/>
+    <rect y="62" width="98" height="10" fill="#003f87"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">GIFEC</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#003f87</text>
+  </g>
+  <g transform="translate(660 24)">
+    <rect width="98" height="72" rx="10" fill="#21438c"/>
+    <rect y="62" width="98" height="10" fill="#21438c"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">GMet</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#21438c</text>
+  </g>
+  <g transform="translate(766 24)">
+    <rect width="98" height="72" rx="10" fill="#0c075b"/>
+    <rect y="62" width="98" height="10" fill="#0c075b"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">Ghana Post</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#0c075b</text>
+  </g>
+  <g transform="translate(872 24)">
+    <rect width="98" height="72" rx="10" fill="#0808af"/>
+    <rect y="62" width="98" height="10" fill="#0808af"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">GI-KACE</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#0808af</text>
+  </g>
+  <g transform="translate(978 24)">
+    <rect width="98" height="72" rx="10" fill="#061f45"/>
+    <rect y="62" width="98" height="10" fill="#061f45"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">NCA</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#061f45</text>
+  </g>
+  <g transform="translate(1084 24)">
+    <rect width="98" height="72" rx="10" fill="#00342b"/>
+    <rect y="62" width="98" height="10" fill="#00342b"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">NITA</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#00342b</text>
+  </g>
+  <g transform="translate(1190 24)">
+    <rect width="98" height="72" rx="10" fill="#ca0a15"/>
+    <rect y="62" width="98" height="10" fill="#b20912"/>
+    <rect width="98" height="4" rx="2" fill="#fcd116"/>
+    <text x="49" y="98" text-anchor="middle" fill="#1f2937" font-size="12.5" font-weight="700">PCSRC</text>
+    <text x="49" y="114" text-anchor="middle" fill="#6b7280" font-size="11">#ca0a15</text>
+  </g>
+  </g>
+</svg>
