@@ -1,0 +1,40 @@
+<!-- name: Summary list; status: alpha; order: 36; group: Content; related: table, button, panel; summary: Questions and answers, or labels and values, as a list, with links to change them. For "Check your answers" pages and records. -->
+<p class="ggds-lead">Questions and answers, or labels and values, as a list, with links to change them.</p>
+<h2>When to use</h2>
+<ul>
+<li>On a "Check your answers" page, at the end of a form, so people can check everything before they send it.</li>
+<li>To show a record people can read and update, such as their application, licence or account details.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>To compare several items that share the same columns: use a <a href="table.html">table</a>.</li>
+<li>For a long list of links: use a plain list or <a href="card.html">cards</a>.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Use the same wording for each key as the question it answers, shortened if it is long: "Date of birth", not "What is your date of birth?".</li>
+<li>Show answers the way people gave them, written out in full: "27 March 1990", not "27/03/1990"; "Phone call", not "call".</li>
+<li>Write "Not given" for an optional question left blank, so people can see it was not missed by mistake.</li>
+<li>Give every row its own Change link, and say what it changes with hidden text: <code>Change&lt;span class="ggds-visually-hidden"&gt; date of birth&lt;/span&gt;</code>. Rows people cannot change have no link.</li>
+<li>A Change link goes back to that question with the answer filled in, then returns to the check page.</li>
+<li>Break long check pages into sections with an <code>&lt;h2&gt;</code> above each list, such as "Your details" and "Your complaint".</li>
+<li>Use <code>ggds-summary-list--plain</code>, without lines, for a short list inside a card or under a confirmation panel.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Show every answer, including the ones people left blank.</li><li>Put a Send or Accept button after the last list, with what will happen: "Send complaint".</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use a table for questions and answers: a screen reader reads a table cell by cell, a description list question by answer.</li><li>Write "Change" with no hidden text: ten links all called "Change" make no sense in a list of links.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>It is a description list (<code>&lt;dl&gt;</code>), so screen readers announce each answer with its question (WCAG 1.3.1).</li>
+<li>On phones each row stacks: question, answer, then the link, so nothing is squeezed. From 48rem they sit side by side.</li>
+<li>Long answers, such as an email address or reference, wrap instead of making the page scroll sideways.</li>
+<li>Change links are at least 44px tall.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Add hidden text to every Change link that says what it changes (WCAG 2.4.4).</li>
+<li>Wrap each row in a <code>&lt;div class="ggds-summary-list__row"&gt;</code>, with one <code>&lt;dt&gt;</code> and one or two <code>&lt;dd&gt;</code>.</li>
+<li>Give the page a heading that says what the list is, such as "Check your answers before sending your complaint".</li>
+</ul>

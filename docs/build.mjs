@@ -147,7 +147,8 @@ ${content}
 // example link leads to "not found". The HTML shown for copying keeps the real addresses.
 function exampleLinks(c, e) {
   const dir = join(site, 'examples', c.slug, 'links');
-  return e.body.replace(/<(a|form)\b([^>]*?)\s(href|action)="(\/[^"]*)"([^>]*)>([\s\S]*?)<\/\1>/g, (whole, tag, before, attr, address, after, inside) => {
+  // Links first, then forms, so a link inside a form (such as "I do not have a Ghana Card") is caught too.
+  const rewrite = (body, tags) => body.replace(new RegExp(`<(${tags})\\b([^>]*?)\\s(href|action)="(\\/[^"]*)"([^>]*)>([\\s\\S]*?)<\\/\\1>`, 'g'), (whole, tag, before, attr, address, after, inside) => {
     const path = address.split('#')[0];
     const file = `${e.slug}-${path.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase() || 'home'}.html`;
     const text = inside.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
@@ -161,6 +162,7 @@ function exampleLinks(c, e) {
 </main>` }));
     return `<${tag}${before} ${attr}="links/${file}"${after}>${inside}</${tag}>`;
   });
+  return rewrite(rewrite(e.body, 'a'), 'form');
 }
 
 // Components
@@ -184,6 +186,7 @@ for (const c of components) for (const r of c.related) if (!components.some((x) 
 const STATUS = {
   stable: ['ggds-tag--success', 'Used on live government websites and not expected to change. Any change is listed below and in What’s new.'],
   beta: ['ggds-tag--info', 'Works and is tested, and is used on the MoCDTI platform. It may still change before version 1.0, after research or the accessibility audit.'],
+  alpha: ['ggds-tag--warning', 'New: tested automatically, but not yet used on a live government website. It may change after research with the people who use it. Tell us how it works for you.'],
 };
 
 // The changelog, by version. A line ending in <!-- components: header, hero --> is listed on those components'
@@ -521,11 +524,12 @@ ${tokenTable('size-caption', 'Size tokens', ['size.target', 'size.icon'])}
 ${tokenTable('radius-caption', 'Corner tokens', ['radius'], 'radius')}
 ${tokenTable('shadow-caption', 'Shadow tokens', ['shadow'], 'shadow')}
 <h2>Motion</h2>
-<p class="ggds-measure">Movement is short and explains a change, such as a menu opening. Nothing flashes. The only thing that moves on its own is the optional hero drawing, and only for people who have not asked for less motion (see the <a href="accessibility.html">accessibility statement</a>).</p>
+<p class="ggds-measure">Movement is short and explains a change, such as a menu opening. Nothing flashes. The only thing that moves on its own is the optional hero drawing, only for people who have not asked for less motion, and it stops within 5 seconds.</p>
 <ul class="ggds-measure">
 <li>Animate only inside <code>@media (prefers-reduced-motion: no-preference)</code>, so people who ask their device for less motion get none.</li>
 <li>Use the duration and easing tokens, so movement feels the same everywhere.</li>
 <li>Never make people wait for an animation before they can act.</li>
+<li>Anything that moves on its own must stop within 5 seconds, or have a pause button (WCAG 2.2.2). A finite <code>animation-iteration-count</code> does it without JavaScript; never use <code>infinite</code>.</li>
 </ul>
 ${tokenTable('motion-caption', 'Motion tokens', ['motion'])}
 <h2>Layers</h2>
@@ -728,6 +732,14 @@ FORM_RENDERER = "ggds_django.forms.GGDSFormRenderer"</code></pre>
 {% ggds_pagination page_obj %}
 {% ggds_footer name="National Communications Authority" sections=sections links=links %}</code></pre>
 <p>For Django admin in GGDS colours with your institution's header, add <code>"ggds_django.admin_theme"</code> above <code>"django.contrib.admin"</code> and set <code>GGDS_ADMIN = {"theme": "nca", "name": "National Communications Authority"}</code>. See every tag in <code>packages/django/README.md</code>. <code>pnpm run test:django</code> renders an example site with it at <code>/django/index.html</code>.</p>
+<h2 id="wordpress">Use it with WordPress</h2>
+<p>Download <code>ggds-wordpress-${version}.zip</code> from the <a href="${repo}/releases">releases page</a>, then in WordPress go to <strong>Appearance &gt; Themes &gt; Add New Theme &gt; Upload Theme</strong>. It is a classic theme that outputs GGDS's own markup: the banner, header, homepage hero, footer, tab bar, pages with breadcrumbs, news, search and "page not found".</p>
+<ul>
+<li>Set your institution's short name, theme, official address and contact details in <strong>Appearance &gt; Customise &gt; GGDS</strong>, and your logo in <strong>Site identity</strong>.</li>
+<li>Make four menus: main sections, common tasks, footer sections and footer links.</li>
+<li>Its front end has no inline scripts or styles, so you can serve it with a strict Content Security Policy. Every template is tested with axe in a real WordPress.</li>
+</ul>
+<p>The full set-up is in the theme's <a href="${repo}/tree/main/packages/wordpress#readme">README</a>.</p>
 <h2>Next steps</h2>
 <ul>
 <li>Pick the parts you need from <a href="../components/index.html">Components</a>. Each page says when to use it and has the HTML to copy.</li>

@@ -59,10 +59,27 @@ script, each item linking to its field, a radio group's to its first option), th
 | `Textarea`, `Select`, `FileInput` | the same with `ggds-textarea`, `ggds-select`, `ggds-file-upload` |
 | `RadioSelect`, `CheckboxSelectMultiple` | a `ggds-fieldset` with a legend and `ggds-choices` |
 | `CheckboxInput` | a single `ggds-choice` |
+| `GGDSDateField` | a `ggds-fieldset` with day, month and year boxes (`ggds-date-input`) |
 
 Each control gets `aria-describedby` (hint, then error) and, with an error, `aria-invalid="true"`. Errors start
 with a hidden "Error:". Fields that are not required say "(optional)". Set `autocomplete` on personal details with
 the widget's `attrs`. One field: `{{ form.phone.as_field_group }}`.
+
+### Dates people know
+
+```python
+from ggds_django.forms import GGDSDateField
+
+class ApplicationForm(forms.Form):
+    date_of_birth = GGDSDateField(label="What is your date of birth?", name="date of birth", birthday=True,
+                                  help_text="For example, 27 3 1990")
+```
+
+`cleaned_data["date_of_birth"]` is a `datetime.date`. The month can be typed as 3, 03, March or Mar. Errors use
+`name`: "Enter date of birth", "Date of birth must include a year", "Year must include 4 numbers", "Date of birth
+must be a real date", and with `birthday=True` or `past=True`, "Date of birth must be in the past". Only the boxes
+with the problem are marked invalid, and the error summary links to the first of them. `birthday=True` also adds
+`autocomplete="bday-day"` and so on.
 
 ## Page parts
 
@@ -74,6 +91,8 @@ the widget's `attrs`. One field: `{{ form.phone.as_field_group }}`.
 | `{% ggds_header name nav %}` | Logo or initials, name, sections, Search |
 | `{% ggds_hero title purpose lede search_action tasks %}` | Homepage hero |
 | `{% ggds_breadcrumbs crumbs %}` | Trail ending with the current page |
+| `{% ggds_summary_list rows %}` | Check answers: rows of `{"key", "value", "href"}`; an empty value shows "Not given", and each Change link says what it changes. `plain=True` for no lines |
+| `{% ggds_panel "Complaint sent" reference=ref %}` | Confirmation panel: the page's `<h1>` and the reference number |
 | `{% ggds_pagination page_obj %}` | From Django's `Paginator`; keeps other query parameters |
 | `{% ggds_footer name purpose address email phone sections links %}` | Footer |
 | `{% ggds_tab_bar tabs %}` | Phone quick links: each tab has an `icon` |

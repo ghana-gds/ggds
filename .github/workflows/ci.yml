@@ -37,9 +37,24 @@ jobs:
           name: playwright-report
           path: playwright-report/
 
+  # The WordPress theme in a real WordPress (Docker): axe on every template, a strict CSP, the same markup.
+  wordpress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run build
+      - run: pnpm run test:wordpress
+
   # The documentation website, from main only and only after every test has passed.
   docs:
-    needs: test
+    needs: [test, wordpress]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:

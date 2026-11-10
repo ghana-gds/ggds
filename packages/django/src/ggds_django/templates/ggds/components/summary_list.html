@@ -1,0 +1,7 @@
+<dl class="ggds-summary-list{% if plain %} ggds-summary-list--plain{% endif %}">
+  {% for r in rows %}<div class="ggds-summary-list__row">
+    <dt class="ggds-summary-list__key">{{ r.key }}</dt>
+    <dd class="ggds-summary-list__value">{{ r.value }}</dd>{% if r.href %}
+    <dd class="ggds-summary-list__actions"><a href="{{ r.href }}">{{ r.action }}<span class="ggds-visually-hidden"> {{ r.label }}</span></a></dd>{% endif %}
+  </div>
+  {% endfor %}</dl>

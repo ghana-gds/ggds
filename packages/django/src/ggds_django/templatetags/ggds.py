@@ -10,6 +10,8 @@ Page parts (they output the same markup as the GGDS documentation and @ggds/astr
     {% ggds_pagination page_obj %}
     {% ggds_footer name="..." sections=sections links=links %}
     {% ggds_tab_bar tabs %}
+    {% ggds_summary_list rows %}      questions and answers, with Change links
+    {% ggds_panel "Complaint sent" reference=ref %}
 Forms (GGDSFormRenderer uses these; you rarely need them yourself):
     {% ggds_error_summary form %}, {{ field|ggds_widget }}, {{ field|ggds_choices }}
 
@@ -27,6 +29,7 @@ from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 
+from ..forms import PARTS, GGDSDateWidget
 from ..icons import icon
 
 register = template.Library()
@@ -183,7 +186,11 @@ CHOICE_WIDGETS = (forms.RadioSelect, forms.CheckboxSelectMultiple)
 
 
 def _first_id(field) -> str:
-    """The id an error summary links to: the control itself, or a group's first option, which can take focus."""
+    """The id an error summary links to: the control itself, a group's first option, or a date's first box with
+    the problem, each of which can take focus."""
+    if isinstance(field.field.widget, GGDSDateWidget):
+        bad = getattr(field.field, "invalid_parts", ()) or PARTS
+        return f"{field.auto_id}_{PARTS.index(bad[0])}"
     if isinstance(field.field.widget, CHOICE_WIDGETS):
         return f"{field.auto_id}_0"
     return field.id_for_label
@@ -192,6 +199,8 @@ def _first_id(field) -> str:
 @register.filter
 def ggds_kind(field) -> str:
     widget = field.field.widget
+    if isinstance(widget, GGDSDateWidget):
+        return "date"
     if isinstance(widget, CHOICE_WIDGETS):
         return "choices"
     if isinstance(widget, forms.CheckboxInput):
@@ -248,6 +257,26 @@ def ggds_choices(field) -> list[dict]:
     return out
 
 
+@register.filter
+def ggds_date_parts(field) -> list[dict]:
+    """The day, month and year boxes of a GGDSDateField, each with its label; only the parts with the problem
+    are marked invalid."""
+    widget = field.field.widget
+    value = field.value()
+    values = value if isinstance(value, (list, tuple)) else widget.decompress(value)
+    invalid = (getattr(field.field, "invalid_parts", ()) or PARTS) if field.errors else ()
+    out = []
+    for i, (part, box) in enumerate(zip(PARTS, widget.widgets)):
+        attrs = {"class": "ggds-input ggds-date-input__input" + (" ggds-date-input__input--year" if part == "year" else ""),
+                 "id": f"{field.auto_id}_{i}", "name": f"{field.html_name}_{i}", "type": "text", **box.attrs}
+        if values[i] not in (None, ""):
+            attrs["value"] = str(values[i])
+        if part in invalid:
+            attrs["aria-invalid"] = "true"
+        out.append({"id": attrs["id"], "label": part.capitalize(), "input": format_html("<input{}>", flatatt(attrs))})
+    return out
+
+
 @register.inclusion_tag("ggds/forms/error_summary.html")
 def ggds_error_summary(form, title: str = "There is a problem"):
     """Every problem in the form, each linking to its field. data-ggds-module: @ggds/js focuses it on load."""
@@ -264,3 +293,23 @@ def ggds_error_title(form, title: str) -> str:
     return f"Error: {title}" if form.errors else title
 
 
+# --- Summary list and confirmation panel -------------------------------------------------------------------
+
+@register.inclusion_tag("ggds/components/summary_list.html")
+def ggds_summary_list(rows, plain: bool = False):
+    """Rows as dicts: key, value, and optionally href and label (what the Change link changes; default: the key
+    in lower case). A missing or empty value shows "Not given"."""
+    out = []
+    for r in rows:
+        r = dict(r)
+        value = r.get("value")
+        out.append({"key": r["key"], "value": value if value not in (None, "") else "Not given",
+                    "href": r.get("href", ""), "label": r.get("label") or str(r["key"]).lower(),
+                    "action": r.get("action", "Change")})
+    return {"rows": out, "plain": plain}
+
+
+@register.inclusion_tag("ggds/components/panel.html")
+def ggds_panel(title: str, reference: str = "", reference_label: str = "Your reference number"):
+    """The confirmation panel: the page's <h1>, and the reference people need later."""
+    return {"title": title, "reference": reference, "reference_label": reference_label}

@@ -1,0 +1,45 @@
+<!-- name: Date input; status: alpha; order: 24; group: Forms; related: field, error-summary, summary-list; summary: Three boxes for day, month and year, for dates people already know, such as their date of birth. -->
+<p class="ggds-lead">Three boxes for day, month and year, for dates people already know, such as their date of birth.</p>
+<h2>When to use</h2>
+<ul>
+<li>For dates people know or can find on a document: their date of birth, the date on a receipt, when something happened.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>For booking a date in the next few weeks: show the dates people can choose as <a href="choices.html">radios</a>, such as available appointment days.</li>
+<li>When you only need a month and year, or a year: leave out the boxes you do not need.</li>
+<li>With a calendar pop-up or the browser's date picker (<code>type="date"</code>) for dates of birth: they are slow to use for a date 30 years ago, look different in every browser, and are hard to use with some screen readers.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Ask the question in the <code>&lt;legend&gt;</code>, and give an example in the hint, written the way people type it: "For example, 27 3 1990".</li>
+<li>Label each box: Day, Month, Year. Use <code>inputmode="numeric"</code> so phones show the number keypad, and not <code>type="number"</code>, which drops leading zeros and changes the value when people scroll.</li>
+<li>For a date of birth, add <code>autocomplete="bday-day"</code>, <code>"bday-month"</code> and <code>"bday-year"</code>, so browsers can fill it in.</li>
+<li>Accept what people type: "3" or "03" for March, and month names such as "March" or "Mar". Remove spaces before checking.</li>
+<li>Give the year box <code>ggds-date-input__input--year</code>, so it is wider. The width shows people the format.</li>
+<li>Show the date back in full, on a check page: "27 March 1990".</li>
+</ul>
+<h2>Error messages</h2>
+<p>Say what is wrong and how to fix it. Highlight only the boxes with the problem (<code>aria-invalid="true"</code>), and link the error summary to the first of them.</p>
+<ul>
+<li>Nothing entered: "Enter your date of birth".</li>
+<li>A part missing: "Date of birth must include a year".</li>
+<li>Not a real date: "Date of birth must be a real date".</li>
+<li>In the future: "Date of birth must be in the past".</li>
+<li>A year with two digits: "Year must include 4 numbers".</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Accept "3", "03" and "March" for the month.</li><li>Keep what people typed when you show an error.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use one box with a format such as DD/MM/YYYY: people type dates in many ways.</li><li>Move the cursor to the next box automatically: it surprises people and gets in the way of corrections.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>Each box is at least 44px tall, with 16px text, so phones do not zoom in.</li>
+<li>The boxes wrap onto a new line on very narrow screens.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Put the boxes in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, and point the fieldset's <code>aria-describedby</code> at the hint and any error, so the question is read with every box (WCAG 1.3.1, 3.3.2).</li>
+<li>Give each box its own visible label.</li>
+</ul>

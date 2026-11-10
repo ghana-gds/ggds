@@ -70,6 +70,9 @@ unbuilt sources are in `src/`.
 | `navigation.css` | Breadcrumbs, pagination, tab links |
 | `button.css` | Buttons |
 | `field.css` | Labels, hints, error messages, text inputs, textareas, selects, file upload, radios and checkboxes |
+| `date-input.css` | Date input: day, month and year |
+| `summary-list.css` | Summary list, for check answers pages and records |
+| `panel.css` | Confirmation panel |
 | `error-summary.css` | Error summary |
 | `card.css` | Cards and card grids |
 | `notice.css` | Notices |

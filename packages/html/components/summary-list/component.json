@@ -1,0 +1,16 @@
+{
+  "css": "summary-list",
+  "javascript": null,
+  "classes": [
+    [".ggds-summary-list", "The list: a <dl>."],
+    [".ggds-summary-list__row", "One question and answer: a <div> holding the key, the value and any action."],
+    [".ggds-summary-list__key", "The question or label: a <dt>."],
+    [".ggds-summary-list__value", "The answer: a <dd>. It can hold paragraphs or a list."],
+    [".ggds-summary-list__actions", "The Change link: a <dd>. Leave it out for rows people cannot change."],
+    [".ggds-summary-list--plain", "No lines between rows, for a short list inside a card or under a panel."]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{# rows: dicts with key, value, and optionally href and label (what the link changes) #}\n{% ggds_summary_list rows %}",
+  "tests": []
+}

@@ -1,0 +1,18 @@
+{
+  "css": "date-input",
+  "javascript": null,
+  "classes": [
+    [".ggds-date-input", "The three boxes, side by side. Inside a .ggds-fieldset in a .ggds-field."],
+    [".ggds-date-input__item", "One box and its label."],
+    [".ggds-date-input__label", "Day, Month or Year."],
+    [".ggds-date-input__input", "One box, used with .ggds-input: wide enough for two digits."],
+    [".ggds-date-input__input--year", "The year box: wide enough for four digits."]
+  ],
+  "states": [
+    [":focus-visible", "The gold focus ring and a dark border, as for text inputs."],
+    ["aria-invalid=\"true\"", "A red border on the boxes with the problem."]
+  ],
+  "astro": null,
+  "django": "{# GGDSDateField renders as a date input with GGDSFormRenderer #}\nfrom ggds_django.forms import GGDSDateField\n\ndate_of_birth = GGDSDateField(label=\"What is your date of birth?\", help_text=\"For example, 27 3 1990\")",
+  "tests": []
+}

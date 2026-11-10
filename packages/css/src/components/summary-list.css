@@ -1,0 +1,80 @@
+/*
+ * Summary list: pairs of a question (or label) and its answer, with an optional link to change it. For "Check your
+ * answers" pages and for showing a record, such as an application's details. A description list, so screen
+ * readers announce each answer with its question. One column on phones; label, answer and action side by side
+ * from 48rem.
+ */
+.ggds-summary-list {
+  margin: 0 0 var(--ggds-space-8);
+  padding: 0;
+}
+
+.ggds-summary-list__row {
+  padding-block: var(--ggds-space-3);
+  border-bottom: 1px solid var(--ggds-color-border-subtle);
+}
+
+.ggds-summary-list__row:first-child {
+  border-top: 1px solid var(--ggds-color-border-subtle);
+}
+
+.ggds-summary-list__key,
+.ggds-summary-list__value,
+.ggds-summary-list__actions {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.ggds-summary-list__key {
+  margin-bottom: var(--ggds-space-1);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-summary-list__value > :first-child {
+  margin-top: 0;
+}
+
+.ggds-summary-list__value > :last-child {
+  margin-bottom: 0;
+}
+
+.ggds-summary-list__actions {
+  margin-top: var(--ggds-space-2);
+}
+
+/* Change links are at least the height of a touch target, so they are easy to tap on a phone. */
+.ggds-summary-list__actions a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+}
+
+/* No lines between rows: for a short list inside a card or panel. */
+.ggds-summary-list--plain .ggds-summary-list__row,
+.ggds-summary-list--plain .ggds-summary-list__row:first-child {
+  border: 0;
+  padding-block: var(--ggds-space-1);
+}
+
+@media (min-width: 48rem) {
+  .ggds-summary-list__row {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 2fr);
+    gap: var(--ggds-space-4);
+    align-items: baseline;
+  }
+
+  .ggds-summary-list__key {
+    margin-bottom: 0;
+  }
+
+  .ggds-summary-list__actions {
+    margin-top: 0;
+    text-align: end;
+  }
+
+  /* A row without an action keeps the answer in its column. */
+  .ggds-summary-list__value:last-child {
+    grid-column: 2 / -1;
+  }
+}

@@ -1,0 +1,36 @@
+<!-- name: Confirmation panel; status: alpha; order: 25; group: Forms; related: summary-list, notice, button; summary: The top of the page people see when they have finished a task: that it worked, and their reference number. -->
+<p class="ggds-lead">The top of the page people see when they have finished a task: that it worked, and their reference number.</p>
+<h2>When to use</h2>
+<ul>
+<li>On the confirmation page at the end of a service: after people send an application, a complaint, a payment or a booking.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>For any other message: use a <a href="notice.html">notice</a>. A green panel means "you have finished", and it loses that meaning if it appears elsewhere.</li>
+<li>For a task that did not work: show the problem and what to do, never a panel.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Make the panel's title the page's <code>&lt;h1&gt;</code>, and say what happened in a few words: "Complaint sent", "Payment received", "Application submitted".</li>
+<li>Give the reference number in the panel, in <code>ggds-panel__reference</code>, if people may need it later. Keep references short, and avoid letters that look like numbers (O and 0, I and 1).</li>
+<li>Under the panel, say what happens next and when: "We will reply by SMS within 10 working days". Then say how to get help, with the reference.</li>
+<li>Say whether you sent a confirmation by SMS or email. Many people will not have a printer: tell them to write the reference down or take a screenshot.</li>
+<li>Do not ask people to do anything else in the panel. Put any next step, such as paying a fee, below it with a button.</li>
+<li>Do not use the browser's Back button to return to the form: the confirmation page is the end. Show the panel once, and send people who reload it to the same page, not to a second submission.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Write "Your reference number" and the reference on its own line.</li><li>Say what happens next, under the panel.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Write "Success!" or "Thank you for your submission".</li><li>Use the panel for warnings or general information.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>White text on the success green has 6.6 to 1 contrast, checked by GGDS's tests (WCAG 1.4.3).</li>
+<li>The reference breaks onto a new line rather than making a 320px screen scroll sideways (WCAG 1.4.10).</li>
+<li>In Windows contrast themes the panel keeps a border, and when printed it prints as black text in a box.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Make the panel's title the page's only <code>&lt;h1&gt;</code>, and start the page <code>&lt;title&gt;</code> with it too, so screen reader users hear straight away that it worked.</li>
+<li>Do not rely on the green colour: the words must say it worked (WCAG 1.4.1).</li>
+</ul>

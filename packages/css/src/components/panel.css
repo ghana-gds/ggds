@@ -1,0 +1,54 @@
+/*
+ * Confirmation panel: the top of the page people see when they have finished a task. It says that it worked and
+ * gives the reference number they need later. White text on the success green (6.6 to 1, checked in tokens.json).
+ * The title is the page's <h1>.
+ */
+.ggds-panel {
+  margin-bottom: var(--ggds-space-8);
+  padding: var(--ggds-space-6) var(--ggds-space-4);
+  border-radius: var(--ggds-radius-md);
+  background: var(--ggds-color-status-success-strong);
+  color: var(--ggds-color-text-inverse);
+  text-align: center;
+}
+
+.ggds-panel__title {
+  margin: 0 0 var(--ggds-space-3);
+  color: inherit;
+  font-size: var(--ggds-font-size-3xl);
+  line-height: var(--ggds-line-height-tight);
+}
+
+.ggds-panel__body {
+  margin: 0;
+  font-size: var(--ggds-font-size-xl);
+}
+
+/* The reference: large and bold, and broken anywhere rather than overflowing a 320px screen. */
+.ggds-panel__reference {
+  display: block;
+  margin-top: var(--ggds-space-1);
+  font-weight: var(--ggds-font-weight-bold);
+  letter-spacing: 0.05em;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 48rem) {
+  .ggds-panel {
+    padding: var(--ggds-space-8);
+  }
+}
+
+@media (forced-colors: active) {
+  .ggds-panel {
+    border: 2px solid CanvasText;
+  }
+}
+
+@media print {
+  .ggds-panel {
+    border: 2px solid currentColor;
+    background: none;
+    color: inherit;
+  }
+}

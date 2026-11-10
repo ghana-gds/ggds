@@ -6,16 +6,22 @@
 
 /** themes: [{ shortName, accent, deep }]. Returns the SVG markup and the CSS it needs. */
 export function heroArt(themes) {
-  const cycle = themes.slice(0, 6);
+  // Every movement ends within 5 seconds, then the drawing stays still (WCAG 2.2.2): the page assembles, then three
+  // themes show for a second each, ending on the first.
+  const cycle = themes.slice(0, 3);
   const n = cycle.length;
   const step = 100 / n;
   const pct = (x) => `${Math.round(x * 100) / 100}%`;
   // Hold each theme, then change quickly to the next.
   const frames = (prop, key) => cycle.map((t, i) => `${pct(i * step)}, ${pct((i + 1) * step - 1.5)} { ${prop}: ${t[key]}; }`).join(' ') + ` 100% { ${prop}: ${cycle[0][key]}; }`;
-  const seconds = n * 2.6;
+  const slot = 0.95;
+  const seconds = Math.round(n * slot * 100) / 100;
+  const start = 2.05;
+  const t = (x) => Math.round(x * 100) / 100;
   const labels = cycle.map((t, i) => `<text class="ga-theme-name ga-theme-name--${i}" x="280" y="471" text-anchor="middle">Theme: ${t.shortName}</text>`).join('');
-  const labelCss = cycle.map((_, i) => `.ga-theme-name--${i} { animation: ga-label ${seconds}s linear ${3.2 - seconds + i * (seconds / n)}s infinite; }`).join('\n');
-  const show = pct(step - 1.5);
+  // Each label shows during its theme's second. The first shows before and after, and hides while the others show.
+  const labelCss = [`.ga-theme-name--0 { animation: ga-hide ${t((n - 1) * slot)}s linear ${t(start + slot)}s 1; }`,
+    ...cycle.slice(1).map((_, j) => `.ga-theme-name--${j + 1} { animation: ga-label ${slot}s linear ${t(start + (j + 1) * slot)}s 1; }`)].join('\n');
 
   const svg = `<svg class="ga" viewBox="0 0 560 490" focusable="false" role="presentation">
   <defs>
@@ -88,7 +94,7 @@ export function heroArt(themes) {
 /* Homepage hero drawing (docs/hero-art.mjs) */
 .ga { display: block; width: 100%; max-width: 560px; height: auto; margin-inline: auto; overflow: visible; font-family: var(--ggds-font-family-sans); }
 .ga-shadow { fill: var(--ggds-color-text); opacity: .35; }
-.ga-orbit { fill: none; stroke: var(--ggds-color-text-inverse); stroke-opacity: .2; stroke-width: 2; stroke-dasharray: 5 12; transform-origin: 280px 250px; animation: ga-drift 18s linear infinite; }
+.ga-orbit { fill: none; stroke: var(--ggds-color-text-inverse); stroke-opacity: .2; stroke-width: 2; stroke-dasharray: 5 12; transform-origin: 280px 250px; }
 .ga-page { fill: var(--ggds-color-surface); }
 .ga-page-edge { fill: none; stroke: var(--ggds-color-text-inverse); stroke-opacity: .5; stroke-width: 2; }
 .ga-sunken { fill: var(--ggds-color-surface-sunken); }
@@ -114,15 +120,15 @@ export function heroArt(themes) {
 .ga-theme-name { fill: var(--ggds-color-text-inverse); font-size: 15px; font-weight: 700; opacity: 0; }
 .ga-theme-name--0 { opacity: 1; }
 @media (prefers-reduced-motion: no-preference) {
-  .ga-float { animation: ga-float 7s ease-in-out infinite; }
+  .ga-orbit { animation: ga-drift 18s linear 0.27 forwards; }
+  .ga-float { animation: ga-float 7s ease-in-out 0.7 forwards; }
   .ga-part { opacity: 0; animation: ga-in .6s cubic-bezier(.2,.8,.2,1) forwards; }
   .ga-part--1 { animation-delay: .2s; } .ga-part--2 { animation-delay: .55s; } .ga-part--3 { animation-delay: .9s; }
   .ga-part--4 { animation-delay: 1.25s; } .ga-part--5 { animation-delay: 1.6s; } .ga-part--6 { animation-delay: 1.95s; }
-  .ga-accent { animation: ga-accent ${seconds}s linear 3.2s infinite; }
-  .ga-deep { animation: ga-deep ${seconds}s linear 3.2s infinite; }
-  .ga-theme-name--0 { opacity: 0; }
+  .ga-accent { animation: ga-accent ${seconds}s linear ${start}s 1; }
+  .ga-deep { animation: ga-deep ${seconds}s linear ${start}s 1; }
   ${labelCss}
-  .ga-bit { animation: ga-bob 6s ease-in-out infinite; }
+  .ga-bit { animation: ga-bob 4.8s ease-in-out 1; }
   .ga-bit--field { animation-delay: -1.5s; } .ga-bit--tag { animation-delay: -3s; } .ga-bit--check { animation-delay: -4.5s; }
   .ga-check { stroke-dasharray: 48; stroke-dashoffset: 48; animation: ga-draw 1s ease-out 2.6s forwards; }
 }
@@ -133,7 +139,8 @@ export function heroArt(themes) {
 @keyframes ga-draw { to { stroke-dashoffset: 0; } }
 @keyframes ga-accent { ${frames('fill', 'accent')} }
 @keyframes ga-deep { ${frames('fill', 'deep')} }
-@keyframes ga-label { 0%, ${show} { opacity: 1; } ${pct(step)}, 100% { opacity: 0; } }
+@keyframes ga-label { 0%, 92% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes ga-hide { from, to { opacity: 0; } }
 `;
   return { svg, css };
 }

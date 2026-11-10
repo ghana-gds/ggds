@@ -1,0 +1,58 @@
+<!-- name: Ask for an address; order: 10; components: field, error-summary, button; summary: Ask for the GhanaPostGPS digital address, directions in people's own words, the town and the region, and never force a street number or postcode. -->
+<p class="ggds-lead">Ask for the GhanaPostGPS digital address, directions in people's own words, the town and the region, and never force a street number or postcode.</p>
+<h2>When to use</h2>
+<ul>
+<li>When you need to visit people, deliver something to them, or know which district office deals with them.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>When you only need to know the region or district, such as to send people to the right office. Ask for that alone.</li>
+<li>When you will only contact people by phone, SMS or email. Only collect the personal data you need.</li>
+</ul>
+<h2>How it works</h2>
+<p>Ask for the address on one page, with the question as the page heading, such as "What is your address?"</p>
+<ol>
+<li><strong>Digital address.</strong> The GhanaPostGPS address, in a medium-width box. Make it optional unless everyone using your service must have one.</li>
+<li><strong>Address or directions.</strong> A text box where people describe where they live in their own words: house number and street if there are any, the area, and a landmark near it.</li>
+<li><strong>Town or city.</strong> A text box.</li>
+<li><strong>Region.</strong> A select with the 16 regions of Ghana, in alphabetical order.</li>
+</ol>
+<h2>Addresses in Ghana</h2>
+<ul>
+<li>Many places do not have a street name or a house number. People give directions instead: "behind the Methodist church", "the blue gate after the filling station". Accept this as a full answer.</li>
+<li>Do not make house number or street required, and do not ask for a postcode or ZIP code. Address forms copied from other countries often do.</li>
+<li>Do not use an address form made for another country: it will ask for things people do not have, and reject what they do have.</li>
+<li>Where people live and where they get letters are different. A post office box (P.O. Box) is a postal address, not a home. Ask only for the one you need, and say which one you mean, such as "Where do you live?" or "What is your postal address?"</li>
+</ul>
+<h2>The digital address</h2>
+<ul>
+<li>A GhanaPostGPS digital address is two letters, then numbers, such as GA-000-0000. Say this in the hint, with an example that is clearly not real.</li>
+<li>Tell people how to find theirs, such as in the GhanaPostGPS app, if they may not know it.</li>
+<li>Accept it with or without hyphens and spaces, and in capitals or small letters. Tidy it before you check it: remove spaces, change small letters to capitals, and put the hyphens back.</li>
+<li>Check its shape only: two letters, a hyphen, 3 or 4 digits, a hyphen and 4 digits. Do not reject an address because you do not recognise its letters.</li>
+<li>Do not make people use a map or share their location to find their address. It uses mobile data, does not work for everyone, and cannot be used with a screen reader. Offer it only as an extra.</li>
+<li>Add <code>autocomplete="off"</code>, <code>spellcheck="false"</code> and <code>autocapitalize="characters"</code>. There is no <code>autocomplete</code> value for a digital address, and browsers would fill in the wrong thing.</li>
+</ul>
+<h2>The other fields</h2>
+<ul>
+<li>Use a textarea for "Address or directions", with <code>autocomplete="street-address"</code>. Give it at least 3 rows, and do not limit it to a few characters.</li>
+<li>Add <code>autocomplete="address-level2"</code> to the town or city, and <code>autocomplete="address-level1"</code> to the region.</li>
+<li>Use a select for the region, because there are 16 of them: Ahafo, Ashanti, Bono, Bono East, Central, Eastern, Greater Accra, North East, Northern, Oti, Savannah, Upper East, Upper West, Volta, Western and Western North.</li>
+<li>Only ask for the district if you need it, and then as a select that depends on the region, on the next page.</li>
+<li>Show the address back on the check answers page as people wrote it, one part to a line.</li>
+</ul>
+<h2>Error messages</h2>
+<p>Use these messages in the error summary and next to the field.</p>
+<ul>
+<li>If the digital address is required and empty: "Enter your digital address, such as GA-000-0000".</li>
+<li>If the digital address is the wrong shape: "Enter a digital address in the right format, such as GA-000-0000".</li>
+<li>If the address or directions are empty: "Enter your address or directions to where you live".</li>
+<li>If the town or city is empty: "Enter your town or city".</li>
+<li>If no region is chosen: "Select your region".</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Follow the accessibility advice in the <a href="ask-for-information.html">ask for information</a> pattern: a unique page title, the question as the heading, and a Back link.</li>
+<li>Give every field its own visible label. Do not use one label for several boxes.</li>
+<li>Mark optional fields with "(optional)" in the label, rather than marking required fields with a star.</li>
+</ul>

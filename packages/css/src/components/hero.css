@@ -284,12 +284,14 @@
 .ggds-hero-art__node { fill: var(--ggds-color-flag-gold); stroke: var(--ggds-color-text-inverse); stroke-width: 3; }
 .ggds-hero-art__pulse { fill: none; stroke: var(--ggds-color-flag-gold); stroke-width: 2; opacity: .45; transform-origin: 326px 215px; }
 
+/* Every movement ends within 5 seconds of the page loading, then the drawing stays still, so it needs no pause
+   button (WCAG 2.2.2 Pause, Stop, Hide). Fractions of an iteration stop each part part-way, where it is. */
 @media (prefers-reduced-motion: no-preference) {
-  .ggds-hero-art__orbit { animation: ggds-hero-art-turn 16s linear infinite; }
-  .ggds-hero-art__orbit--reverse { animation-direction: reverse; animation-duration: 20s; }
-  .ggds-hero-art__plane { animation: ggds-hero-art-float 7s ease-in-out infinite; }
+  .ggds-hero-art__orbit { animation: ggds-hero-art-turn 16s linear 0.3 forwards; }
+  .ggds-hero-art__orbit--reverse { animation-direction: reverse; animation-duration: 20s; animation-iteration-count: 0.24; }
+  .ggds-hero-art__plane { animation: ggds-hero-art-float 7s ease-in-out 0.65 forwards; }
   .ggds-hero-art__plane--front { animation-delay: .35s; animation-direction: reverse; }
-  .ggds-hero-art__pulse { opacity: 0; animation: ggds-hero-art-pulse 3.6s ease-out infinite; }
+  .ggds-hero-art__pulse { opacity: 0; animation: ggds-hero-art-pulse 2.4s ease-out 1; }
   .ggds-hero-art__pulse:nth-child(2) { animation-delay: 1.2s; }
   .ggds-hero-art__pulse:nth-child(3) { animation-delay: 2.4s; }
 }

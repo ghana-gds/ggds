@@ -41,3 +41,12 @@ test('ggds.css puts base and components in cascade layers', () => {
   assert.match(css, /@layer ggds\.base, ggds\.components;/);
   assert.ok(css.length < 60_000, `ggds.css is ${css.length} bytes`);
 });
+
+// WCAG 2.2.2 (Pause, Stop, Hide): anything that moves on its own must stop within 5 seconds, or have a pause
+// button. GGDS has no pause buttons, so nothing may repeat for ever. (The browser tests also time it.)
+test('no animation repeats for ever', async () => {
+  const { heroArt } = await import('../../docs/hero-art.mjs');
+  const docs = [['docs/docs.css', readFileSync(new URL('../../docs/docs.css', import.meta.url), 'utf8')],
+    ['docs/hero-art.mjs', heroArt([{ shortName: 'A', accent: '#005f8f', deep: '#004466' }]).css]];
+  for (const [name, css] of [...sources, ...docs]) assert.doesNotMatch(strip(css), /\binfinite\b/, name);
+});

@@ -1,0 +1,17 @@
+/*
+Theme Name: GGDS
+Theme URI: https://ghana-gds.github.io/ggds/
+Author: Ghana Government Design System (GGDS) contributors
+Author URI: https://github.com/ghana-gds/ggds
+Description: The Ghana Government Design System for WordPress. GGDS's own markup and styles, accessible (WCAG 2.2 AA in automated tests), fast on low-cost phones, and ready for a strict Content Security Policy. Set your institution's details in Appearance > Customise > GGDS.
+Version: 0.1.1
+Requires at least: 6.5
+Tested up to: 6.8
+Requires PHP: 8.1
+License: Apache-2.0
+License URI: https://www.apache.org/licenses/LICENSE-2.0
+Text Domain: ggds
+Tags: accessibility-ready, one-column, custom-logo, custom-menu, block-styles, editor-style
+*/
+
+/* The styles are in assets/ggds.min.css, loaded by functions.php. This file only names the theme. */

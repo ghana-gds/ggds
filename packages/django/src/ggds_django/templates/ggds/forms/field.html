@@ -11,6 +11,21 @@
     </div>
   </fieldset>
 </div>
+{% elif kind == "date" %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
+  <fieldset class="ggds-fieldset" role="group"{% if described %} aria-describedby="{{ described }}"{% endif %}>
+    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</legend>
+    {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+    <div class="ggds-date-input">
+      {% for part in field|ggds_date_parts %}<div class="ggds-date-input__item">
+        <label class="ggds-date-input__label" for="{{ part.id }}">{{ part.label }}</label>
+        {{ part.input }}
+      </div>
+      {% endfor %}
+    </div>
+  </fieldset>
+</div>
 {% elif kind == "checkbox" %}
 <div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
   {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}

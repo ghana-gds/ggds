@@ -1,0 +1,17 @@
+<!-- title: A question page after a failed submit; layout: main; height: 580 -->
+<p><a href="/apply/address/">Back</a></p>
+<div class="ggds-error-summary" data-ggds-module="error-summary" role="alert" aria-labelledby="phone-error-title" tabindex="-1">
+  <h2 class="ggds-error-summary__title" id="phone-error-title">There is a problem</h2>
+  <ul class="ggds-error-summary__list">
+    <li><a href="#phone-number-error-field">Enter a phone number with 10 digits, such as 024 000 0000</a></li>
+  </ul>
+</div>
+<form action="/apply/email/" method="post" novalidate>
+  <div class="ggds-field ggds-field--error">
+    <h1><label class="ggds-label ggds-label--page" for="phone-number-error-field">What is your phone number?</label></h1>
+    <p class="ggds-hint" id="phone-number-error-field-hint">We will send you an SMS when we have made a decision. For example, 024 000 0000 or +233 24 000 0000.</p>
+    <p class="ggds-error-message" id="phone-number-error-field-error"><span class="ggds-visually-hidden">Error:</span> Enter a phone number with 10 digits, such as 024 000 0000</p>
+    <input class="ggds-input ggds-input--width-medium" id="phone-number-error-field" name="phone" type="tel" autocomplete="tel" inputmode="tel" aria-invalid="true" aria-describedby="phone-number-error-field-hint phone-number-error-field-error" value="024 000 00">
+  </div>
+  <button class="ggds-button" type="submit">Continue</button>
+</form>

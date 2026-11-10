@@ -21,9 +21,10 @@ for any government institution. NITA is its custodian (decision D-02).
 | `packages/themes` | Ready-made institution themes (MoCDTI is the default), from the platform's agency profiles |
 | `packages/css` | All component styles, in cascade layers; also one file per component (`dist/components/`) |
 | `packages/js` | The optional script: phone menu and error summary (TypeScript) |
-| `packages/html` | The canonical HTML and guidance for each of the 20 components and the patterns; the documentation is built from it (not published) |
+| `packages/html` | The canonical HTML and guidance for each of the 23 components and the patterns; the documentation is built from it (not published) |
 | `packages/astro` | `@ggds/astro`: the page parts as Astro components |
 | `packages/django` | `ggds-django`: template tags, a form renderer and the static files, for Django and Wagtail |
+| `packages/wordpress` | GGDS for WordPress: a classic theme (`ggds/`), its build, and a Docker set-up for its tests (`pnpm run test:wordpress`) |
 | `docs/` | The documentation site builder (plain Node, no framework); output in `site/`. `docs/guides/` holds the get-started guides, `docs/pages/` the about pages (contribute, versions, accessibility statement) |
 | `docs/scenes/` | The agencies' hero drawings, copied from the platform by `pnpm run sync:scenes` |
 | `tests/` | Unit tests (Node) and browser tests (Playwright with axe, desktop and phone) |
@@ -131,7 +132,8 @@ so the example-site checks run on a developer's machine only.
 
 ## Known issues and next steps
 
-- **Accessibility audit (D-09).** Automated tests find only part of the barriers people meet. Commission the audit
+- **Accessibility audit (D-09).** Automated tests find only part of the barriers people meet. The brief for the
+  audit is ready: [`ACCESSIBILITY-AUDIT.md`](ACCESSIBILITY-AUDIT.md). Commission the audit
   with disabled users before calling anything v1.0.
 - **Platform stylesheet size.** The platform's largest stylesheet was close to its 16 KB budget after the
   migration. Its remaining own components (search, filter sheet, steps, metadata lists) are candidates to become GGDS
@@ -140,8 +142,10 @@ so the example-site checks run on a developer's machine only.
   small logo file the profile now has. It failed before GGDS work began; update the test.
 - **Wording to approve.** The banner text (D-03) and the "Example only" notices on the example sites. Until the
   notices are approved, the published documentation leaves the example sites out (`EXAMPLES` in `docs/build.mjs`).
-- **Moving hero drawing (WCAG 2.2.2).** `ggds-hero-art` moves without end for people who have not asked for less
-  motion, and has no pause button. Add a pause control, or stop it after 5 seconds. The accessibility statement
-  lists it as a known problem.
-- **Templates for other stacks.** Astro and Django have packages; WordPress and others copy the HTML from the
+- **Example sites' drawings.** The agencies' hero drawings copied from the platform (`docs/scenes/`) still move
+  without end, as on the live platform sites. Give them the same 5-second limit as `ggds-hero-art`, on the platform.
+- **Figma library.** Not made yet: it needs the Figma connector authorised for a designer's Figma account. The
+  tokens are in the W3C format (`packages/tokens/tokens.json`), which Figma variables plugins can import. Build the
+  library from them and the components, in an organisation Figma team NITA owns.
+- **Templates for other stacks.** Astro, Django and WordPress have packages; others copy the HTML from the
   documentation. Add packages where institutions need them.

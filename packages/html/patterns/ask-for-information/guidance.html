@@ -1,4 +1,4 @@
-<!-- name: Ask for information with a form; order: 1; components: field, choices, error-summary, button, table, notice; summary: Break a form into short pages, let people check their answers, and tell them what happens next. -->
+<!-- name: Ask for information with a form; order: 1; components: field, choices, date-input, error-summary, summary-list, panel, button; summary: Break a form into short pages, let people check their answers, and tell them what happens next. -->
 <p class="ggds-lead">Break a form into short pages, let people check their answers, and tell them what happens next.</p>
 <h2>When to use</h2>
 <ul><li>For any service that asks people for information: a complaint, an application, a registration, a request.</li></ul>
@@ -8,8 +8,8 @@
 <ol>
 <li><strong>Start page.</strong> What the service is for, who can use it, what people need before they start (a Ghana Card, a receipt) and how long it takes. One "Start now" button.</li>
 <li><strong>Question pages.</strong> One question, or a few closely related ones, per page. The question is the page's heading.</li>
-<li><strong>Check your answers.</strong> Every answer, each with a "Change" link, and the declaration, then the button that sends it.</li>
-<li><strong>Confirmation.</strong> That it worked, the reference number, what happens next and when, and how to get in touch.</li>
+<li><strong>Check your answers.</strong> Every answer in a <a href="../components/summary-list.html">summary list</a>, each with a "Change" link, and the declaration, then the button that sends it.</li>
+<li><strong>Confirmation.</strong> A <a href="../components/panel.html">confirmation panel</a> that says it worked and gives the reference number, then what happens next and when, and how to get in touch.</li>
 </ol>
 <h2>Questions</h2>
 <ul>
@@ -23,7 +23,7 @@
 <ul>
 <li>Check the answers when the page is sent, not while people type.</li>
 <li>Show the error summary at the top, the message next to each field, and start the page title with "Error: ". With Django, <code>{{ form }}</code> and the GGDS form renderer do all three.</li>
-<li>Say how to fix it: "Enter a mobile number with 10 digits, like 024 123 4567".</li>
+<li>Say how to fix it: "Enter a mobile number with 10 digits, like 024 000 0000".</li>
 <li>Keep what people entered, even when it is wrong, so they can correct it.</li>
 </ul>
 <h2>Confirmation</h2>
@@ -37,5 +37,5 @@
 <li>Give every page a unique title that starts with its question, such as "How should we contact you? – Make a complaint – NCA".</li>
 <li>Do not time people out without warning. If you must, warn them first and let them ask for more time.</li>
 <li>Let people go back without losing answers: a link at the top of each question page, and the browser's Back button.</li>
-<li>Make a question the page heading by putting an <code>&lt;h1&gt;</code> inside the <code>&lt;legend&gt;</code> (or the <code>&lt;label&gt;</code>), so screen readers hear it once.</li>
+<li>Make a question the page heading by putting an <code>&lt;h1&gt;</code> inside the <code>&lt;legend&gt;</code> (with <code>ggds-fieldset__legend--page</code>), or the <code>&lt;label&gt;</code> inside an <code>&lt;h1&gt;</code> (with <code>ggds-label--page</code>), so screen readers hear it once.</li>
 </ul>

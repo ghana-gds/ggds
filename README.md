@@ -33,6 +33,9 @@ npm install @ggds/astro                       # Astro
 pip install ggds-django                       # Django and Wagtail
 ```
 
+**WordPress**: upload `ggds-wordpress-<version>.zip` from the releases page in Appearance > Themes. See
+[GGDS for WordPress](packages/wordpress).
+
 Then copy the HTML for each part from the [components](https://ghana-gds.github.io/ggds/components/index.html), or
 follow [Get started as a developer](https://ghana-gds.github.io/ggds/get-started/developers.html).
 
@@ -45,6 +48,7 @@ follow [Get started as a developer](https://ghana-gds.github.io/ggds/get-started
 | [`@ggds/css`](packages/css) | The styles for every part. Works with any website or framework. |
 | [`@ggds/js`](packages/js) | A small optional script: the phone menu and the error summary. |
 | [`@ggds/astro`](packages/astro) | The page parts as Astro components. |
+| [GGDS for WordPress](packages/wordpress) | A WordPress theme with GGDS's markup, ready for a strict Content Security Policy. Download `ggds-wordpress-<version>.zip` from the releases page. |
 | [`ggds-django`](packages/django) | Template tags, a form renderer, a Django admin theme and the static files, for Django and Wagtail. |
 | [`@ggds/html`](packages/html) | The HTML and guidance for every component and pattern. The documentation is built from it; not published. |
 

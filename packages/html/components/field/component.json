@@ -15,6 +15,10 @@
       "The visible label."
     ],
     [
+      ".ggds-label--page",
+      "A label that is also the page's heading: put the label inside an <h1>."
+    ],
+    [
       ".ggds-hint",
       "Extra help under the label."
     ],

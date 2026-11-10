@@ -13,7 +13,7 @@
     "build:css": "node packages/css/build.mjs",
     "build:js": "tsc -p packages/js",
     "build:docs": "node docs/build.mjs",
-    "build": "pnpm run build:tokens && pnpm run build:themes && pnpm run build:css && pnpm run build:js && pnpm run build:django && pnpm run build:docs",
+    "build": "pnpm run build:tokens && pnpm run build:themes && pnpm run build:css && pnpm run build:js && pnpm run build:django && pnpm run build:wordpress && pnpm run build:docs",
     "sync:themes": "node packages/themes/sync.mjs",
     "check:themes": "node packages/themes/sync.mjs --check",
     "test:unit": "node --test \"tests/unit/**/*.test.mjs\"",
@@ -26,7 +26,9 @@
     "publish:npm": "node scripts/publish-npm.mjs --publish",
     "build:django": "node packages/django/build.mjs",
     "test:django": "node scripts/test-django.mjs",
-    "pack:django": "node scripts/pack-django.mjs"
+    "pack:django": "node scripts/pack-django.mjs",
+    "build:wordpress": "node packages/wordpress/build.mjs",
+    "test:wordpress": "node scripts/test-wordpress.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",

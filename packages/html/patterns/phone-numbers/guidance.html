@@ -1,0 +1,66 @@
+<!-- name: Ask for a phone number; order: 9; components: field, choices, error-summary, button; summary: One phone box that accepts a Ghana number however people write it, says how you will use it, and asks for the network only for mobile money. -->
+<p class="ggds-lead">One phone box that accepts a Ghana number however people write it, says how you will use it, and asks for the network only for mobile money.</p>
+<h2>When to use</h2>
+<ul>
+<li>When you will call people or send them an SMS about their application, complaint or appointment.</li>
+<li>When you will pay people, or take payment, by mobile money.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>When you will never call or text. Do not ask for a phone number "just in case". Only collect the personal data you need.</li>
+</ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>The question</strong>, such as "What is your phone number?", or a "Phone number" label in a page of contact details.</li>
+<li><strong>The hint</strong> says how you will use it, and shows an example: "We will send you an SMS when we have made a decision. For example, 024 000 0000."</li>
+<li><strong>One phone box</strong>, medium width, that accepts the number however people write it.</li>
+<li>For mobile money only, <strong>a separate question for the network</strong>, with radios.</li>
+</ol>
+<h2>Ghana phone numbers</h2>
+<ul>
+<li>A Ghana number has 10 digits and starts with 0, such as 024 000 0000 for a mobile or 030 000 0000 for a landline in Accra.</li>
+<li>From abroad, or in international form, it is +233 and the same number without the first 0: +233 24 000 0000.</li>
+<li>Do not reject a number because of its first 3 digits. Networks get new prefixes, and people keep their number when they move to another network.</li>
+</ul>
+<h2>The phone box</h2>
+<ul>
+<li>Use <code>type="tel"</code> and <code>autocomplete="tel"</code>, with the <code>ggds-input--width-medium</code> class. Phones then show the number keypad and can fill in the person's own number.</li>
+<li>Use one box. Do not split the number into several boxes, and do not make people choose a network or a country code from a list before they type.</li>
+<li>Do not use <code>type="number"</code>. It removes the first 0 in some browsers and does not allow + or spaces.</li>
+<li>Say in the hint how you will use the number: SMS updates, a call from an officer, or both. If you will only send SMS, say "mobile number".</li>
+</ul>
+<h2>Checking the answer</h2>
+<ul>
+<li>Accept spaces, hyphens, dots and brackets, and remove them before you check: "024-000-0000", "(024) 000 0000" and "024 000 0000" are the same answer.</li>
+<li>Accept all three Ghana forms: 0240000000, 233240000000 and +233240000000. Store one form, such as <code>+233240000000</code>, so you can send SMS to it.</li>
+<li>Show the number back in groups, the way people say it: 024 000 0000.</li>
+<li>Keep what people typed when there is an error, so they can correct it.</li>
+</ul>
+<h2>Numbers outside Ghana</h2>
+<ul>
+<li>People living abroad may not have a Ghana number. If your service can call or text abroad, accept any number that starts with + and a country code, such as +44 or +1, and say so in the hint.</li>
+<li>If you can only use Ghana numbers, say so in the hint, and give another way to contact people, such as email.</li>
+</ul>
+<h2>Mobile money</h2>
+<ul>
+<li>Ask for the network only when you need it to pay or take a payment by mobile money. Ask it as a separate question with radios: MTN, Telecel and AT.</li>
+<li>Do not guess the network from the number. People move their number between networks.</li>
+<li>Ask "What is your mobile money number?", not "phone number", because some people use a different number for mobile money.</li>
+<li>Show the number and network on the check answers page, so people can spot a mistake before money is sent.</li>
+</ul>
+<h2>Error messages</h2>
+<p>Use these messages in the error summary and next to the field.</p>
+<ul>
+<li>If it is empty: "Enter your phone number".</li>
+<li>If it has letters or other symbols: "Phone number must only include numbers, spaces, brackets, hyphens and +".</li>
+<li>If a Ghana number has too few or too many digits: "Enter a phone number with 10 digits, such as 024 000 0000".</li>
+<li>If a number from outside Ghana is not accepted: "Enter a Ghana phone number, such as 024 000 0000".</li>
+<li>If the network is not chosen: "Select the network for your mobile money number".</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Follow the accessibility advice in the <a href="ask-for-information.html">ask for information</a> pattern: a unique page title, the question as the heading, and a Back link.</li>
+<li>Do not put the example in placeholder text. Put it in the hint, where it stays while people type.</li>
+<li>Connect the hint and any error message to the box with <code>aria-describedby</code>, hint first, and add <code>aria-invalid="true"</code> on error.</li>
+<li>Offer another way to be contacted, such as email or a letter, for people who cannot use a phone.</li>
+</ul>

@@ -1,0 +1,29 @@
+/*
+ * Date input: day, month and year as three text inputs in one fieldset, for dates people know, such as a date of
+ * birth. Built on the field component: put it in a .ggds-field, with a .ggds-fieldset and its legend, hint and
+ * error message. Each box is sized for what goes in it, so people can see the format.
+ */
+.ggds-date-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ggds-space-4);
+}
+
+.ggds-date-input__item {
+  margin: 0;
+}
+
+.ggds-date-input__label {
+  display: block;
+  margin-bottom: var(--ggds-space-1);
+}
+
+/* Two digits for day and month, four for the year: the width shows the format. */
+.ggds-date-input__input {
+  width: 4.5rem;
+  text-align: center;
+}
+
+.ggds-date-input__input--year {
+  width: 6.5rem;
+}

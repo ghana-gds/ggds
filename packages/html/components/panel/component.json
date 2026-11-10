@@ -1,0 +1,14 @@
+{
+  "css": "panel",
+  "javascript": null,
+  "classes": [
+    [".ggds-panel", "The panel: white text on the success green."],
+    [".ggds-panel__title", "What happened: the page's <h1>."],
+    [".ggds-panel__body", "The reference number and its label."],
+    [".ggds-panel__reference", "The reference: large and bold, on its own line."]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{% ggds_panel \"Complaint sent\" reference=complaint.reference %}",
+  "tests": []
+}

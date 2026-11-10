@@ -2,6 +2,31 @@
 
 ## Unreleased
 
+### Components
+
+- New: summary list, for "Check your answers" pages and records: questions and answers, with Change links that say what they change. <!-- components: summary-list -->
+- New: confirmation panel, for the end of a service: that it worked, and the reference number. <!-- components: panel -->
+- New: date input, day, month and year boxes for dates people know, such as a date of birth. <!-- components: date-input -->
+- New: `ggds-label--page`, for a question that is also the page's heading: `<h1><label class="ggds-label ggds-label--page">`. <!-- components: field -->
+- New components start with the status "alpha": tested automatically, but not yet used on a live government website.
+- The form patterns use the summary list on their check answers pages and the confirmation panel on their confirmation pages. Their examples use obviously fake phone numbers and references.
+
+### Accessibility
+
+- The hero drawing (`ggds-hero-art`) and the documentation's homepage drawing now stop moving within 5 seconds of loading, so they meet WCAG 2.2.2 (Pause, Stop, Hide) without a pause button. Tests check that nothing animates for ever and time it in the browser. <!-- components: hero -->
+- A brief for the external accessibility audit (D-09): [docs/ACCESSIBILITY-AUDIT.md](https://github.com/ghana-gds/ggds/blob/main/docs/ACCESSIBILITY-AUDIT.md).
+
+### Patterns
+
+- New patterns for questions Ghanaian services ask most: a Ghana Card number, a phone number (including a mobile money number and network), and an address with a GhanaPostGPS digital address.
+
+### Packages
+
+- New: **GGDS for WordPress**, a theme with GGDS's own markup: banner, header, homepage hero with search and common tasks, cards, footer, tab bar, pages with breadcrumbs, news, search with pagination, and "page not found". Its front end has no inline scripts or styles, so it runs under a strict Content Security Policy; editors cannot set colours or font sizes that would break contrast; comments are off. Each release has `ggds-wordpress-<version>.zip`. Every template is tested in a real WordPress (Docker): axe at desktop and phone widths, a strict policy, no sideways scrolling, and the same header, banner, footer and tab bar markup as the documentation.
+- `ggds-django`: `GGDSDateField` renders as a date input with `GGDSFormRenderer`. It accepts 3, 03, March or Mar for the month, gives GGDS's error messages, marks only the boxes with the problem, and links the error summary to the first of them. New template tags: `{% ggds_summary_list rows %}` and `{% ggds_panel "Complaint sent" reference=ref %}`.
+- `@ggds/css`: `components/summary-list.css`, `components/panel.css` and `components/date-input.css`.
+- A colour pair is checked for the panel: white text on the success green.
+
 ### Documentation
 
 - Get started has a guide for each role: developers, designers, content designers and service owners, with GGDS's principles. The developers' guide leads with installing from npm, now that the packages are published, and shows the download and a CDN for trying it out.
@@ -15,10 +40,6 @@
 - Fuller guidance for tags, breadcrumbs, disclosures, the skip link, pagination, rich text, tables and tab links. <!-- components: tag, breadcrumbs, disclosure, skip-link, pagination, prose, table, tab-links -->
 - New pages: an accessibility statement for GGDS, with what is not tested yet; how to contribute and how NITA decides on new components; and versions and support: what each kind of release can change, how things are removed, and how long a version is supported.
 - The repository has a code of conduct, a security policy with private reporting, forms for reporting problems and proposing components, and a pull request checklist.
-
-### Known problems
-
-- The optional moving hero drawing (`ggds-hero-art`) has no pause button, so it does not meet WCAG 2.2.2 (Pause, Stop, Hide) for people who have not asked for less motion. <!-- components: hero -->
 
 ## Version 0.1.1 (draft, 10 November 2026)
 

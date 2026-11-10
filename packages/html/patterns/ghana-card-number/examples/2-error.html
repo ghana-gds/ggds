@@ -1,0 +1,18 @@
+<!-- title: A question page after a failed submit; layout: main; height: 600 -->
+<p><a href="/apply/name/">Back</a></p>
+<div class="ggds-error-summary" data-ggds-module="error-summary" role="alert" aria-labelledby="ghana-card-error-title" tabindex="-1">
+  <h2 class="ggds-error-summary__title" id="ghana-card-error-title">There is a problem</h2>
+  <ul class="ggds-error-summary__list">
+    <li><a href="#ghana-card-number">Ghana Card number must have 10 numbers after GHA, such as GHA-000000000-0</a></li>
+  </ul>
+</div>
+<form action="/apply/date-of-birth/" method="post" novalidate>
+  <div class="ggds-field ggds-field--error">
+    <h1><label class="ggds-label ggds-label--page" for="ghana-card-number">What is your Ghana Card number?</label></h1>
+    <p class="ggds-hint" id="ghana-card-number-hint">We use it to confirm who you are with the National Identification Authority (NIA). It starts with GHA, such as GHA-000000000-0.</p>
+    <p class="ggds-error-message" id="ghana-card-number-error"><span class="ggds-visually-hidden">Error:</span> Ghana Card number must have 10 numbers after GHA, such as GHA-000000000-0</p>
+    <input class="ggds-input ggds-input--width-medium" id="ghana-card-number" name="ghanaCardNumber" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" aria-invalid="true" aria-describedby="ghana-card-number-hint ghana-card-number-error" value="GHA-0000000">
+  </div>
+  <p><a href="/apply/other-id/">I do not have a Ghana Card yet</a></p>
+  <button class="ggds-button" type="submit">Continue</button>
+</form>

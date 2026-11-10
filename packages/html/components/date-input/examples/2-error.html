@@ -1,0 +1,22 @@
+<!-- title: With an error in one part; layout: main; height: 300 -->
+<div class="ggds-field ggds-field--error">
+  <fieldset class="ggds-fieldset" role="group" aria-describedby="issued-hint issued-error">
+    <legend class="ggds-fieldset__legend">When was the receipt issued?</legend>
+    <p class="ggds-hint" id="issued-hint">For example, 4 11 2026</p>
+    <p class="ggds-error-message" id="issued-error"><span class="ggds-visually-hidden">Error:</span> Date the receipt was issued must include a year</p>
+    <div class="ggds-date-input">
+      <div class="ggds-date-input__item">
+        <label class="ggds-date-input__label" for="issued-day">Day</label>
+        <input class="ggds-input ggds-date-input__input" id="issued-day" name="issuedDay" type="text" inputmode="numeric" spellcheck="false" value="4">
+      </div>
+      <div class="ggds-date-input__item">
+        <label class="ggds-date-input__label" for="issued-month">Month</label>
+        <input class="ggds-input ggds-date-input__input" id="issued-month" name="issuedMonth" type="text" inputmode="numeric" spellcheck="false" value="11">
+      </div>
+      <div class="ggds-date-input__item">
+        <label class="ggds-date-input__label" for="issued-year">Year</label>
+        <input class="ggds-input ggds-date-input__input ggds-date-input__input--year" id="issued-year" name="issuedYear" type="text" inputmode="numeric" spellcheck="false" aria-invalid="true">
+      </div>
+    </div>
+  </fieldset>
+</div>

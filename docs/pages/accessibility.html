@@ -3,7 +3,7 @@
 <p>Every government website that uses GGDS needs its own accessibility statement: GGDS makes its parts accessible, but each website's own content, pages and services need checking too. You can start from the structure of this one.</p>
 
 <h2>How accessible GGDS is</h2>
-<p>GGDS aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a> at level AA. We think it meets level AA in what automated tests can check, except for one known problem listed below. It has not yet been tested by an accessibility auditor or by disabled people, so we do not yet claim that it fully meets level AA.</p>
+<p>GGDS aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a> at level AA. We think it meets level AA in what automated tests can check. It has not yet been tested by an accessibility auditor or by disabled people, so we do not yet claim that it fully meets level AA.</p>
 <p>You should be able to:</p>
 <ul>
 <li>use every page with a keyboard only, and always see where you are, with a gold focus outline;</li>
@@ -13,7 +13,7 @@
 <li>use every page and every form without JavaScript;</li>
 <li>read every text and see every border and focus outline: each colour pair meets its contrast minimum.</li>
 </ul>
-<p>Animations play only if you have not asked your device for less motion. One known exception to level AA is listed below: the moving hero drawing.</p>
+<p>Animations play only if you have not asked your device for less motion, and everything that moves on its own stops within 5 seconds.</p>
 
 <h2>How we test</h2>
 <p>On every change, before it can be released:</p>
@@ -22,6 +22,7 @@
 <li><strong>Sideways scrolling</strong> at 320 pixels, also with a wide font, on every live example and the main documentation pages.</li>
 <li><strong>Contrast</strong> of every colour pair GGDS uses, for the default and every institution theme.</li>
 <li><strong>Behaviour tests</strong>: the phone menu opens in place, Escape closes it and focus returns to its button; the error summary takes focus and its links reach each field; the banner opens; pagination keeps the search.</li>
+<li><strong>Movement</strong>: the moving drawings stop within 5 seconds of loading, so they need no pause button (WCAG 2.2.2).</li>
 <li><strong>Content Security Policy</strong>: every page runs with no inline scripts or styles.</li>
 </ul>
 <p>Automated tests find only some of the barriers people meet. Each component page lists its tests, including the checks by people that are still to do: keyboard only, NVDA, JAWS, VoiceOver, TalkBack, zoom to 400%, Windows contrast themes and voice control.</p>
@@ -30,7 +31,6 @@
 <ul>
 <li><strong>No audit yet.</strong> An external accessibility auditor, working with Ghanaian disability organisations, will test GGDS before version 1.0 (decision D-09). Until then, results by people are not recorded on the component pages.</li>
 <li><strong>Screen readers and voice control</strong> have not been tested with each component.</li>
-<li><strong>Moving hero drawing.</strong> The optional drawing in the hero (<code>ggds-hero-art</code>, and the drawing on this website's homepage) keeps moving for people who have not asked their device for less motion, and has no pause button. This does not meet WCAG 2.2.2 (Pause, Stop, Hide). Until it is fixed, use a still drawing, or none, on pages where people need to concentrate.</li>
 <li><strong>Languages.</strong> GGDS's text and examples are in English only. Pages in Ghanaian languages need their own <code>lang</code> attribute and testing with speakers of those languages.</li>
 <li><strong>Live examples in frames.</strong> Component pages show each example in a frame with a title. Each example also opens as its own page, which is easier to use with some screen readers and magnifiers.</li>
 </ul>

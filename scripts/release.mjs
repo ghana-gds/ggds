@@ -62,11 +62,19 @@ const digest = (alg, enc, f) => createHash(alg).update(readFileSync(f)).digest(e
 // -X leaves out file attributes that differ between machines; files are added in sorted order.
 execFileSync('zip', ['-X', '-q', join(out, zipName), ...all.map((f) => relative(out, f))], { cwd: out });
 
-const sums = [join(out, zipName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
+// The WordPress theme, as WordPress expects it: a zip holding the "ggds" theme folder, uploaded in Appearance >
+// Themes > Add New Theme. Its assets come from pnpm run build.
+const wpName = `ggds-wordpress-${version}.zip`;
+const wpTheme = join(pkg('wordpress'), 'ggds');
+if (!existsSync(join(wpTheme, 'assets', 'ggds.min.css'))) throw new Error('packages/wordpress/ggds/assets is missing: run pnpm run build first');
+for (const f of ['LICENSE', 'LICENSE.md']) cpSync(join(root, f), join(wpTheme, f));
+execFileSync('zip', ['-X', '-q', '-r', join(out, wpName), 'ggds', '-x', 'ggds/.*'], { cwd: pkg('wordpress') });
+
+const sums = [join(out, zipName), join(out, wpName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
 writeFileSync(join(out, 'SHA256SUMS'), `${sums.join('\n')}\n`);
 const integrity = Object.fromEntries(all.filter((f) => /\.(css|js)$/.test(f))
   .map((f) => [relative(dir, f), `sha384-${digest('sha384', 'base64', f)}`]));
 writeFileSync(join(out, 'integrity.json'), `${JSON.stringify({ version, files: integrity }, null, 2)}\n`);
 
 const size = statSync(join(out, zipName)).size;
-console.log(`release: ${zipName} (${all.length} files, ${(size / 1024).toFixed(0)} KB), SHA256SUMS, integrity.json → ${out}`);
+console.log(`release: ${zipName} (${all.length} files, ${(size / 1024).toFixed(0)} KB), ${wpName}, SHA256SUMS, integrity.json → ${out}`);

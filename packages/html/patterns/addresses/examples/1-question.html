@@ -1,0 +1,42 @@
+<!-- title: An address question page; layout: main; height: 860 -->
+<p><a href="/apply/phone/">Back</a></p>
+<h1>What is your address?</h1>
+<form action="/apply/check/" method="post" novalidate>
+  <div class="ggds-field">
+    <label class="ggds-label" for="address-digital">Digital address (optional)</label>
+    <p class="ggds-hint" id="address-digital-hint">Your GhanaPostGPS address. It is two letters, then numbers, such as GA-000-0000.</p>
+    <input class="ggds-input ggds-input--width-medium" id="address-digital" name="digitalAddress" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" aria-describedby="address-digital-hint">
+  </div>
+  <div class="ggds-field">
+    <label class="ggds-label" for="address-directions">Address or directions</label>
+    <p class="ggds-hint" id="address-directions-hint">The house number and street if there are any, the area, and a landmark near it, such as a school, church or mosque.</p>
+    <textarea class="ggds-textarea" id="address-directions" name="directions" rows="4" autocomplete="street-address" aria-describedby="address-directions-hint"></textarea>
+  </div>
+  <div class="ggds-field">
+    <label class="ggds-label" for="address-town">Town or city</label>
+    <input class="ggds-input ggds-input--width-long" id="address-town" name="town" type="text" autocomplete="address-level2">
+  </div>
+  <div class="ggds-field">
+    <label class="ggds-label" for="address-region">Region</label>
+    <select class="ggds-select" id="address-region" name="region" autocomplete="address-level1">
+    <option value="">Choose a region</option>
+    <option>Ahafo</option>
+    <option>Ashanti</option>
+    <option>Bono</option>
+    <option>Bono East</option>
+    <option>Central</option>
+    <option>Eastern</option>
+    <option>Greater Accra</option>
+    <option>North East</option>
+    <option>Northern</option>
+    <option>Oti</option>
+    <option>Savannah</option>
+    <option>Upper East</option>
+    <option>Upper West</option>
+    <option>Volta</option>
+    <option>Western</option>
+    <option>Western North</option>
+    </select>
+  </div>
+  <button class="ggds-button" type="submit">Continue</button>
+</form>

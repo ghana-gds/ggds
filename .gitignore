@@ -17,3 +17,8 @@ packages/django/.venv/
 packages/django/src/ggds_django/static/
 packages/django/src/ggds_django/icons.json
 __pycache__/
+
+# ggds-wordpress: the files build.mjs copies in (pnpm run build)
+packages/wordpress/ggds/assets/
+packages/wordpress/ggds/LICENSE
+packages/wordpress/ggds/LICENSE.md

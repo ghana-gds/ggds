@@ -201,3 +201,21 @@ test.describe('ggds-django example site', () => {
     await expect(page.getByRole('navigation', { name: 'Pages of results' }).getByRole('link', { name: 'Page 6' })).toHaveAttribute('href', '?q=licence&page=6');
   });
 });
+
+// WCAG 2.2.2 (Pause, Stop, Hide): the hero drawings move only while the page loads, and are still within 5
+// seconds, so they need no pause button.
+// The drawings show only on wide screens (they are hidden on phones), so this runs at desktop width.
+test.describe('moving drawings', () => {
+  test.use({ viewport: { width: 1280, height: 900 } });
+  for (const path of ['/index.html', '/examples/hero/3-art.html']) {
+    test(`everything on ${path} stops moving within 5 seconds`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion: 'no-preference' });
+      await page.goto(path);
+      expect(await page.evaluate(() => document.getAnimations().length), 'the drawing should move at first').toBeGreaterThan(0);
+      await page.waitForTimeout(5100);
+      const running = await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running')
+        .map((a) => `${(a.effect as KeyframeEffect | null)?.target?.getAttribute('class') ?? '?'} (${(a as CSSAnimation).animationName})`));
+      expect(running).toEqual([]);
+    });
+  }
+});

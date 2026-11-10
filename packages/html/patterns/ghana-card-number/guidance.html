@@ -1,0 +1,68 @@
+<!-- name: Ask for a Ghana Card number; order: 8; components: field, error-summary, button; summary: One text box that accepts the number however people type it, says why you need it, and does not stop people when the check with NIA is not working. -->
+<p class="ggds-lead">One text box that accepts the number however people type it, says why you need it, and does not stop people when the check with NIA is not working.</p>
+<h2>When to use</h2>
+<ul>
+<li>When you must know exactly who someone is, such as for a licence, a registration, a tax matter or a payment.</li>
+<li>When the law or your rules say you must record it.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>When a name, phone number or reference number would do, such as for a complaint, an enquiry or a newsletter. Only collect the personal data you need, and keep it safe. Ask your data protection lead if you are not sure.</li>
+<li>Do not ask for it "just in case", or because another form did.</li>
+</ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>The question</strong> is the page heading: "What is your Ghana Card number?"</li>
+<li><strong>The hint</strong> says why you need it and what it looks like: "It starts with GHA, such as GHA-000000000-0".</li>
+<li><strong>One text box</strong>, medium width, that accepts the number with or without hyphens and spaces, in capitals or small letters.</li>
+<li><strong>A link for people without a card</strong>, such as "I do not have a Ghana Card yet", when your service can accept something else.</li>
+</ol>
+<h2>The format</h2>
+<p>A Ghana Card number (the personal ID number) is <code>GHA</code>, a hyphen, 9 digits, a hyphen and 1 check digit: <code>GHA-XXXXXXXXX-X</code>. To most people, that is "GHA and 10 numbers".</p>
+<ul>
+<li>Always show an example that is clearly not real, such as GHA-000000000-0. Never use a real person's number in a hint, a test or a screenshot.</li>
+<li>If your service is open to people who are not Ghanaian citizens, check with the National Identification Authority (NIA) what their cards look like before you add a rule that could reject them.</li>
+</ul>
+<h2>The text box</h2>
+<ul>
+<li>Use one <code>type="text"</code> box with the <code>ggds-input--width-medium</code> class. Do not split the number into several boxes: people paste it, and moving between boxes is hard with a keyboard or screen reader.</li>
+<li>Do not use <code>type="number"</code>. The number has letters and hyphens, and number boxes change what people type when they scroll.</li>
+<li>Add <code>autocomplete="off"</code>, <code>spellcheck="false"</code> and <code>autocapitalize="characters"</code>, so the browser does not offer old answers or mark the number as a spelling mistake.</li>
+<li>Do not set <code>maxlength</code>. People may type spaces, and a box that silently stops typing is confusing.</li>
+</ul>
+<h2>Checking the answer</h2>
+<ul>
+<li>Before you check it, tidy it: remove spaces and hyphens, and change small letters to capitals. "gha 000000000 0" and "GHA0000000000" are the same answer.</li>
+<li>Then check the tidied number is <code>GHA</code> and 10 digits, and store it in one form, such as <code>GHA-000000000-0</code>.</li>
+<li>Only check the check digit if NIA has given you the rule. Do not guess it.</li>
+<li>Show the number back to people in the same form, with hyphens, on the check answers page.</li>
+</ul>
+<h2>Checking with NIA</h2>
+<ul>
+<li>Checking that a number is real, and that it belongs to the person, is a separate step on your server, using the access NIA has given your institution. It is not part of the form.</li>
+<li>If the NIA check is slow or not working, do not stop people. Accept the answer, check it later, and say so: "We will check your Ghana Card number with NIA. We will contact you if there is a problem."</li>
+<li>If a number does not match, do not tell people whose number it is or what name it belongs to. Ask them to check it, and give a way to get help.</li>
+<li>Do not show NIA's error codes or messages to people. Log them instead.</li>
+</ul>
+<h2>People without a Ghana Card</h2>
+<ul>
+<li>Some people have applied but not yet got their card, and some cannot get one easily. Where the law allows, accept something else, such as their NIA application number, a passport or another ID, and say what you will accept.</li>
+<li>Put the link next to the question, not on another page, so people do not give up.</li>
+<li>If you really cannot help people without a card, say so on the start page, before they begin.</li>
+</ul>
+<h2>Error messages</h2>
+<p>Use these messages in the error summary and next to the field.</p>
+<ul>
+<li>If it is empty: "Enter your Ghana Card number".</li>
+<li>If it does not start with GHA: "Ghana Card number must start with GHA".</li>
+<li>If it has too few or too many numbers: "Ghana Card number must have 10 numbers after GHA, such as GHA-000000000-0".</li>
+<li>If it has other letters or symbols: "Ghana Card number must only include GHA, numbers and hyphens".</li>
+<li>If NIA says it does not match: "Check your Ghana Card number. It must be the same as the number on your card".</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Follow the accessibility advice in the <a href="ask-for-information.html">ask for information</a> pattern: a unique page title, the question as the heading, and a Back link.</li>
+<li>Put the label inside the <code>&lt;h1&gt;</code>, so screen readers hear the question once.</li>
+<li>Connect the hint and any error message to the box with <code>aria-describedby</code>, hint first, and add <code>aria-invalid="true"</code> on error.</li>
+<li>Do not use placeholder text for the example. It disappears when people start typing.</li>
+</ul>
