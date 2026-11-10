@@ -1,0 +1,67 @@
+{
+  "css": "card",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-card-grid",
+      "Cards in a grid: one column on phones, two on tablets, three on wide screens."
+    ],
+    [
+      ".ggds-card-grid--4",
+      "Four columns on wide screens."
+    ],
+    [
+      ".ggds-card",
+      "A card. The whole card is clickable through its title link."
+    ],
+    [
+      ".ggds-card__title",
+      "The card's heading."
+    ],
+    [
+      ".ggds-card__link",
+      "The heading's link; it stretches over the whole card."
+    ],
+    [
+      ".ggds-card__body",
+      "One short sentence."
+    ],
+    [
+      ".ggds-card--institution",
+      "An institution card, with a line in that institution's colour (data-ggds-theme)."
+    ],
+    [
+      ".ggds-card__head",
+      "An institution card's logo and names."
+    ],
+    [
+      ".ggds-card__logo",
+      "The institution's logo or initials."
+    ],
+    [
+      ".ggds-card__subtitle",
+      "The institution's full name under its short name."
+    ],
+    [
+      ".ggds-card__actions",
+      "Up to two task links, above the card's own link."
+    ],
+    [
+      ".ggds-card__action",
+      "A task link."
+    ]
+  ],
+  "states": [
+    [
+      ":hover on .ggds-card__link",
+      "The card's border darkens and it lifts slightly (unless the visitor asked for less motion)."
+    ],
+    [
+      ":focus-visible on .ggds-card__link",
+      "The gold focus ring goes round the whole card."
+    ]
+  ],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

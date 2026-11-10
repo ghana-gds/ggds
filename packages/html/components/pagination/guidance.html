@@ -1,10 +1,17 @@
 <!-- name: Pagination; status: beta; order: 11; group: Navigation; related: tab-links; summary: Links to move between pages of a long list. -->
 <p class="ggds-lead">Links to move between pages of a long list.</p>
 <h2>When to use</h2>
-<ul><li>For search results, news and other long lists.</li></ul>
+<ul><li>For search results, news, notices, publications and other long lists.</li><li>Instead of "Load more" or endless scrolling. Each page is a normal link, so it works without JavaScript, can be bookmarked, and loads only one page of items at a time on slow or costly data.</li></ul>
 <h2>When not to use</h2>
-<ul><li>To move between steps of a form. Use a "Continue" <a href="button.html">button</a>.</li></ul>
+<ul><li>To move between steps of a form. Use a "Continue" <a href="button.html">button</a>.</li><li>When everything fits on one page. Leave pagination out.</li><li>To split one article over several pages.</li></ul>
 <h2>How to use</h2>
-<ul><li>Show previous and next links, and numbered pages in between.</li><li>Mark the current page with <code>aria-current="page"</code>.</li></ul>
+<ul><li>Put it after the list.</li><li>Show Previous and Next, and numbered pages in between: the first, the last, and a few either side of the current page, with "…" (<code>ggds-pagination__ellipsis</code>) where pages are left out.</li><li>Leave out Previous on the first page and Next on the last.</li><li>Above the list, say how many results there are and which ones are showing, such as "Showing 21 to 40 of 236 results".</li><li>Keep the search and filters in every link: <code>?q=licence&amp;page=6</code>, not just <code>?page=6</code>. The Django tag does this for you.</li><li>Mark the current page with <code>aria-current="page"</code>.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Use real links with the page in the address.</li><li>Keep the same number of items on each page.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Lose the visitor's search when they change page.</li><li>Use buttons and a script to load the next page.</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>Name the navigation by what is being paged, such as "Pages of results".</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>Every link is at least 44px square, and the row wraps on narrow screens.</li><li>The current page is shown by more than colour: it is filled in, and screen readers announce it as the current page.</li><li>In the examples and the Django tag, the "…" is hidden from screen readers and Previous and Next carry the hidden word "page".</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Name the navigation by what is being paged, such as <code>aria-label="Pages of results"</code>.</li><li>Mark the current page with <code>aria-current="page"</code>.</li><li>Give number links a full name, such as <code>aria-label="Page 3"</code>.</li><li>Give Previous and Next hidden text when they are not clear alone, such as "Next page of results".</li></ul>

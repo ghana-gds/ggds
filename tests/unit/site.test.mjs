@@ -120,3 +120,20 @@ test('no example site names a compromised website', needsExampleSites, () => {
   assert.doesNotMatch(html, /gifec\.gov\.gh/);
   assert.match(html, /has not confirmed its official address yet/);
 });
+
+test('every component page has its reference sections and a way to report a problem', () => {
+  const dir = join(site, 'components');
+  for (const f of readdirSync(dir).filter((f) => f.endsWith('.html') && f !== 'index.html')) {
+    const html = readFileSync(join(dir, f), 'utf8');
+    for (const id of ['use-it', 'classes', 'accessibility-tests', 'changes']) assert.match(html, new RegExp(`id="${id}"`), `${f}: no #${id}`);
+    assert.match(html, /Report a problem with this page/, `${f}: no feedback link`);
+    assert.match(html, /suggest a change to it on GitHub/, `${f}: no edit link`);
+  }
+});
+
+test('there are pattern pages, each with a live example', () => {
+  const dir = join(site, 'patterns');
+  const files = readdirSync(dir).filter((f) => f.endsWith('.html') && f !== 'index.html');
+  assert.ok(files.length >= 3, `${files.length} patterns`);
+  for (const f of files) assert.match(readFileSync(join(dir, f), 'utf8'), /<iframe class="docs-frame/, `${f}: no example`);
+});

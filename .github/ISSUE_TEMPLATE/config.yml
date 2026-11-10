@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security problem
+    url: https://github.com/ghana-gds/ggds/security/advisories/new
+    about: Report security problems privately, never in a public issue.
+  - name: GGDS documentation
+    url: https://ghana-gds.github.io/ggds/
+    about: Guidance, components, patterns and how to get started.

@@ -1,0 +1,41 @@
+<!-- name: Ask for information with a form; order: 1; components: field, choices, error-summary, button, table, notice; summary: Break a form into short pages, let people check their answers, and tell them what happens next. -->
+<p class="ggds-lead">Break a form into short pages, let people check their answers, and tell them what happens next.</p>
+<h2>When to use</h2>
+<ul><li>For any service that asks people for information: a complaint, an application, a registration, a request.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For a search or a single question on a page, such as a newsletter sign-up. Use one field and a button.</li></ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>Start page.</strong> What the service is for, who can use it, what people need before they start (a Ghana Card, a receipt) and how long it takes. One "Start now" button.</li>
+<li><strong>Question pages.</strong> One question, or a few closely related ones, per page. The question is the page's heading.</li>
+<li><strong>Check your answers.</strong> Every answer, each with a "Change" link, and the declaration, then the button that sends it.</li>
+<li><strong>Confirmation.</strong> That it worked, the reference number, what happens next and when, and how to get in touch.</li>
+</ol>
+<h2>Questions</h2>
+<ul>
+<li>Ask only what you need, and say why if it is not obvious, such as "We use your phone number only to call you about this complaint".</li>
+<li>Ask in the words people use. "Which network are you complaining about?", not "Select operator".</li>
+<li>Use radios for one choice from a short list, checkboxes for several, and a text input sized to the answer.</li>
+<li>Add <code>autocomplete</code> to names, phone numbers, emails and addresses.</li>
+<li>Do not ask for the same thing twice. Keep answers when people go back.</li>
+</ul>
+<h2>Errors</h2>
+<ul>
+<li>Check the answers when the page is sent, not while people type.</li>
+<li>Show the error summary at the top, the message next to each field, and start the page title with "Error: ". With Django, <code>{{ form }}</code> and the GGDS form renderer do all three.</li>
+<li>Say how to fix it: "Enter a mobile number with 10 digits, like 024 123 4567".</li>
+<li>Keep what people entered, even when it is wrong, so they can correct it.</li>
+</ul>
+<h2>Confirmation</h2>
+<ul>
+<li>Give a reference number people can quote, and send it by SMS or email too.</li>
+<li>Say what happens next and how long it takes, in working days.</li>
+<li>Say how to contact you about it.</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Give every page a unique title that starts with its question, such as "How should we contact you? – Make a complaint – NCA".</li>
+<li>Do not time people out without warning. If you must, warn them first and let them ask for more time.</li>
+<li>Let people go back without losing answers: a link at the top of each question page, and the browser's Back button.</li>
+<li>Make a question the page heading by putting an <code>&lt;h1&gt;</code> inside the <code>&lt;legend&gt;</code> (or the <code>&lt;label&gt;</code>), so screen readers hear it once.</li>
+</ul>

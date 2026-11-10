@@ -1,0 +1,105 @@
+{
+  "css": "header",
+  "javascript": "Optional. With the GGDS script, below 80rem the sections go behind a menu button that opens the list in place and closes with Escape, returning focus to the button. Without it, the sections show as a list under the name.",
+  "classes": [
+    [
+      ".ggds-header",
+      "The header. Sticky, white, with the flag colours as a thin line above and a line in the institution's colour below."
+    ],
+    [
+      ".ggds-header__inner",
+      "The row inside the page width."
+    ],
+    [
+      ".ggds-header__identity",
+      "The link home: logo or initials, name and country."
+    ],
+    [
+      ".ggds-header__logo",
+      "An approved logo, 44px, drawn round."
+    ],
+    [
+      ".ggds-header__monogram",
+      "The institution's initials in a round badge, until it has an approved logo."
+    ],
+    [
+      ".ggds-header__text",
+      "The name and country."
+    ],
+    [
+      ".ggds-header__name",
+      "The institution's name, in its colour."
+    ],
+    [
+      ".ggds-header__name--long",
+      "A name longer than 45 characters: set smaller on phones."
+    ],
+    [
+      ".ggds-header__country",
+      "\"Republic of Ghana\" under the name, on wide screens."
+    ],
+    [
+      ".ggds-header__nav",
+      "The main navigation."
+    ],
+    [
+      ".ggds-header__nav--collapsible",
+      "Added by the GGDS script: the navigation can be hidden behind the menu button."
+    ],
+    [
+      ".ggds-header__list",
+      "The list of sections."
+    ],
+    [
+      ".ggds-header__link",
+      "A section link."
+    ],
+    [
+      ".ggds-header__search",
+      "The link to the search page, with its icon."
+    ],
+    [
+      ".ggds-header__search-label",
+      "The word \"Search\": shown on wide screens, otherwise kept for screen readers only."
+    ],
+    [
+      ".ggds-header__menu-button",
+      "The menu button. Has hidden until the GGDS script shows it."
+    ],
+    [
+      ".ggds-header__icon",
+      "An icon in the header."
+    ],
+    [
+      ".ggds-header__icon--menu",
+      "The menu icon, shown while the menu is closed."
+    ],
+    [
+      ".ggds-header__icon--close",
+      "The close icon, shown while the menu is open."
+    ]
+  ],
+  "states": [
+    [
+      "aria-current=\"page\" on .ggds-header__link",
+      "The section the visitor is in: marked with a line in the link colour, and underlined on wide screens."
+    ],
+    [
+      "aria-expanded=\"true\" on .ggds-header__menu-button",
+      "The menu is open: the close icon shows."
+    ],
+    [
+      "hidden on .ggds-header__nav",
+      "The menu is closed (set by the GGDS script)."
+    ]
+  ],
+  "astro": "<Header name=\"National Communications Authority\" initials=\"NCA\"\n  nav={[{ label: 'Services', href: '/services/' }, { label: 'About', href: '/about/' }]}\n  current={Astro.url.pathname} />",
+  "django": "{% ggds_header name=\"National Communications Authority\" initials=\"NCA\" nav=nav %}",
+  "tests": [
+    "opens in place, closes with Escape and returns focus",
+    "navigation is visible and the menu button is not",
+    "one row from 80rem: name, navigation and Search side by side",
+    "a menu button below 80rem",
+    "the header row fits inside the page at 1280px and 1440px, even with six sections"
+  ]
+}

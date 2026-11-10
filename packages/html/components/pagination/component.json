@@ -1,0 +1,33 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-pagination",
+      "The <nav>, named after what is being paged."
+    ],
+    [
+      ".ggds-pagination__list",
+      "The links, in a row that wraps."
+    ],
+    [
+      ".ggds-pagination__link",
+      "Previous, Next or a page number: at least 44px square."
+    ],
+    [
+      ".ggds-pagination__ellipsis",
+      "The \"…\" between page numbers that are left out."
+    ]
+  ],
+  "states": [
+    [
+      "aria-current=\"page\" on .ggds-pagination__link",
+      "The current page: filled in the brand colour."
+    ]
+  ],
+  "astro": null,
+  "django": "{% ggds_pagination page_obj %}",
+  "tests": [
+    "pagination keeps the search"
+  ]
+}

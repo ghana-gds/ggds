@@ -1,0 +1,53 @@
+<!-- title: Accessibility statement; lead: How accessible GGDS and this website are, what is not tested yet, and how to tell us about a problem. -->
+<p>This statement covers this website, the GGDS documentation, and the GGDS styles, script and page parts it shows. It was prepared on 10 November 2026, for version ${version}.</p>
+<p>Every government website that uses GGDS needs its own accessibility statement: GGDS makes its parts accessible, but each website's own content, pages and services need checking too. You can start from the structure of this one.</p>
+
+<h2>How accessible GGDS is</h2>
+<p>GGDS aims to meet the <a href="https://www.w3.org/TR/WCAG22/">Web Content Accessibility Guidelines (WCAG) 2.2</a> at level AA. We think it meets level AA in what automated tests can check, except for one known problem listed below. It has not yet been tested by an accessibility auditor or by disabled people, so we do not yet claim that it fully meets level AA.</p>
+<p>You should be able to:</p>
+<ul>
+<li>use every page with a keyboard only, and always see where you are, with a gold focus outline;</li>
+<li>use a screen reader: every page has a skip link, headings in order, labelled landmarks and labelled form fields;</li>
+<li>use a phone as narrow as 320 pixels without scrolling sideways;</li>
+<li>zoom in, change the text size, and use Windows contrast themes;</li>
+<li>use every page and every form without JavaScript;</li>
+<li>read every text and see every border and focus outline: each colour pair meets its contrast minimum.</li>
+</ul>
+<p>Animations play only if you have not asked your device for less motion. One known exception to level AA is listed below: the moving hero drawing.</p>
+
+<h2>How we test</h2>
+<p>On every change, before it can be released:</p>
+<ul>
+<li><strong>Automated accessibility checks</strong> (axe, WCAG 2.2 A and AA rules) on every page of this website, including every live example, in Chrome at desktop and phone widths.</li>
+<li><strong>Sideways scrolling</strong> at 320 pixels, also with a wide font, on every live example and the main documentation pages.</li>
+<li><strong>Contrast</strong> of every colour pair GGDS uses, for the default and every institution theme.</li>
+<li><strong>Behaviour tests</strong>: the phone menu opens in place, Escape closes it and focus returns to its button; the error summary takes focus and its links reach each field; the banner opens; pagination keeps the search.</li>
+<li><strong>Content Security Policy</strong>: every page runs with no inline scripts or styles.</li>
+</ul>
+<p>Automated tests find only some of the barriers people meet. Each component page lists its tests, including the checks by people that are still to do: keyboard only, NVDA, JAWS, VoiceOver, TalkBack, zoom to 400%, Windows contrast themes and voice control.</p>
+
+<h2>What is not accessible or not tested yet</h2>
+<ul>
+<li><strong>No audit yet.</strong> An external accessibility auditor, working with Ghanaian disability organisations, will test GGDS before version 1.0 (decision D-09). Until then, results by people are not recorded on the component pages.</li>
+<li><strong>Screen readers and voice control</strong> have not been tested with each component.</li>
+<li><strong>Moving hero drawing.</strong> The optional drawing in the hero (<code>ggds-hero-art</code>, and the drawing on this website's homepage) keeps moving for people who have not asked their device for less motion, and has no pause button. This does not meet WCAG 2.2.2 (Pause, Stop, Hide). Until it is fixed, use a still drawing, or none, on pages where people need to concentrate.</li>
+<li><strong>Languages.</strong> GGDS's text and examples are in English only. Pages in Ghanaian languages need their own <code>lang</code> attribute and testing with speakers of those languages.</li>
+<li><strong>Live examples in frames.</strong> Component pages show each example in a frame with a title. Each example also opens as its own page, which is easier to use with some screen readers and magnifiers.</li>
+</ul>
+
+<h2>Tell us about a problem</h2>
+<p>If you find a problem with GGDS or this website, or you cannot use something, please tell us. We want to hear from disabled people especially.</p>
+<ul>
+<li><a href="${repo}/issues/new?title=Accessibility%3A%20">Report an accessibility problem</a> on GitHub (you need a GitHub account).</li>
+<li>Say which page or component, what you were trying to do, and what you use, such as a screen reader, magnifier or voice control, if you are happy to.</li>
+</ul>
+<p>We aim to reply within 5 working days. NITA looks after GGDS. A contact for people without a GitHub account will be added here once NITA confirms one.</p>
+
+<h2>For websites using GGDS</h2>
+<p>Using GGDS does not make a website accessible on its own. You still need to:</p>
+<ul>
+<li>write clear content, with headings in order and link text that makes sense on its own (see <a href="get-started/content.html">Get started as a content designer</a>);</li>
+<li>follow the "What you need to do" part of each component's guidance;</li>
+<li>test your own pages and services, including with disabled people, before launch;</li>
+<li>publish your own accessibility statement and answer the problems people report.</li>
+</ul>

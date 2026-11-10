@@ -11,4 +11,7 @@
 <div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use placeholder text instead of a label.</li><li>Write "Invalid input".</li></ul></div>
 </div>
 <h2>Accessibility</h2>
-<ul><li>Text is at least 16px, so phones do not zoom in.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>Text is at least 16px, so phones do not zoom in, and every control is at least 44px tall.</li><li>An error is shown by more than colour: a message, a line beside the question and a red border.</li><li>The gold focus ring shows on every control.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Give every field a visible <code>&lt;label&gt;</code>; never use placeholder text instead.</li><li>Connect the hint and error message with <code>aria-describedby</code>, hint first.</li><li>On error, add <code>aria-invalid="true"</code> and start the message with a visually hidden "Error:".</li><li>Add <code>autocomplete</code> to personal details, so people can fill them in quickly.</li></ul>

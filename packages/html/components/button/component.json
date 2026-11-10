@@ -1,0 +1,43 @@
+{
+  "css": "button",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-button",
+      "The main (primary) button: one per page."
+    ],
+    [
+      ".ggds-button--secondary",
+      "For other actions, such as saving a draft."
+    ],
+    [
+      ".ggds-button--quiet",
+      "Looks like a link: for minor actions such as Cancel."
+    ],
+    [
+      ".ggds-button--warning",
+      "Only for actions that delete or withdraw something."
+    ],
+    [
+      ".ggds-button-group",
+      "Buttons side by side, wrapping on narrow screens."
+    ]
+  ],
+  "states": [
+    [
+      ":hover",
+      "A darker background."
+    ],
+    [
+      ":focus-visible",
+      "The gold focus ring."
+    ],
+    [
+      ":disabled, aria-disabled=\"true\"",
+      "Faded, with a not-allowed cursor. Prefer explaining why an action is not available."
+    ]
+  ],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

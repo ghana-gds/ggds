@@ -1,0 +1,19 @@
+{
+  "css": "skip-link",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-skip-link",
+      "The link. Hidden until it has keyboard focus, then shown at the top left of the page."
+    ]
+  ],
+  "states": [
+    [
+      ":focus",
+      "Shown on screen while it has focus."
+    ]
+  ],
+  "astro": "<SkipLink />",
+  "django": "{% ggds_skip_link %}",
+  "tests": []
+}

@@ -1,0 +1,56 @@
+<!-- title: Versions and support; lead: How GGDS is numbered and released, what each kind of release can change, and how long an old version is supported. -->
+<p>The current version is <strong>${version}</strong>. Every change is listed in <a href="changelog.html">What’s new</a>.</p>
+
+<h2>Where to get each version</h2>
+<ul>
+<li><strong>Download</strong>: <code>ggds-&lt;version&gt;.zip</code> from the <a href="${repo}/releases">releases page</a>, with a checksum (<code>SHA256SUMS</code>) and an <code>integrity</code> value for every file (<code>integrity.json</code>). This is the recommended way for government websites.</li>
+<li><strong>npm</strong>: <code>@ggds/tokens</code>, <code>@ggds/themes</code>, <code>@ggds/css</code>, <code>@ggds/js</code> and <code>@ggds/astro</code>, published with provenance, so anyone can check they were built from this repository.</li>
+<li><strong>PyPI</strong>: <code>ggds-django</code>, for Django and Wagtail.</li>
+</ul>
+<p>All packages share one version number and are released together, so <code>@ggds/css</code> ${version} always goes with <code>@ggds/js</code> ${version}.</p>
+
+<h2>What a version number means</h2>
+<p>GGDS uses <a href="https://semver.org/">semantic versioning</a>: <code>major.minor.patch</code>.</p>
+<ul>
+<li><strong>Patch</strong> (0.1.0 to 0.1.1): fixes and documentation. Update without checking your pages.</li>
+<li><strong>Minor</strong> (1.1 to 1.2): new components, classes, options or tokens. Nothing you use stops working. Update when you are ready.</li>
+<li><strong>Major</strong> (1.x to 2.0): changes that may need you to change your HTML or CSS, such as a renamed class or removed token. Each one comes with a guide to updating.</li>
+</ul>
+<p><strong>Before version 1.0</strong>, GGDS is a draft: a minor version (0.1 to 0.2) may also contain changes that need you to change your pages. They are listed first in What’s new, under "Changes you need to make".</p>
+
+<h2>What counts as a breaking change</h2>
+<p>These are breaking changes, and only happen in a major version (or a minor version before 1.0):</p>
+<ul>
+<li>removing or renaming a class, token, file, package export, Astro prop or Django template tag;</li>
+<li>changing the HTML a component needs;</li>
+<li>removing support for a browser.</li>
+</ul>
+<p>These are not breaking changes: how a component looks (spacing, colour within its contrast rules), new classes and tokens, accessibility fixes, and changes to the guidance. An accessibility fix may change a component's HTML in a minor version if leaving it would keep a barrier in place; it is marked clearly in What’s new.</p>
+
+<h2>How things are removed</h2>
+<ol>
+<li>The thing is marked <strong>deprecated</strong> in What’s new and in its documentation, with what to use instead. It keeps working.</li>
+<li>It is removed in the next major version, at least 6 months later.</li>
+</ol>
+<p>For example, the <code>--site-*</code> token names in <code>@ggds/tokens/compat-site.css</code> are deprecated, for sites moving from the MoCDTI platform, and will be removed in GGDS 2.0.</p>
+
+<h2>Component status</h2>
+<p>Each component page shows a status:</p>
+<ul>
+<li><strong>Stable</strong>: used on live government websites and not expected to change. It changes only as described above.</li>
+<li><strong>Beta</strong>: works, is tested and is used on the MoCDTI platform. It may still change before version 1.0, after research or the accessibility audit. Any change is listed in What’s new.</li>
+</ul>
+<p>See every component and its status on the <a href="components/index.html">components page</a>.</p>
+
+<h2>How long a version is supported</h2>
+<ul>
+<li>The latest version gets every fix.</li>
+<li>After version 1.0, the previous major version gets security and accessibility fixes for 12 months after the next one is released.</li>
+<li>Before version 1.0, only the latest version is supported. Keep to the latest 0.x release.</li>
+</ul>
+
+<h2>Browsers</h2>
+<p>GGDS supports current versions of Chrome, Edge, Firefox and Safari, on phones and computers, and Samsung Internet and Opera on Android. The styles use cascade layers, which these browsers have had since 2022. Some details, such as card hover effects and the wide-screen header, use newer CSS; browsers without it show a plainer version that still works. Every page works without JavaScript.</p>
+
+<h2>Security problems</h2>
+<p>Do not report a security problem in a public issue. Follow the <a href="${repo}/security/policy">security policy</a>: report it privately on GitHub, and we will reply within 5 working days.</p>

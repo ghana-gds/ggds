@@ -1,0 +1,14 @@
+{
+  "css": "prose",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-prose",
+      "Styles the headings, lists, links, quotes and tables inside it, as text from a CMS arrives."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{# Wagtail: a RichTextField, cleaned by Wagtail #}\n<div class=\"ggds-prose\">{{ page.body|richtext }}</div>",
+  "tests": []
+}

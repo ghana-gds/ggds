@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/@ggds/themes)](https://www.npmjs.com/package/@ggds/themes)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
 
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Themes](https://ghana-gds.github.io/ggds/themes.html)
+
 Ready-made institution themes for GGDS, the Ghana Government Design System. A theme changes an institution's
 colour in five places only: the line under the header, the institution's name, the homepage hero, the footer and
 its card in a list. Links, buttons, form fields and messages stay the same on every government website, so people
@@ -100,8 +102,9 @@ theme cannot change the colours of links, buttons, focus or error messages.
 
 ## Contributing and support
 
-Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues). See
-[CONTRIBUTING.md](https://github.com/ghana-gds/ggds/blob/main/CONTRIBUTING.md) before sending a change.
+Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues), and see
+[Contribute](https://ghana-gds.github.io/ggds/contribute.html) and [Versions and support](https://ghana-gds.github.io/ggds/versions.html). Report security problems
+privately: [security policy](https://github.com/ghana-gds/ggds/security/policy).
 
 ## Licence
 

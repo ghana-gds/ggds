@@ -1,0 +1,18 @@
+<!-- title: States: empty, answered, focus and error; layout: main; height: 560; states: true -->
+<div class="ggds-field">
+  <label class="ggds-label" for="state-empty">Empty</label>
+  <input class="ggds-input ggds-input--width-medium" id="state-empty" name="stateEmpty" type="text">
+</div>
+<div class="ggds-field">
+  <label class="ggds-label" for="state-answered">Answered</label>
+  <input class="ggds-input ggds-input--width-medium" id="state-answered" name="stateAnswered" type="text" value="Kofi Mensah">
+</div>
+<div class="ggds-field">
+  <label class="ggds-label" for="state-focus">Focus (what keyboard users see)</label>
+  <input class="ggds-input ggds-input--width-medium docs-state-focus" id="state-focus" name="stateFocus" type="text">
+</div>
+<div class="ggds-field ggds-field--error">
+  <label class="ggds-label" for="state-error">Error</label>
+  <p class="ggds-error-message" id="state-error-message"><span class="ggds-visually-hidden">Error:</span> Enter your full name</p>
+  <input class="ggds-input ggds-input--width-medium" id="state-error" name="stateError" type="text" aria-invalid="true" aria-describedby="state-error-message">
+</div>

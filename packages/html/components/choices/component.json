@@ -1,0 +1,61 @@
+{
+  "css": "field",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-fieldset",
+      "The <fieldset> that groups the options."
+    ],
+    [
+      ".ggds-fieldset__legend",
+      "The question, in the <legend>."
+    ],
+    [
+      ".ggds-fieldset__legend--page",
+      "A question that is also the page heading: set as large as an h1."
+    ],
+    [
+      ".ggds-choices",
+      "The list of options, one under another."
+    ],
+    [
+      ".ggds-choices--inline",
+      "Options side by side, for two short ones such as Yes and No."
+    ],
+    [
+      ".ggds-choice",
+      "One option: the whole row can be tapped."
+    ],
+    [
+      ".ggds-choice__input",
+      "The radio or checkbox, enlarged."
+    ],
+    [
+      ".ggds-choice__label",
+      "The option's label."
+    ],
+    [
+      ".ggds-choice__hint",
+      "Extra help for one option."
+    ]
+  ],
+  "states": [
+    [
+      ":checked",
+      "Chosen."
+    ],
+    [
+      ":focus-visible",
+      "The gold focus ring."
+    ],
+    [
+      "aria-invalid=\"true\" and .ggds-field--error",
+      "The question has an error, as for text inputs."
+    ]
+  ],
+  "astro": null,
+  "django": "{# RadioSelect and CheckboxSelectMultiple widgets, with GGDSFormRenderer #}\n{{ form.contact_method.as_field_group }}",
+  "tests": [
+    "after a failed submit the error summary is read first, and its links reach each field"
+  ]
+}

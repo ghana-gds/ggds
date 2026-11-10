@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/@ggds/css)](https://www.npmjs.com/package/@ggds/css)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
 
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Components](https://ghana-gds.github.io/ggds/components/index.html)
+
 The styles for every part of GGDS, the Ghana Government Design System: page structure, navigation, forms and
 content. Plain CSS: it works with any website or framework, needs no JavaScript, and runs under a strict Content
 Security Policy.
@@ -41,7 +43,7 @@ Or only the parts you use, which keeps pages lighter:
 ```
 
 Then write the HTML for each part as shown in the
-[GGDS documentation](https://github.com/ghana-gds/ggds/tree/main/packages/html/components). Every class starts with
+[GGDS documentation](https://ghana-gds.github.io/ggds/components/index.html). Every class starts with
 `ggds-`. For your institution's colour, add a theme from
 [`@ggds/themes`](https://www.npmjs.com/package/@ggds/themes).
 
@@ -113,8 +115,9 @@ plainer version that still works.
 
 ## Contributing and support
 
-Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues). See
-[CONTRIBUTING.md](https://github.com/ghana-gds/ggds/blob/main/CONTRIBUTING.md) before sending a change.
+Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues), and see
+[Contribute](https://ghana-gds.github.io/ggds/contribute.html) and [Versions and support](https://ghana-gds.github.io/ggds/versions.html). Report security problems
+privately: [security policy](https://github.com/ghana-gds/ggds/security/policy).
 
 ## Licence
 

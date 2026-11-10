@@ -1,0 +1,25 @@
+name: Report an accessibility problem
+description: Something in GGDS or its documentation is hard or impossible to use.
+labels: [accessibility]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you. We especially want to hear from disabled people. Share only what you are happy to share.
+  - type: input
+    id: where
+    attributes:
+      label: Where is the problem?
+      description: The component or page, and its address.
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What were you trying to do, and what got in the way?
+    validations:
+      required: true
+  - type: input
+    id: tools
+    attributes:
+      label: What do you use?
+      description: "For example: NVDA with Firefox, TalkBack, a magnifier, voice control, keyboard only."

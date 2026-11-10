@@ -1,10 +1,17 @@
 <!-- name: Skip link; status: stable; order: 4; group: Page structure; related: page; summary: A "Skip to main content" link that appears when someone presses Tab. -->
 <p class="ggds-lead">A "Skip to main content" link that appears when someone presses Tab.</p>
 <h2>When to use</h2>
-<ul><li>On every page.</li></ul>
+<ul><li>On every page. Without it, keyboard users must Tab through the banner, header and menu on every page before reaching the content (WCAG 2.4.1).</li></ul>
 <h2>When not to use</h2>
-<ul><li>Pointing anywhere other than the main content.</li></ul>
+<ul><li>Pointing anywhere other than the main content.</li><li>More than once on a page.</li></ul>
 <h2>How to use</h2>
-<ul><li>Make it the first thing on the page.</li><li>Point it at your main content: <code>&lt;main id="main" tabindex="-1"&gt;</code>.</li></ul>
+<ul><li>Make it the first element in <code>&lt;body&gt;</code>, before the banner.</li><li>Point it at your main content: <code>&lt;main id="main" tabindex="-1"&gt;</code>. The <code>tabindex="-1"</code> lets focus move to <code>&lt;main&gt;</code>, so the next Tab starts from the content, not from the top of the page.</li><li>Keep the words "Skip to main content".</li><li>Give <code>&lt;main&gt;</code> the class <code>ggds-main</code>. It removes the focus outline from <code>&lt;main&gt;</code> itself.</li><li>Check it on every page template: load the page, press Tab once, then Enter.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Use the same skip link on every page.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Hide it with <code>display: none</code>; keyboard and screen reader users could not reach it.</li><li>Put the <code>id="main"</code> on more than one element.</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>It lets keyboard and screen reader users jump straight past the banner and menu.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>It is moved off screen, not hidden, so it stays in the Tab order and screen readers can always find it.</li><li>When it has focus it appears at the top left, above everything else, in bold dark text on gold.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Make it the first element in <code>&lt;body&gt;</code>.</li><li>Point it at <code>&lt;main id="main" tabindex="-1"&gt;</code>, so focus really moves past the banner and menu.</li><li>Test it with a keyboard after any change to the page layout.</li></ul>

@@ -21,14 +21,16 @@ for any government institution. NITA is its custodian (decision D-02).
 | `packages/themes` | Ready-made institution themes (MoCDTI is the default), from the platform's agency profiles |
 | `packages/css` | All component styles, in cascade layers; also one file per component (`dist/components/`) |
 | `packages/js` | The optional script: phone menu and error summary (TypeScript) |
-| `packages/html` | The canonical HTML and guidance for each of the 20 components; the documentation is built from it (not published) |
+| `packages/html` | The canonical HTML and guidance for each of the 20 components and the patterns; the documentation is built from it (not published) |
 | `packages/astro` | `@ggds/astro`: the page parts as Astro components |
 | `packages/django` | `ggds-django`: template tags, a form renderer and the static files, for Django and Wagtail |
-| `docs/` | The documentation site builder (plain Node, no framework); output in `site/` |
+| `docs/` | The documentation site builder (plain Node, no framework); output in `site/`. `docs/guides/` holds the get-started guides, `docs/pages/` the about pages (contribute, versions, accessibility statement) |
 | `docs/scenes/` | The agencies' hero drawings, copied from the platform by `pnpm run sync:scenes` |
 | `tests/` | Unit tests (Node) and browser tests (Playwright with axe, desktop and phone) |
 | `scripts/` | Serve, release, npm publishing, scene sync, Django tests |
-| `.github/workflows/` | CI on every push; release on a version tag |
+| `.github/workflows/` | CI on every push, then the documentation website to GitHub Pages from `main`; release on a version tag |
+| `.github/ISSUE_TEMPLATE/` | Forms for problems, accessibility problems and proposals |
+| `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` | How to change the code, the code of conduct, how to report security problems privately |
 
 ## Build and test
 
@@ -55,18 +57,27 @@ What the tests guard:
 
 ## Release
 
-Set the same version in `packages/{tokens,themes,css,js,astro}/package.json` (and
-`packages/django/pyproject.toml`), add it to `CHANGELOG.md`, then push a tag such as `v0.1.0`. The release
-workflow tests the build, publishes the npm packages under `@ggds` with provenance, and makes a GitHub release
-with `ggds-<version>.zip` (the recommended way for government websites: self-hosted files, no build step).
+Set the same version in `packages/{tokens,themes,css,js,astro,html}/package.json`,
+`packages/django/pyproject.toml` and `packages/django/src/ggds_django/__init__.py`, move the "Unreleased" changes
+in `CHANGELOG.md` under the new version, then push a tag such as `v0.1.2`. The release workflow tests the build,
+publishes the npm packages under `@ggds` with provenance and `ggds-django` to PyPI, and makes a GitHub release with
+`ggds-<version>.zip` (the recommended way for government websites: self-hosted files, no build step). Follow
+the rules on the [Versions and support](https://ghana-gds.github.io/ggds/versions.html) page for what each kind
+of release may change.
 
-Before the first release:
+The documentation website, [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/), is published from
+`main` by the `docs` job in `ci.yml`, after every test passes. It is built without the platform, so it has no
+example sites (see "Wording to approve" below). A `.gov.gh` address can replace it later (decision D-08).
 
-- npm: the `@ggds` organisation exists. Set up trusted publishing for each package on npmjs.com (workflow
-  `release.yml`), or add an `NPM_TOKEN` secret for the first publish.
-- PyPI: `ggds-django` is not published yet. The name was free in November 2026. Create a PyPI account (an
-  organisation for GGDS), add a pending trusted publisher for `ghana-gds/ggds`, workflow `release.yml`, and add a
-  PyPI step to the workflow.
+Publishing:
+
+- npm: done. `@ggds/tokens`, `@ggds/themes`, `@ggds/css`, `@ggds/js` and `@ggds/astro` are published at 0.1.1,
+  using an `NPM_TOKEN` secret. Move to trusted publishing on npmjs.com (workflow `release.yml`, environment `npm`)
+  and delete the token: npm is restricting tokens that skip two-factor authentication.
+- PyPI: `ggds-django` is not published yet; the workflow's `pypi` job fails until this is done. Create a PyPI
+  account (an organisation for GGDS) and add a pending trusted publisher: project `ggds-django`, owner
+  `ghana-gds`, repository `ggds`, workflow `release.yml`, environment `pypi`. Then re-run the failed job.
+- Security: private vulnerability reporting is on for the repository (`SECURITY.md`).
 
 ## Decisions
 
@@ -91,6 +102,8 @@ Still open, and what each blocks:
 | D-06 | Who keeps the register of official government websites that the banner tells people to check (`site/register.html` explains it does not exist yet) | Banner link |
 | D-08 | Code hosting and CI. GitHub (`ghana-gds/ggds`) is in use; a government mirror is allowed | — |
 | D-11 | Budget, including the accessibility audit (D-09) | v1.0 |
+| D-12 | A GGDS contact address for people without a GitHub account: accessibility reports, code of conduct reports. The accessibility statement and code of conduct say one will be added | Accessibility statement |
+| D-13 | Confirm the support commitments proposed on the Versions and support page and in `SECURITY.md`: 5 working days to reply, 6 months' notice before removing something, 12 months of fixes for the previous major version, monthly review of proposals | v1.0 |
 
 Each institution still has to confirm its theme colour, logo and contact details. The approval tracker used for
 the four decisions above also holds a sign-off item per institution theme.
@@ -125,6 +138,10 @@ so the example-site checks run on a developer's machine only.
   components if other sites need them.
 - **Platform test.** One platform unit test (`agency-profile.test.ts`, NCA identity) expects NCA's logo without the
   small logo file the profile now has. It failed before GGDS work began; update the test.
-- **Wording to approve.** The banner text (D-03) and the "Example only" notices on the example sites.
+- **Wording to approve.** The banner text (D-03) and the "Example only" notices on the example sites. Until the
+  notices are approved, the published documentation leaves the example sites out (`EXAMPLES` in `docs/build.mjs`).
+- **Moving hero drawing (WCAG 2.2.2).** `ggds-hero-art` moves without end for people who have not asked for less
+  motion, and has no pause button. Add a pause control, or stop it after 5 seconds. The accessibility statement
+  lists it as a known problem.
 - **Templates for other stacks.** Astro and Django have packages; WordPress and others copy the HTML from the
   documentation. Add packages where institutions need them.

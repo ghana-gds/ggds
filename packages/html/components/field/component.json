@@ -1,0 +1,69 @@
+{
+  "css": "field",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-field",
+      "One question: label, hint, error message and control."
+    ],
+    [
+      ".ggds-field--error",
+      "The question has an error: a red line down its left side."
+    ],
+    [
+      ".ggds-label",
+      "The visible label."
+    ],
+    [
+      ".ggds-hint",
+      "Extra help under the label."
+    ],
+    [
+      ".ggds-error-message",
+      "What went wrong and how to fix it. Starts with a hidden \"Error:\"."
+    ],
+    [
+      ".ggds-input",
+      "A text input, at least 16px text and 44px tall."
+    ],
+    [
+      ".ggds-input--width-short",
+      "For short answers such as a code."
+    ],
+    [
+      ".ggds-input--width-medium",
+      "For medium answers such as a phone number."
+    ],
+    [
+      ".ggds-input--width-long",
+      "For long answers such as a name or email."
+    ],
+    [
+      ".ggds-textarea",
+      "A box for longer answers."
+    ],
+    [
+      ".ggds-select",
+      "A drop-down list."
+    ],
+    [
+      ".ggds-file-upload",
+      "A file input."
+    ]
+  ],
+  "states": [
+    [
+      ":focus-visible",
+      "The gold focus ring, and a dark border."
+    ],
+    [
+      "aria-invalid=\"true\"",
+      "The answer has an error: a red border."
+    ]
+  ],
+  "astro": null,
+  "django": "{# With FORM_RENDERER = \"ggds_django.forms.GGDSFormRenderer\" #}\n{{ form }}\n{# or one field #}\n{{ form.phone.as_field_group }}",
+  "tests": [
+    "after a failed submit the error summary is read first, and its links reach each field"
+  ]
+}

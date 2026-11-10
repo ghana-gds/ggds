@@ -1,10 +1,17 @@
 <!-- name: Breadcrumbs; status: stable; order: 10; group: Navigation; related: header, page; summary: A trail of links showing where the page sits in the website. -->
 <p class="ggds-lead">A trail of links showing where the page sits in the website.</p>
 <h2>When to use</h2>
-<ul><li>On every page except the homepage.</li></ul>
+<ul><li>On every page below the homepage, when your website has more than two levels.</li><li>When people often arrive on a deep page from a search engine and need a way up.</li></ul>
 <h2>When not to use</h2>
-<ul><li>On the homepage.</li><li>To show steps in a form.</li></ul>
+<ul><li>On the homepage.</li><li>To show steps in a form. Breadcrumbs take people out of the form.</li><li>As the only way to move around. People still need the <a href="header.html">header</a>.</li></ul>
 <h2>How to use</h2>
-<ul><li>The last item is the current page. Do not link it, and mark it with <code>aria-current="page"</code>.</li></ul>
+<ul><li>Put the breadcrumbs at the top of the page, above the main heading.</li><li>Start with "Home", then one link for each level above this page.</li><li>Show where the page sits in the website, not the pages the visitor came through.</li><li>Use the same names as the pages' headings, shortened if they are long.</li><li>The last item is the current page. Do not link it, and mark it with <code>aria-current="page"</code>.</li><li>On a narrow phone the trail wraps onto more lines; nothing is cut off. Short names keep it to one or two lines.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Keep the trail the same on every page in a section.</li><li>Use short names: "Services", not "Our services to the public".</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Link the current page to itself.</li><li>Type "&gt;" or "/" between items; GGDS draws the arrows.</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>It is a navigation area named "Breadcrumb".</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>It is a navigation area with an ordered list, so screen readers say how many steps there are.</li><li>The arrows between steps are drawn in CSS, so screen readers do not read them out.</li><li>Each link is at least 24px tall (WCAG 2.5.8), and the trail wraps instead of making the page scroll sideways.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Name it: <code>&lt;nav aria-label="Breadcrumb"&gt;</code>.</li><li>Make the last step the current page: not a link, with <code>aria-current="page"</code>.</li><li>Use one breadcrumb trail per page.</li></ul>

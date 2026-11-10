@@ -1,0 +1,31 @@
+{
+  "css": "disclosure",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-disclosure",
+      "One section that opens and closes: a <details> element."
+    ],
+    [
+      ".ggds-disclosure__summary",
+      "The heading people click, with an arrow."
+    ],
+    [
+      ".ggds-disclosure__content",
+      "What shows when it is open."
+    ],
+    [
+      ".ggds-accordion",
+      "Several disclosures as one list, with lines between them."
+    ]
+  ],
+  "states": [
+    [
+      "[open]",
+      "Open: the content shows and the arrow points up."
+    ]
+  ],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/@ggds/js)](https://www.npmjs.com/package/@ggds/js)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
 
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Get started as a developer](https://ghana-gds.github.io/ggds/get-started/developers.html)
+
 The small, optional script for GGDS, the Ghana Government Design System. It adds the phone menu to the header and
 moves focus to the error summary. Every GGDS part works without it: this script only makes two of them easier to
 use.
@@ -75,8 +77,9 @@ version without it, which works.
 
 ## Contributing and support
 
-Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues). See
-[CONTRIBUTING.md](https://github.com/ghana-gds/ggds/blob/main/CONTRIBUTING.md) before sending a change.
+Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues), and see
+[Contribute](https://ghana-gds.github.io/ggds/contribute.html) and [Versions and support](https://ghana-gds.github.io/ggds/versions.html). Report security problems
+privately: [security policy](https://github.com/ghana-gds/ggds/security/policy).
 
 ## Licence
 

@@ -1,0 +1,37 @@
+{
+  "css": null,
+  "javascript": "Optional: the GGDS script runs the header menu and the error summary.",
+  "classes": [
+    [
+      ".ggds-container",
+      "Centres content at the page width, with side margins that keep clear of a phone's notch."
+    ],
+    [
+      ".ggds-main",
+      "Space above and below the main content."
+    ],
+    [
+      ".ggds-lead",
+      "A larger opening paragraph."
+    ],
+    [
+      ".ggds-measure",
+      "Limits text to a comfortable line length."
+    ],
+    [
+      ".ggds-visually-hidden",
+      "Hides text on screen but keeps it for screen readers."
+    ],
+    [
+      ".ggds-no-print",
+      "Left out when the page is printed."
+    ]
+  ],
+  "states": [],
+  "astro": "<SkipLink />\n<Banner official shortName=\"NCA\" host=\"nca.org.gh\" />\n<Header name=\"National Communications Authority\" initials=\"NCA\" nav={nav} current={Astro.url.pathname} />\n<main id=\"main\" tabindex=\"-1\" class=\"ggds-container ggds-main\">…</main>\n<Footer name=\"National Communications Authority\" />\n<TabBar tabs={tabs} />",
+  "django": "{% load ggds %}\n{% ggds_skip_link %}\n{% ggds_banner short_name=\"NCA\" host=\"nca.org.gh\" official=True %}\n{% ggds_header name=\"National Communications Authority\" nav=nav %}\n<main id=\"main\" tabindex=\"-1\" class=\"ggds-container ggds-main\">…</main>\n{% ggds_footer name=\"National Communications Authority\" sections=sections links=links %}\n{% ggds_tab_bar tabs %}",
+  "tests": [
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

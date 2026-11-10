@@ -1,0 +1,27 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-tab-links",
+      "The <nav>, with a line under the tabs."
+    ],
+    [
+      ".ggds-tab-links__list",
+      "The tabs. Scrolls sideways when they do not fit."
+    ],
+    [
+      ".ggds-tab-links__link",
+      "A tab: a link to its own page."
+    ]
+  ],
+  "states": [
+    [
+      "aria-current=\"page\" on .ggds-tab-links__link",
+      "The current tab: bold, with a thick line under it."
+    ]
+  ],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

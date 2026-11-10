@@ -1,0 +1,62 @@
+{
+  "css": "footer",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-footer",
+      "The footer, in the institution's deep colour with the woven flag band. Leaves room for the tab bar when one follows it."
+    ],
+    [
+      ".ggds-footer__main",
+      "The upper part: identity and contact on the left, sections on the right from 64rem."
+    ],
+    [
+      ".ggds-footer__identity",
+      "Logo or initials, name and purpose."
+    ],
+    [
+      ".ggds-footer__logo",
+      "The logo or initials badge."
+    ],
+    [
+      ".ggds-footer__purpose",
+      "One sentence on what the institution does."
+    ],
+    [
+      ".ggds-footer__contact",
+      "The <address>: postal address, email and phone."
+    ],
+    [
+      ".ggds-footer__more",
+      "The link to the full contact page."
+    ],
+    [
+      ".ggds-footer__sections",
+      "The main sections, in columns."
+    ],
+    [
+      ".ggds-footer__section",
+      "One section: a <nav> named after it."
+    ],
+    [
+      ".ggds-footer__heading",
+      "A section's heading, linking to the section."
+    ],
+    [
+      ".ggds-footer__list",
+      "A section's most-used pages (up to five)."
+    ],
+    [
+      ".ggds-footer__bottom",
+      "The bottom bar: copyright and the required links."
+    ],
+    [
+      ".ggds-footer__bar",
+      "The required links: Accessibility, Privacy, Disclaimer and others."
+    ]
+  ],
+  "states": [],
+  "astro": "<Footer name=\"National Communications Authority\"\n  purpose=\"We regulate communications in Ghana.\"\n  contact={{ email: 'info@nca.org.gh', moreHref: '/contact/' }} />",
+  "django": "{% ggds_footer name=\"National Communications Authority\" purpose=\"We regulate communications in Ghana.\" sections=sections links=footer_links %}",
+  "tests": []
+}

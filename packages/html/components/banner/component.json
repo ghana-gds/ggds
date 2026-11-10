@@ -1,0 +1,73 @@
+{
+  "css": "banner",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-banner",
+      "The banner: a strip above the header."
+    ],
+    [
+      ".ggds-banner--unofficial",
+      "For a website not served from its official address: says so and names the real one."
+    ],
+    [
+      ".ggds-banner__details",
+      "The <details> element that opens and closes the explanation."
+    ],
+    [
+      ".ggds-banner__summary",
+      "The always-visible line: the flag, the sentence and the toggle."
+    ],
+    [
+      ".ggds-banner__flag",
+      "The small Ghana flag, drawn in CSS."
+    ],
+    [
+      ".ggds-banner__flag-red",
+      "The flag's red stripe."
+    ],
+    [
+      ".ggds-banner__flag-gold",
+      "The flag's gold stripe."
+    ],
+    [
+      ".ggds-banner__flag-green",
+      "The flag's green stripe."
+    ],
+    [
+      ".ggds-banner__flag-star",
+      "The flag's black star."
+    ],
+    [
+      ".ggds-banner__text",
+      "The sentence \"An official website of the Government of Ghana\"."
+    ],
+    [
+      ".ggds-banner__toggle",
+      "\"Here's how you know\", with an arrow that turns when the banner is open."
+    ],
+    [
+      ".ggds-banner__content",
+      "The explanation shown when open: two items side by side from 48rem."
+    ],
+    [
+      ".ggds-banner__item",
+      "One item of the explanation."
+    ],
+    [
+      ".ggds-banner__heading",
+      "An item's heading."
+    ]
+  ],
+  "states": [
+    [
+      "[open] on .ggds-banner__details",
+      "Open: the explanation shows and the arrow points up."
+    ]
+  ],
+  "astro": "<Banner official shortName=\"NCA\" host=\"nca.org.gh\" />",
+  "django": "{% ggds_banner short_name=\"NCA\" host=\"nca.org.gh\" official=True %}",
+  "tests": [
+    "the identification banner opens"
+  ]
+}

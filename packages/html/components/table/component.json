@@ -1,0 +1,26 @@
+{
+  "css": "table",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-table-wrap",
+      "A box that scrolls a wide table sideways. Give it role=\"region\", tabindex=\"0\" and aria-labelledby."
+    ],
+    [
+      ".ggds-table",
+      "The table."
+    ],
+    [
+      ".ggds-table__caption",
+      "The caption: what the table shows."
+    ],
+    [
+      ".ggds-table__numeric",
+      "Right-aligns a column of numbers."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

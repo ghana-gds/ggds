@@ -11,4 +11,7 @@
 <div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Name sections after departments people do not know.</li><li>Add a second row of links to the header.</li></ul></div>
 </div>
 <h2>Accessibility</h2>
-<ul><li>The menu never covers the page, so keyboard users never land on content they cannot see. Escape closes it.</li><li>The header stays at the top as people scroll; the page leaves room so focused links are never hidden under it.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>The current section is shown by more than colour: a line beside it on phones and an underline on wide screens.</li><li>The menu pushes the page down instead of covering it, so keyboard users never land on content they cannot see. Escape closes it and returns focus to the menu button.</li><li>The page leaves room under the sticky header, so focused links are never hidden behind it.</li><li>Without JavaScript the sections show as a list, so nothing depends on the script.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Mark the current section with <code>aria-current="page"</code>.</li><li>Give a logo image <code>alt</code> text naming your institution, or use the initials, which are hidden from screen readers because the name follows.</li><li>Keep section names short so the menu stays easy to scan.</li></ul>

@@ -1,0 +1,24 @@
+name: Report a problem
+description: Something is broken, wrong or unclear in GGDS or its documentation.
+labels: [bug]
+body:
+  - type: input
+    id: where
+    attributes:
+      label: Where is the problem?
+      description: The component, page or package, and its address if it is on the documentation website.
+      placeholder: "For example: header, or https://ghana-gds.github.io/ggds/components/header.html"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what happened instead. Add screenshots if they help.
+    validations:
+      required: true
+  - type: input
+    id: setup
+    attributes:
+      label: Browser, device and GGDS version
+      placeholder: "For example: Chrome on a Tecno Spark phone, GGDS 0.1.1"

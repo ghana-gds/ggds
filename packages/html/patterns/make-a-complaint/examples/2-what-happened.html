@@ -1,0 +1,21 @@
+<!-- title: A question page; layout: main; height: 720 -->
+<p><a href="/complaints/about/">Back</a></p>
+<h1>Tell us about your complaint</h1>
+<form action="/complaints/contact/" method="post" novalidate>
+  <div class="ggds-field">
+    <label class="ggds-label" for="complaint-problem">What happened?</label>
+    <p class="ggds-hint" id="complaint-problem-hint">Include dates and what the company told you. Do not include your PIN or passwords.</p>
+    <textarea class="ggds-textarea" id="complaint-problem" name="problem" rows="6" aria-describedby="complaint-problem-hint"></textarea>
+  </div>
+  <div class="ggds-field">
+    <fieldset class="ggds-fieldset">
+      <legend class="ggds-fieldset__legend">What would you like to happen?</legend>
+      <div class="ggds-choices">
+        <div class="ggds-choice"><input class="ggds-choice__input" id="outcome-fix" name="outcome" type="radio" value="fix"><label class="ggds-choice__label" for="outcome-fix">The problem is fixed</label></div>
+        <div class="ggds-choice"><input class="ggds-choice__input" id="outcome-refund" name="outcome" type="radio" value="refund"><label class="ggds-choice__label" for="outcome-refund">I get my money back</label></div>
+        <div class="ggds-choice"><input class="ggds-choice__input" id="outcome-other" name="outcome" type="radio" value="other"><label class="ggds-choice__label" for="outcome-other">Something else</label></div>
+      </div>
+    </fieldset>
+  </div>
+  <button class="ggds-button" type="submit">Continue</button>
+</form>

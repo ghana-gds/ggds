@@ -7,4 +7,7 @@
 <h2>How to use</h2>
 <ol><li>Skip link</li><li>Government website banner</li><li>Header</li><li>Main content, starting with breadcrumbs on inner pages or the hero on the homepage</li><li>Footer</li><li>Tab bar (phones only)</li></ol>
 <h2>Accessibility</h2>
-<ul><li>One <code>&lt;h1&gt;</code> per page, at the start of the main content.</li><li>Set the page language: <code>&lt;html lang="en-GB"&gt;</code>.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>The page parts are landmarks in the expected order: banner, navigation, main content, footer.</li><li>Every part fits a 320px screen and works when text is enlarged.</li><li>The focus style is the same everywhere: a gold ring with a dark band inside it.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Set the language: <code>&lt;html lang="en-GB"&gt;</code>, and <code>lang</code> on any passage in another language.</li><li>Use one <code>&lt;h1&gt;</code>, at the start of the main content, and give every page a unique <code>&lt;title&gt;</code>.</li><li>Allow zooming: never add <code>maximum-scale</code> or <code>user-scalable=no</code> to the viewport.</li></ul>

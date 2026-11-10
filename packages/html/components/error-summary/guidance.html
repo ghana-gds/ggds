@@ -7,4 +7,7 @@
 <h2>How to use</h2>
 <ul><li>Use the same words as the message next to each field.</li><li>Link each item to its field.</li><li>Start the page title with "Error: " while it shows.</li><li>Add <code>data-ggds-module="error-summary"</code>: with the GGDS script, the page moves to the summary when it loads.</li></ul>
 <h2>Accessibility</h2>
-<ul><li>It is announced to screen reader users even without JavaScript.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>It has <code>role="alert"</code>, so screen readers announce it even without JavaScript.</li><li>With the GGDS script it takes focus when the page loads, and each link moves focus to its field with the question in view.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>List every error, in the same words as the message next to each field, and link each one to its field.</li><li>Start the page <code>&lt;title&gt;</code> with "Error: " while it shows.</li><li>Put it at the top of the main content, before the form.</li></ul>

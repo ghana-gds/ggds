@@ -1,0 +1,34 @@
+{
+  "css": "notice",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-notice",
+      "An information notice."
+    ],
+    [
+      ".ggds-notice--success",
+      "Something worked."
+    ],
+    [
+      ".ggds-notice--warning",
+      "Something people need to know before they continue."
+    ],
+    [
+      ".ggds-notice--danger",
+      "Something is wrong or risky."
+    ],
+    [
+      ".ggds-notice--urgent",
+      "A site-wide notice under the header, such as an emergency."
+    ],
+    [
+      ".ggds-notice__title",
+      "The notice's first line, starting with its type (which can be visually hidden)."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

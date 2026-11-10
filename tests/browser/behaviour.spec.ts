@@ -2,7 +2,7 @@
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
-import { EXAMPLE_SITES, NO_EXAMPLE_SITES } from './pages';
+import { EXAMPLE_SITES, NO_EXAMPLE_SITES, PAGES } from './pages';
 
 test.describe('header menu on a narrow screen', () => {
   test.use({ viewport: { width: 375, height: 800 } });
@@ -44,7 +44,8 @@ test.describe('without JavaScript', () => {
   });
 });
 
-const NARROW_PATHS = ['/examples/page/1-default.html', '/examples/hero/1-default.html', '/index.html', '/get-started.html',
+// Every example (so each component page can say it was checked at 320px), and the main documentation pages.
+const NARROW_PATHS = [...PAGES.filter((p) => p.startsWith('/examples/') && !p.includes('/links/')), '/index.html', '/get-started.html', '/get-started/developers.html', '/get-started/designers.html',
   '/foundations.html', '/themes.html', '/components/index.html', '/components/header.html', ...(EXAMPLE_SITES ? ['/agencies/mocdti.html'] : [])];
 
 test('no horizontal scrolling at 320px', async ({ page }) => {
@@ -130,10 +131,10 @@ test.describe('documentation features', () => {
   test('copy code puts the example HTML on the clipboard', async ({ page, context, browserName }) => {
     test.skip(browserName !== 'chromium');
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-    await page.goto('/get-started.html');
+    await page.goto('/get-started/developers.html');
     await page.getByRole('button', { name: 'Copy code' }).first().click();
     await expect(page.getByRole('button', { name: 'Copied' })).toBeVisible();
-    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('<link rel="stylesheet" href="ggds/ggds.min.css">');
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toContain('npm install @ggds/css @ggds/js');
   });
 
   test('"On this page" links to every section, and pages lead on to the next', async ({ page }) => {
@@ -152,7 +153,7 @@ test.describe('documentation without JavaScript', () => {
   test('search lists every page from A to Z', async ({ page }) => {
     await page.goto('/search.html');
     await expect(page.getByRole('heading', { name: 'Every page, A to Z' })).toBeVisible();
-    await expect(page.locator('.docs-search__az a', { hasText: 'Get started' })).toBeVisible();
+    await expect(page.locator('.docs-search__az').getByRole('link', { name: 'Get started', exact: true })).toBeVisible();
   });
 });
 

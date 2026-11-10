@@ -1,10 +1,17 @@
 <!-- name: Tab links; status: beta; order: 12; group: Navigation; related: pagination, header; summary: Links that look like tabs, for moving between views of the same section. -->
 <p class="ggds-lead">Links that look like tabs, for moving between views of the same section.</p>
 <h2>When to use</h2>
-<ul><li>For views of one list, such as "News", "Notices" and "Events".</li></ul>
+<ul><li>For views of one list, such as "News", "Public notices" and "Publications".</li><li>For a few pages about one thing, such as a service's "Overview", "Fees" and "How to apply".</li></ul>
 <h2>When not to use</h2>
-<ul><li>For content that should all be on one page. Use headings.</li><li>As the main navigation. Use the <a href="header.html">header</a>.</li></ul>
+<ul><li>For content that should all be on one page. Use headings.</li><li>To show and hide parts of one page. GGDS has no in-page tabs; use headings, or a <a href="disclosure.html">disclosure</a>.</li><li>As the main navigation. Use the <a href="header.html">header</a>.</li><li>For steps of a form.</li></ul>
 <h2>How to use</h2>
-<ul><li>Each tab is a normal link to its own page, so it works without JavaScript and can be bookmarked.</li><li>Mark the current tab with <code>aria-current="page"</code>.</li></ul>
+<ul><li>Each tab is a normal link to its own page or address, such as <code>?kind=news</code>, so it works without JavaScript and can be bookmarked.</li><li>Mark the current tab with <code>aria-current="page"</code>.</li><li>Keep to two to five tabs, with names of one to three words.</li><li>Keep the tabs in the same order and place on every page they appear.</li><li>On a narrow phone the tabs stay on one line and the row scrolls sideways, so tabs at the end can be out of sight. Short names keep them all in view.</li><li>Change the page <code>&lt;title&gt;</code> to name the current tab, such as "Public notices – News".</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Name tabs after what people will find: "Public notices".</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Add <code>role="tab"</code> or <code>role="tablist"</code>.</li><li>Use more tabs than fit on a phone.</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>Do not add ARIA tab roles. These are links and should be announced as links.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>They are ordinary links, so they work with every assistive technology and without JavaScript.</li><li>Every tab is at least 44px tall.</li><li>The current tab is shown by more than colour: it is bold, with a thick line under it.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Do not add ARIA tab roles. These are links and should be announced as links; people expect ARIA tabs to switch with arrow keys, without loading a page.</li><li>Mark the current tab with <code>aria-current="page"</code>.</li><li>Name the navigation, such as <code>aria-label="Kinds of news"</code>.</li><li>Give each tab's page its own title (WCAG 2.4.2).</li></ul>

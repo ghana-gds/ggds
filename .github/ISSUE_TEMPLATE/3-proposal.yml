@@ -1,0 +1,31 @@
+name: Propose a component or pattern
+description: Your website needs something GGDS does not have yet.
+labels: [proposal]
+body:
+  - type: markdown
+    attributes:
+      value: "Before you start, search the documentation and the open issues: it may exist already. How proposals are decided: https://ghana-gds.github.io/ggds/contribute.html"
+  - type: textarea
+    id: need
+    attributes:
+      label: What are people trying to do?
+      description: The task or problem, in the words of the people using your website.
+    validations:
+      required: true
+  - type: textarea
+    id: where
+    attributes:
+      label: Where do you need it?
+      description: Your institution and service. Do other institutions need it too?
+    validations:
+      required: true
+  - type: textarea
+    id: today
+    attributes:
+      label: What do you use today?
+      description: Screenshots, links, and why existing GGDS components do not do the job.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Research, analytics, support calls or test findings.

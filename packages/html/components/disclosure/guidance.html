@@ -1,10 +1,17 @@
 <!-- name: Disclosure and accordion; status: stable; order: 34; group: Content; related: prose; summary: Sections people can open and close, such as questions and answers. -->
 <p class="ggds-lead">Sections people can open and close, such as questions and answers.</p>
 <h2>When to use</h2>
-<ul><li>For extra detail that only some people need.</li></ul>
+<ul><li>For extra detail that only some people need, such as "What if I do not have a Ghana Card?".</li><li>For a list of questions and answers, where each person looks for one or two. Use an accordion.</li></ul>
 <h2>When not to use</h2>
-<ul><li>For information everyone needs. Put it on the page.</li></ul>
+<ul><li>For information everyone needs, such as fees, deadlines or required documents. Put it on the page.</li><li>For short content. Showing it is quicker than opening it.</li><li>For steps people must follow in order. Use a numbered list.</li><li>To switch between views, like tabs. Use headings on one page, or separate pages with <a href="tab-links.html">tab links</a>.</li></ul>
 <h2>How to use</h2>
-<ul><li>Write each heading as the question or topic people are looking for.</li></ul>
+<ul><li>Build each section from <code>&lt;details class="ggds-disclosure"&gt;</code>, a <code>&lt;summary class="ggds-disclosure__summary"&gt;</code> and a <code>ggds-disclosure__content</code> block.</li><li>For several sections, put them in a <code>ggds-accordion</code>. It adds lines between them.</li><li>Write each summary as the question or topic people are looking for, in under ten words.</li><li>Start sections closed. Add <code>open</code> only when most people need that one.</li><li>Put only plain text in the summary: no links, buttons or headings.</li><li>Do not put a disclosure inside another one.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Use the words people search for: "How do I pay?".</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Hide the fee or the deadline in a closed section.</li><li>Write vague summaries such as "More information".</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>Built on the browser's own <code>&lt;details&gt;</code>: it works with a keyboard, a screen reader and without JavaScript.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>Built on the browser's own <code>&lt;details&gt;</code>: it opens with Enter or Space, screen readers announce whether it is open, and it works without JavaScript.</li><li>The summary is at least 44px tall, bold and in the link colour, with the gold focus ring.</li><li>The arrow is drawn in CSS: it points down when closed and up when open.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Keep <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. Do not rebuild it with <code>&lt;div&gt;</code>s and a script.</li><li>Write each summary so it makes sense on its own.</li><li>Do not hide information everyone needs inside a closed section.</li></ul>

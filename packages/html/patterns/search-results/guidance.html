@@ -1,0 +1,24 @@
+<!-- name: Search and show results; order: 3; components: field, button, tag, pagination, notice; summary: A search box that keeps the search, a count, results people can scan, and help when nothing is found. -->
+<p class="ggds-lead">A search box that keeps the search, a count, results people can scan, and help when nothing is found.</p>
+<h2>When to use</h2>
+<ul><li>For your website's search page, and for any long list people search: licensed providers, laws, tenders, news.</li></ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>The search box</strong> at the top, still holding what people searched for, so they can change it.</li>
+<li><strong>A count</strong>: "24 results for <em>courier licence</em>".</li>
+<li><strong>Results</strong>: each a heading that links to the page, one line from it, and a tag for its type or status.</li>
+<li><strong>Pagination</strong> at the end, keeping the search in every link.</li>
+<li><strong>No results</strong>: say so, repeat the search, and suggest what to try next, including how to ask a person.</li>
+</ol>
+<h2>Details</h2>
+<ul>
+<li>Use a <code>GET</code> form, so every search has an address people can share and bookmark. With Django, <code>{% ggds_pagination page_obj %}</code> keeps the search.</li>
+<li>Put the search in the page title: "courier licence – Search – PCSRC".</li>
+<li>Show 10 to 20 results a page. Order them by what people most likely want, not by date alone.</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Give the search box a visible label, or a hidden one when the page's heading already says "Search".</li>
+<li>Make the result count the first thing after the search box, so screen reader users hear it straight away.</li>
+<li>Results are a list of headings, so people can move from one to the next.</li>
+</ul>

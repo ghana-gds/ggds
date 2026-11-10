@@ -3,6 +3,8 @@
 [![npm](https://img.shields.io/npm/v/@ggds/tokens)](https://www.npmjs.com/package/@ggds/tokens)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
 
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Foundations](https://ghana-gds.github.io/ggds/foundations.html)
+
 The design tokens of GGDS, the Ghana Government Design System: its colours, text sizes, spacing, radii, shadows
 and motion as named values, with the rule that decides whether a colour can be an institution's colour.
 
@@ -100,8 +102,9 @@ and focus lines. GGDS's tests check each pair, and no version is released while 
 
 ## Contributing and support
 
-Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues). See
-[CONTRIBUTING.md](https://github.com/ghana-gds/ggds/blob/main/CONTRIBUTING.md) before sending a change.
+Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues), and see
+[Contribute](https://ghana-gds.github.io/ggds/contribute.html) and [Versions and support](https://ghana-gds.github.io/ggds/versions.html). Report security problems
+privately: [security policy](https://github.com/ghana-gds/ggds/security/policy).
 
 ## Licence
 

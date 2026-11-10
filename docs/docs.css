@@ -678,3 +678,156 @@
 .docs-pager__link {
   overflow-wrap: anywhere;
 }
+
+/* Component pages: status and accessibility badges under the title. */
+.docs-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ggds-space-2);
+  margin: 0 0 var(--ggds-space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.docs-badges a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  text-decoration: none;
+}
+
+/* Facts as term and description: the stylesheet and script a component needs, what a status means. */
+.docs-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ggds-space-2) var(--ggds-space-6);
+  max-width: var(--ggds-measure);
+  margin: 0 0 var(--ggds-space-6);
+}
+
+.docs-facts dt {
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.docs-facts dd {
+  margin: 0 0 var(--ggds-space-2);
+}
+
+@media (min-width: 48rem) {
+  .docs-facts {
+    grid-template-columns: 10rem minmax(0, 1fr);
+  }
+
+  .docs-facts dd {
+    margin: 0;
+  }
+}
+
+/* "Report a problem" at the end of every page. */
+.docs-feedback {
+  margin-top: var(--ggds-space-8);
+  padding-block: var(--ggds-space-4);
+  border-top: 1px solid var(--ggds-color-border-subtle);
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+}
+
+/* States examples: a label over each state, and focus drawn without a keyboard. docs-state-focus repeats the
+   GGDS focus style (base.css :focus-visible, and field.css for form controls); tests/unit/site.test.mjs checks
+   they stay the same. */
+.docs-state-label {
+  margin: var(--ggds-space-6) 0 var(--ggds-space-2);
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.docs-state-label:first-child {
+  margin-top: 0;
+}
+
+.docs-state-focus {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ggds-color-focus-halo);
+}
+
+.ggds-input.docs-state-focus {
+  border-color: var(--ggds-color-focus-halo);
+}
+
+/* Get started: the guide for each role, as links that look like tabs. */
+.docs-roles {
+  margin-bottom: var(--ggds-space-6);
+  border-bottom: 1px solid var(--ggds-color-border-strong);
+}
+
+.docs-roles__list {
+  display: flex;
+  gap: var(--ggds-space-1);
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  list-style: none;
+}
+
+.docs-roles__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+  padding-inline: var(--ggds-space-4);
+  white-space: nowrap;
+}
+
+.docs-roles__link[aria-current="page"] {
+  color: var(--ggds-color-text);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+  box-shadow: inset 0 -4px 0 var(--ggds-color-brand-700);
+}
+
+.docs-roles-grid {
+  margin-bottom: var(--ggds-space-12);
+}
+
+.docs-nowrap {
+  white-space: nowrap;
+}
+
+/* Foundations: token samples and the icon set */
+.docs-sample {
+  display: block;
+  background: var(--ggds-color-brand-700);
+}
+.docs-sample--space {
+  block-size: var(--ggds-space-4);
+}
+.docs-sample--radius,
+.docs-sample--shadow {
+  inline-size: var(--ggds-space-12);
+  block-size: var(--ggds-space-8);
+}
+.docs-sample--shadow {
+  background: var(--ggds-color-surface);
+}
+.docs-icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: var(--ggds-space-4);
+  margin: 0 0 var(--ggds-space-8);
+  padding: 0;
+  list-style: none;
+}
+.docs-icons__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  padding: var(--ggds-space-3);
+  border: 1px solid var(--ggds-color-border-subtle);
+  border-radius: var(--ggds-radius-md);
+}
+.docs-icons__svg {
+  inline-size: var(--ggds-size-icon-xl);
+  block-size: var(--ggds-size-icon-xl);
+}

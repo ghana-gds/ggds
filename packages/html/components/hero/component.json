@@ -1,0 +1,97 @@
+{
+  "css": "hero",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-hero",
+      "The top of a homepage, in the institution's colour."
+    ],
+    [
+      ".ggds-hero--hub",
+      "A ministry hub: one narrower, centred column for a search across all its agencies."
+    ],
+    [
+      ".ggds-hero--art",
+      "Leaves room for a drawing beside the text on wide screens."
+    ],
+    [
+      ".ggds-hero__inner",
+      "The content inside the page width."
+    ],
+    [
+      ".ggds-hero__body",
+      "The text, search and tasks."
+    ],
+    [
+      ".ggds-hero__purpose",
+      "The gold line saying what the institution does."
+    ],
+    [
+      ".ggds-hero__title",
+      "The heading: a question about the visitor's need."
+    ],
+    [
+      ".ggds-hero__lede",
+      "A short sentence under the heading."
+    ],
+    [
+      ".ggds-hero__search",
+      "The search form."
+    ],
+    [
+      ".ggds-hero__input",
+      "The search box."
+    ],
+    [
+      ".ggds-hero__button",
+      "The search button."
+    ],
+    [
+      ".ggds-hero__button-icon",
+      "The search button's icon."
+    ],
+    [
+      ".ggds-hero__button-label",
+      "The search button's word, hidden on narrow screens but kept for screen readers."
+    ],
+    [
+      ".ggds-hero__tasks-label",
+      "\"Common tasks:\" before the task links."
+    ],
+    [
+      ".ggds-hero__tasks",
+      "The task links: one row that scrolls sideways on phones."
+    ],
+    [
+      ".ggds-hero__task",
+      "A task link."
+    ],
+    [
+      ".ggds-hero__task-tag",
+      "On a hub, the agency that handles the task."
+    ],
+    [
+      ".ggds-hero__art",
+      "Holds the drawing (aria-hidden). Hidden on phones."
+    ],
+    [
+      ".ggds-hero-art",
+      "The shared animated drawing. It moves only when the visitor has not asked for less motion."
+    ],
+    [
+      ".ggds-hero-art__*",
+      "Parts of the shared drawing (plane, side, surface, shadow, orbit, node, edge, links, pulse). Not for other use."
+    ]
+  ],
+  "states": [
+    [
+      "prefers-reduced-motion: reduce",
+      "The drawing stays still."
+    ]
+  ],
+  "astro": "<Hero purpose=\"We regulate communications in Ghana.\" title=\"What do you need help with?\"\n  search={{ action: '/search/', label: 'Search this website' }}\n  tasks={[{ label: 'Make a complaint', href: '/complaints/' }]} />",
+  "django": "{% ggds_hero title=\"What do you need help with?\" purpose=\"We regulate communications in Ghana.\" search_action=\"/search/\" tasks=tasks %}",
+  "tests": [
+    "no horizontal scrolling at 320px"
+  ]
+}

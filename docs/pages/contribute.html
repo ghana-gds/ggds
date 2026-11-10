@@ -1,0 +1,48 @@
+<!-- title: Contribute; lead: How to report a problem, suggest a change, propose a new component or pattern, and how NITA decides what goes into GGDS. -->
+<p>GGDS belongs to every government institution that uses it. NITA looks after it (decision D-02), and anyone can contribute: ministries, departments and agencies, their suppliers, and members of the public.</p>
+
+<h2>Ways to help</h2>
+<ul>
+<li><strong>Report a problem</strong>: something broken, unclear or inaccessible. Every page of this website has a link at the bottom to report a problem with it.</li>
+<li><strong>Share evidence</strong>: research findings, analytics, or what people said in testing about a component or pattern. Evidence is what most often changes GGDS.</li>
+<li><strong>Suggest a change</strong> to a page's guidance: every guidance page links to its source on GitHub.</li>
+<li><strong>Propose a component or pattern</strong> that your website needs and GGDS does not have (below).</li>
+<li><strong>Fix something</strong> in the code: see <a href="${repo}/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for how to build and test GGDS, and how to sign off your commits.</li>
+</ul>
+<p>Everything happens in the open, on <a href="${repo}">GitHub</a>. You need a free GitHub account. Everyone taking part follows the <a href="${repo}/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
+
+<h2>Propose a new component or pattern</h2>
+<ol>
+<li><strong>Check it is not already there.</strong> Search this website and the <a href="${repo}/issues">open issues</a>. Often an existing component, or a pattern built from several, does the job.</li>
+<li><strong>Open a proposal</strong> with the "Propose a component or pattern" issue form. Say what people are trying to do, where you need it, and what you use today. Add screenshots and any research.</li>
+<li><strong>Discussion.</strong> Other institutions say whether they need it too. NITA reviews proposals every month.</li>
+<li><strong>Decision.</strong> NITA accepts the proposal, asks for more evidence, or explains why not. The decision and its reasons are written on the issue.</li>
+<li><strong>Build and test.</strong> An accepted proposal is built as a <strong>beta</strong> component, with guidance, examples and tests, usually by the team that proposed it with NITA's help.</li>
+<li><strong>Stable.</strong> It becomes stable once it is used on live government websites and has passed its accessibility checks.</li>
+</ol>
+
+<h2>What NITA looks for</h2>
+<p>A new component or pattern is accepted when:</p>
+<ul>
+<li><strong>It is needed</strong>: at least two institutions need it, or one service needs it and others are likely to.</li>
+<li><strong>It is different</strong>: no existing component does the job, even with small changes.</li>
+<li><strong>There is evidence</strong> it works for the people who use government websites in Ghana, or a plan to get that evidence in beta.</li>
+</ul>
+<p>And before it is released, it must, like every GGDS part:</p>
+<ul>
+<li>meet WCAG 2.2 level AA in automated tests, at desktop and phone widths;</li>
+<li>work without JavaScript, and under a strict Content Security Policy;</li>
+<li>fit a 320 pixel screen without sideways scrolling;</li>
+<li>use GGDS tokens only, not new colours or sizes;</li>
+<li>have guidance in plain English: when to use it, when not to, how, and what websites need to do for accessibility.</li>
+</ul>
+
+<h2>How changes are decided</h2>
+<ul>
+<li><strong>Fixes and guidance changes</strong> are reviewed and merged by the GGDS maintainers at NITA.</li>
+<li><strong>Changes that affect every website</strong>, such as the default colours, the banner wording or what every website must have, are decided by NITA and recorded in the decision register, with the reasons.</li>
+<li><strong>Breaking changes</strong> follow the rules in <a href="versions.html">Versions and support</a>.</li>
+</ul>
+
+<h2>Report a security problem</h2>
+<p>Do not open a public issue. Follow the <a href="${repo}/security/policy">security policy</a> to report it privately.</p>

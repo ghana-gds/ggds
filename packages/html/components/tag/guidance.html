@@ -1,10 +1,17 @@
 <!-- name: Tag; status: stable; order: 31; group: Content; related: notice, card; summary: A short label that shows a status, such as "Open" or "Closed". -->
 <p class="ggds-lead">A short label that shows a status, such as "Open" or "Closed".</p>
 <h2>When to use</h2>
-<ul><li>To show the status of an item in a list or on a page.</li></ul>
+<ul><li>To show the status of an item in a list or on a page: a licence, a consultation, an application.</li><li>When people need to scan many items and pick out the ones in a certain state.</li></ul>
 <h2>When not to use</h2>
-<ul><li>As a link or button.</li></ul>
+<ul><li>As a link, button or filter. Tags have no hover or focus style, so people will not know they can press them.</li><li>For a message people must read or act on. Use a <a href="notice.html">notice</a>.</li><li>For categories or keywords. Write them as plain text or links.</li></ul>
 <h2>How to use</h2>
-<ul><li>Use one or two words.</li></ul>
+<ul><li>Use one to three words, such as "In force" or "Closing soon".</li><li>Choose the style by meaning: <code>ggds-tag--success</code> for a good or settled state ("Approved", "In force"), <code>ggds-tag--info</code> for something new or open ("New", "Open for comment"), <code>ggds-tag--warning</code> for something that needs attention soon ("Closing soon", "To be confirmed"), <code>ggds-tag--danger</code> for something stopped or refused ("Revoked", "Rejected"), and plain <code>ggds-tag</code> when the state is neither good nor bad ("Closed", "Draft").</li><li>Use the same word and style for the same status everywhere on your website.</li><li>Put the tag next to the thing it describes, such as after a title.</li><li>Use only one tag per item. If an item needs several, the status is not clear yet.</li></ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Use words that make sense alone: "Closing soon".</li><li>Keep a short list of statuses and use it everywhere.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Rely on colour: a red tag saying "Status" tells people nothing.</li><li>Write a sentence in a tag.</li></ul></div>
+</div>
 <h2>Accessibility</h2>
-<ul><li>The words carry the meaning. The colour only supports them.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>Every tag's text colour is checked against its background for at least 4.5:1 contrast by the GGDS tests (WCAG 1.4.3).</li><li>Tags are bold and have a border in the text colour, so they keep their shape even where background colours are not shown.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Let the words carry the meaning; the colour only supports them (WCAG 1.4.1).</li><li>Check the tag reads well in order: a screen reader reads it as plain text with the words around it. If it is unclear, add visually hidden text such as <code>&lt;span class="ggds-visually-hidden"&gt;Status: &lt;/span&gt;</code>.</li><li>Do not make a tag a link or button.</li></ul>

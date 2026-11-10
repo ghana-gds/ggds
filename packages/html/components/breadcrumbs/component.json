@@ -1,0 +1,31 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-breadcrumbs",
+      "The <nav aria-label=\"Breadcrumb\">."
+    ],
+    [
+      ".ggds-breadcrumbs__list",
+      "The trail, as an ordered list that wraps."
+    ],
+    [
+      ".ggds-breadcrumbs__item",
+      "One step, with an arrow drawn before every step after the first."
+    ],
+    [
+      ".ggds-breadcrumbs__link",
+      "A link to a page above this one."
+    ]
+  ],
+  "states": [
+    [
+      "aria-current=\"page\" on the last item",
+      "The current page: plain text, not a link."
+    ]
+  ],
+  "astro": null,
+  "django": "{% ggds_breadcrumbs crumbs %}",
+  "tests": []
+}

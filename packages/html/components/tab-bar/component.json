@@ -1,0 +1,31 @@
+{
+  "css": "tab-bar",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-tab-bar",
+      "The bar, fixed to the bottom of phone screens; hidden from 48rem and when printing. A <nav> with its own name."
+    ],
+    [
+      ".ggds-tab-bar__list",
+      "The list of tabs."
+    ],
+    [
+      ".ggds-tab-bar__link",
+      "A tab: icon above its label, at least 44px tall."
+    ],
+    [
+      ".ggds-tab-bar__icon",
+      "A tab's icon, hidden from screen readers."
+    ]
+  ],
+  "states": [
+    [
+      "aria-current=\"page\" on .ggds-tab-bar__link",
+      "The section the visitor is in."
+    ]
+  ],
+  "astro": "<TabBar tabs={[\n  { label: 'Home', href: '/', icon: 'home' },\n  { label: 'Services', href: '/services/', icon: 'services' },\n  { label: 'Search', href: '/search/', icon: 'search' },\n]} />",
+  "django": "{% ggds_tab_bar tabs %}",
+  "tests": []
+}

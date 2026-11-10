@@ -1,0 +1,30 @@
+{
+  "css": "error-summary",
+  "javascript": "Optional. With data-ggds-module=\"error-summary\", the GGDS script moves focus to the summary when the page loads, and each link moves focus to its field and scrolls its label or question into view.",
+  "classes": [
+    [
+      ".ggds-error-summary",
+      "The box, with a thick red border. Give it role=\"alert\", aria-labelledby (its title) and tabindex=\"-1\"."
+    ],
+    [
+      ".ggds-error-summary__title",
+      "\"There is a problem\"."
+    ],
+    [
+      ".ggds-error-summary__list",
+      "One link per problem, each to its field."
+    ]
+  ],
+  "states": [
+    [
+      ":focus",
+      "Focused when the page loads (with the GGDS script)."
+    ]
+  ],
+  "astro": null,
+  "django": "{# Automatic with {{ form }} and GGDSFormRenderer; on its own: #}\n{% ggds_error_summary form %}",
+  "tests": [
+    "error summary takes focus on load",
+    "after a failed submit the error summary is read first, and its links reach each field"
+  ]
+}

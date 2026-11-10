@@ -1,5 +1,25 @@
 # What's new
 
+## Unreleased
+
+### Documentation
+
+- Get started has a guide for each role: developers, designers, content designers and service owners, with GGDS's principles. The developers' guide leads with installing from npm, now that the packages are published, and shows the download and a CDN for trying it out.
+- Patterns: whole tasks put together from components, with live examples: asking for information with a form, helping people find what they came for, and search results.
+- Every component page now has: what GGDS does for accessibility and what you need to do; a "Use it" section with its stylesheet and size, any script, and its Astro and Django versions; a table of its classes and states; its accessibility tests, automated and by people; and its changes.
+- New examples show the states of buttons, text inputs, radios and checkboxes, and disclosures, including focus.
+- Every page links to report a problem, and guidance pages to suggest a change on GitHub.
+- The documentation is published at [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/), from `main` after every test has passed. The example sites are left out of the published copy until the wording that marks them as examples is approved.
+- More patterns: helping people contact you, making a complaint, publishing notices and documents, and pages for "page not found" and errors.
+- Foundations now cover spacing, layout and breakpoints, sizes and touch targets, focus, corners and shadows, motion, layers and icons, with every token's value.
+- Fuller guidance for tags, breadcrumbs, disclosures, the skip link, pagination, rich text, tables and tab links. <!-- components: tag, breadcrumbs, disclosure, skip-link, pagination, prose, table, tab-links -->
+- New pages: an accessibility statement for GGDS, with what is not tested yet; how to contribute and how NITA decides on new components; and versions and support: what each kind of release can change, how things are removed, and how long a version is supported.
+- The repository has a code of conduct, a security policy with private reporting, forms for reporting problems and proposing components, and a pull request checklist.
+
+### Known problems
+
+- The optional moving hero drawing (`ggds-hero-art`) has no pause button, so it does not meet WCAG 2.2.2 (Pause, Stop, Hide) for people who have not asked for less motion. <!-- components: hero -->
+
 ## Version 0.1.1 (draft, 10 November 2026)
 
 Documentation only: no change to the styles, the script or the components.
@@ -21,11 +41,11 @@ The first version of GGDS, taken from the shared MoCDTI agency platform and made
 ### Components
 
 - 20 components in four groups: page structure, navigation, forms and content.
-- New: tab bar, for quick links on phones.
-- Header, hero, footer and cards match the shared platform's design: one-row header with the flag-colour line, woven flag band in the footer, institution cards with a line in each institution's colour.
-- The phone menu pushes the page down instead of covering it, so keyboard users never land on content they cannot see.
-- The error summary no longer scrolls the page around it when shown inside a frame.
-- The hero can show a drawing beside the text (`ggds-hero--art`), with a shared animated drawing, `ggds-hero-art`. It moves only for people who have not asked for less motion.
+- New: tab bar, for quick links on phones. <!-- components: tab-bar -->
+- Header, hero, footer and cards match the shared platform's design: one-row header with the flag-colour line, woven flag band in the footer, institution cards with a line in each institution's colour. <!-- components: header, hero, footer, card -->
+- The phone menu pushes the page down instead of covering it, so keyboard users never land on content they cannot see. <!-- components: header -->
+- The error summary no longer scrolls the page around it when shown inside a frame. <!-- components: error-summary -->
+- The hero can show a drawing beside the text (`ggds-hero--art`), with a shared animated drawing, `ggds-hero-art`. It moves only for people who have not asked for less motion. <!-- components: hero -->
 
 ### Getting GGDS
 
@@ -35,13 +55,13 @@ The first version of GGDS, taken from the shared MoCDTI agency platform and made
 
 ### Packages
 
-- New: `@ggds/astro`, the page parts as Astro components (skip link, banner, header, hero, footer, tab bar).
-- New: `ggds-django`, for Django and Django-based CMSs such as Wagtail: the page parts as template tags, a form renderer that turns any Django form into GGDS markup with an error summary and accessible errors, and the GGDS styles, themes and script as static files.
+- New: `@ggds/astro`, the page parts as Astro components (skip link, banner, header, hero, footer, tab bar). <!-- components: skip-link, banner, header, hero, footer, tab-bar -->
 - New: `ggds_django.admin_theme` gives Django admin GGDS's colours, type, focus style and header, from the tokens and the institution's theme. Admin keeps its own layout.
+- New: `ggds-django`, for Django and Django-based CMSs such as Wagtail: the page parts as template tags, a form renderer that turns any Django form into GGDS markup with an error summary and accessible errors, and the GGDS styles, themes and script as static files. <!-- components: skip-link, banner, header, hero, breadcrumbs, pagination, footer, tab-bar, field, choices, error-summary -->
 - `@ggds/css` can be loaded in parts: `core.css`, then one file per component in `components/`.
 - Four tokens added for the shared platform: spring easing, stagger, and the bottom sheet's radius and shadow.
 - The shared MoCDTI agency platform now uses GGDS for its tokens and every component GGDS has: skip link, banner, header, hero, footer, tab bar, buttons, cards, notices, tags, form fields, radios, error summary, tables, accordions, rich text, breadcrumbs, pagination and tab links.
-- `ggds-container` keeps clear of a phone's notch in landscape.
+- `ggds-container` keeps clear of a phone's notch in landscape. <!-- components: page -->
 
 ### Themes
 

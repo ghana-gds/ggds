@@ -1,0 +1,30 @@
+{
+  "css": "tag",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-tag",
+      "A neutral tag, such as \"Closed\" or \"Draft\"."
+    ],
+    [
+      ".ggds-tag--info",
+      "Information, such as \"New\"."
+    ],
+    [
+      ".ggds-tag--success",
+      "A good state, such as \"Open\"."
+    ],
+    [
+      ".ggds-tag--warning",
+      "Needs attention, such as \"Closing soon\"."
+    ],
+    [
+      ".ggds-tag--danger",
+      "A bad outcome, such as \"Revoked\" or \"Rejected\"."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": null,
+  "tests": []
+}

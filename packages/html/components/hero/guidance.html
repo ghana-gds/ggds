@@ -11,4 +11,7 @@
 <div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use department names as tasks.</li><li>Add a photo slideshow.</li></ul></div>
 </div>
 <h2>Accessibility</h2>
-<ul><li>Every theme is checked so white text and the gold purpose line stay readable.</li></ul>
+<h3>What GGDS does</h3>
+<ul><li>Every theme is checked so white text and the gold purpose line stay readable.</li><li>The search works without JavaScript, and its button keeps the word "Search" for screen readers when only the icon shows.</li><li>The drawing is hidden from screen readers, is left out on phones, and moves only for people who have not asked for less motion.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Write the heading as a real <code>&lt;h1&gt;</code>.</li><li>Give the search box a label (it can be visually hidden).</li><li>Add <code>aria-hidden="true"</code> to your own drawing.</li></ul>

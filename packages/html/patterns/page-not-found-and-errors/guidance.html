@@ -1,0 +1,39 @@
+<!-- name: Page not found and other errors; order: 7; components: page, field, button; summary: Error pages that say what went wrong in plain words, do not blame the reader, and give a way to carry on. -->
+<p class="ggds-lead">Error pages that say what went wrong in plain words, do not blame the reader, and give a way to carry on.</p>
+<h2>When to use</h2>
+<ul>
+<li>When a page does not exist or has moved: "Page not found".</li>
+<li>When a service is closed on purpose, for maintenance or outside its hours: "Service unavailable".</li>
+<li>When something goes wrong on your side: "Sorry, there is a problem with the service".</li>
+</ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>The heading</strong> says what happened in plain words. Not "404", "Error 500" or "Oops!".</li>
+<li><strong>A short explanation</strong> of what people can do: check the address, try again later, or use another way.</li>
+<li><strong>A way to carry on</strong>: a search box, a link to the homepage, and the most likely pages.</li>
+<li><strong>A way to get help</strong>, such as a phone number, when people cannot finish something important.</li>
+</ol>
+<h2>Writing error pages</h2>
+<ul>
+<li>Do not blame people. "If you typed the web address, check it is correct", not "You entered an invalid address".</li>
+<li>Do not show technical details: error codes, stack traces, server names. They mean nothing to most people and help attackers. Log them instead.</li>
+<li>When a service is unavailable, say when it will be back, with a day and time. Say whether people will lose what they entered.</li>
+<li>Say whether a deadline will be moved if the service was down near it.</li>
+<li>Keep error pages small. They should load quickly on a slow connection, and should not depend on the part of the website that has failed.</li>
+<li>Keep your usual header and footer, so people know they are still on your website.</li>
+</ul>
+<h2>Status codes</h2>
+<p>The words are for people. The status code is for browsers and search engines, and must still be correct.</p>
+<ul>
+<li>Send <code>404</code> for "Page not found", or <code>410</code> when a page has been removed for good. Never send <code>200</code> with a "not found" page: search engines will keep listing it.</li>
+<li>Send <code>503</code> for "Service unavailable", with a <code>Retry-After</code> header when you know when it will be back.</li>
+<li>Send <code>500</code> for "Sorry, there is a problem with the service".</li>
+<li>When a page moves, send a permanent redirect (<code>301</code>) from the old address to the new one, so links in SMS messages, letters and posters keep working. Do not send every missing page to the homepage.</li>
+<li>With Django, add <code>404.html</code> and <code>500.html</code> templates that use your GGDS page layout. Django shows them when <code>DEBUG</code> is off. Keep <code>500.html</code> simple: it is shown when something has already gone wrong, without the usual template context.</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Start the page title with the heading, such as "Page not found – Example Agency", so screen reader users hear what happened first.</li>
+<li>Give the search box a label, as on any other page.</li>
+<li>Check your "Page not found" reports regularly. Fix broken links on your own website, and add redirects for addresses people often get wrong.</li>
+</ul>
