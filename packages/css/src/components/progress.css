@@ -1,0 +1,47 @@
+/*
+ * Progress: how far through a task someone is ("Question 3 of 4"). The words say it; the bar, a native <progress>,
+ * shows it at a glance and tells screen readers the same. No style attributes: the value sets the width.
+ */
+.ggds-progress {
+  margin-bottom: var(--ggds-space-6);
+}
+
+.ggds-progress__label {
+  display: block;
+  margin-bottom: var(--ggds-space-1);
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-progress__bar {
+  display: block;
+  width: 100%;
+  height: 0.5rem;
+  border: 0;
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-border-subtle);
+  color: var(--ggds-color-institution);
+  overflow: hidden;
+  appearance: none;
+}
+
+.ggds-progress__bar::-webkit-progress-bar {
+  background: var(--ggds-color-border-subtle);
+}
+
+.ggds-progress__bar::-webkit-progress-value {
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-institution);
+}
+
+.ggds-progress__bar::-moz-progress-bar {
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-institution);
+}
+
+@media (forced-colors: active) {
+  .ggds-progress__bar {
+    border: 1px solid CanvasText;
+  }
+}

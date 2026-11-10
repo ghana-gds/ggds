@@ -27,6 +27,14 @@
       "One short sentence."
     ],
     [
+      ".ggds-card--icon",
+      "A card with a GGDS icon above its title, for a page of services or topics."
+    ],
+    [
+      ".ggds-card__icon",
+      "The icon's circle, tinted with the institution colour; the icon inside is hidden from screen readers."
+    ],
+    [
       ".ggds-card--institution",
       "An institution card, with a line in that institution's colour (data-ggds-theme)."
     ],

@@ -1,0 +1,38 @@
+{
+  "css": "key-figures",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-key-figures",
+      "The list of figures: a <ul>. As many columns as fit; one on phones."
+    ],
+    [
+      ".ggds-key-figures--inverse",
+      "For a dark background, such as a page heading: white text and outlines."
+    ],
+    [
+      ".ggds-key-figure",
+      "One figure: an <li>, with an edge in the institution’s colour."
+    ],
+    [
+      ".ggds-key-figure--danger",
+      "A figure that needs action, such as “5 overdue”: a red edge. Say why in the label."
+    ],
+    [
+      ".ggds-key-figure__value",
+      "The number, with its unit: large and bold."
+    ],
+    [
+      ".ggds-key-figure__label",
+      "What it measures."
+    ],
+    [
+      ".ggds-key-figure__change",
+      "Optional: how it has changed, and compared with what, in words."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{# figures: dicts with value, label, and optionally change and danger #}\n{% ggds_key_figures figures %}",
+  "tests": []
+}

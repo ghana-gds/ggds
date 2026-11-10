@@ -1,0 +1,34 @@
+{
+  "css": "timeline",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-timeline",
+      "The stages: an <ol>."
+    ],
+    [
+      ".ggds-timeline__item",
+      "One stage: an <li>, with a dot and a line to the next."
+    ],
+    [
+      ".ggds-timeline__item--done",
+      "A stage that has happened: a filled green dot."
+    ],
+    [
+      ".ggds-timeline__item--current",
+      "The stage it has reached: a ringed dot in the institution’s colour."
+    ],
+    [
+      ".ggds-timeline__title",
+      "What happens, starting with hidden words that say its state."
+    ],
+    [
+      ".ggds-timeline__when",
+      "When: a date, or a promise."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{# stages: dicts with title, when and state (\"done\", \"current\" or \"\") #}\n{% ggds_timeline stages %}",
+  "tests": []
+}

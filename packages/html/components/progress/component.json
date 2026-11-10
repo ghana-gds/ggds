@@ -1,0 +1,22 @@
+{
+  "css": "progress",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-progress",
+      "The label and the bar together."
+    ],
+    [
+      ".ggds-progress__label",
+      "The words: “Question 3 of 4”. A <label> for the bar."
+    ],
+    [
+      ".ggds-progress__bar",
+      "The bar: a native <progress> with value and max."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{% ggds_progress 3 4 %}",
+  "tests": []
+}

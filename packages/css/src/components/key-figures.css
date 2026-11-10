@@ -1,0 +1,63 @@
+/*
+ * Key figures: the few numbers that matter most on a page, each with what it measures. A list (<ul>), so screen
+ * readers say how many there are. The value is large; the change, if any, says its direction in words.
+ */
+.ggds-key-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--ggds-space-3);
+  margin: 0 0 var(--ggds-space-8);
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-key-figure {
+  padding: var(--ggds-space-4);
+  border: 1px solid var(--ggds-color-border-subtle);
+  border-left: 4px solid var(--ggds-color-institution);
+  border-radius: var(--ggds-radius-md);
+  background: var(--ggds-color-surface);
+}
+
+.ggds-key-figure > * {
+  margin: 0;
+}
+
+.ggds-key-figure--danger {
+  border-left-color: var(--ggds-color-status-danger-strong);
+}
+
+.ggds-key-figure__value {
+  font-size: var(--ggds-font-size-3xl);
+  font-weight: var(--ggds-font-weight-bold);
+  line-height: var(--ggds-line-height-tight);
+  overflow-wrap: anywhere;
+}
+
+.ggds-key-figure__label {
+  color: var(--ggds-color-text-muted);
+}
+
+.ggds-key-figure .ggds-key-figure__change {
+  margin-top: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-sm);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+/* On a page heading or another dark background. */
+.ggds-key-figures--inverse .ggds-key-figure {
+  border-color: currentColor;
+  border-left-color: var(--ggds-color-flag-gold);
+  background: transparent;
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-key-figures--inverse .ggds-key-figure__label {
+  color: inherit;
+}
+
+@media (forced-colors: active) {
+  .ggds-key-figure {
+    border-left-color: CanvasText;
+  }
+}

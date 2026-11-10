@@ -1,0 +1,40 @@
+/*
+ * Meter: an amount drawn as a bar, such as each region's rainfall in a table. A native <meter> with min, max and
+ * value: no style attributes. Put the number in words next to it, and hide the bar from screen readers.
+ */
+.ggds-meter {
+  display: block;
+  width: 100%;
+  min-width: 6rem;
+  height: 0.75rem;
+  margin: var(--ggds-space-1) 0;
+  border: 0;
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-surface-sunken);
+  overflow: hidden;
+}
+
+.ggds-meter::-webkit-meter-bar {
+  height: 0.75rem;
+  border: 0;
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-surface-sunken);
+}
+
+.ggds-meter::-webkit-meter-optimum-value,
+.ggds-meter::-webkit-meter-suboptimum-value,
+.ggds-meter::-webkit-meter-even-less-good-value {
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-institution);
+}
+
+.ggds-meter::-moz-meter-bar {
+  border-radius: var(--ggds-radius-pill);
+  background: var(--ggds-color-institution);
+}
+
+@media (forced-colors: active) {
+  .ggds-meter {
+    border: 1px solid CanvasText;
+  }
+}

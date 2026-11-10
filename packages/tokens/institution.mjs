@@ -1,6 +1,6 @@
 // The institution colour rule. Each institution keeps its own colour on identity surfaces only: the header rule,
 // its name and the footer. Links, buttons, form controls and status colours stay shared, so every government
-// website works the same way. Adopted from the MoCDTI platform (packages/design-tokens/agency-colour.mjs).
+// website works the same way.
 //
 // Use: write institutionCss('#006e35') into a stylesheet loaded after ggds.css (never an inline style: GGDS
 // pages run under a CSP without 'unsafe-inline').

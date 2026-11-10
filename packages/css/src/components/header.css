@@ -1,11 +1,11 @@
 /*
- * Header, as on the MoCDTI platform: the flag colours as a thin rule, then one row with the institution's logo,
+ * Header: the flag colours as a thin rule, then one row with the institution's logo,
  * name and country, the main navigation and Search. Sticky, white, with a rule in the institution's colour.
  *
  * Below 80rem the navigation does not fit beside the name. Without JavaScript it is a visible list under the row.
  * With @ggds/js a menu button shows and hides it in place: the menu pushes the page down instead of covering it,
- * so keyboard focus can never land on content hidden behind it (WCAG 2.4.11; the platform's full-screen drawer
- * fails this, defect A1).
+ * so keyboard focus can never land on content hidden behind it (WCAG 2.4.11 Focus Not Obscured;
+ * a full-screen drawer fails this).
  */
 .ggds-header {
   container: ggds-header / inline-size; /* the header spans the page, so its width is the viewport's */
@@ -56,7 +56,7 @@
   text-underline-offset: 0.18em;
 }
 
-/* An approved logo, drawn round on white as on the platform. */
+/* An approved logo, drawn round on white. */
 .ggds-header__logo {
   flex: none;
   width: 44px;
@@ -66,7 +66,7 @@
   object-fit: contain;
 }
 
-/* No approved logo yet: the institution's initials in a round badge keep the layout (the platform's Logo.astro). */
+/* No approved logo yet: the institution's initials in a round badge keep the layout. */
 .ggds-header__monogram {
   display: grid;
   flex: none;
@@ -144,7 +144,7 @@
   height: 24px;
 }
 
-/* "Search" shows from 90rem, as on the platform; below, the icon shows and the word stays for screen readers. */
+/* "Search" shows from 90rem; below, the icon shows and the word stays for screen readers. */
 .ggds-header__search-label {
   position: absolute;
   width: 1px;

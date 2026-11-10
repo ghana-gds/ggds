@@ -1,5 +1,5 @@
 /*
- * Footer in the institution's deep colour, as on the MoCDTI platform: a woven band in the flag colours, the
+ * Footer in the institution's deep colour: a woven band in the flag colours, the
  * institution (logo, name, purpose, contact details), its main sections with their most-used pages, and a bottom
  * bar with the links NITA's Systems and Applications Standard expects on every public website (6.4.18:
  * disclaimer, privacy, copyright) plus accessibility. White text on the deep shade is at 7:1 or more.
@@ -10,7 +10,7 @@
   color: var(--ggds-color-text-inverse);
 }
 
-/* The flag colours as a woven band (the platform's kente band). Decoration only, never text. */
+/* The flag colours as a woven band (a kente band). Decoration only, never text. */
 .ggds-footer::before {
   content: "";
   display: block;

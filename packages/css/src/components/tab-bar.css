@@ -1,6 +1,6 @@
 /*
- * Tab bar: phone-only quick links fixed to the bottom of the screen, within reach of a thumb (the MoCDTI
- * platform's TabBar.astro). Home and Search, with up to three of the site's main sections between them. Hidden
+ * Tab bar: phone-only quick links fixed to the bottom of the screen, within reach of a thumb (as Material
+ * Design's navigation bar and Apple's tab bar advise). Home and Search, with up to three of the site's main sections between them. Hidden
  * from 48rem, where the header shows the navigation. It repeats links that are also in the header, so it is a
  * separate <nav> with its own label.
  */
@@ -31,7 +31,7 @@
   gap: 0.125rem;
   min-height: 56px;
   color: var(--ggds-color-text-muted);
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: var(--ggds-font-weight-bold);
   text-decoration: none;
 }

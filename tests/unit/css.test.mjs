@@ -39,7 +39,9 @@ test('!important only in utilities (visually hidden, print); no raw z-index', ()
 test('ggds.css puts base and components in cascade layers', () => {
   const css = readFileSync(new URL('../../packages/css/dist/ggds.css', import.meta.url), 'utf8');
   assert.match(css, /@layer ggds\.base, ggds\.components;/);
-  assert.ok(css.length < 60_000, `ggds.css is ${css.length} bytes`);
+  // 70 KB before minifying (about 8.5 KB minified and gzipped, what a phone downloads). Raised from 60 KB for key
+  // figures, progress, timeline, meter, steps and page heading. Sites can load only the components they use.
+  assert.ok(css.length < 70_000, `ggds.css is ${css.length} bytes`);
 });
 
 // WCAG 2.2.2 (Pause, Stop, Hide): anything that moves on its own must stop within 5 seconds, or have a pause

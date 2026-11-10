@@ -78,6 +78,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--ggds-space-3) var(--ggds-space-4);
+  margin-bottom: var(--ggds-space-6); /* like a field, so a heading or text after the buttons is not cramped */
 }
 
 @media (forced-colors: active) {

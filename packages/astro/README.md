@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@ggds/astro)](https://www.npmjs.com/package/@ggds/astro)
 [![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
 
-**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Get started as a developer](https://ghana-gds.github.io/ggds/get-started/developers.html#use-it-with-astro)
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Get started as a developer](https://ghana-gds.github.io/ggds/get-started/developers.html#astro)
 
 The page parts of GGDS, the Ghana Government Design System, as [Astro](https://astro.build) components:
 `SkipLink`, `Banner`, `Header`, `Hero`, `Footer` and `TabBar`. They output the same HTML as the GGDS
@@ -69,7 +69,7 @@ The government website banner. It opens without JavaScript (`<details>`) and is 
 | Prop | Type | Default | What it is |
 |---|---|---|---|
 | `shortName` | `string` | required | The institution's short name |
-| `host` | `string` | required | The official address, such as `nca.gov.gh`; `''` if none is confirmed yet |
+| `host` | `string` | required | The official address, such as `example.gov.gh`; `''` if none is confirmed yet |
 | `official` | `boolean` | `false` | This page is served from the official address. If `false`, the banner says this copy is not the official website |
 | `addressNote` | `string` | `''` | Text after the address, when the page is not official |
 | `register` | `{ href, label } \| null` | `null` | A link to the list of official government websites |
@@ -132,7 +132,7 @@ Home, up to three main sections and Search, fixed to the bottom of the screen on
 
 | Prop | Type | What it is |
 |---|---|---|
-| `tabs` | `{ label, href, icon, current?, attrs? }[]` | The tabs. `icon` is one of `home`, `search`, `services`, `building`, `help`, `comment`, `scale`, `chart`, `megaphone`, `book`, `menu`, `close` |
+| `tabs` | `{ label, href, icon, current?, attrs? }[]` | The tabs. `icon` is the name of any [`@ggds/icons`](https://ghana-gds.github.io/ggds/icons.html) icon, such as `home`, `search` or `services` |
 
 ## Accessibility
 

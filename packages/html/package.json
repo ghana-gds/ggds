@@ -1,6 +1,6 @@
 {
   "name": "@ggds/html",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "GGDS reference markup: the canonical HTML for every component. Framework adapters must emit this markup.",
   "license": "Apache-2.0",

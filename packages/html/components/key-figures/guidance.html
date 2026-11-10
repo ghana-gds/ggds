@@ -1,0 +1,39 @@
+<!-- name: Key figures; icon: chart; status: alpha; order: 38; group: Content; related: table, card, page-heading; summary: The few numbers that matter most on a page, each with what it measures, large enough to take in at a glance. -->
+<p class="ggds-lead">The few numbers that matter most on a page, each with what it measures, large enough to take in at a glance.</p>
+<h2>When to use</h2>
+<ul>
+<li>At the top of a page of statistics or open data: “755 mm average rainfall”.</li>
+<li>On a dashboard or an account: “3 applications in progress”, “GH₵ 1,250 paid this year”.</li>
+<li>In a staff tool, to show the size of a queue and what is overdue.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>For more than 4 numbers: put them in a <a href="table.html">table</a>.</li>
+<li>For a number people need to compare across many rows, such as each region: use a table, with a <a href="meter.html">meter</a> if a picture helps.</li>
+<li>For a reference number at the end of a service: use the <a href="panel.html">confirmation panel</a>.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Use 2 to 4 figures. Put the most important first.</li>
+<li>Keep the value short, with its unit: “755 mm”, “GH₵ 1,250”, “3.2 days”. Write the label in lower case after it, so they read as one phrase: “755 mm average rainfall”.</li>
+<li>Say what a change is compared with, in words: “7% above normal”, “5 more than last year”. Do not show only an arrow or a colour.</li>
+<li>Use <code>ggds-key-figure--danger</code> for a figure that needs action, such as “5 overdue”. The label must say why.</li>
+<li>On a <a href="page-heading.html">page heading</a> or another dark background, add <code>ggds-key-figures--inverse</code>.</li>
+<li>Say when the figures were last updated, near them.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Give the unit with every value.</li><li>Say what a change is compared with.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Round so far that the number misleads.</li><li>Use colour alone to say a figure is good or bad.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>The figures are a list, so screen readers say how many there are before reading them (WCAG 1.3.1).</li>
+<li>Values wrap rather than make a 320px screen scroll sideways (WCAG 1.4.10).</li>
+<li>The danger edge is extra: the words carry the meaning (WCAG 1.4.1). In Windows contrast themes every edge keeps showing.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Write each value and label so they make sense read together, without the layout.</li>
+<li>If the figures change while the page is open, do not announce every change: update them quietly.</li>
+</ul>

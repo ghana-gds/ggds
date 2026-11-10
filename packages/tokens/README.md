@@ -27,7 +27,7 @@ npm install @ggds/tokens
 | `@ggds/tokens/tokens.css` | Every token as a CSS custom property, such as `--ggds-color-brand-700` |
 | `@ggds/tokens/tokens.json` | The source, in the W3C design tokens format (DTCG) |
 | `@ggds/tokens/tokens.flat.json` | Every token resolved to its final value, for other tools |
-| `@ggds/tokens/compat-site.css` | Aliases for the MoCDTI platform's older token names, for sites moving to GGDS |
+| `@ggds/tokens/compat-site.css` | Aliases for older token names, for sites moving to GGDS |
 | `@ggds/tokens/institution.mjs` | The institution colour rule, as code |
 | `@ggds/tokens/lib.mjs` | Helpers to read the tokens and check colour contrast (Node) |
 

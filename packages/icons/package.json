@@ -1,0 +1,58 @@
+{
+  "name": "@ggds/icons",
+  "version": "0.3.0",
+  "description": "Icons for the Ghana Government Design System (GGDS): 143 line icons for government services on one 24px grid, as SVG files, a sprite, tree-shakeable JavaScript and JSON.",
+  "author": "Ghana Government Design System (GGDS) contributors",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "icons",
+    "svg",
+    "svg-icons",
+    "sprite"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/icons#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/icons"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src",
+    "catalogue.json"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./all": {
+      "types": "./dist/all.d.ts",
+      "default": "./dist/all.js"
+    },
+    "./sprite.svg": "./dist/sprite.svg",
+    "./icons.json": "./dist/icons.json",
+    "./catalogue.json": "./dist/catalogue.json",
+    "./ggds-icons.svg": "./dist/ggds-icons.svg",
+    "./svg/*": "./dist/svg/*",
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

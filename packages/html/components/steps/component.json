@@ -1,0 +1,30 @@
+{
+  "css": "steps",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-steps",
+      "The steps: an <ol>, side by side where they fit."
+    ],
+    [
+      ".ggds-steps--urgent",
+      "For an emergency: the danger colours."
+    ],
+    [
+      ".ggds-steps__item",
+      "One step: an <li>, with its number drawn large."
+    ],
+    [
+      ".ggds-steps__icon",
+      "The icon, in a circle."
+    ],
+    [
+      ".ggds-steps__title",
+      "What to do: a heading."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{# steps: dicts with icon, title and text #}\n{% ggds_steps steps urgent=True %}",
+  "tests": []
+}

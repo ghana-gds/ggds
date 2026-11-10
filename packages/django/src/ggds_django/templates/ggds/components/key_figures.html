@@ -1,0 +1,7 @@
+<ul class="ggds-key-figures{% if inverse %} ggds-key-figures--inverse{% endif %}">
+  {% for f in figures %}<li class="ggds-key-figure{% if f.danger %} ggds-key-figure--danger{% endif %}">
+    <p class="ggds-key-figure__value">{{ f.value }}</p>
+    <p class="ggds-key-figure__label">{{ f.label }}</p>{% if f.change %}
+    <p class="ggds-key-figure__change">{{ f.change }}</p>{% endif %}
+  </li>
+  {% endfor %}</ul>

@@ -5,7 +5,7 @@
 
 **Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Themes](https://ghana-gds.github.io/ggds/themes.html)
 
-Ready-made institution themes for GGDS, the Ghana Government Design System. A theme changes an institution's
+Ready-made example institution themes for GGDS, the Ghana Government Design System. A theme changes an institution's
 colour in five places only: the line under the header, the institution's name, the homepage hero, the footer and
 its card in a list. Links, buttons, form fields and messages stay the same on every government website, so people
 recognise them wherever they are.
@@ -28,12 +28,12 @@ One institution for the whole site: load its theme after `ggds.css`.
 
 ```css
 @import "@ggds/css/ggds.css";
-@import "@ggds/themes/nca.css";
+@import "@ggds/themes/<theme>.css";   /* your theme's name, from the list below */
 ```
 
 ```html
 <link rel="stylesheet" href="ggds/ggds.min.css">
-<link rel="stylesheet" href="ggds/themes/nca.css">
+<link rel="stylesheet" href="ggds/themes/<theme>.css">
 ```
 
 Several institutions on one page, such as a list of agencies: load `themes.css` and mark each element.

@@ -25,12 +25,12 @@ To use GGDS for some forms only, leave `FORM_RENDERER` out and add `GGDSFormMixi
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% ggds_error_title form "Make a complaint" %} | Example Agency</title>
-  {% ggds_assets theme="nca" %}
+  {% ggds_assets theme="<theme>" %}
 </head>
 <body>
 {% ggds_skip_link %}
-{% ggds_banner short_name="NCA" host="nca.org.gh" official=is_official %}
-{% ggds_header name="National Communications Authority" nav=nav %}
+{% ggds_banner short_name="EA" host="example.gov.gh" official=is_official %}
+{% ggds_header name="Example Agency" nav=nav %}
 <main id="main" tabindex="-1" class="ggds-container ggds-main">
   {% ggds_breadcrumbs crumbs %}
   <h1>Make a complaint</h1>
@@ -39,7 +39,7 @@ To use GGDS for some forms only, leave `FORM_RENDERER` out and add `GGDSFormMixi
     <button class="ggds-button">Send complaint</button>
   </form>
 </main>
-{% ggds_footer name="National Communications Authority" sections=sections links=footer_links %}
+{% ggds_footer name="Example Agency" sections=sections links=footer_links %}
 {% ggds_tab_bar tabs %}
 </body>
 </html>
@@ -85,7 +85,7 @@ with the problem are marked invalid, and the error summary links to the first of
 
 | Tag | |
 |---|---|
-| `{% ggds_assets theme="nca" %}` | Stylesheet, theme and optional script, in `<head>` |
+| `{% ggds_assets theme="<theme>" %}` | Stylesheet, theme and optional script, in `<head>` |
 | `{% ggds_skip_link %}` | First thing in `<body>` |
 | `{% ggds_banner short_name host official %}` | Government website banner |
 | `{% ggds_header name nav %}` | Logo or initials, name, sections, Search |
@@ -93,6 +93,12 @@ with the problem are marked invalid, and the error summary links to the first of
 | `{% ggds_breadcrumbs crumbs %}` | Trail ending with the current page |
 | `{% ggds_summary_list rows %}` | Check answers: rows of `{"key", "value", "href"}`; an empty value shows "Not given", and each Change link says what it changes. `plain=True` for no lines |
 | `{% ggds_panel "Complaint sent" reference=ref %}` | Confirmation panel: the page's `<h1>` and the reference number |
+| `{% ggds_page_heading "Welcome back, Ama" eyebrow="..." lede="..." %}` | Page heading: the top of an inner page in the institution's colour, with the page's `<h1>`. `danger=True` for a warning in force |
+| `{% ggds_key_figures figures %}` | Key figures: dicts of `{"value", "label"}`, and optionally `"change"` (in words) and `"danger": True`. `inverse=True` on a page heading |
+| `{% ggds_progress 3 4 %}` | Progress: "Question 3 of 4" in words and as a native `<progress>`. `label="Step 2 of 4: your canoe"` to change the words |
+| `{% ggds_timeline stages %}` | Timeline: dicts of `{"title", "when", "state"}`, where state is `"done"`, `"current"` or `""`; each stage says its state to screen readers |
+| `{% ggds_meter value max=1100 %}` | Meter: an amount as a bar, for a table cell next to the number; hidden from screen readers |
+| `{% ggds_steps steps %}` | Steps: dicts of `{"icon", "title", "text"}`. `urgent=True` for an emergency; `heading_level=2` if they sit under the `<h1>` |
 | `{% ggds_pagination page_obj %}` | From Django's `Paginator`; keeps other query parameters |
 | `{% ggds_footer name purpose address email phone sections links %}` | Footer |
 | `{% ggds_tab_bar tabs %}` | Phone quick links: each tab has an `icon` |
@@ -108,9 +114,9 @@ institution's logo or initials, name and country), from the GGDS tokens and your
 ```python
 INSTALLED_APPS = [..., "ggds_django", "ggds_django.admin_theme", "django.contrib.admin", ...]  # above admin
 GGDS_ADMIN = {
-    "theme": "nca",                                 # a file in ggds/themes/, as for {% ggds_assets %}
-    "name": "National Communications Authority",    # default: the admin site's site_header
-    "initials": "NCA",                              # or "logo_url" and "logo_alt"
+    "theme": "<theme>",                             # a file in ggds/themes/, as for {% ggds_assets %}
+    "name": "Example Agency",                        # default: the admin site's site_header
+    "initials": "EA",                               # or "logo_url" and "logo_alt"
     "country": "Republic of Ghana",                 # the default; "" for none
 }
 ```

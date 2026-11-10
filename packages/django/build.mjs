@@ -4,7 +4,7 @@
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ICONS } from '../astro/icons.mjs';
+import { ICONS } from '../icons/dist/all.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const app = join(here, 'src', 'ggds_django');

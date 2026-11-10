@@ -1,0 +1,892 @@
+{
+  "categories": [
+    {
+      "name": "Navigation",
+      "icons": {
+        "menu": [
+          "hamburger",
+          "navigation",
+          "open"
+        ],
+        "close": [
+          "cross",
+          "x",
+          "dismiss",
+          "cancel"
+        ],
+        "search": [
+          "find",
+          "magnifying glass",
+          "look up"
+        ],
+        "home": [
+          "house",
+          "start",
+          "homepage"
+        ],
+        "arrow-right": [
+          "next",
+          "forward",
+          "continue",
+          "go"
+        ],
+        "arrow-left": [
+          "back",
+          "previous",
+          "return"
+        ],
+        "arrow-up": [
+          "up",
+          "top",
+          "increase"
+        ],
+        "arrow-down": [
+          "down",
+          "decrease",
+          "lower"
+        ],
+        "chevron-right": [
+          "next",
+          "expand",
+          "more",
+          "caret"
+        ],
+        "chevron-left": [
+          "previous",
+          "back",
+          "caret"
+        ],
+        "chevron-up": [
+          "collapse",
+          "close",
+          "caret"
+        ],
+        "chevron-down": [
+          "expand",
+          "open",
+          "dropdown",
+          "caret"
+        ],
+        "external": [
+          "external link",
+          "new tab",
+          "open",
+          "leave site"
+        ],
+        "more-horizontal": [
+          "more",
+          "options",
+          "ellipsis",
+          "actions"
+        ],
+        "more-vertical": [
+          "more",
+          "options",
+          "kebab",
+          "actions"
+        ],
+        "grid": [
+          "tiles",
+          "apps",
+          "all services",
+          "layout"
+        ],
+        "list": [
+          "items",
+          "bullets",
+          "view as list"
+        ],
+        "sign-in": [
+          "log in",
+          "login",
+          "enter",
+          "account"
+        ],
+        "sign-out": [
+          "log out",
+          "logout",
+          "leave",
+          "exit"
+        ]
+      }
+    },
+    {
+      "name": "Actions",
+      "icons": {
+        "plus": [
+          "add",
+          "new",
+          "create",
+          "more"
+        ],
+        "minus": [
+          "remove",
+          "less",
+          "subtract",
+          "collapse"
+        ],
+        "check": [
+          "tick",
+          "done",
+          "yes",
+          "complete",
+          "confirm"
+        ],
+        "edit": [
+          "change",
+          "pencil",
+          "write",
+          "update"
+        ],
+        "trash": [
+          "delete",
+          "remove",
+          "bin",
+          "discard"
+        ],
+        "copy": [
+          "duplicate",
+          "clipboard",
+          "copy reference"
+        ],
+        "download": [
+          "save",
+          "get",
+          "export",
+          "file"
+        ],
+        "upload": [
+          "attach file",
+          "send file",
+          "import"
+        ],
+        "attach": [
+          "paperclip",
+          "attachment",
+          "add file"
+        ],
+        "link": [
+          "url",
+          "chain",
+          "hyperlink",
+          "web address"
+        ],
+        "print": [
+          "printer",
+          "paper copy"
+        ],
+        "share": [
+          "send",
+          "social",
+          "forward"
+        ],
+        "send": [
+          "submit",
+          "paper plane",
+          "message"
+        ],
+        "filter": [
+          "refine",
+          "narrow",
+          "funnel"
+        ],
+        "sort": [
+          "order",
+          "arrange",
+          "up down"
+        ],
+        "refresh": [
+          "reload",
+          "retry",
+          "update",
+          "again"
+        ],
+        "history": [
+          "past",
+          "recent",
+          "previous",
+          "timeline"
+        ],
+        "eye": [
+          "show",
+          "view",
+          "visible",
+          "preview"
+        ],
+        "eye-off": [
+          "hide",
+          "hidden",
+          "invisible",
+          "password"
+        ],
+        "bookmark": [
+          "save for later",
+          "favourite",
+          "keep"
+        ],
+        "scan": [
+          "scanner",
+          "camera",
+          "capture",
+          "read code"
+        ],
+        "qr-code": [
+          "qr",
+          "code",
+          "scan",
+          "verify"
+        ],
+        "settings": [
+          "cog",
+          "gear",
+          "preferences",
+          "options"
+        ],
+        "sliders": [
+          "adjust",
+          "controls",
+          "preferences",
+          "filters"
+        ]
+      }
+    },
+    {
+      "name": "Status and feedback",
+      "icons": {
+        "info": [
+          "information",
+          "about",
+          "details",
+          "notice"
+        ],
+        "help": [
+          "question",
+          "support",
+          "faq",
+          "how to"
+        ],
+        "warning": [
+          "alert",
+          "caution",
+          "important",
+          "danger"
+        ],
+        "error": [
+          "problem",
+          "failed",
+          "wrong",
+          "x"
+        ],
+        "success": [
+          "done",
+          "complete",
+          "approved",
+          "valid",
+          "tick"
+        ],
+        "blocked": [
+          "not allowed",
+          "forbidden",
+          "unavailable",
+          "stop"
+        ],
+        "bell": [
+          "notification",
+          "alert",
+          "reminder",
+          "updates"
+        ],
+        "lightbulb": [
+          "tip",
+          "idea",
+          "guidance",
+          "hint"
+        ],
+        "star": [
+          "favourite",
+          "rating",
+          "featured",
+          "important"
+        ],
+        "heart": [
+          "like",
+          "care",
+          "welfare",
+          "wellbeing"
+        ],
+        "flag": [
+          "report",
+          "mark",
+          "milestone"
+        ],
+        "shield": [
+          "security",
+          "protection",
+          "safe",
+          "defence"
+        ],
+        "shield-check": [
+          "verified",
+          "secure",
+          "trusted",
+          "official"
+        ]
+      }
+    },
+    {
+      "name": "People and accounts",
+      "icons": {
+        "user": [
+          "person",
+          "account",
+          "profile",
+          "citizen"
+        ],
+        "users": [
+          "people",
+          "group",
+          "family",
+          "staff",
+          "team"
+        ],
+        "user-plus": [
+          "add person",
+          "register",
+          "new account",
+          "sign up"
+        ],
+        "user-check": [
+          "verified person",
+          "approved",
+          "identity confirmed"
+        ],
+        "lock": [
+          "secure",
+          "private",
+          "password",
+          "locked"
+        ],
+        "unlock": [
+          "open",
+          "unlocked",
+          "access"
+        ],
+        "key": [
+          "password",
+          "access",
+          "credentials",
+          "pin"
+        ],
+        "id-card": [
+          "ghana card",
+          "identity",
+          "national id",
+          "licence"
+        ],
+        "passport": [
+          "travel",
+          "immigration",
+          "visa",
+          "identity"
+        ],
+        "accessibility": [
+          "disability",
+          "inclusion",
+          "assistance",
+          "accessible"
+        ]
+      }
+    },
+    {
+      "name": "Communication",
+      "icons": {
+        "mail": [
+          "email",
+          "message",
+          "letter",
+          "inbox"
+        ],
+        "phone": [
+          "call",
+          "telephone",
+          "contact",
+          "helpline"
+        ],
+        "mobile": [
+          "smartphone",
+          "mobile money",
+          "momo",
+          "sms",
+          "text"
+        ],
+        "comment": [
+          "feedback",
+          "message",
+          "speech",
+          "say"
+        ],
+        "chat": [
+          "conversation",
+          "messages",
+          "discuss",
+          "live chat"
+        ],
+        "megaphone": [
+          "announcement",
+          "news",
+          "campaign",
+          "press"
+        ],
+        "news": [
+          "newspaper",
+          "press release",
+          "articles",
+          "updates"
+        ],
+        "video": [
+          "film",
+          "recording",
+          "watch",
+          "meeting"
+        ],
+        "play": [
+          "start",
+          "video",
+          "watch",
+          "listen"
+        ],
+        "pause": [
+          "stop",
+          "hold",
+          "wait"
+        ],
+        "volume": [
+          "sound",
+          "audio",
+          "listen",
+          "read aloud"
+        ],
+        "wifi": [
+          "internet",
+          "connection",
+          "online",
+          "network"
+        ],
+        "location": [
+          "map pin",
+          "address",
+          "place",
+          "office",
+          "find us"
+        ],
+        "map": [
+          "directions",
+          "land",
+          "region",
+          "district"
+        ],
+        "globe": [
+          "language",
+          "world",
+          "international",
+          "website"
+        ]
+      }
+    },
+    {
+      "name": "Documents and time",
+      "icons": {
+        "document": [
+          "file",
+          "page",
+          "form",
+          "paper",
+          "record"
+        ],
+        "document-check": [
+          "approved document",
+          "verified file",
+          "completed form"
+        ],
+        "documents": [
+          "files",
+          "records",
+          "papers",
+          "multiple"
+        ],
+        "folder": [
+          "directory",
+          "collection",
+          "category",
+          "case"
+        ],
+        "clipboard": [
+          "form",
+          "application",
+          "checklist",
+          "survey"
+        ],
+        "certificate": [
+          "award",
+          "licence",
+          "permit",
+          "qualification",
+          "registration"
+        ],
+        "stamp": [
+          "official",
+          "approved",
+          "seal",
+          "endorse"
+        ],
+        "signature": [
+          "sign",
+          "pen",
+          "consent",
+          "agree"
+        ],
+        "receipt": [
+          "invoice",
+          "bill",
+          "proof of payment",
+          "transaction"
+        ],
+        "archive": [
+          "box",
+          "records",
+          "storage",
+          "past"
+        ],
+        "book": [
+          "guide",
+          "manual",
+          "read",
+          "publication",
+          "law"
+        ],
+        "calendar": [
+          "date",
+          "schedule",
+          "appointment",
+          "event"
+        ],
+        "clock": [
+          "time",
+          "hours",
+          "opening times",
+          "wait"
+        ]
+      }
+    },
+    {
+      "name": "Money and business",
+      "icons": {
+        "payment": [
+          "card",
+          "pay",
+          "bank card",
+          "debit"
+        ],
+        "cash": [
+          "money",
+          "banknote",
+          "cedis",
+          "fee"
+        ],
+        "wallet": [
+          "money",
+          "mobile money",
+          "balance",
+          "savings"
+        ],
+        "cedi": [
+          "ghana cedi",
+          "currency",
+          "money",
+          "price",
+          "ghs"
+        ],
+        "percent": [
+          "tax",
+          "rate",
+          "discount",
+          "interest"
+        ],
+        "calculator": [
+          "calculate",
+          "estimate",
+          "tax",
+          "fees"
+        ],
+        "chart": [
+          "statistics",
+          "data",
+          "report",
+          "bar chart"
+        ],
+        "chart-pie": [
+          "statistics",
+          "budget",
+          "share",
+          "breakdown"
+        ],
+        "trending-up": [
+          "growth",
+          "increase",
+          "progress",
+          "economy"
+        ],
+        "store": [
+          "shop",
+          "market",
+          "business",
+          "trader",
+          "registration"
+        ],
+        "briefcase": [
+          "jobs",
+          "work",
+          "employment",
+          "business",
+          "career"
+        ],
+        "factory": [
+          "industry",
+          "manufacturing",
+          "trade",
+          "production"
+        ]
+      }
+    },
+    {
+      "name": "Government",
+      "icons": {
+        "building": [
+          "agency",
+          "office",
+          "institution",
+          "ministry"
+        ],
+        "government": [
+          "parliament",
+          "state",
+          "columns",
+          "public sector"
+        ],
+        "services": [
+          "all services",
+          "tasks",
+          "directory"
+        ],
+        "scale": [
+          "justice",
+          "law",
+          "court",
+          "fairness",
+          "rights"
+        ],
+        "gavel": [
+          "court",
+          "judiciary",
+          "ruling",
+          "law"
+        ],
+        "vote": [
+          "election",
+          "ballot",
+          "poll",
+          "democracy"
+        ]
+      }
+    },
+    {
+      "name": "Public services",
+      "icons": {
+        "health": [
+          "medical",
+          "healthcare",
+          "clinic",
+          "first aid"
+        ],
+        "hospital": [
+          "clinic",
+          "health facility",
+          "emergency care"
+        ],
+        "medicine": [
+          "pill",
+          "drugs",
+          "pharmacy",
+          "prescription"
+        ],
+        "pulse": [
+          "heartbeat",
+          "health",
+          "vital signs",
+          "monitoring"
+        ],
+        "education": [
+          "school",
+          "graduation",
+          "learning",
+          "students"
+        ],
+        "transport": [
+          "bus",
+          "public transport",
+          "travel",
+          "trotro"
+        ],
+        "car": [
+          "vehicle",
+          "driving",
+          "licence",
+          "road"
+        ],
+        "road": [
+          "highway",
+          "infrastructure",
+          "roads",
+          "works"
+        ],
+        "train": [
+          "rail",
+          "railway",
+          "transport"
+        ],
+        "plane": [
+          "aviation",
+          "airport",
+          "flight",
+          "travel"
+        ],
+        "ship": [
+          "port",
+          "harbour",
+          "maritime",
+          "boat"
+        ],
+        "farming": [
+          "agriculture",
+          "crops",
+          "food",
+          "plant",
+          "sprout"
+        ],
+        "fish": [
+          "fisheries",
+          "aquaculture",
+          "sea",
+          "food"
+        ],
+        "tree": [
+          "forestry",
+          "environment",
+          "nature",
+          "lands"
+        ],
+        "leaf": [
+          "environment",
+          "climate",
+          "green",
+          "sustainability"
+        ],
+        "water": [
+          "droplet",
+          "water supply",
+          "sanitation",
+          "rain"
+        ],
+        "energy": [
+          "electricity",
+          "power",
+          "lightning",
+          "utilities"
+        ],
+        "sun": [
+          "weather",
+          "solar",
+          "daytime",
+          "light mode"
+        ],
+        "cloud": [
+          "weather",
+          "cloud services",
+          "online storage"
+        ],
+        "fire": [
+          "fire service",
+          "flame",
+          "emergency",
+          "hazard"
+        ],
+        "emergency": [
+          "siren",
+          "police",
+          "ambulance",
+          "urgent"
+        ],
+        "tools": [
+          "maintenance",
+          "repairs",
+          "works",
+          "settings"
+        ],
+        "mining": [
+          "minerals",
+          "pickaxe",
+          "extraction",
+          "resources"
+        ],
+        "food": [
+          "meals",
+          "nutrition",
+          "restaurant",
+          "food safety"
+        ],
+        "camera": [
+          "tourism",
+          "photo",
+          "picture",
+          "media"
+        ],
+        "football": [
+          "sports",
+          "ball",
+          "youth",
+          "recreation"
+        ],
+        "music": [
+          "culture",
+          "arts",
+          "creative",
+          "entertainment"
+        ],
+        "laptop": [
+          "computer",
+          "digital",
+          "online",
+          "technology"
+        ],
+        "monitor": [
+          "desktop",
+          "screen",
+          "display",
+          "computer"
+        ],
+        "database": [
+          "data",
+          "records",
+          "storage",
+          "register"
+        ],
+        "code": [
+          "developer",
+          "programming",
+          "api",
+          "technical"
+        ]
+      }
+    }
+  ]
+}

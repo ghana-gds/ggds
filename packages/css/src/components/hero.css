@@ -1,8 +1,8 @@
 /*
  * Hero: the top of an institution's homepage, in its deep colour. The purpose line (who we are) is in the flag
  * gold, which institutionPalette() guarantees at 4.5:1 or more on the deep shade; white text there is at 7:1 or
- * more. It leads with the visitor's task: a heading, an optional search and common tasks. Adopted from the MoCDTI
- * platform's AgencyHome.astro and HubHome.astro heroes.
+ * more. It leads with the visitor's task: a heading, an optional search and common tasks, because most visitors come
+ * to do something, not to read about the institution.
  */
 .ggds-hero {
   position: relative;
@@ -211,7 +211,7 @@
   white-space: nowrap;
 }
 
-/* Which agency answers it, on a ministry hub. 90% white: the platform's 60% is below 4.5:1 on the chip. */
+/* Which agency answers it, on a ministry hub. 90% white: 60% would be below 4.5:1 on the chip. */
 .ggds-hero__task-tag {
   color: color-mix(in srgb, var(--ggds-color-text-inverse) 90%, transparent);
   font-size: var(--ggds-font-size-xs);
@@ -234,7 +234,7 @@
 /*
  * Drawing beside the hero text (ggds-hero--art). Decorative: put aria-hidden="true" on .ggds-hero__art; the text
  * says the same. Hidden on phones so it never pushes the search down; below the text from 48rem; beside it from
- * 64rem, as on the MoCDTI platform's agency homepages.
+ * 64rem.
  */
 .ggds-hero__art {
   display: none;
@@ -263,7 +263,7 @@
 
 /*
  * The shared animated drawing (ggds-hero-art): floating planes, a network of points and a pulse, in white and the
- * flag gold on the institution's dark shade. Adapted from the platform's DefaultHeroArt.astro. It moves only for
+ * flag gold on the institution's dark shade. It moves only for
  * people who have not asked for less motion.
  */
 .ggds-hero-art {

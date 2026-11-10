@@ -28,7 +28,7 @@ content and gives GGDS full control of the page.
 1. **Settings > General**: the site title is your institution's full name. The tagline says what you do in one
    sentence; it shows at the top of the homepage.
 2. **Appearance > Customise > GGDS**: your short name, your institution theme (its colour), your official address
-   (such as `nca.gov.gh`), the register of official websites, the homepage question, and your contact details for
+   (such as `example.gov.gh`), the register of official websites, the homepage question, and your contact details for
    the footer.
 3. **Appearance > Customise > Site identity**: your approved logo. Until you add one, a round badge shows your
    initials.

@@ -1,6 +1,7 @@
 /* Data table in a scrollable, keyboard-focusable region, so wide tables never make the page scroll sideways
    at 320px (WCAG 1.4.10). Give the region role="region", tabindex="0" and aria-labelledby the caption. */
 .ggds-table-wrap {
+  position: relative; /* keeps visually hidden text in cells inside the scroll box, so it cannot widen the page */
   max-width: 100%;
   margin-bottom: var(--ggds-space-6);
   overflow-x: auto;

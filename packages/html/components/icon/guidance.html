@@ -1,0 +1,28 @@
+<!-- name: Icon; icon: star; status: beta; order: 37; group: Content; related: button, card, tab-bar; summary: A small picture next to words, to help people find and recognise things quickly. -->
+<p class="ggds-lead">A small picture next to words, to help people find and recognise things quickly.</p>
+<p>GGDS has its own set of icons for government services, <code>@ggds/icons</code>. See <a href="../icons.html">all the icons</a>, with what each one is for.</p>
+<h2>When to use</h2>
+<ul><li>To help people scan a list of services, links or actions and find the one they want.</li><li>For a common action whose icon most people already know: download, print, search, menu.</li><li>To show the type of a link: a file to download, a website outside government, a phone number.</li></ul>
+<h2>When not to use</h2>
+<ul><li>On its own, without words. People guess the meaning of an icon differently, and many will not guess at all.</li><li>To decorate a page or fill space. Every icon is one more thing to look at.</li><li>For a status. Use a <a href="tag.html">tag</a> or a <a href="notice.html">notice</a>, which say it in words.</li></ul>
+<h2>How to use</h2>
+<ul><li>Put the icon before the words, or after them for "next" and "continue" arrows. Wrap both in <code>ggds-with-icon</code> so they line up.</li><li>Use the same icon for the same thing everywhere on your website, and only for that thing.</li><li>Use the default size next to body text, <code>ggds-icon--sm</code> next to small text, and <code>ggds-icon--xl</code> above a card's heading.</li><li>Do not change the stroke or colour of one icon: they are drawn to look like a set.</li><li>If GGDS has no icon for what you need, use words alone and <a href="../contribute.html">ask for one</a>. Do not mix in icons from other sets.</li></ul>
+<h2>Adding icons to your website</h2>
+<h3>With npm</h3>
+<p>Import only the icons you use: your bundler leaves out the rest.</p>
+<pre><code>import { download, svg } from '@ggds/icons';
+
+element.innerHTML = svg(download) + '&lt;span&gt;Download the form&lt;/span&gt;';</code></pre>
+<p>Astro, the documentation and other templates that pick icons by name can use <code>icon(name)</code> from <code>@ggds/icons/all</code>. In Django use <code>{% ggds_icon "download" %}</code>; in the WordPress theme, <code>ggds_icon( 'download' )</code>.</p>
+<h3>Without npm</h3>
+<p>The GGDS download has every icon in <code>ggds/icons/</code>. Either copy the SVG of one icon from <code>icons/svg/</code> into your page, with <code>class="ggds-icon" aria-hidden="true" focusable="false"</code>, or point to the sprite, which the browser downloads once and keeps:</p>
+<pre><code>&lt;svg class="ggds-icon" aria-hidden="true" focusable="false"&gt;&lt;use href="/ggds/icons/sprite.svg#download"/&gt;&lt;/svg&gt;</code></pre>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Write "Download the form" next to the download icon.</li><li>Keep to a few icons on a page.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Make a button that is only an icon, except search and menu in the header.</li><li>Use an icon to mean two different things.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>Icons take the colour of the text around them (<code>currentColor</code>), so they keep its contrast in every theme and in Windows high contrast mode.</li><li><code>svg()</code>, <code>icon()</code>, <code>{% ggds_icon %}</code> and <code>ggds_icon()</code> hide icons from screen readers (<code>aria-hidden="true"</code>) and keep them out of the tab order (<code>focusable="false"</code>), because the words beside them already say it.</li><li>Every icon is drawn with a 2px line on a 24px grid, so it stays clear at small sizes and when zoomed.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Put words next to every icon.</li><li>If an icon really must stand alone, give it a name: <code>svg(download, { label: 'Download' })</code>, or <code>role="img" aria-label="Download"</code> on the <code>&lt;svg&gt;</code>. In a button or link, put the name on the button or link instead.</li><li>Keep an icon in a link or button inside its target, so the whole thing is at least 44px tall to press (WCAG 2.5.8).</li></ul>

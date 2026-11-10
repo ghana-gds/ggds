@@ -1,0 +1,55 @@
+/*
+ * Page heading: the top of an inner page in the institution's colour, with the page's <h1>, a line above it and a
+ * short summary. For an account's welcome or a service's start; --danger for a warning in force. Full width: put it
+ * first in <main>, with a .ggds-container inside.
+ */
+.ggds-page-heading {
+  padding-block: var(--ggds-space-8);
+  background: var(--ggds-color-institution-deep);
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-page-heading--danger {
+  background: var(--ggds-color-status-danger-strong);
+}
+
+.ggds-page-heading a {
+  color: inherit;
+}
+
+.ggds-page-heading__eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  margin: 0 0 var(--ggds-space-2);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-page-heading__title {
+  margin: 0 0 var(--ggds-space-3);
+  color: inherit;
+}
+
+.ggds-page-heading__lede {
+  max-width: 40rem;
+  margin: 0;
+  font-size: var(--ggds-font-size-lg);
+}
+
+.ggds-page-heading > .ggds-container > :last-child {
+  margin-bottom: 0;
+}
+
+@media (forced-colors: active) {
+  .ggds-page-heading {
+    border-block: 2px solid CanvasText;
+  }
+}
+
+@media print {
+  .ggds-page-heading {
+    background: none;
+    color: inherit;
+  }
+}

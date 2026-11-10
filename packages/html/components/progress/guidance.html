@@ -1,0 +1,37 @@
+<!-- name: Progress; icon: trending-up; status: alpha; order: 26; group: Forms; related: field, summary-list, panel; summary: Shows people how far through a task they are, such as “Question 3 of 4”, in words and as a bar. -->
+<p class="ggds-lead">Shows people how far through a task they are, such as “Question 3 of 4”, in words and as a bar.</p>
+<h2>When to use</h2>
+<ul>
+<li>On each question page of a service with 3 or more pages, so people know how much is left.</li>
+<li>On a card for an application, to show which stage it has reached.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>On a service with 1 or 2 pages: it adds nothing.</li>
+<li>When the number of pages depends on the answers and you cannot say it: say “Question 3” only, or leave it out. A total that changes is worse than none.</li>
+<li>For an amount, such as rainfall: use a <a href="meter.html">meter</a>.</li>
+<li>For time passing while something loads: GGDS pages should load fast enough not to need it.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Put it above the page’s <code>&lt;h1&gt;</code>.</li>
+<li>Write the words in the label: “Question 3 of 4”, “Step 2 of 4: your canoe”, “Done”. The bar only repeats them.</li>
+<li>Use a native <code>&lt;progress&gt;</code> with <code>value</code> and <code>max</code>: no style attributes, so it works under a strict Content Security Policy. Link the label to it with <code>for</code> and <code>id</code>.</li>
+<li>Count the check answers page as a step, and leave out the confirmation page.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Say the step in words.</li><li>Keep the total the same on every page.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Show percentages.</li><li>Make the bar a link or a button.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>The bar is a native <code>&lt;progress&gt;</code>, so screen readers say its name and how far along it is (WCAG 4.1.2).</li>
+<li>The label is text with at least 4.5 to 1 contrast; the bar is not the only way to see the step (WCAG 1.4.1).</li>
+<li>In Windows contrast themes the bar keeps an outline.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Give the <code>&lt;progress&gt;</code> a label, with <code>for</code> and <code>id</code>, so screen readers say what it measures.</li>
+<li>Put the same words inside the <code>&lt;progress&gt;</code> element too, for browsers that do not draw it.</li>
+</ul>

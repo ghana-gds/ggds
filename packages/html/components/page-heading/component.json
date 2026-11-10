@@ -1,0 +1,30 @@
+{
+  "css": "page-heading",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-page-heading",
+      "The heading area: full width, in the institution’s deep colour."
+    ],
+    [
+      ".ggds-page-heading--danger",
+      "For a warning in force: the danger red."
+    ],
+    [
+      ".ggds-page-heading__eyebrow",
+      "The line above the title: context, such as who or when."
+    ],
+    [
+      ".ggds-page-heading__title",
+      "The page’s <h1>."
+    ],
+    [
+      ".ggds-page-heading__lede",
+      "One or two sentences under the title."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{% ggds_page_heading \"Welcome back, Ama\" eyebrow=\"Owusu Trading Enterprise\" %}",
+  "tests": []
+}

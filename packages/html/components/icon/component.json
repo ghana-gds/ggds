@@ -1,0 +1,30 @@
+{
+  "css": "icon",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-icon",
+      "A GGDS icon, 20px (the md icon size), in the colour of the text around it."
+    ],
+    [
+      ".ggds-icon--sm",
+      "16px, for small text."
+    ],
+    [
+      ".ggds-icon--lg",
+      "24px, the size the icons are drawn at."
+    ],
+    [
+      ".ggds-icon--xl",
+      "32px, for cards and lists of services."
+    ],
+    [
+      ".ggds-with-icon",
+      "An icon and its words side by side, centred on each other, with a small gap. Works on links and buttons too."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{% ggds_icon \"download\" %}",
+  "tests": []
+}

@@ -8,8 +8,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/** A GGDS line icon (the shared set in assets/icons.json), hidden from screen readers. */
-function ggds_icon( string $name, string $cls ): string {
+/** A GGDS line icon (the @ggds/icons set, copied into assets/icons.json), hidden from screen readers. */
+function ggds_icon( string $name, string $cls = 'ggds-icon' ): string {
 	static $icons = null;
 	if ( null === $icons ) {
 		$file  = get_template_directory() . '/assets/icons.json';

@@ -1,0 +1,39 @@
+<!-- name: Page heading; icon: flag; status: alpha; order: 8; group: Page structure; related: hero, key-figures, notice; summary: The top of an inner page in the institution’s colour: the page’s title, a line above it and a short summary. -->
+<p class="ggds-lead">The top of an inner page in the institution’s colour: the page’s title, a line above it and a short summary.</p>
+<h2>When to use</h2>
+<ul>
+<li>At the top of an account, to welcome people and show what they have: “Welcome back, Ama”.</li>
+<li>At the top of a warning page, with <code>ggds-page-heading--danger</code>: “Flood warning: low-lying areas near rivers”.</li>
+<li>At the start of a service or a section that needs to stand out from ordinary pages.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>On the homepage: use the <a href="hero.html">hero</a>.</li>
+<li>On question pages in a form: keep them plain, with the question as the <code>&lt;h1&gt;</code>.</li>
+<li>On every page of a site: it loses its meaning.</li>
+<li>For a site-wide message: use an urgent <a href="notice.html">notice</a>.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Put it first in <code>&lt;main&gt;</code>, full width, with a <code>ggds-container</code> inside.</li>
+<li>Make the title the page’s <code>&lt;h1&gt;</code>.</li>
+<li>Use the line above for context, such as the account holder or when a warning was updated. Keep the summary to one or two sentences.</li>
+<li>Add <a href="key-figures.html">key figures</a> with <code>ggds-key-figures--inverse</code> if people need a few numbers first.</li>
+<li>Use <code>ggds-page-heading--danger</code> only while a warning is in force.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Make the title say what the page is for.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Put forms or long text in the page heading.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>It uses the theme’s deep colour, which every GGDS theme checks for 4.5 to 1 contrast with white text (WCAG 1.4.3). The danger colour is checked too.</li>
+<li>Links in it are white and underlined.</li>
+<li>In Windows contrast themes it keeps a border, and it prints as plain black text.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Make the title the page’s only <code>&lt;h1&gt;</code>.</li>
+<li>If you set your own colour, check it with <code>institutionCss</code>, which refuses one too light for white text.</li>
+</ul>

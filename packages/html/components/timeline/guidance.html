@@ -1,0 +1,36 @@
+<!-- name: Timeline; icon: history; status: alpha; order: 39; group: Content; related: panel, progress, summary-list; summary: What has happened and what happens next, in order: the stages of an application, a complaint or a case. -->
+<p class="ggds-lead">What has happened and what happens next, in order: the stages of an application, a complaint or a case.</p>
+<h2>When to use</h2>
+<ul>
+<li>Under a <a href="panel.html">confirmation panel</a>, to say what happens next and when.</li>
+<li>On a page where people track an application, to show where it has reached.</li>
+<li>In a staff tool, to show a case’s history.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>For steps people must take themselves: use <a href="steps.html">steps</a>, or a numbered list.</li>
+<li>For dates in a table of many records: use a <a href="table.html">table</a>.</li>
+<li>For more than about 7 stages: group them.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Write each stage as what happens, in a few words: “A fisheries officer checks your answers”.</li>
+<li>Under it, say when: a date for what has happened, and a promise for what is to come (“Within 5 working days”).</li>
+<li>Mark what is done with <code>ggds-timeline__item--done</code> and the stage it is at now with <code>ggds-timeline__item--current</code>. Leave the stages to come plain.</li>
+<li>Start every stage with hidden words, “Done:”, “Now:” or “Next:”, so the state is said, not only drawn.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Say when each stage happened or will happen.</li><li>Keep promises you can keep.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Show internal stages people cannot act on, such as “Sent to database”.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>It is an ordered list, so screen readers say the number of stages and each one’s place (WCAG 1.3.1).</li>
+<li>Done and current stages differ in shape as well as colour (WCAG 1.4.1). In Windows contrast themes they stay different.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Add the hidden words “Done:”, “Now:” and “Next:” to each stage, as in the example.</li>
+<li>Keep the stages the same for every applicant, so people can compare what they are told.</li>
+</ul>

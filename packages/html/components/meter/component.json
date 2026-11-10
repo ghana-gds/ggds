@@ -1,0 +1,14 @@
+{
+  "css": "meter",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-meter",
+      "The bar: a native <meter> with min, max and value, in the institution’s colour."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "{% ggds_meter region.rainfall max=1100 %}",
+  "tests": []
+}

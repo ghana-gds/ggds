@@ -1,0 +1,32 @@
+/* Icon: a GGDS line icon (@ggds/icons), sized by the icon tokens and drawn in the colour of the text around it.
+   The stroke settings are repeated here so an icon drawn with <use href="sprite.svg#name"> looks the same. */
+.ggds-icon {
+  --ggds-icon-size: var(--ggds-size-icon-md);
+  display: inline-block;
+  flex-shrink: 0;
+  inline-size: var(--ggds-icon-size);
+  block-size: var(--ggds-icon-size);
+  vertical-align: -0.3em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ggds-icon--sm { --ggds-icon-size: var(--ggds-size-icon-sm); vertical-align: -0.15em; }
+.ggds-icon--lg { --ggds-icon-size: var(--ggds-size-icon-lg); }
+.ggds-icon--xl { --ggds-icon-size: var(--ggds-size-icon-xl); }
+
+/* An icon and its words side by side: <span class="ggds-with-icon">. When the words wrap, the icon stays centred
+   on their first line. */
+.ggds-with-icon {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ggds-space-2);
+}
+
+.ggds-with-icon > .ggds-icon {
+  margin-block-start: max(0px, calc((1lh - var(--ggds-icon-size)) / 2));
+  vertical-align: 0;
+}

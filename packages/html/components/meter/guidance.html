@@ -1,0 +1,36 @@
+<!-- name: Meter; icon: chart-pie; status: alpha; order: 40; group: Content; related: table, key-figures, progress; summary: An amount drawn as a bar, so people can compare rows of a table at a glance: a chart that is still a table. -->
+<p class="ggds-lead">An amount drawn as a bar, so people can compare rows of a table at a glance: a chart that is still a table.</p>
+<h2>When to use</h2>
+<ul>
+<li>In a table, to compare one amount across rows: rainfall by region, applications by office.</li>
+<li>For how full something is, such as places left at a session.</li>
+</ul>
+<h2>When not to use</h2>
+<ul>
+<li>On its own, without the number in words next to it.</li>
+<li>For progress through a task: use <a href="progress.html">progress</a>.</li>
+<li>For data that needs a real chart, such as a trend over time: show the table, and a chart image with a text description.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Put the number in its own cell, then the meter in the next. The number is what people read; the bar is for comparing.</li>
+<li>Use a native <code>&lt;meter&gt;</code> with <code>min</code>, <code>max</code> and <code>value</code>: no style attributes, so it works under a strict Content Security Policy.</li>
+<li>Use the same <code>max</code> on every row, a round number just above the largest value, so the bars compare fairly.</li>
+<li>Hide the meter from screen readers with <code>aria-hidden="true"</code>: the number in the table says it already.</li>
+<li>Say the unit in the table’s caption or column heading.</li>
+</ul>
+<div class="docs-dodont">
+<div class="docs-dodont__do"><h3>Do</h3><ul><li>Show the number next to every bar.</li><li>Use one scale for the whole table.</li></ul></div>
+<div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Start the scale above zero: it exaggerates differences.</li></ul></div>
+</div>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>The meter is a native element, drawn in the institution’s colour, with no script.</li>
+<li>In Windows contrast themes it keeps an outline.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul>
+<li>Keep the number in text next to the meter (WCAG 1.1.1 and 1.4.1).</li>
+<li>Hide the meter from screen readers, so the number is not read twice.</li>
+</ul>

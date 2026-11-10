@@ -65,12 +65,14 @@ unbuilt sources are in `src/`.
 | `skip-link.css` | Skip link |
 | `header.css` | Header, with the phone menu |
 | `hero.css` | Homepage hero |
+| `page-heading.css` | Page heading: the top of an inner page in the institution's colour |
 | `footer.css` | Footer |
 | `tab-bar.css` | Tab bar for phones |
 | `navigation.css` | Breadcrumbs, pagination, tab links |
 | `button.css` | Buttons |
 | `field.css` | Labels, hints, error messages, text inputs, textareas, selects, file upload, radios and checkboxes |
 | `date-input.css` | Date input: day, month and year |
+| `progress.css` | Progress through a task: "Question 3 of 4" |
 | `summary-list.css` | Summary list, for check answers pages and records |
 | `panel.css` | Confirmation panel |
 | `error-summary.css` | Error summary |
@@ -78,6 +80,10 @@ unbuilt sources are in `src/`.
 | `notice.css` | Notices |
 | `tag.css` | Tags |
 | `table.css` | Tables |
+| `meter.css` | Meter: an amount drawn as a bar, such as in a table |
+| `key-figures.css` | Key figures: the numbers that matter most on a page |
+| `timeline.css` | Timeline: what has happened and what happens next |
+| `steps.css` | Steps: a few numbered things to do |
 | `disclosure.css` | Accordions and details |
 | `prose.css` | Rich text from a CMS |
 

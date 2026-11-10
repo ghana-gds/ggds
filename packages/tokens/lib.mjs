@@ -60,7 +60,7 @@ export function cssValue(token, all) {
   }
 }
 
-// Contrast: WCAG 2.2 relative luminance (same formula as the MoCDTI platform's agency-colour.mjs).
+// Contrast: WCAG 2.2 relative luminance.
 const HEX = /^#[0-9a-f]{6}$/i;
 const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
 

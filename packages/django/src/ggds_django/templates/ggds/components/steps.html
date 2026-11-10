@@ -1,0 +1,7 @@
+{% load ggds %}<ol class="ggds-steps{% if urgent %} ggds-steps--urgent{% endif %}">
+  {% for s in steps %}<li class="ggds-steps__item">
+    <span class="ggds-steps__icon">{% ggds_icon s.icon "ggds-icon ggds-icon--lg" %}</span>
+    <h{{ h }} class="ggds-steps__title">{{ s.title }}</h{{ h }}>
+    <p>{{ s.text }}</p>
+  </li>
+  {% endfor %}</ol>

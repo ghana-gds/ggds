@@ -1,5 +1,5 @@
-// @ggds/themes: named institution themes. MoCDTI is the default (it is also what @ggds/tokens ships), and every
-// agency of the Ministry is a theme GGDS can switch to. A theme changes only the institution colour and its deep
+// @ggds/themes: named example institution themes. MoCDTI is the default (it is also what @ggds/tokens ships), and
+// each agency of the Ministry has an example theme GGDS can switch to. A theme changes only the institution colour and its deep
 // shade, so it reaches the identity surfaces (header rule and name, hero, footer, directory cards) and nothing
 // else: links, buttons, form controls and status colours are the same on every government website.
 //

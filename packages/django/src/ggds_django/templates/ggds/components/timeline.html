@@ -1,0 +1,6 @@
+<ol class="ggds-timeline">
+  {% for s in stages %}<li class="ggds-timeline__item{% if s.state %} ggds-timeline__item--{{ s.state }}{% endif %}">
+    <p class="ggds-timeline__title"><span class="ggds-visually-hidden">{{ s.words }}: </span>{{ s.title }}</p>{% if s.when %}
+    <p class="ggds-timeline__when">{{ s.when }}</p>{% endif %}
+  </li>
+  {% endfor %}</ol>

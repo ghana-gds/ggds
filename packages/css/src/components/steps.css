@@ -1,0 +1,72 @@
+/*
+ * Steps: a few numbered things to do, in order, each with an icon, a short title and one sentence. For what to do
+ * in an emergency, or how a service works. An ordered list, so the numbers are real; the big ones are drawn.
+ */
+.ggds-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--ggds-space-4);
+  margin: 0 0 var(--ggds-space-8);
+  padding: 0;
+  list-style: none;
+  counter-reset: ggds-step;
+}
+
+.ggds-steps__item {
+  position: relative;
+  padding: var(--ggds-space-6);
+  border-radius: var(--ggds-radius-lg);
+  background: var(--ggds-color-brand-50);
+  counter-increment: ggds-step;
+}
+
+.ggds-steps__item > p {
+  margin: 0;
+}
+
+.ggds-steps__item::after {
+  content: counter(ggds-step);
+  position: absolute;
+  top: var(--ggds-space-4);
+  right: var(--ggds-space-6);
+  color: var(--ggds-color-brand-700);
+  font-size: var(--ggds-font-size-3xl);
+  font-weight: var(--ggds-font-weight-bold);
+  line-height: 1;
+}
+
+.ggds-steps__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: var(--ggds-space-3);
+  border-radius: 50%;
+  background: var(--ggds-color-brand-700);
+  color: var(--ggds-color-text-inverse);
+}
+
+.ggds-steps__title {
+  margin: 0 0 var(--ggds-space-1);
+  font-size: var(--ggds-font-size-lg);
+}
+
+/* For an emergency: the danger colours. */
+.ggds-steps--urgent .ggds-steps__item {
+  background: var(--ggds-color-status-danger-subtle);
+}
+
+.ggds-steps--urgent .ggds-steps__item::after {
+  color: var(--ggds-color-status-danger-strong);
+}
+
+.ggds-steps--urgent .ggds-steps__icon {
+  background: var(--ggds-color-status-danger-strong);
+}
+
+@media (forced-colors: active) {
+  .ggds-steps__item {
+    border: 1px solid CanvasText;
+  }
+}

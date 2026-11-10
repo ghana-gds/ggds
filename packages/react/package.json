@@ -1,0 +1,61 @@
+{
+  "name": "@ggds/react",
+  "version": "0.3.0",
+  "description": "React components for the Ghana Government Design System (GGDS): page parts, form fields with errors wired up, and icons. Works with Next.js server components.",
+  "author": "Ghana Government Design System (GGDS) contributors",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "accessibility",
+    "gov",
+    "react",
+    "nextjs",
+    "react-components"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/react#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "dependencies": {
+    "@ggds/icons": "workspace:^"
+  },
+  "peerDependencies": {
+    "@ggds/css": "workspace:^",
+    "react": ">=18"
+  },
+  "scripts": {
+    "prepack": "node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@ggds/css": "workspace:^",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "vite": "8.3.6"
+  }
+}

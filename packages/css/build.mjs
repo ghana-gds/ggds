@@ -24,7 +24,8 @@ const tokensCss = join(here, '..', 'tokens', 'dist', 'tokens.css');
 // Order matters only within a layer; keep it stable and readable.
 export const COMPONENTS = [
   'skip-link', 'banner', 'header', 'footer', 'navigation', 'button', 'field', 'error-summary',
-  'date-input', 'summary-list', 'panel', 'notice', 'tag', 'card', 'table', 'disclosure', 'prose', 'hero', 'tab-bar',
+  'date-input', 'progress', 'summary-list', 'panel', 'notice', 'tag', 'icon', 'card', 'table', 'meter', 'key-figures',
+  'timeline', 'steps', 'disclosure', 'prose', 'hero', 'page-heading', 'tab-bar',
 ];
 
 const read = (p) => readFileSync(p, 'utf8').trim();

@@ -1,4 +1,4 @@
-"""GGDS icons, shared with @ggds/astro and the documentation (packages/astro/icons.mjs, copied by build.mjs)."""
+"""GGDS icons: the @ggds/icons set (packages/icons), copied into icons.json by build.mjs."""
 import json
 from functools import cache
 from pathlib import Path

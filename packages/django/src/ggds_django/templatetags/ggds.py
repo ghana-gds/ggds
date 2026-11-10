@@ -12,6 +12,12 @@ Page parts (they output the same markup as the GGDS documentation and @ggds/astr
     {% ggds_tab_bar tabs %}
     {% ggds_summary_list rows %}      questions and answers, with Change links
     {% ggds_panel "Complaint sent" reference=ref %}
+    {% ggds_page_heading "Welcome back, Ama" eyebrow="..." lede="..." %}
+    {% ggds_key_figures figures %}    the numbers that matter most
+    {% ggds_progress 3 4 %}           "Question 3 of 4"
+    {% ggds_timeline stages %}        what has happened and what happens next
+    {% ggds_meter value max=1100 %}   an amount as a bar, in a table
+    {% ggds_steps steps urgent=True %} numbered things to do
 Forms (GGDSFormRenderer uses these; you rarely need them yourself):
     {% ggds_error_summary form %}, {{ field|ggds_widget }}, {{ field|ggds_choices }}
 
@@ -313,3 +319,52 @@ def ggds_summary_list(rows, plain: bool = False):
 def ggds_panel(title: str, reference: str = "", reference_label: str = "Your reference number"):
     """The confirmation panel: the page's <h1>, and the reference people need later."""
     return {"title": title, "reference": reference, "reference_label": reference_label}
+
+
+# --- Key figures, progress, timeline, meter, steps and page heading ----------------------------------------------
+
+@register.inclusion_tag("ggds/components/key_figures.html")
+def ggds_key_figures(figures, inverse: bool = False):
+    """Figures as dicts: value, label, and optionally change (in words) and danger (True for one that needs action)."""
+    return {"figures": [dict(f) for f in figures], "inverse": inverse}
+
+
+@register.inclusion_tag("ggds/components/progress.html")
+def ggds_progress(current: int, total: int, label: str = "", id: str = "ggds-progress"):
+    """How far through a task: "Question 3 of 4" in words, and the same as a native <progress>."""
+    return {"current": current, "total": total, "label": label or f"Question {current} of {total}", "id": id}
+
+
+_STATE_WORDS = {"done": "Done", "current": "Now", "": "Next"}
+
+
+@register.inclusion_tag("ggds/components/timeline.html")
+def ggds_timeline(stages):
+    """Stages as dicts: title, when, and state: "done", "current" or "" (to come). Each starts with hidden words that
+    say its state, so it is said and not only drawn."""
+    out = []
+    for s in stages:
+        s = dict(s)
+        state = s.get("state") or ""
+        if state not in _STATE_WORDS:
+            raise ValueError(f'ggds_timeline: state must be "done", "current" or "", not {state!r}')
+        out.append({**s, "state": state, "words": s.get("words") or _STATE_WORDS[state]})
+    return {"stages": out}
+
+
+@register.inclusion_tag("ggds/components/meter.html")
+def ggds_meter(value, max, min=0, text: str = ""):
+    """An amount as a bar, for a table cell next to the number. Hidden from screen readers: the number says it."""
+    return {"value": value, "max": max, "min": min, "text": text or str(value)}
+
+
+@register.inclusion_tag("ggds/components/steps.html")
+def ggds_steps(steps, urgent: bool = False, heading_level: int = 3):
+    """Steps as dicts: icon (a GGDS icon name), title (starts with a verb) and text (one sentence)."""
+    return {"steps": [dict(s) for s in steps], "urgent": urgent, "h": heading_level}
+
+
+@register.inclusion_tag("ggds/components/page_heading.html")
+def ggds_page_heading(title: str, eyebrow: str = "", lede: str = "", danger: bool = False):
+    """The top of an inner page in the institution's colour; the title is the page's <h1>."""
+    return {"title": title, "eyebrow": eyebrow, "lede": lede, "danger": danger}

@@ -1,9 +1,9 @@
-/* Card: a linked summary of a service, document or page, as on the MoCDTI platform. The heading link covers the
+/* Card: a linked summary of a service, document or page. The heading link covers the
    whole card, so there is one link per card for screen readers and the full card is the touch target. */
 .ggds-card-grid {
   display: grid;
   gap: var(--ggds-space-3);
-  margin: 0;
+  margin: 0 0 var(--ggds-space-8); /* so the next section's heading is not cramped */
   padding: 0;
   list-style: none;
 }
@@ -97,6 +97,79 @@
   margin: var(--ggds-space-1) 0 0;
   color: var(--ggds-color-text-muted);
   font-size: 0.95rem;
+}
+
+/* Card with an icon: a GGDS icon (@ggds/icons) in a circle tinted with the institution colour, above the title,
+   for a page of services or topics. The circle fills with the colour when the card is pointed at. */
+.ggds-card--icon {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--ggds-space-1) var(--ggds-space-4);
+}
+
+/* On phones the icon sits beside the title, so more cards fit on the screen; from 48rem it sits above. */
+.ggds-card__icon {
+  display: grid;
+  grid-row: span 2;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: var(--ggds-radius-round);
+  background: var(--ggds-color-brand-50);
+  background: color-mix(in srgb, var(--ggds-color-institution) 10%, var(--ggds-color-surface-raised));
+  color: var(--ggds-color-institution);
+}
+
+.ggds-card__icon > svg {
+  inline-size: 1.375rem;
+  block-size: 1.375rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (min-width: 48rem) {
+  .ggds-card--icon {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ggds-space-3);
+  }
+
+  .ggds-card__icon {
+    inline-size: 3.5rem;
+    block-size: 3.5rem;
+  }
+
+  .ggds-card__icon > svg {
+    inline-size: 1.75rem;
+    block-size: 1.75rem;
+  }
+}
+
+.ggds-card--icon .ggds-card__body {
+  margin: 0;
+}
+
+.ggds-card:has(.ggds-card__link:hover) .ggds-card__icon {
+  background: var(--ggds-color-institution);
+  color: var(--ggds-color-text-inverse);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ggds-card__icon {
+    transition:
+      background-color var(--ggds-motion-duration-fast) var(--ggds-motion-easing-standard),
+      color var(--ggds-motion-duration-fast) var(--ggds-motion-easing-standard);
+  }
+}
+
+@media (forced-colors: active) {
+  .ggds-card__icon {
+    border: 2px solid CanvasText;
+  }
 }
 
 /* Institution card (a ministry's directory of its agencies): a rule in that institution's colour, its logo,
