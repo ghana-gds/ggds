@@ -1,7 +1,8 @@
 {
   "name": "@ggds/css",
-  "version": "0.1.0",
-  "description": "GGDS component CSS. Framework-neutral; no runtime dependencies.",
+  "version": "0.1.1",
+  "description": "Styles for the Ghana Government Design System (GGDS): accessible components for government websites. Plain CSS, no JavaScript needed, works under a strict CSP.",
+  "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
     "ghana",
     "government",
@@ -13,7 +14,7 @@
     "components"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/css#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghana-gds/ggds.git",

@@ -1,10 +1,15 @@
 # @ggds/themes
 
+[![npm](https://img.shields.io/npm/v/@ggds/themes)](https://www.npmjs.com/package/@ggds/themes)
+[![Licence: Apache-2.0](https://img.shields.io/badge/licence-Apache--2.0-blue)](https://github.com/ghana-gds/ggds/blob/main/LICENSE.md)
+
 Ready-made institution themes for GGDS, the Ghana Government Design System. A theme changes an institution's
 colour in five places only: the line under the header, the institution's name, the homepage hero, the footer and
-its card in a list. Links, buttons, form fields and messages stay the same on every government website.
+its card in a list. Links, buttons, form fields and messages stay the same on every government website, so people
+recognise them wherever they are.
 
-**Draft, version 0.1.** See the [GGDS repository](https://github.com/ghana-gds/ggds).
+> **Draft, version 0.1.** Each institution still has to confirm its colour before its theme is final. Changes are
+> listed in the [changelog](https://github.com/ghana-gds/ggds/blob/main/CHANGELOG.md).
 
 ## Install
 
@@ -12,35 +17,93 @@ its card in a list. Links, buttons, form fields and messages stay the same on ev
 npm install @ggds/themes
 ```
 
+It installs [`@ggds/tokens`](https://www.npmjs.com/package/@ggds/tokens) with it. You also need
+[`@ggds/css`](https://www.npmjs.com/package/@ggds/css) for the styles the theme colours.
+
 ## Use
 
 One institution for the whole site: load its theme after `ggds.css`.
+
+```css
+@import "@ggds/css/ggds.css";
+@import "@ggds/themes/nca.css";
+```
 
 ```html
 <link rel="stylesheet" href="ggds/ggds.min.css">
 <link rel="stylesheet" href="ggds/themes/nca.css">
 ```
 
-Several institutions on one page: load `themes.css` and mark each element.
+Several institutions on one page, such as a list of agencies: load `themes.css` and mark each element.
 
 ```html
 <link rel="stylesheet" href="ggds/themes/themes.css">
 <li class="ggds-card ggds-card--institution" data-ggds-theme="gmet">…</li>
 ```
 
-In Node, for build tools:
+## Themes
 
-```js
-import { themes, getTheme, themeCss } from '@ggds/themes';
+| Slug | Institution |
+|---|---|
+| `mocdti` | Ministry of Communications, Digital Technology and Innovations (the default) |
+| `csa` | Cyber Security Authority |
+| `dpc` | Data Protection Commission |
+| `gdcl` | Ghana Digital Centres Limited |
+| `gdnr` | Ghana Domain Name Registry |
+| `gifec` | Ghana Investment Fund for Electronic Communications |
+| `gmet` | Ghana Meteorological Agency |
+| `gpcl` | Ghana Post Company Limited |
+| `gi-kace` | Ghana-India Kofi Annan Centre of Excellence in ICT |
+| `nca` | National Communications Authority |
+| `nita` | National Information Technology Agency |
+| `pcsrc` | Postal and Courier Services Regulatory Commission |
 
-getTheme('nca');      // { slug, name, shortName, color, accent, deep, … }
-themeCss('nca');      // the theme as CSS
-```
+Each theme is `@ggds/themes/<slug>.css`. All of them together, keyed by `data-ggds-theme`, are
+`@ggds/themes/themes.css`. The data is in `@ggds/themes/themes.json`.
 
 No theme for your institution yet? Make one with `institutionCss('#rrggbb')` from
 [`@ggds/tokens/institution.mjs`](https://www.npmjs.com/package/@ggds/tokens). It rejects colours too light to read
-on white.
+on white. To add your institution to this package, open an
+[issue](https://github.com/ghana-gds/ggds/issues).
+
+## API
+
+For build tools in Node.
+
+```js
+import { themes, getTheme, themeCss, allThemesCss, DEFAULT_THEME } from '@ggds/themes';
+
+getTheme('nca');                        // { slug, name, shortName, color, accent, deep, status, source }
+themeCss('nca');                        // the theme as CSS for the whole page (:root)
+themeCss('nca', { scope: 'attribute' }); // the theme for elements marked data-ggds-theme="nca"
+```
+
+| Export | What it is |
+|---|---|
+| `themes` | Every theme, the default first. Frozen objects: `slug`, `name`, `shortName`, `color`, `accent`, `deep`, `status`, `source` |
+| `getTheme(slug)` | One theme. Throws for an unknown slug, so a typo cannot silently fall back to the default |
+| `themeCss(slug, { scope })` | A theme as CSS. `scope: 'root'` (default) themes the whole page; `'attribute'` themes elements with `data-ggds-theme` |
+| `allThemesCss()` | Every theme keyed by `data-ggds-theme`, the same as `themes.css` |
+| `DEFAULT_THEME` | `'mocdti'` |
+
+## Accessibility
+
+Every theme colour has at least 4.5:1 contrast on white, and its deep shade at least 7:1 behind white text. A
+theme cannot change the colours of links, buttons, focus or error messages.
+
+## Related packages
+
+- [`@ggds/css`](https://www.npmjs.com/package/@ggds/css): the component styles
+- [`@ggds/tokens`](https://www.npmjs.com/package/@ggds/tokens): the design tokens and the institution colour rule
+- [`@ggds/js`](https://www.npmjs.com/package/@ggds/js): the optional script
+- [`@ggds/astro`](https://www.npmjs.com/package/@ggds/astro): the page parts as Astro components
+
+## Contributing and support
+
+Report problems and ask questions in [GitHub issues](https://github.com/ghana-gds/ggds/issues). See
+[CONTRIBUTING.md](https://github.com/ghana-gds/ggds/blob/main/CONTRIBUTING.md) before sending a change.
 
 ## Licence
 
-Apache-2.0. Using a theme does not give anyone the right to use an institution's name or logo: see `LICENSE.md`.
+Apache-2.0. Using a theme does not give anyone the right to use an institution's name or logo, or to present a
+website as a Government of Ghana website: see `LICENSE.md` in the package.

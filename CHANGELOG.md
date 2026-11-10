@@ -1,6 +1,13 @@
 # What's new
 
-## Version 0.1.0 (draft, not yet released)
+## Version 0.1.1 (draft, 10 November 2026)
+
+Documentation only: no change to the styles, the script or the components.
+
+- Each npm package's page now explains, with examples, how to install and use it and what it contains: every file and export, the Astro components' props and slots, the script's behaviour, accessibility, browser support and the related packages.
+- The npm packages name their authors, link to their own folder in the repository, and describe themselves more clearly in npm search. `@ggds/css` has a `style` field, and `@ggds/astro` exports its `package.json`.
+
+## Version 0.1.0 (draft, 10 November 2026)
 
 The first version of GGDS, taken from the shared MoCDTI agency platform and made to work for any government institution.
 

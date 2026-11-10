@@ -3,7 +3,7 @@
 Ready-made styles and page parts for Government of Ghana websites, so every government website looks familiar,
 works on low-cost phones and slow networks, and can be used by everyone.
 
-**Draft, version 0.1.0.** NITA looks after GGDS. Version 1 will be NITA guidance, recommended for all government
+**Draft, version 0.1.1.** NITA looks after GGDS. Version 1 will be NITA guidance, recommended for all government
 websites. The code is licensed under Apache-2.0. The national flag, the coat of arms and institutions' logos are
 not part of the licence: see [`LICENSE.md`](LICENSE.md). To contribute, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 

@@ -1,7 +1,8 @@
 {
   "name": "@ggds/themes",
-  "version": "0.1.0",
-  "description": "GGDS institution themes: MoCDTI by default, and each MoCDTI agency as a theme. Identity colours only.",
+  "version": "0.1.1",
+  "description": "Institution themes for the Ghana Government Design System (GGDS): the ministry and each agency, as CSS and data. Identity colours only.",
+  "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
     "ghana",
     "government",
@@ -13,7 +14,7 @@
     "css"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/themes#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghana-gds/ggds.git",

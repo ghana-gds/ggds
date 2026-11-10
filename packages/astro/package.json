@@ -1,7 +1,8 @@
 {
   "name": "@ggds/astro",
-  "version": "0.1.0",
-  "description": "GGDS page parts as Astro components. They output the same markup as the GGDS documentation.",
+  "version": "0.1.1",
+  "description": "Astro components for the Ghana Government Design System (GGDS): skip link, banner, header, hero, footer and tab bar.",
+  "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
     "ghana",
     "government",
@@ -11,10 +12,11 @@
     "gov",
     "astro",
     "astro-component",
-    "withastro"
+    "withastro",
+    "astro-components"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/astro#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghana-gds/ggds.git",
@@ -26,7 +28,8 @@
   "type": "module",
   "exports": {
     "./*.astro": "./src/*.astro",
-    "./icons.mjs": "./icons.mjs"
+    "./icons.mjs": "./icons.mjs",
+    "./package.json": "./package.json"
   },
   "files": [
     "src",

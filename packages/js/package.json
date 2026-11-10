@@ -1,7 +1,8 @@
 {
   "name": "@ggds/js",
-  "version": "0.1.0",
-  "description": "Optional progressive enhancement for GGDS components. ES modules, no dependencies, CSP-safe.",
+  "version": "0.1.1",
+  "description": "Optional script for the Ghana Government Design System (GGDS): the phone menu and error summary focus. ES modules, no dependencies, CSP-safe.",
+  "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
     "ghana",
     "government",
@@ -13,7 +14,7 @@
     "csp"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/js#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghana-gds/ggds.git",

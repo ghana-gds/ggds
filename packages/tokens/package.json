@@ -1,7 +1,8 @@
 {
   "name": "@ggds/tokens",
-  "version": "0.1.0",
-  "description": "GGDS design tokens: DTCG JSON source, CSS custom properties, JSON, MoCDTI platform aliases, and the institution colour rule.",
+  "version": "0.1.1",
+  "description": "Design tokens for the Ghana Government Design System (GGDS): colours, type and spacing as CSS custom properties and W3C DTCG JSON, with the institution colour rule.",
+  "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
     "ghana",
     "government",
@@ -14,7 +15,7 @@
     "css-custom-properties"
   ],
   "license": "Apache-2.0",
-  "homepage": "https://github.com/ghana-gds/ggds#readme",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/tokens#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ghana-gds/ggds.git",
