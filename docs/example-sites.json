@@ -1,0 +1,2832 @@
+{
+  "note": "Made by pnpm run sync:examples from the MoCDTI platform. Do not edit: run it again. See docs/agencies.mjs.",
+  "registry": [
+    {
+      "key": "services",
+      "paths": [
+        "/services/"
+      ]
+    },
+    {
+      "key": "type-approval",
+      "paths": [
+        "/services/type-approval/"
+      ]
+    },
+    {
+      "key": "regulation",
+      "paths": [
+        "/regulation/"
+      ]
+    },
+    {
+      "key": "consultations",
+      "paths": [
+        "/regulation/consultations/"
+      ]
+    },
+    {
+      "key": "consumer-help",
+      "paths": [
+        "/consumer-help/"
+      ]
+    },
+    {
+      "key": "complaints",
+      "paths": [
+        "/consumer-help/complaints/"
+      ]
+    },
+    {
+      "key": "industry-data",
+      "paths": [
+        "/industry-data/"
+      ]
+    },
+    {
+      "key": "news",
+      "paths": [
+        "/news-notices/"
+      ]
+    },
+    {
+      "key": "hub",
+      "paths": [
+        "/our-agencies/",
+        "/regulation/laws/"
+      ]
+    },
+    {
+      "key": "grievances",
+      "paths": [
+        "/grievances/"
+      ]
+    },
+    {
+      "key": "weather",
+      "paths": [
+        "/warnings/",
+        "/forecast/"
+      ]
+    }
+  ],
+  "agencies": [
+    {
+      "slug": "csa",
+      "profile": {
+        "identity": {
+          "legalName": "Cyber Security Authority",
+          "shortName": "CSA",
+          "themeColor": "#222164",
+          "purposeStatement": "We regulate cybersecurity activities in Ghana and promote the development of cybersecurity in the country."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": true,
+          "complaints": false,
+          "industry-data": true,
+          "news": true
+        },
+        "remit": {
+          "summary": "Report cybercrime, online fraud and hacking; cybersecurity licences",
+          "topics": [
+            {
+              "label": "Report a cybercrime, scam or hacked account"
+            },
+            {
+              "label": "Protect children online"
+            },
+            {
+              "label": "Get a cybersecurity licence or accreditation"
+            },
+            {
+              "label": "Check a cybersecurity licence or certificate"
+            },
+            {
+              "label": "Read the latest cyber alerts"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "shortcuts": [
+            {
+              "label": "Report an incident",
+              "href": "/about/report-an-incident/"
+            },
+            {
+              "label": "Latest alerts",
+              "href": "/news-notices/?kind=notice"
+            },
+            {
+              "label": "Check a licence",
+              "href": "/about/check-a-licence/"
+            },
+            {
+              "label": "Protect children online",
+              "href": "/about/protecting-children-online/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Report a cybercrime or incident",
+              "body": "Call or text 292, WhatsApp to be confirmed or email to be confirmed.",
+              "href": "/about/report-an-incident/",
+              "art": "complaints"
+            },
+            {
+              "title": "Get licensed or accredited",
+              "body": "Cybersecurity service providers, establishments and professionals.",
+              "href": "/services/",
+              "art": "standards"
+            },
+            {
+              "title": "Check a licence or certificate",
+              "body": "Verify a certificate number or request an official verification report.",
+              "href": "/about/check-a-licence/",
+              "art": "regulation"
+            },
+            {
+              "title": "Read the latest alerts",
+              "body": "CERT-GH alerts on current scams and threats, with what to do.",
+              "href": "/news-notices/?kind=notice",
+              "art": "other"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "description": "Licensing of cybersecurity service providers, accreditation and CII",
+            "children": [
+              {
+                "label": "All services",
+                "href": "/services/"
+              },
+              {
+                "label": "Licence a cybersecurity service provider",
+                "href": "/services/licensing-of-cybersecurity-service-providers/"
+              },
+              {
+                "label": "Accredit an establishment",
+                "href": "/services/accreditation-of-cybersecurity-establishments/"
+              },
+              {
+                "label": "Get accredited as a professional",
+                "href": "/services/accreditation-of-cybersecurity-professionals/"
+              },
+              {
+                "label": "Check a licence or certificate",
+                "href": "/about/check-a-licence/"
+              },
+              {
+                "label": "Critical information infrastructure",
+                "href": "/services/critical-information-infrastructure-designation-and-compliance/"
+              },
+              {
+                "label": "Online portals",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/consumer-help/",
+            "description": "Report an incident, latest alerts and advice on staying safe online",
+            "children": [
+              {
+                "label": "Report an incident",
+                "href": "/about/report-an-incident/"
+              },
+              {
+                "label": "Latest alerts from CERT-GH",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "Advisories: staying safe online",
+                "href": "/consumer-help/guides/"
+              },
+              {
+                "label": "Protecting children online",
+                "href": "/about/protecting-children-online/"
+              },
+              {
+                "label": "Licensing FAQs",
+                "href": "/consumer-help/faqs/"
+              },
+              {
+                "label": "Contact the CSA",
+                "href": "/about/contact/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "description": "Act 1038, the CII Directive, policies and consultations",
+            "children": [
+              {
+                "label": "Acts",
+                "href": "/regulation/?type=act"
+              },
+              {
+                "label": "Policies and strategies",
+                "href": "/regulation/?type=policy"
+              },
+              {
+                "label": "Frameworks",
+                "href": "/regulation/?type=code"
+              },
+              {
+                "label": "Critical information infrastructure",
+                "href": "/about/critical-information-infrastructure/"
+              },
+              {
+                "label": "CERT ecosystem",
+                "href": "/about/cert-ecosystem/"
+              },
+              {
+                "label": "Public consultations",
+                "href": "/regulation/consultations/"
+              }
+            ]
+          },
+          {
+            "section": "/industry-data/",
+            "description": "Annual reports, NCSAM reports and event reports",
+            "children": [
+              {
+                "label": "All reports",
+                "href": "/industry-data/reports/"
+              },
+              {
+                "label": "Annual reports",
+                "href": "/industry-data/reports/?type=annual"
+              },
+              {
+                "label": "NCSAM and event reports",
+                "href": "/industry-data/reports/?type=other"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "description": "CERT-GH alerts, press releases, news and events",
+            "children": [
+              {
+                "label": "Alerts and press releases",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              },
+              {
+                "label": "National Cybersecurity Challenge",
+                "href": "/about/national-cybersecurity-challenge/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact the CSA",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "Mandate, vision and values",
+                "href": "/about/"
+              },
+              {
+                "label": "CERT-GH",
+                "href": "/about/cert-gh/"
+              },
+              {
+                "label": "Protecting children online",
+                "href": "/about/protecting-children-online/"
+              },
+              {
+                "label": "Licensing and accreditation",
+                "href": "/about/licensing-and-accreditation/"
+              },
+              {
+                "label": "CERT-GH RFC 2350 profile",
+                "href": "/about/cert-gh-rfc-2350/"
+              },
+              {
+                "label": "CERT-GH PGP key",
+                "href": "/about/cert-gh-pgp-key/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "report scam, verify licence, sextortion"
+        }
+      }
+    },
+    {
+      "slug": "dpc",
+      "profile": {
+        "identity": {
+          "legalName": "Data Protection Commission",
+          "shortName": "DPC",
+          "themeColor": "#1276bc",
+          "purposeStatement": "We regulate the processing of personal data in Ghana and protect the privacy rights of individuals."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": true,
+          "complaints": true,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "Your personal data rights; registering organisations that use personal data",
+          "topics": [
+            {
+              "label": "Complain about misuse of your personal data"
+            },
+            {
+              "label": "Report a personal data breach"
+            },
+            {
+              "label": "Register your organisation as a data controller"
+            },
+            {
+              "label": "Check if an organisation is registered"
+            },
+            {
+              "label": "Know your data protection rights"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "shortcuts": [
+            {
+              "label": "Check if an organisation is registered",
+              "href": "/services/due-diligence-search/"
+            },
+            {
+              "label": "Know your data protection rights",
+              "href": "/about/your-rights/"
+            },
+            {
+              "label": "Read the Data Protection Act (Act 843)",
+              "href": "/regulation/instruments/act-843/"
+            },
+            {
+              "label": "Become a data protection supervisor (DPO)",
+              "href": "/services/cdps-training/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Register with the Commission",
+              "body": "Every data controller and processor in Ghana must register before processing personal data.",
+              "href": "/services/register-as-a-data-controller-or-processor/",
+              "art": "standards"
+            },
+            {
+              "title": "Renew your registration",
+              "body": "Registration lasts two years. Renew with your compliance report.",
+              "href": "/services/renew-registration/",
+              "art": "standards"
+            },
+            {
+              "title": "Make a complaint",
+              "body": "If you think your personal data has been mishandled or misused.",
+              "href": "/consumer-help/complaints/",
+              "art": "complaints"
+            },
+            {
+              "title": "Report a data breach",
+              "body": "Organisations must notify the Commission as soon as possible.",
+              "href": "/services/report-a-personal-data-breach/",
+              "art": "regulation"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "description": "Register, renew, report a breach, training and accreditation",
+            "children": [
+              {
+                "label": "Find a service",
+                "href": "/services/"
+              },
+              {
+                "label": "Register with the Commission",
+                "href": "/services/register-as-a-data-controller-or-processor/"
+              },
+              {
+                "label": "Renew your registration",
+                "href": "/services/renew-registration/"
+              },
+              {
+                "label": "Report a data breach",
+                "href": "/services/report-a-personal-data-breach/"
+              },
+              {
+                "label": "Check if an organisation is registered",
+                "href": "/services/due-diligence-search/"
+              },
+              {
+                "label": "Become a data protection supervisor (DPO)",
+                "href": "/services/cdps-training/"
+              },
+              {
+                "label": "Training and accreditation",
+                "href": "/services/?category=training"
+              },
+              {
+                "label": "Fees and charges",
+                "href": "/services/fees/"
+              },
+              {
+                "label": "Registration portal and register search",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/consumer-help/",
+            "description": "Your rights over your personal data, and how to complain",
+            "children": [
+              {
+                "label": "Your rights as a data subject",
+                "href": "/about/your-rights/"
+              },
+              {
+                "label": "Make a complaint",
+                "href": "/consumer-help/complaints/"
+              },
+              {
+                "label": "Frequently asked questions",
+                "href": "/consumer-help/faqs/"
+              },
+              {
+                "label": "Privacy campaign guides",
+                "href": "/consumer-help/guides/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "description": "The Data Protection Act, guidelines, forms and the draft bill",
+            "children": [
+              {
+                "label": "Data Protection Act, 2012 (Act 843)",
+                "href": "/regulation/instruments/act-843/"
+              },
+              {
+                "label": "Acts and conventions",
+                "href": "/regulation/?type=act"
+              },
+              {
+                "label": "Guidelines",
+                "href": "/regulation/?type=guideline"
+              },
+              {
+                "label": "Draft Data Protection Bill",
+                "href": "/regulation/consultations/data-protection-bill-draft/"
+              },
+              {
+                "label": "Compliance guidelines",
+                "href": "/about/compliance/"
+              },
+              {
+                "label": "Data protection principles",
+                "href": "/about/data-protection-principles/"
+              },
+              {
+                "label": "Forms",
+                "href": "/about/forms/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "description": "News, notices and publications from the Commission",
+            "children": [
+              {
+                "label": "All news and notices",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "Notices",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "Publications",
+                "href": "/news-notices/?kind=publication"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact the DPC",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About the Commission",
+                "href": "/about/"
+              },
+              {
+                "label": "Our mandate",
+                "href": "/about/mandate/"
+              },
+              {
+                "label": "What we do",
+                "href": "/about/what-we-do/"
+              },
+              {
+                "label": "Leadership",
+                "href": "/about/#leadership"
+              },
+              {
+                "label": "Organisational structure",
+                "href": "/about/organisational-structure/"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Forms",
+                "href": "/about/forms/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "register my company, report a data breach, Act 843"
+        }
+      }
+    },
+    {
+      "slug": "gdcl",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana Digital Centres Limited",
+          "shortName": "GDCL",
+          "themeColor": "#006e35",
+          "purposeStatement": "We develop and manage digital centres in Ghana, including the Accra Digital Centre, to grow digital innovation, entrepreneurship and jobs."
+        },
+        "modules": {
+          "services": true,
+          "regulation": false,
+          "consultations": false,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": false,
+          "news": true,
+          "type-approval": false
+        },
+        "remit": {
+          "summary": "Office space, co-working and event rooms at the Accra Digital Centre; digital skills and start-up programmes",
+          "topics": [
+            {
+              "label": "Rent office space or co-working space for a tech business"
+            },
+            {
+              "label": "Book a conference, meeting or training room"
+            },
+            {
+              "label": "Digital skills programmes at the centres"
+            },
+            {
+              "label": "Start-up incubation and acceleration"
+            },
+            {
+              "label": "Book a study tour or educational visit"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Space, skills and support for Ghana's tech businesses",
+          "lede": "GDCL runs the Accra Digital Centre. Find office space, book a room, join a programme or arrange a visit.",
+          "tasksHeading": "What do you need?",
+          "shortcuts": [
+            {
+              "label": "Where is the Accra Digital Centre?",
+              "href": "/about/accra-digital-centre/"
+            },
+            {
+              "label": "Start-up incubation",
+              "href": "/services/startup-incubation-and-acceleration/"
+            },
+            {
+              "label": "Who leads GDCL",
+              "href": "/about/management-team/"
+            },
+            {
+              "label": "Contact GDCL",
+              "href": "/about/contact/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Find office space",
+              "body": "Commercial office space and co-working space with an incubator at the Accra Digital Centre.",
+              "href": "/services/office-space/",
+              "art": "other"
+            },
+            {
+              "title": "Book a conference or meeting room",
+              "body": "Rooms for conferences, meetings, training and events, with how to ask for a booking.",
+              "href": "/services/conference-and-meeting-facilities/",
+              "art": "standards"
+            },
+            {
+              "title": "Join a programme",
+              "body": "Digital skills training, start-up incubation and acceleration.",
+              "href": "/services/digital-skills-training/",
+              "art": "data"
+            },
+            {
+              "title": "Arrange a study tour",
+              "body": "Visits for schools, officials, entrepreneurs and incubatees to the Centre and the wider tech ecosystem.",
+              "href": "/services/study-tours-and-exchange/",
+              "art": "other"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": "Spaces and programmes",
+            "tabLabel": "Spaces",
+            "description": "Office space, co-working and meeting rooms at the Accra Digital Centre, and GDCL's programmes",
+            "children": [
+              {
+                "label": "All spaces and programmes",
+                "href": "/services/"
+              },
+              {
+                "label": "Office space",
+                "href": "/services/office-space/"
+              },
+              {
+                "label": "Co-working space and incubator",
+                "href": "/services/co-working-and-incubation/"
+              },
+              {
+                "label": "Conference and meeting rooms",
+                "href": "/services/conference-and-meeting-facilities/"
+              },
+              {
+                "label": "Digital skills training",
+                "href": "/services/digital-skills-training/"
+              },
+              {
+                "label": "Start-up incubation and acceleration",
+                "href": "/services/startup-incubation-and-acceleration/"
+              },
+              {
+                "label": "BPO service support",
+                "href": "/services/bpo-service-support/"
+              },
+              {
+                "label": "Study tours and exchange",
+                "href": "/services/study-tours-and-exchange/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News",
+            "description": "News and events from GDCL and the Accra Digital Centre",
+            "children": [
+              {
+                "label": "All news",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              },
+              {
+                "label": "Publications",
+                "href": "/about/publications/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "label": "About GDCL",
+            "children": [
+              {
+                "label": "Contact GDCL",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About GDCL",
+                "href": "/about/"
+              },
+              {
+                "label": "The Accra Digital Centre",
+                "href": "/about/accra-digital-centre/"
+              },
+              {
+                "label": "Vision, mission and objectives",
+                "href": "/about/vision-mission-and-objectives/"
+              },
+              {
+                "label": "Leadership",
+                "href": "/about/management-team/"
+              },
+              {
+                "label": "Projects",
+                "href": "/about/projects/"
+              },
+              {
+                "label": "Partners",
+                "href": "/about/partners/"
+              },
+              {
+                "label": "Questions",
+                "href": "/about/questions/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "office space, conference room, digital skills"
+        }
+      }
+    },
+    {
+      "slug": "gdnr",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana Domain Name Registry",
+          "shortName": "GDNR",
+          "themeColor": "#1848f0",
+          "purposeStatement": "GDNR manages and administers Ghana's .gh domain name space."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": true,
+          "news": true
+        },
+        "remit": {
+          "summary": ".gh domain names: getting one, who owns one, and disputes",
+          "topics": [
+            {
+              "label": "Get a .gh domain name"
+            },
+            {
+              "label": "Check who owns a .gh domain"
+            },
+            {
+              "label": "Resolve a .gh domain dispute"
+            },
+            {
+              "label": "Become a .gh registrar"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Get, check or protect a .gh domain name",
+          "lede": "Choose what you need to do, or search for it.",
+          "tasksHeading": "What do you need to do?",
+          "shortcuts": [
+            {
+              "label": ".gh endings and who can use them",
+              "href": "/about/name-spaces/"
+            },
+            {
+              "label": "What happens when a domain expires",
+              "href": "/about/questions/"
+            },
+            {
+              "label": "The draft GDNR Bill in plain words",
+              "href": "/news-notices/ghana-domain-name-registry-bill-2025-explained/"
+            },
+            {
+              "label": "Local Internet Community meetings",
+              "href": "/about/local-internet-community/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Get a .gh domain name",
+              "body": "You buy a .gh name from a registrar. The steps, the documents and what to check before you pay.",
+              "href": "/services/get-a-gh-domain/",
+              "art": "other"
+            },
+            {
+              "title": "Check who owns a domain",
+              "body": "Use the .gh WHOIS search to see if a name is taken, its registrar and when it expires.",
+              "href": "/about/domain-lookup/",
+              "art": "data"
+            },
+            {
+              "title": "Resolve a domain dispute",
+              "body": "What to do if a .gh name uses your trade mark or your name.",
+              "href": "/about/domain-disputes/",
+              "art": "regulation"
+            },
+            {
+              "title": "Become a .GH registrar",
+              "body": "How a business can be accredited by GDNR to sell .gh names.",
+              "href": "/services/registrar-accreditation/",
+              "art": "standards"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": ".gh domains",
+            "tabLabel": "Domains",
+            "description": "Get a .gh domain name, look one up, resolve a dispute or become a registrar",
+            "children": [
+              {
+                "label": "Get a .gh domain name",
+                "href": "/services/get-a-gh-domain/"
+              },
+              {
+                "label": "Check who owns a domain (WHOIS)",
+                "href": "/about/domain-lookup/"
+              },
+              {
+                "label": ".gh domain endings and rules",
+                "href": "/about/name-spaces/"
+              },
+              {
+                "label": ".gov.gh names for government",
+                "href": "/services/get-a-gov-gh-domain/"
+              },
+              {
+                "label": "Domain name disputes",
+                "href": "/about/domain-disputes/"
+              },
+              {
+                "label": "Questions about .gh domains",
+                "href": "/about/questions/"
+              },
+              {
+                "label": "Become a .GH registrar",
+                "href": "/services/registrar-accreditation/"
+              },
+              {
+                "label": "Registrar expressions of interest",
+                "href": "/about/registrar-expressions-of-interest/"
+              },
+              {
+                "label": "Registry and registrar websites",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "label": "Law & consultations",
+            "tabLabel": "Law",
+            "description": "The law that set up GDNR, the draft GDNR Bill and public consultations",
+            "children": [
+              {
+                "label": "Electronic Transactions Act (Act 772)",
+                "href": "/regulation/instruments/act-772/"
+              },
+              {
+                "label": "Ghana Domain Name Registry Bill (draft)",
+                "href": "/regulation/instruments/gdnr-bill-2025-draft/"
+              },
+              {
+                "label": "The draft Bill in plain words",
+                "href": "/news-notices/ghana-domain-name-registry-bill-2025-explained/"
+              },
+              {
+                "label": "Registry policies (nic.gh)",
+                "href": "/regulation/?type=policy"
+              },
+              {
+                "label": "Public consultations",
+                "href": "/regulation/consultations/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News & events",
+            "tabLabel": "News",
+            "description": "News, events and community meetings",
+            "children": [
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              },
+              {
+                "label": "Report texts",
+                "href": "/news-notices/?kind=publication"
+              },
+              {
+                "label": "All news and events",
+                "href": "/news-notices/"
+              }
+            ]
+          },
+          {
+            "section": "/industry-data/",
+            "label": "Reports",
+            "tabLabel": "Reports",
+            "description": "Local Internet Community meeting reports and the DNS Forum report",
+            "children": [
+              {
+                "label": "All reports",
+                "href": "/industry-data/reports/"
+              },
+              {
+                "label": "Local Internet Community",
+                "href": "/about/local-internet-community/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "label": "About & contact",
+            "tabLabel": "About",
+            "children": [
+              {
+                "label": "About GDNR",
+                "href": "/about/"
+              },
+              {
+                "label": "Mission and purpose",
+                "href": "/about/purpose/"
+              },
+              {
+                "label": "Board of Directors",
+                "href": "/about/board/"
+              },
+              {
+                "label": "Local Internet Community",
+                "href": "/about/local-internet-community/"
+              },
+              {
+                "label": "Contact GDNR",
+                "href": "/about/contact/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "register a .com.gh domain, WHOIS"
+        }
+      }
+    },
+    {
+      "slug": "gifec",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana Investment Fund for Electronic Communications",
+          "shortName": "GIFEC",
+          "themeColor": "#003f87",
+          "purposeStatement": "We bring phone and internet coverage, ICT centres and digital skills to underserved and unserved communities in Ghana."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "Phone and internet coverage for rural communities; ICT centres, school labs and digital skills programmes",
+          "topics": [
+            {
+              "label": "Phone or internet coverage for a rural community"
+            },
+            {
+              "label": "Learn to code with One Million Coders"
+            },
+            {
+              "label": "Girls in ICT and coding for girls"
+            },
+            {
+              "label": "Community ICT centres and computers for schools"
+            },
+            {
+              "label": "GIFEC projects in your region"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Bridging the digital divide",
+          "lede": "GIFEC brings phone and internet coverage, ICT centres and digital skills to communities that do not have them.",
+          "tasksHeading": "What people come to GIFEC for",
+          "shortcuts": [
+            {
+              "label": "No network in my village",
+              "href": "/services/rural-telephony-project/"
+            },
+            {
+              "label": "Register for One Million Coders",
+              "href": "/services/one-million-coders/"
+            },
+            {
+              "label": "Girls in ICT",
+              "href": "/services/girls-in-ict/"
+            },
+            {
+              "label": "Projects near you",
+              "href": "/about/projects/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "No network in your community?",
+              "body": "The Rural Telephony Project and how to tell GIFEC about a community without coverage.",
+              "href": "/services/rural-telephony-project/",
+              "art": "telecommunications"
+            },
+            {
+              "title": "Learn to code",
+              "body": "Free courses with the One Million Coders Programme. Register with your Ghana Card.",
+              "href": "/services/one-million-coders/",
+              "art": "standards"
+            },
+            {
+              "title": "Programmes for girls, schools and communities",
+              "body": "Girls in ICT, school ICT labs, Community ICT Centres and training.",
+              "href": "/about/get-involved/",
+              "art": "infrastructure"
+            },
+            {
+              "title": "Reports and procurement",
+              "body": "Tenders, reports, the Board and the draft bill consultation.",
+              "href": "/about/transparency/",
+              "art": "data"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": "Programmes",
+            "description": "Phone coverage for rural communities, ICT for schools and communities, and digital skills",
+            "children": [
+              {
+                "label": "All programmes",
+                "href": "/services/"
+              },
+              {
+                "label": "Rural connectivity",
+                "href": "/services/?category=rural-connectivity"
+              },
+              {
+                "label": "Rural Telephony Project",
+                "href": "/services/rural-telephony-project/"
+              },
+              {
+                "label": "Cyberlabs: ICT for schools and communities",
+                "href": "/services/?category=cyberlabs"
+              },
+              {
+                "label": "Digital skills",
+                "href": "/services/?category=ict-capacity-building"
+              },
+              {
+                "label": "Learn to code: One Million Coders",
+                "href": "/services/one-million-coders/"
+              },
+              {
+                "label": "Girls in ICT",
+                "href": "/services/girls-in-ict/"
+              },
+              {
+                "label": "Take part in a programme",
+                "href": "/about/get-involved/"
+              },
+              {
+                "label": "Projects near you",
+                "href": "/about/projects/"
+              },
+              {
+                "label": "Online portals",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "label": "Law & consultations",
+            "tabLabel": "Law",
+            "description": "The law behind GIFEC, the draft bill to change it, and public consultations",
+            "children": [
+              {
+                "label": "Law and draft bill",
+                "href": "/regulation/"
+              },
+              {
+                "label": "Act 775",
+                "href": "/regulation/instruments/act-775/"
+              },
+              {
+                "label": "Mandate and legal basis",
+                "href": "/about/mandate/"
+              },
+              {
+                "label": "Consultations",
+                "href": "/regulation/consultations/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News",
+            "description": "GIFEC news: programmes, site visits and partnerships",
+            "children": [
+              {
+                "label": "All news",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "Reports and procurement",
+                "href": "/about/transparency/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "label": "About GIFEC",
+            "tabLabel": "About",
+            "children": [
+              {
+                "label": "Contact GIFEC",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About GIFEC",
+                "href": "/about/"
+              },
+              {
+                "label": "Mandate and legal basis",
+                "href": "/about/mandate/"
+              },
+              {
+                "label": "Our history",
+                "href": "/about/history/"
+              },
+              {
+                "label": "Board of Trustees",
+                "href": "/about/board/"
+              },
+              {
+                "label": "Leadership",
+                "href": "/about/leadership/"
+              },
+              {
+                "label": "Reports and procurement",
+                "href": "/about/transparency/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "rural connectivity, One Million Coders, Act 775"
+        }
+      }
+    },
+    {
+      "slug": "gmet",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana Meteorological Agency",
+          "shortName": "GMet",
+          "themeColor": "#21438c",
+          "purposeStatement": "We provide weather forecasts, warnings and climate information for Ghana, and look after the country's weather stations."
+        },
+        "modules": {
+          "weather": true,
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": true,
+          "news": true
+        },
+        "remit": {
+          "summary": "Weather forecasts and severe-weather warnings",
+          "topics": [
+            {
+              "label": "Check today's weather forecast"
+            },
+            {
+              "label": "Severe-weather warnings"
+            },
+            {
+              "label": "Marine and fishing forecasts"
+            },
+            {
+              "label": "Seasonal rainfall outlook for farmers"
+            },
+            {
+              "label": "Request weather or climate data"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Weather warnings, forecasts and climate information for Ghana",
+          "lede": "Check the warnings in force, today's forecast, the sea and lake forecasts or the rainy-season outlook.",
+          "tasksHeading": "What do you need?",
+          "shortcuts": [
+            {
+              "label": "Warnings in force now",
+              "href": "/warnings/"
+            },
+            {
+              "label": "Weather today",
+              "href": "/forecast/"
+            },
+            {
+              "label": "Sea forecast for fishers",
+              "href": "/services/coastal-and-maritime-forecast/"
+            },
+            {
+              "label": "When will the rains start?",
+              "href": "/services/seasonal-forecast/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Weather warnings",
+              "body": "Is there a storm, flood or harmattan warning for your area? See GMet's warnings in force now.",
+              "href": "/warnings/",
+              "art": "complaints"
+            },
+            {
+              "title": "Today's forecast",
+              "body": "GMet's 24-hour forecast for Ghana, morning, afternoon and night, or the forecast for your town.",
+              "href": "/services/24-hour-impact-based-forecast/",
+              "art": "other"
+            },
+            {
+              "title": "Marine and Volta Lake forecasts",
+              "body": "Wind, waves and weather for fishers and boat users on the sea and the Volta Lake.",
+              "href": "/services/?category=marine",
+              "art": "other"
+            },
+            {
+              "title": "Seasonal rainfall forecast",
+              "body": "When the rains should start and end, and how much rain to expect, for farmers and planners.",
+              "href": "/services/seasonal-forecast/",
+              "art": "data"
+            },
+            {
+              "title": "Request weather and climate data",
+              "body": "Past rainfall, temperature, wind and more for research, construction, insurance or business.",
+              "href": "/services/climate-data-request/",
+              "art": "standards"
+            },
+            {
+              "title": "Get warnings by email",
+              "body": "Sign up for GMet alerts, forecasts and bulletins.",
+              "href": "/services/alert-subscriptions/",
+              "art": "regulation"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": "Forecasts and warnings",
+            "tabLabel": "Forecasts",
+            "description": "Warnings, today's forecast, marine and lake forecasts, seasonal outlooks, bulletins and data",
+            "children": [
+              {
+                "label": "Weather warnings",
+                "href": "/services/weather-warnings/"
+              },
+              {
+                "label": "Today's forecast (24-hour)",
+                "href": "/services/24-hour-impact-based-forecast/"
+              },
+              {
+                "label": "Forecast for your town",
+                "href": "/services/location-forecasts/"
+              },
+              {
+                "label": "Weekend and weekly forecasts",
+                "href": "/services/?category=forecasts"
+              },
+              {
+                "label": "Marine and Volta Lake forecasts",
+                "href": "/services/?category=marine"
+              },
+              {
+                "label": "Seasonal rainfall forecast",
+                "href": "/services/seasonal-forecast/"
+              },
+              {
+                "label": "Climate outlooks and bulletins",
+                "href": "/services/?category=climate"
+              },
+              {
+                "label": "Floods and drought",
+                "href": "/services/?category=water"
+              },
+              {
+                "label": "Get warnings by email",
+                "href": "/services/alert-subscriptions/"
+              },
+              {
+                "label": "Request weather and climate data",
+                "href": "/services/climate-data-request/"
+              },
+              {
+                "label": "GMet's online tools",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/industry-data/",
+            "label": "Publications",
+            "description": "Annual reports, seasonal forecast bulletins, research papers and frameworks",
+            "children": [
+              {
+                "label": "All publications",
+                "href": "/industry-data/reports/"
+              },
+              {
+                "label": "Ghana Climate Atlas",
+                "href": "/services/ghana-climate-atlas/"
+              },
+              {
+                "label": "Newsletters",
+                "href": "/news-notices/?kind=publication"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "label": "Laws",
+            "description": "The GMet Act, the fees regulations and the draft Authority Bill",
+            "children": [
+              {
+                "label": "All laws",
+                "href": "/regulation/"
+              },
+              {
+                "label": "Act 682 (the GMet Act)",
+                "href": "/regulation/instruments/act-682/"
+              },
+              {
+                "label": "L.I. 2512 (fees and charges)",
+                "href": "/regulation/instruments/li-2512/"
+              },
+              {
+                "label": "Draft Authority Bill, 2025",
+                "href": "/regulation/instruments/ghana-meteorological-authority-bill-2025/"
+              },
+              {
+                "label": "Consultations",
+                "href": "/regulation/consultations/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "description": "News, advisories, events and newsletters",
+            "children": [
+              {
+                "label": "All news and notices",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "Notices and advisories",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              },
+              {
+                "label": "Newsletters",
+                "href": "/news-notices/?kind=publication"
+              },
+              {
+                "label": "Media enquiries",
+                "href": "/about/media-enquiries/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact GMet",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About GMet",
+                "href": "/about/"
+              },
+              {
+                "label": "Board and management",
+                "href": "/about/board-and-management/"
+              },
+              {
+                "label": "Projects",
+                "href": "/about/projects/"
+              },
+              {
+                "label": "Partners",
+                "href": "/about/partners/"
+              },
+              {
+                "label": "Questions",
+                "href": "/about/questions/"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              },
+              {
+                "label": "Tenders",
+                "href": "/about/tenders/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "weather today, sea forecast, seasonal forecast"
+        }
+      }
+    },
+    {
+      "slug": "gpcl",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana Post Company Limited",
+          "shortName": "Ghana Post",
+          "themeColor": "#0c075b",
+          "purposeStatement": "Ghana's designated postal operator, providing mail, courier and financial services through post offices across the country."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": false,
+          "consultations": false,
+          "consumer-help": true,
+          "complaints": false,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "Post offices, sending and tracking letters and parcels, P.O. boxes, passport delivery and digital addresses",
+          "topics": [
+            {
+              "label": "Send a parcel or letter, in Ghana or abroad"
+            },
+            {
+              "label": "Track a parcel or letter sent by post"
+            },
+            {
+              "label": "Find a post office"
+            },
+            {
+              "label": "Get a P.O. box or home mailbox"
+            },
+            {
+              "label": "Get your digital address (GhanaPostGPS)"
+            },
+            {
+              "label": "Passport delivered to your door"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Send, track and receive with Ghana Post",
+          "lede": "Track an item, find a post office, get a P.O. box and send letters and parcels in Ghana and abroad.",
+          "tasksHeading": "Most-used services",
+          "shortcuts": [
+            {
+              "label": "Track my parcel",
+              "href": "/services/track-a-parcel/"
+            },
+            {
+              "label": "Pay with *885#",
+              "href": "/services/pay-with-885/"
+            },
+            {
+              "label": "Passport delivery",
+              "href": "/services/passport-delivery/"
+            },
+            {
+              "label": "Is this message a scam?",
+              "href": "/consumer-help/guides/scam-alert-payment-links/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Track a letter or parcel",
+              "body": "Use the tracking number on your receipt or SMS. The result opens on Ghana Post's tracking system.",
+              "href": "/services/track-a-parcel/",
+              "art": "data"
+            },
+            {
+              "title": "Send a parcel abroad with EMS",
+              "body": "Express mail for documents and goods, in Ghana and from Ghana to other countries.",
+              "href": "/services/ems/",
+              "art": "standards"
+            },
+            {
+              "title": "Get a P.O. box",
+              "body": "Boxes are available at all post offices. Bring a valid ID card, and pay with *885#.",
+              "href": "/services/post-office-box/",
+              "art": "other"
+            },
+            {
+              "title": "Find a post office",
+              "body": "Search the GhanaPostGPS map, and see the opening times Ghana Post publishes.",
+              "href": "/about/find-a-post-office/",
+              "art": "other"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": "Send and receive",
+            "description": "Track an item, send letters and parcels, P.O. boxes, payments and business shipping",
+            "children": [
+              {
+                "label": "Track a letter or parcel",
+                "href": "/services/track-a-parcel/"
+              },
+              {
+                "label": "EMS (express mail)",
+                "href": "/services/ems/"
+              },
+              {
+                "label": "Speedlink same-day delivery",
+                "href": "/services/speedlink/"
+              },
+              {
+                "label": "Letters and parcels",
+                "href": "/services/postal-service/"
+              },
+              {
+                "label": "Passport delivery",
+                "href": "/services/passport-delivery/"
+              },
+              {
+                "label": "Get a P.O. box",
+                "href": "/services/post-office-box/"
+              },
+              {
+                "label": "Pay with *885#",
+                "href": "/services/pay-with-885/"
+              },
+              {
+                "label": "Money and payments",
+                "href": "/services/?category=money"
+              },
+              {
+                "label": "Business services",
+                "href": "/services/?category=business"
+              },
+              {
+                "label": "Prices and delivery times",
+                "href": "/about/prices-and-delivery-times/"
+              },
+              {
+                "label": "All services",
+                "href": "/services/"
+              }
+            ]
+          },
+          {
+            "section": "/consumer-help/",
+            "label": "Help",
+            "description": "Questions, scam alerts, complaints and how to reach customer service",
+            "children": [
+              {
+                "label": "Help and questions",
+                "href": "/consumer-help/"
+              },
+              {
+                "label": "Frequently asked questions",
+                "href": "/consumer-help/faqs/"
+              },
+              {
+                "label": "Scam alert: payment links",
+                "href": "/consumer-help/guides/scam-alert-payment-links/"
+              },
+              {
+                "label": "Fake Ghana Post websites",
+                "href": "/consumer-help/guides/fraud-alert-fake-websites/"
+              },
+              {
+                "label": "Customer service and complaints",
+                "href": "/about/customer-service/"
+              },
+              {
+                "label": "Find a post office",
+                "href": "/about/find-a-post-office/"
+              },
+              {
+                "label": "Digital addresses (GhanaPostGPS)",
+                "href": "/about/ghanapostgps-digital-addresses/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News",
+            "description": "Ghana Post news and announcements",
+            "children": [
+              {
+                "label": "All news",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "SkoolBox launch",
+                "href": "/news-notices/ghana-post-launches-skoolbox-service-to-ease-burden-on-students-and-parents/"
+              },
+              {
+                "label": "100,000th passport delivered",
+                "href": "/news-notices/ghana-post-delivers-on-its-promise-as-100-000th-passport-reaches-applicant/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "About Ghana Post",
+                "href": "/about/"
+              },
+              {
+                "label": "Board and management",
+                "href": "/about/board-and-management/"
+              },
+              {
+                "label": "Customer service and complaints",
+                "href": "/about/customer-service/"
+              },
+              {
+                "label": "Find a post office",
+                "href": "/about/find-a-post-office/"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              },
+              {
+                "label": "Terms and conditions",
+                "href": "/about/terms-and-conditions/"
+              },
+              {
+                "label": "Contact",
+                "href": "/about/contact/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "track parcel, P.O. box, EMS, *885#"
+        }
+      }
+    },
+    {
+      "slug": "gi-kace",
+      "profile": {
+        "identity": {
+          "legalName": "Ghana-India Kofi Annan Centre of Excellence in ICT",
+          "shortName": "GI-KACE",
+          "themeColor": "#0808af",
+          "purposeStatement": "We train people in ICT, carry out ICT research and innovation, and provide ICT consultancy in Ghana."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": false,
+          "consultations": false,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "ICT training courses, free digital skills programmes, software testing and ICT consultancy",
+          "topics": [
+            {
+              "label": "Find an ICT training course"
+            },
+            {
+              "label": "Get a professional IT certification (CISA, CCNA, cybersecurity)"
+            },
+            {
+              "label": "Join a free digital skills programme (One Million Coders, DARE)"
+            },
+            {
+              "label": "Get software tested or ICT consultancy for an organisation"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "Learn ICT skills, or get ICT help for your organisation",
+          "lede": "Courses and certifications, free digital skills programmes, software testing and consultancy from Ghana's first Advanced Information Technology Institute.",
+          "tasksHeading": "What people come to GI-KACE for",
+          "shortcuts": [
+            {
+              "label": "Learn to code",
+              "href": "/services/certificate-in-software-development/"
+            },
+            {
+              "label": "One Million Coders",
+              "href": "/services/one-million-coders/"
+            },
+            {
+              "label": "Course dates and fees",
+              "href": "/about/course-dates-and-fees/"
+            },
+            {
+              "label": "Get software tested",
+              "href": "/services/software-quality-assurance/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Find an ICT course",
+              "body": "Certificate and diploma courses in software development, networking, data and more.",
+              "href": "/services/?category=regular-courses",
+              "art": "standards"
+            },
+            {
+              "title": "Get a professional certification",
+              "body": "CISA, CCNA, cybersecurity, data analytics and Oracle courses for working professionals.",
+              "href": "/services/?category=professional-courses",
+              "art": "regulation"
+            },
+            {
+              "title": "Free digital skills programmes",
+              "body": "One Million Coders, DARE for young women in rural Ghana, and past programmes.",
+              "href": "/services/?category=programmes",
+              "art": "data"
+            },
+            {
+              "title": "Software testing and consultancy",
+              "body": "Software quality assurance, IT audit, ICT consultancy and venue hire for organisations.",
+              "href": "/services/?category=consultancy",
+              "art": "other"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "label": "Courses and services",
+            "tabLabel": "Courses",
+            "description": "ICT courses, free digital skills programmes, software testing and consultancy",
+            "children": [
+              {
+                "label": "Regular courses (certificate and diploma)",
+                "href": "/services/?category=regular-courses"
+              },
+              {
+                "label": "Professional certification courses",
+                "href": "/services/?category=professional-courses"
+              },
+              {
+                "label": "Sandwich courses",
+                "href": "/services/?category=sandwich-courses"
+              },
+              {
+                "label": "Course dates and fees",
+                "href": "/about/course-dates-and-fees/"
+              },
+              {
+                "label": "How to enrol",
+                "href": "/about/how-to-enrol/"
+              },
+              {
+                "label": "Digital skills programmes",
+                "href": "/services/?category=programmes"
+              },
+              {
+                "label": "One Million Coders",
+                "href": "/services/one-million-coders/"
+              },
+              {
+                "label": "Software quality assurance",
+                "href": "/services/software-quality-assurance/"
+              },
+              {
+                "label": "Consultancy (GI-KACE Consult)",
+                "href": "/services/gi-kace-consult/"
+              },
+              {
+                "label": "Venue and facility hire",
+                "href": "/services/venue-hire/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News and events",
+            "tabLabel": "News",
+            "description": "News, events and conferences such as FEMITECH",
+            "children": [
+              {
+                "label": "All news and events",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              },
+              {
+                "label": "FEMITECH 2026",
+                "href": "/news-notices/femitech-2026/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "label": "About GI-KACE",
+            "tabLabel": "About",
+            "children": [
+              {
+                "label": "About GI-KACE",
+                "href": "/about/"
+              },
+              {
+                "label": "Board and management",
+                "href": "/about/board-and-management/"
+              },
+              {
+                "label": "Director-General's welcome",
+                "href": "/about/director-general/"
+              },
+              {
+                "label": "Research and innovation",
+                "href": "/about/research-and-innovation/"
+              },
+              {
+                "label": "Innovation projects",
+                "href": "/about/innovation-projects/"
+              },
+              {
+                "label": "Sunyani centre",
+                "href": "/about/sunyani-centre/"
+              },
+              {
+                "label": "Bolgatanga centre",
+                "href": "/about/bolgatanga-centre/"
+              },
+              {
+                "label": "Notable achievements",
+                "href": "/about/achievements/"
+              },
+              {
+                "label": "Draft GI-KACE Bill",
+                "href": "/about/legislation/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              },
+              {
+                "label": "Questions",
+                "href": "/about/questions/"
+              },
+              {
+                "label": "Contact GI-KACE",
+                "href": "/about/contact/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "coding course, CISA, One Million Coders"
+        }
+      }
+    },
+    {
+      "slug": "mocdti",
+      "profile": {
+        "identity": {
+          "legalName": "Ministry of Communications, Digital Technology and Innovations",
+          "shortName": "MoCDTI",
+          "themeColor": "#005f8f",
+          "purposeStatement": "We set policy for communications, digital technology and innovation in Ghana, and oversee the agencies that deliver it."
+        },
+        "modules": {
+          "services": false,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": false,
+          "complaints": false,
+          "industry-data": false,
+          "news": true,
+          "hub": true,
+          "grievances": true
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "What do you need today?",
+          "lede": "Tell us in your own words. We search the Ministry and all its agencies at once and take you to the one that can help."
+        },
+        "nav": [
+          {
+            "section": "/regulation/",
+            "label": "Policies & laws",
+            "tabLabel": "Policies",
+            "description": "National policies, strategies, bills and laws",
+            "children": [
+              {
+                "label": "Policies and strategies",
+                "href": "/regulation/?type=policy"
+              },
+              {
+                "label": "Laws for the sector",
+                "href": "/regulation/laws/"
+              },
+              {
+                "label": "Bills",
+                "href": "/regulation/?type=bill"
+              },
+              {
+                "label": "Public consultations",
+                "href": "/regulation/consultations/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News & speeches",
+            "tabLabel": "News",
+            "description": "News, press releases, speeches, tenders and newsletters",
+            "children": [
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Press releases and tenders",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "Speeches and newsletters",
+                "href": "/news-notices/?kind=publication"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "label": "About the Ministry",
+            "tabLabel": "About",
+            "description": "Leadership, directorates, mandate, programmes, right to information and contact",
+            "children": [
+              {
+                "label": "Leadership",
+                "href": "/about/#leadership"
+              },
+              {
+                "label": "The Minister",
+                "href": "/about/the-minister/"
+              },
+              {
+                "label": "Directorates and units",
+                "href": "/about/directorates/"
+              },
+              {
+                "label": "Mandate, vision and mission",
+                "href": "/about/mandate/"
+              },
+              {
+                "label": "Programmes and projects",
+                "href": "/about/#what-we-do"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Contact the Ministry",
+                "href": "/about/contact/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "report a scam, weather, SIM card, .gh domain"
+        },
+        "hub": {
+          "featured": [
+            "nca",
+            "csa",
+            "gmet",
+            "gpcl",
+            "dpc",
+            "gdnr",
+            "pcsrc",
+            "gi-kace"
+          ]
+        }
+      }
+    },
+    {
+      "slug": "nca",
+      "profile": {
+        "identity": {
+          "legalName": "National Communications Authority",
+          "shortName": "NCA",
+          "themeColor": "#061f45",
+          "purposeStatement": "We license and regulate electronic communications in Ghana."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": true,
+          "regulation": true,
+          "consultations": true,
+          "consumer-help": true,
+          "complaints": true,
+          "industry-data": true,
+          "news": true
+        },
+        "remit": {
+          "summary": "Mobile networks, internet, SIM cards, broadcasting and telecom licences",
+          "topics": [
+            {
+              "label": "Complain about your mobile network or internet"
+            },
+            {
+              "label": "Check the SIM cards on your Ghana Card"
+            },
+            {
+              "label": "Keep your number when you change network"
+            },
+            {
+              "label": "Check if a phone or device is approved"
+            },
+            {
+              "label": "Apply for a telecom, radio or TV licence"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "shortcuts": [
+            {
+              "label": "Check a phone or device",
+              "href": "/services/type-approval/equipment/"
+            },
+            {
+              "label": "Check SIMs on my Ghana Card",
+              "href": "/consumer-help/guides/check-sims-linked-to-ghana-card/"
+            },
+            {
+              "label": "Keep my mobile number",
+              "href": "/consumer-help/guides/mobile-number-portability/"
+            },
+            {
+              "label": "Apply for an internet licence",
+              "href": "/services/internet-public-data-service-provision/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Apply for a licence or authorisation",
+              "body": "Telecoms, broadcasting, spectrum, numbering and infrastructure.",
+              "href": "/services/",
+              "art": "telecommunications"
+            },
+            {
+              "title": "Get equipment type approved",
+              "body": "Approval for phones, radios and other devices sold or used in Ghana.",
+              "href": "/services/type-approval/",
+              "art": "standards"
+            },
+            {
+              "title": "Make or escalate a complaint",
+              "body": "If your provider has not fixed a problem with your service.",
+              "href": "/consumer-help/complaints/",
+              "art": "complaints"
+            },
+            {
+              "title": "Find a law or regulation",
+              "body": "Acts, regulations, guidelines and decisions, with their status.",
+              "href": "/regulation/",
+              "art": "regulation"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "description": "Licences, applications, equipment approval and fees",
+            "children": [
+              {
+                "label": "Find a service",
+                "href": "/services/"
+              },
+              {
+                "label": "Licences and authorisations",
+                "href": "/services/?service_type=licence"
+              },
+              {
+                "label": "Get equipment approved",
+                "href": "/services/type-approval/"
+              },
+              {
+                "label": "Radio spectrum services",
+                "href": "/services/?category=spectrum"
+              },
+              {
+                "label": "Phone numbers and numbering",
+                "href": "/services/?category=numbering"
+              },
+              {
+                "label": "Fees and charges",
+                "href": "/services/fees/"
+              },
+              {
+                "label": "Application portals",
+                "href": "/services/portals/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "description": "Find communications laws, official documents and consultations",
+            "children": [
+              {
+                "label": "Laws & regulations",
+                "href": "/regulation/?type=act"
+              },
+              {
+                "label": "Guidelines & codes",
+                "href": "/regulation/?type=guideline"
+              },
+              {
+                "label": "Regulatory decisions",
+                "href": "/regulation/?type=decision"
+              },
+              {
+                "label": "Public consultations",
+                "href": "/regulation/consultations/"
+              },
+              {
+                "label": "Dispute resolution",
+                "href": "/about/dispute-resolution-committee/"
+              },
+              {
+                "label": "Frequency allocation table",
+                "href": "/about/national-frequency-allocation-table/"
+              },
+              {
+                "label": "Schedule of penalties",
+                "href": "/about/schedule-of-penalties/"
+              }
+            ]
+          },
+          {
+            "section": "/industry-data/",
+            "description": "Statistics, network quality, research and industry reports",
+            "children": [
+              {
+                "label": "Statistical bulletins",
+                "href": "/industry-data/reports/?type=bulletin"
+              },
+              {
+                "label": "Quality of service",
+                "href": "/industry-data/reports/?type=qos"
+              },
+              {
+                "label": "Industry reports",
+                "href": "/industry-data/reports/?type=annual"
+              },
+              {
+                "label": "Research",
+                "href": "/industry-data/reports/?type=research"
+              },
+              {
+                "label": "Datasets",
+                "href": "/industry-data/#datasets"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact the NCA",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "Regional offices",
+                "href": "/about/contact/#offices"
+              },
+              {
+                "label": "Mandate & values",
+                "href": "/about/"
+              },
+              {
+                "label": "Organisational structure",
+                "href": "/about/organisational-structure/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "SIM registration, Act 775"
+        }
+      }
+    },
+    {
+      "slug": "nita",
+      "profile": {
+        "identity": {
+          "legalName": "National Information Technology Agency",
+          "shortName": "NITA",
+          "themeColor": "#00342b",
+          "purposeStatement": "We regulate information technology in Ghana, set the ICT standards government systems must follow, certify IT professionals and service providers, and run shared digital infrastructure for government."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": false,
+          "consumer-help": true,
+          "complaints": false,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "IT certification, government ICT standards, e-government infrastructure and GovCERT",
+          "topics": [
+            {
+              "label": "Register or certify as an IT professional"
+            },
+            {
+              "label": "Certify an IT company to supply government"
+            },
+            {
+              "label": "Verify a NITA certificate"
+            },
+            {
+              "label": "Government ICT standards and e-government"
+            },
+            {
+              "label": "Government data centre, cloud and Smartworkplace"
+            },
+            {
+              "label": "Report a cyber incident on a government system (GovCERT)"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "heading": "What do you need from NITA?",
+          "lede": "Certification for IT professionals and companies, ICT standards for government, and GovCERT.",
+          "tasksHeading": "Most-used services",
+          "shortcuts": [
+            {
+              "label": "Get NITA certified",
+              "href": "/services/it-professional-certification/"
+            },
+            {
+              "label": "Verify a certificate",
+              "href": "/services/verify-a-nita-certificate/"
+            },
+            {
+              "label": "Report a cyber incident",
+              "href": "/consumer-help/guides/report-a-cyber-incident-to-govcert/"
+            },
+            {
+              "label": "Government ICT standards",
+              "href": "/regulation/?type=guideline"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Get certified as an IT professional",
+              "body": "Technician, graduate, practitioner or professional: what to upload and where to apply.",
+              "href": "/services/it-professional-certification/",
+              "art": "standards"
+            },
+            {
+              "title": "Certify an IT company",
+              "body": "Register an IT service provider that supplies government: documents and the portal.",
+              "href": "/services/it-service-provider-certification/",
+              "art": "regulation"
+            },
+            {
+              "title": "Verify a NITA certificate",
+              "body": "Check a vendor or IT professional by certificate number, name or QR code.",
+              "href": "/services/verify-a-nita-certificate/",
+              "art": "data"
+            },
+            {
+              "title": "Find a government ICT standard",
+              "body": "Standards for networks, data centres, records, systems and backup, with their status.",
+              "href": "/regulation/?type=guideline",
+              "art": "standards"
+            },
+            {
+              "title": "Report a cyber incident to GovCERT",
+              "body": "For Ministries, Departments and Agencies: what to do first and how to reach GovCERT.",
+              "href": "/consumer-help/guides/report-a-cyber-incident-to-govcert/",
+              "art": "complaints"
+            },
+            {
+              "title": "Government data centre and cloud",
+              "body": "Hosting, G-Cloud, digital certificates and Smartworkplace for government institutions.",
+              "href": "/services/?category=government-infrastructure",
+              "art": "other"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "description": "Certification for IT professionals and companies, and NITA's infrastructure for government",
+            "children": [
+              {
+                "label": "All services",
+                "href": "/services/"
+              },
+              {
+                "label": "IT professional certification",
+                "href": "/services/it-professional-certification/"
+              },
+              {
+                "label": "IT service provider certification",
+                "href": "/services/it-service-provider-certification/"
+              },
+              {
+                "label": "Verify a NITA certificate",
+                "href": "/services/verify-a-nita-certificate/"
+              },
+              {
+                "label": "Data centre registration",
+                "href": "/services/data-centre-registration/"
+              },
+              {
+                "label": "Government infrastructure",
+                "href": "/services/?category=government-infrastructure"
+              },
+              {
+                "label": "Digital certificates (PKI)",
+                "href": "/services/pki-digital-certificates/"
+              },
+              {
+                "label": "Portals: Ghana.GOV, GhanEPS, Smartworkplace",
+                "href": "/services/portals/"
+              },
+              {
+                "label": "Fees",
+                "href": "/services/fees/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "label": "Standards & law",
+            "tabLabel": "Standards",
+            "description": "Government ICT standards, frameworks and the Acts NITA works under",
+            "children": [
+              {
+                "label": "All standards and laws",
+                "href": "/regulation/"
+              },
+              {
+                "label": "ICT standards for government",
+                "href": "/regulation/?type=guideline"
+              },
+              {
+                "label": "Frameworks: e-GIF and GGEA",
+                "href": "/regulation/?type=code"
+              },
+              {
+                "label": "Acts 771 and 772",
+                "href": "/regulation/?type=act"
+              },
+              {
+                "label": "NITA policy statements",
+                "href": "/regulation/?type=policy"
+              },
+              {
+                "label": "About NITA's standards",
+                "href": "/about/ict-standards-and-frameworks/"
+              }
+            ]
+          },
+          {
+            "section": "/consumer-help/",
+            "label": "Help & GovCERT",
+            "tabLabel": "Help",
+            "description": "Report a cyber incident on a government system, pay for certification, common questions",
+            "children": [
+              {
+                "label": "Report a cyber incident (GovCERT)",
+                "href": "/consumer-help/guides/report-a-cyber-incident-to-govcert/"
+              },
+              {
+                "label": "About GovCERT",
+                "href": "/about/govcert/"
+              },
+              {
+                "label": "Paying for certification",
+                "href": "/consumer-help/guides/paying-for-nita-certification/"
+              },
+              {
+                "label": "Frequently asked questions",
+                "href": "/consumer-help/faqs/"
+              },
+              {
+                "label": "All help guides",
+                "href": "/consumer-help/guides/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "label": "News & events",
+            "tabLabel": "News",
+            "description": "NITA news and events",
+            "children": [
+              {
+                "label": "All news and events",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Events",
+                "href": "/news-notices/?kind=event"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact NITA",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About NITA",
+                "href": "/about/"
+              },
+              {
+                "label": "Mandate and functions",
+                "href": "/about/mandate/"
+              },
+              {
+                "label": "Board and management",
+                "href": "/about/board-and-management/"
+              },
+              {
+                "label": "Departments and units",
+                "href": "/about/structure/"
+              },
+              {
+                "label": "Digital Public Infrastructure",
+                "href": "/about/digital-public-infrastructure/"
+              },
+              {
+                "label": "Ghana Electronic Document Wallet",
+                "href": "/about/ghana-electronic-document-wallet/"
+              },
+              {
+                "label": "Partner with NITA",
+                "href": "/about/partner-with-nita/"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Our history",
+                "href": "/about/history/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "IT certification, verify certificate, e-government"
+        }
+      }
+    },
+    {
+      "slug": "pcsrc",
+      "profile": {
+        "identity": {
+          "legalName": "Postal and Courier Services Regulatory Commission",
+          "shortName": "PCSRC",
+          "themeColor": "#ca0a15",
+          "purposeStatement": "We license and regulate postal and courier services in Ghana."
+        },
+        "modules": {
+          "services": true,
+          "type-approval": false,
+          "regulation": true,
+          "consultations": false,
+          "consumer-help": true,
+          "complaints": false,
+          "industry-data": false,
+          "news": true
+        },
+        "remit": {
+          "summary": "Courier and postal licences; complaints about couriers and lost parcels",
+          "topics": [
+            {
+              "label": "Complain about a courier or a lost parcel"
+            },
+            {
+              "label": "Check if a courier company is licensed"
+            },
+            {
+              "label": "Get a postal or courier licence"
+            },
+            {
+              "label": "Apply for a single bike (dispatch rider) licence"
+            }
+          ]
+        }
+      },
+      "site": {
+        "home": {
+          "shortcuts": [
+            {
+              "label": "How to get a courier licence",
+              "href": "/services/postal-courier-licence/"
+            },
+            {
+              "label": "Is this courier licensed?",
+              "href": "/news-notices/operators-in-good-standing-2023/"
+            },
+            {
+              "label": "Complain about a lost parcel",
+              "href": "/consumer-help/guides/complaints-procedure/"
+            },
+            {
+              "label": "Download a form",
+              "href": "/about/request-forms/"
+            }
+          ],
+          "tasks": [
+            {
+              "title": "Get a postal or courier licence",
+              "body": "What to send, the documents you need and the application form.",
+              "href": "/services/postal-courier-licence/",
+              "art": "standards"
+            },
+            {
+              "title": "Apply for a single bike licence",
+              "body": "For delivery riders using one motorbike.",
+              "href": "/services/single-bike-licence/",
+              "art": "other"
+            },
+            {
+              "title": "Check who is licensed",
+              "body": "Lists of postal and courier operators in good standing.",
+              "href": "/news-notices/operators-in-good-standing-2023/",
+              "art": "data"
+            },
+            {
+              "title": "Complain about an operator",
+              "body": "How to complain in writing to the Commission.",
+              "href": "/consumer-help/guides/complaints-procedure/",
+              "art": "complaints"
+            }
+          ]
+        },
+        "nav": [
+          {
+            "section": "/services/",
+            "description": "Licences for postal and courier businesses and delivery riders",
+            "children": [
+              {
+                "label": "All licences",
+                "href": "/services/"
+              },
+              {
+                "label": "Postal and courier licence",
+                "href": "/services/postal-courier-licence/"
+              },
+              {
+                "label": "Single bike licence",
+                "href": "/services/single-bike-licence/"
+              },
+              {
+                "label": "International licence classes",
+                "href": "/services/?category=international"
+              },
+              {
+                "label": "Domestic licence classes",
+                "href": "/services/?category=domestic"
+              },
+              {
+                "label": "Application forms",
+                "href": "/about/request-forms/"
+              },
+              {
+                "label": "Online application portals",
+                "href": "/services/portals/"
+              },
+              {
+                "label": "Licensing questions",
+                "href": "/consumer-help/faqs/"
+              }
+            ]
+          },
+          {
+            "section": "/regulation/",
+            "description": "The law and regulations for the postal and courier sector",
+            "children": [
+              {
+                "label": "All laws and regulations",
+                "href": "/regulation/"
+              },
+              {
+                "label": "Act 649",
+                "href": "/regulation/instruments/act-649/"
+              },
+              {
+                "label": "L.I. 2205",
+                "href": "/regulation/instruments/li-2205/"
+              },
+              {
+                "label": "Regulatory framework",
+                "href": "/about/regulatory-framework/"
+              }
+            ]
+          },
+          {
+            "section": "/consumer-help/",
+            "description": "Your rights, and what to do if a postal or courier operator lets you down",
+            "children": [
+              {
+                "label": "Consumer help",
+                "href": "/consumer-help/"
+              },
+              {
+                "label": "Your rights and obligations",
+                "href": "/consumer-help/guides/consumer-rights-and-obligations/"
+              },
+              {
+                "label": "How to complain",
+                "href": "/consumer-help/guides/complaints-procedure/"
+              },
+              {
+                "label": "Frequently asked questions",
+                "href": "/consumer-help/faqs/"
+              }
+            ]
+          },
+          {
+            "section": "/news-notices/",
+            "description": "News, public notices and lists of operators in good standing",
+            "children": [
+              {
+                "label": "All news and notices",
+                "href": "/news-notices/"
+              },
+              {
+                "label": "Public notices",
+                "href": "/news-notices/?kind=notice"
+              },
+              {
+                "label": "News",
+                "href": "/news-notices/?kind=news"
+              },
+              {
+                "label": "Operators in good standing 2023",
+                "href": "/news-notices/operators-in-good-standing-2023/"
+              },
+              {
+                "label": "Past vacancies",
+                "href": "/about/careers/"
+              }
+            ]
+          },
+          {
+            "section": "/about/",
+            "children": [
+              {
+                "label": "Contact the PCSRC",
+                "href": "/about/contact/"
+              },
+              {
+                "label": "About us",
+                "href": "/about/"
+              },
+              {
+                "label": "Vision, mission and objectives",
+                "href": "/about/vision-mission-objectives/"
+              },
+              {
+                "label": "Board and management",
+                "href": "/about/board-and-management/"
+              },
+              {
+                "label": "AfCFTA Hub",
+                "href": "/about/afcfta-hub/"
+              },
+              {
+                "label": "Right to information",
+                "href": "/about/right-to-information/"
+              },
+              {
+                "label": "Forms",
+                "href": "/about/request-forms/"
+              },
+              {
+                "label": "Careers",
+                "href": "/about/careers/"
+              }
+            ]
+          }
+        ],
+        "search": {
+          "example": "courier licence, lost parcel, Act 649"
+        }
+      }
+    }
+  ]
+}
