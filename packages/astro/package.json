@@ -1,6 +1,6 @@
 {
   "name": "@ggds/astro",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Astro components for the Ghana Government Design System (GGDS): skip link, banner, header, hero, footer and tab bar.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [

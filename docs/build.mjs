@@ -102,7 +102,7 @@ function shell({ title, depth, body, extraCss = [], bare = false, current = '', 
     ...(EXAMPLES ? [{ label: 'Example sites', href: `${base}agencies/index.html` }] : []),
   ];
   const content = bare ? body : `<a class="ggds-skip-link" href="#main">Skip to main content</a>
-<div class="docs-draft"><p class="ggds-container"><strong>Draft, version 0.1.1.</strong> GGDS v1 will be NITA guidance, recommended for government websites. It has not had its accessibility audit yet.</p></div>
+<div class="docs-draft"><p class="ggds-container"><strong>Draft, version ${version}.</strong> GGDS v1 will be NITA guidance, recommended for government websites. It has not had its accessibility audit yet.</p></div>
 ${header({ name: 'Ghana Government Design System', country: 'Design system for Government of Ghana websites', logo: '<span class="ggds-header__monogram" aria-hidden="true">GGDS</span>', nav: docsNav, current: docsNav.find((n) => n.label === current)?.href, navId: 'docs-nav', home: `${base}index.html`, search: `${base}search.html` })}
 <main id="main" tabindex="-1">
 ${lead ?? ''}<div class="ggds-main ggds-container">
@@ -721,7 +721,7 @@ import Header from '@ggds/astro/Header.astro';
   nav={[{ label: 'Services', href: '/services/' }]} /&gt;</code></pre>
 <p>The shared MoCDTI agency platform uses GGDS this way.</p>
 <h2 id="django">Use it with Django</h2>
-<p><code>ggds-django</code> is not on PyPI yet. Install it from a copy of the GGDS repository: <code>pip install -e ggds/packages/django</code>. It works with Wagtail and other Django-based content management systems.</p>
+<p><code>pip install ggds-django</code>, from PyPI. It works with Wagtail and other Django-based content management systems.</p>
 <pre class="docs-code" tabindex="0" aria-label="Django settings"><code>INSTALLED_APPS = [..., "django.contrib.staticfiles", "ggds_django"]
 FORM_RENDERER = "ggds_django.forms.GGDSFormRenderer"</code></pre>
 <p>Then <code>{{ form }}</code> renders every form in GGDS markup, with an error summary and each field's error wired up for screen readers. The page parts are template tags:</p>

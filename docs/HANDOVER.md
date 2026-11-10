@@ -72,12 +72,12 @@ example sites (see "Wording to approve" below). A `.gov.gh` address can replace 
 
 Publishing:
 
-- npm: done. `@ggds/tokens`, `@ggds/themes`, `@ggds/css`, `@ggds/js` and `@ggds/astro` are published at 0.1.1,
-  using an `NPM_TOKEN` secret. Move to trusted publishing on npmjs.com (workflow `release.yml`, environment `npm`)
-  and delete the token: npm is restricting tokens that skip two-factor authentication.
-- PyPI: `ggds-django` is not published yet; the workflow's `pypi` job fails until this is done. Create a PyPI
-  account (an organisation for GGDS) and add a pending trusted publisher: project `ggds-django`, owner
-  `ghana-gds`, repository `ggds`, workflow `release.yml`, environment `pypi`. Then re-run the failed job.
+- npm: done. `@ggds/tokens`, `@ggds/themes`, `@ggds/css`, `@ggds/js` and `@ggds/astro` are published from
+  0.1.1, using an `NPM_TOKEN` secret. Move to trusted publishing on npmjs.com (workflow `release.yml`, environment
+  `npm`) and delete the token: npm is restricting tokens that skip two-factor authentication.
+- PyPI: `ggds-django` publishes from 0.2.0 by trusted publishing (project `ggds-django`, owner `ghana-gds`,
+  repository `ggds`, workflow `release.yml`, environment `pypi`). No token is stored. 0.1.0 and 0.1.1 were never
+  on PyPI.
 - Security: private vulnerability reporting is on for the repository (`SECURITY.md`).
 
 ## Decisions

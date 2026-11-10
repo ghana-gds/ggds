@@ -1,6 +1,6 @@
 # What's new
 
-## Unreleased
+## Version 0.2.0 (draft, 10 November 2026)
 
 ### Components
 
@@ -22,6 +22,7 @@
 
 ### Packages
 
+- `ggds-django` is on PyPI: `pip install ggds-django`. Earlier versions were only installable from the repository.
 - New: **GGDS for WordPress**, a theme with GGDS's own markup: banner, header, homepage hero with search and common tasks, cards, footer, tab bar, pages with breadcrumbs, news, search with pagination, and "page not found". Its front end has no inline scripts or styles, so it runs under a strict Content Security Policy; editors cannot set colours or font sizes that would break contrast; comments are off. Each release has `ggds-wordpress-<version>.zip`. Every template is tested in a real WordPress (Docker): axe at desktop and phone widths, a strict policy, no sideways scrolling, and the same header, banner, footer and tab bar markup as the documentation.
 - `ggds-django`: `GGDSDateField` renders as a date input with `GGDSFormRenderer`. It accepts 3, 03, March or Mar for the month, gives GGDS's error messages, marks only the boxes with the problem, and links the error summary to the first of them. New template tags: `{% ggds_summary_list rows %}` and `{% ggds_panel "Complaint sent" reference=ref %}`.
 - `@ggds/css`: `components/summary-list.css`, `components/panel.css` and `components/date-input.css`.

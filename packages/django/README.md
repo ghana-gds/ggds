@@ -5,7 +5,7 @@ template tags, a form renderer that turns any Django form into GGDS markup with 
 styles, themes and script as static files, and GGDS colours and header for Django admin. Django 5.0 or later. Works
 with Wagtail and other Django-based CMSs.
 
-**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Use it with Django](https://ghana-gds.github.io/ggds/get-started/developers.html#use-it-with-django) · [Versions and support](https://ghana-gds.github.io/ggds/versions.html)
+**Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Use it with Django](https://ghana-gds.github.io/ggds/get-started/developers.html#django) · [Versions and support](https://ghana-gds.github.io/ggds/versions.html)
 
 ## Set up
 

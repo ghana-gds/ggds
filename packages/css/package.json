@@ -1,6 +1,6 @@
 {
   "name": "@ggds/css",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Styles for the Ghana Government Design System (GGDS): accessible components for government websites. Plain CSS, no JavaScript needed, works under a strict CSP.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [

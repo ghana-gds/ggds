@@ -21,4 +21,4 @@ body:
     id: setup
     attributes:
       label: Browser, device and GGDS version
-      placeholder: "For example: Chrome on a Tecno Spark phone, GGDS 0.1.1"
+      placeholder: "For example: Chrome on a Tecno Spark phone, GGDS 0.2.0"
