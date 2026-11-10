@@ -30,6 +30,7 @@ The first version of GGDS, taken from the shared MoCDTI agency platform and made
 
 - New: `@ggds/astro`, the page parts as Astro components (skip link, banner, header, hero, footer, tab bar).
 - New: `ggds-django`, for Django and Django-based CMSs such as Wagtail: the page parts as template tags, a form renderer that turns any Django form into GGDS markup with an error summary and accessible errors, and the GGDS styles, themes and script as static files.
+- New: `ggds_django.admin_theme` gives Django admin GGDS's colours, type, focus style and header, from the tokens and the institution's theme. Admin keeps its own layout.
 - `@ggds/css` can be loaded in parts: `core.css`, then one file per component in `components/`.
 - Four tokens added for the shared platform: spring easing, stagger, and the bottom sheet's radius and shadow.
 - The shared MoCDTI agency platform now uses GGDS for its tokens and every component GGDS has: skip link, banner, header, hero, footer, tab bar, buttons, cards, notices, tags, form fields, radios, error summary, tables, accordions, rich text, breadcrumbs, pagination and tab links.

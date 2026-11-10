@@ -1,4 +1,4 @@
-// Copies the built GGDS styles, themes and script into the Django app's static files, and the shared icons into
+// Copies the built GGDS tokens, styles, themes and script into the Django app's static files, and the shared icons into
 // icons.json, so the Django package serves exactly what the other GGDS packages do. Run after the CSS, theme and
 // JavaScript builds (pnpm run build does).
 import { cpSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
@@ -14,6 +14,8 @@ const packages = join(here, '..');
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
 cpSync(join(packages, 'css', 'dist'), out, { recursive: true });
+// The tokens on their own, with no element styles: for pages GGDS does not lay out, such as Django admin.
+cpSync(join(packages, 'tokens', 'dist', 'tokens.css'), join(out, 'tokens.css'));
 cpSync(join(packages, 'themes', 'dist'), join(out, 'themes'), { recursive: true, filter: (f) => !f.endsWith('.json') });
 cpSync(join(packages, 'js', 'dist'), join(out, 'js'), { recursive: true, filter: (f) => !f.endsWith('.d.ts') });
 writeFileSync(join(app, 'icons.json'), `${JSON.stringify(ICONS, null, 1)}\n`);

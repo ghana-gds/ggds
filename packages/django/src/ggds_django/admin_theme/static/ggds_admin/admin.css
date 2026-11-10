@@ -1,0 +1,137 @@
+/*
+ * GGDS for Django admin. Admin keeps its layout; its colour variables, type, focus style and header come from GGDS
+ * tokens (and the institution's theme, loaded before this file). Uses only --ggds-* tokens: tests/test_admin.py
+ * checks that each exists. Not in a layer, and loaded after admin's own CSS, so it wins without !important.
+ * Light only: the dark palette and theme toggle are left out (admin/base_site.html).
+ */
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+
+  --primary: var(--ggds-color-institution);
+  --secondary: var(--ggds-color-institution-deep);
+  --accent: var(--ggds-color-flag-gold);
+  --primary-fg: var(--ggds-color-text-inverse);
+
+  --body-fg: var(--ggds-color-text);
+  --body-bg: var(--ggds-color-surface);
+  --body-quiet-color: var(--ggds-color-text-muted);
+  --body-medium-color: var(--ggds-color-text);
+  --body-loud-color: var(--ggds-color-text);
+
+  /* Module captions and fieldset headings: the institution's colour, as the header's rule. */
+  --header-color: var(--ggds-color-text-inverse);
+  --header-branding-color: var(--ggds-color-institution);
+  --header-bg: var(--ggds-color-institution);
+  --header-link-color: var(--ggds-color-text-inverse);
+
+  --breadcrumbs-fg: var(--ggds-color-text-muted);
+  --breadcrumbs-link-fg: var(--ggds-color-link);
+  --breadcrumbs-bg: var(--ggds-color-surface-sunken);
+
+  --link-fg: var(--ggds-color-link);
+  --link-hover-color: var(--ggds-color-link-hover);
+  --link-selected-fg: var(--ggds-color-institution);
+
+  --hairline-color: var(--ggds-color-border-subtle);
+  --border-color: var(--ggds-color-border-strong);
+
+  --error-fg: var(--ggds-color-status-danger-strong);
+  --message-debug-bg: var(--ggds-color-status-neutral-subtle);
+  --message-info-bg: var(--ggds-color-status-info-subtle);
+  --message-success-bg: var(--ggds-color-status-success-subtle);
+  --message-warning-bg: var(--ggds-color-status-warning-subtle);
+  --message-error-bg: var(--ggds-color-status-danger-subtle);
+
+  --darkened-bg: var(--ggds-color-surface-sunken);
+  --selected-bg: var(--ggds-color-brand-100);
+  --selected-row: var(--ggds-color-status-warning-subtle);
+
+  /* Buttons as .ggds-button. */
+  --button-fg: var(--ggds-color-text-inverse);
+  --button-bg: var(--ggds-color-brand-700);
+  --button-hover-bg: var(--ggds-color-brand-900);
+  --default-button-bg: var(--ggds-color-brand-700);
+  --default-button-hover-bg: var(--ggds-color-brand-900);
+  --close-button-bg: var(--ggds-color-status-neutral-strong);
+  --close-button-hover-bg: var(--ggds-color-text);
+  --delete-button-bg: var(--ggds-color-status-danger-strong);
+  --delete-button-hover-bg: var(--ggds-color-text);
+
+  --font-family-primary: var(--ggds-font-family-sans);
+  --font-family-monospace: var(--ggds-font-family-mono);
+}
+
+/* The header as GGDS's: white, the flag colours as a thin rule above, a rule in the institution's colour below.
+   A container named as the GGDS header's, so its identity shows the country on wide screens as it does there. */
+#header {
+  container: ggds-header / inline-size;
+  position: relative;
+  padding-block-start: calc(10px + 3px);
+  border-bottom: 3px solid var(--ggds-color-institution);
+  background: var(--ggds-color-surface);
+  color: var(--ggds-color-text);
+}
+
+#header::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg,
+    var(--ggds-color-flag-red) 0 33.33%,
+    var(--ggds-color-flag-gold) 33.33% 66.66%,
+    var(--ggds-color-flag-green) 66.66% 100%);
+}
+
+#header a:link,
+#header a:visited,
+#logout-form button {
+  color: var(--ggds-color-link);
+}
+
+#header a:hover,
+#logout-form button:hover {
+  color: var(--ggds-color-link-hover);
+}
+
+#site-name {
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+#site-name a:link,
+#site-name a:visited {
+  color: var(--ggds-color-text);
+  text-decoration: none;
+}
+
+#user-tools {
+  color: var(--ggds-color-text-muted);
+}
+
+div.breadcrumbs {
+  border-bottom: 1px solid var(--ggds-color-border-subtle);
+}
+
+/* Buttons and inputs with GGDS's corners. */
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  border-radius: var(--ggds-radius-sm);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+/* One focus style everywhere, as in GGDS: a gold ring with a dark band inside it. */
+:focus-visible {
+  outline: 3px solid var(--ggds-color-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--ggds-color-focus-halo);
+}
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}

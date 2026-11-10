@@ -1,0 +1,7 @@
+<div id="site-name"><a class="ggds-header__identity" href="{% url 'admin:index' %}">
+  {% if logo_url %}<img class="ggds-header__logo" src="{{ logo_url }}" alt="{{ logo_alt }}" width="44" height="44">{% else %}<span class="ggds-header__monogram" aria-hidden="true">{{ initials }}</span>{% endif %}
+  <span class="ggds-header__text">
+    <span class="ggds-header__name{% if long %} ggds-header__name--long{% endif %}">{{ name }}</span>
+    {% if country %}<span class="ggds-header__country">{{ country }}</span>{% endif %}
+  </span>
+</a></div>

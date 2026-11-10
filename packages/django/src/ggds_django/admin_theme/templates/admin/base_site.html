@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load ggds_admin %}
+{% comment %}GGDS for Django admin: admin's layout, GGDS tokens, theme and header identity. Light only.{% endcomment %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block dark-mode-vars %}{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+{% ggds_admin_assets %}
+{% endblock %}
+
+{% block branding %}{% ggds_admin_branding %}{% endblock %}
+
+{% block nav-global %}{% endblock %}

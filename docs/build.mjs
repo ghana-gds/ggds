@@ -406,7 +406,7 @@ FORM_RENDERER = "ggds_django.forms.GGDSFormRenderer"</code></pre>
 {% ggds_header name="National Communications Authority" nav=nav %}
 {% ggds_pagination page_obj %}
 {% ggds_footer name="National Communications Authority" sections=sections links=links %}</code></pre>
-<p>See every tag in <code>packages/django/README.md</code>. <code>pnpm run test:django</code> renders an example site with it at <code>/django/index.html</code>.</p>
+<p>For Django admin in GGDS colours with your institution's header, add <code>"ggds_django.admin_theme"</code> above <code>"django.contrib.admin"</code> and set <code>GGDS_ADMIN = {"theme": "nca", "name": "National Communications Authority"}</code>. See every tag in <code>packages/django/README.md</code>. <code>pnpm run test:django</code> renders an example site with it at <code>/django/index.html</code>.</p>
 <h2>Next steps</h2>
 <ul>
 <li>Pick the parts you need from <a href="components/index.html">Components</a>. Each page says when to use it and has the HTML to copy.</li>

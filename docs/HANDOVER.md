@@ -41,7 +41,7 @@ pnpm run serve    # http://localhost:4173, under the strict Content Security Pol
 pnpm test         # build, Django tests, unit tests, then axe and behaviour tests on every page
 ```
 
-At handover, all of it passes: 14 Django tests, 34 unit tests and 488 browser tests.
+At handover, all of it passes: 26 Django tests, 34 unit tests and 488 browser tests.
 
 What the tests guard:
 
@@ -49,6 +49,7 @@ What the tests guard:
 - every colour pair meets its contrast minimum (the build fails otherwise);
 - component CSS uses tokens only, the agreed breakpoints and layers;
 - the Django page parts output the same markup as the documentation (`packages/django/tests/test_parity.py`);
+- the Django admin theme uses only tokens that exist (`packages/django/tests/test_admin.py`);
 - no link in the documentation or the example sites leads to a missing page;
 - the example sites publish no unconfirmed agency data (logos, phone numbers, emails) and are not indexed.
 

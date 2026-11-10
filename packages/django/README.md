@@ -1,8 +1,9 @@
 # ggds-django
 
 The [Ghana Government Design System](https://github.com/ghana-gds/ggds) (GGDS) for Django: the page parts as
-template tags, a form renderer that turns any Django form into GGDS markup with correct error handling, and the GGDS
-styles, themes and script as static files. Django 5.0 or later. Works with Wagtail and other Django-based CMSs.
+template tags, a form renderer that turns any Django form into GGDS markup with correct error handling, the GGDS
+styles, themes and script as static files, and GGDS colours and header for Django admin. Django 5.0 or later. Works
+with Wagtail and other Django-based CMSs.
 
 ## Set up
 
@@ -78,6 +79,25 @@ the widget's `attrs`. One field: `{{ form.phone.as_field_group }}`.
 
 Everything else (buttons, notices, tags, cards, tables) is plain GGDS HTML: copy it from the documentation.
 
+## Django admin
+
+Admin keeps its own layout but takes GGDS's colours, type, focus style and header (the flag-colour rule and the
+institution's logo or initials, name and country), from the GGDS tokens and your institution's theme:
+
+```python
+INSTALLED_APPS = [..., "ggds_django", "ggds_django.admin_theme", "django.contrib.admin", ...]  # above admin
+GGDS_ADMIN = {
+    "theme": "nca",                                 # a file in ggds/themes/, as for {% ggds_assets %}
+    "name": "National Communications Authority",    # default: the admin site's site_header
+    "initials": "NCA",                              # or "logo_url" and "logo_alt"
+    "country": "Republic of Ghana",                 # the default; "" for none
+}
+```
+
+It loads the tokens on their own (`ggds/tokens.css`), never the GGDS base styles, which would restyle admin's
+elements. Admin is shown light only: the dark palette and the theme toggle are left out. `manage.py check` warns if
+the app is below `django.contrib.admin`, a key is misspelt or the theme does not exist.
+
 ## Content added after load
 
 HTMX, fetch or a script that adds a GGDS menu or error summary should call `initAll(element)` from the GGDS script
@@ -85,6 +105,6 @@ HTMX, fetch or a script that adds a GGDS menu or error summary should call `init
 
 ## Develop
 
-From the GGDS repository: `pnpm run build` copies the styles, themes, script and icons into the app;
+From the GGDS repository: `pnpm run build` copies the tokens, styles, themes, script and icons into the app;
 `pnpm run test:django` runs the tests (including a check that the markup matches the GGDS documentation) and renders
 an example site into the documentation build, where the accessibility tests check it.
