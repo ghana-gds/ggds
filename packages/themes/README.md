@@ -47,7 +47,7 @@ Several institutions on one page, such as a list of agencies: load `themes.css` 
 
 | Slug | Institution |
 |---|---|
-| `mocdti` | Ministry of Communications, Digital Technology and Innovations (the default) |
+| `mocdti` | Ministry of Communication, Digital Technology and Innovations (the default) |
 | `csa` | Cyber Security Authority |
 | `dpc` | Data Protection Commission |
 | `gdcl` | Ghana Digital Centres Limited |

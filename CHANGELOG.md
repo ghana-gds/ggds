@@ -1,5 +1,9 @@
 # What's new
 
+## Unreleased
+
+- The ministry's name is "Ministry of Communication, Digital Technology and Innovations", not "Communications": in the MoCDTI theme (`@ggds/themes`), its example site and the themes documentation.
+
 ## Version 0.4.0 (draft, 14 November 2026)
 
 ### Make your website

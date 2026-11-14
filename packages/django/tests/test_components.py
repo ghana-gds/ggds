@@ -20,7 +20,7 @@ class ComponentTests(SimpleTestCase):
         self.assertIn('<span class="ggds-header__search-label">Search</span>', html)
 
     def test_long_names_get_the_long_modifier(self):
-        html = render('{% ggds_header name=n nav=nav %}', n="Ministry of Communications, Digital Technology and Innovations", nav=NAV)
+        html = render('{% ggds_header name=n nav=nav %}', n="Ministry of Communication, Digital Technology and Innovations", nav=NAV)
         self.assertIn("ggds-header__name--long", html)
 
     def test_pagination_keeps_other_query_parameters(self):
