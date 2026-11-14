@@ -60,21 +60,5 @@ export function cssValue(token, all) {
   }
 }
 
-// Contrast: WCAG 2.2 relative luminance.
-const HEX = /^#[0-9a-f]{6}$/i;
-const channels = (hex) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
-
-export function luminance(hex) {
-  if (!HEX.test(hex)) throw new Error(`expected #rrggbb, got "${hex}"`);
-  const [r, g, b] = channels(hex).map((c) => {
-    const s = c / 255;
-    return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
-}
-
-/** WCAG 2.2 contrast ratio between two #rrggbb colours. */
-export function contrast(a, b) {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
-  return (hi + 0.05) / (lo + 0.05);
-}
+// Contrast: WCAG 2.2, in color.mjs (no imports, so it also runs in the browser).
+export { contrast, luminance } from './color.mjs';

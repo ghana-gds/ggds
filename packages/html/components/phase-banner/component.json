@@ -1,0 +1,29 @@
+{
+  "css": "phase-banner",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-phase-banner",
+      "Under the header: the service is new."
+    ],
+    [
+      ".ggds-phase-banner__content",
+      "The tag and the sentence, at the page width."
+    ],
+    [
+      ".ggds-phase-banner__tag",
+      "\"Alpha\" or \"Beta\"."
+    ],
+    [
+      ".ggds-phase-banner__text",
+      "What the phase means, with a link to give feedback."
+    ]
+  ],
+  "states": [],
+  "astro": "<PhaseBanner phase=\"beta\" feedbackHref=\"/feedback/\" />",
+  "django": "{% ggds_phase_banner \"beta\" feedback_href=\"/feedback/\" %}",
+  "tests": [
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

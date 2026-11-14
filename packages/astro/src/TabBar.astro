@@ -1,12 +1,14 @@
 ---
 /** GGDS tab bar: Home, up to three main sections and Search, fixed to the bottom of the screen on phones only. */
 import { icon } from '../icons.mjs';
+import { STRINGS } from './strings.mjs';
 
 interface Tab { label: string; href: string; icon: string; current?: boolean | undefined; attrs?: Record<string, unknown> | undefined }
-interface Props { tabs: Tab[]; class?: string | undefined; [attr: string]: unknown }
-const { tabs, class: extra = '', ...rest } = Astro.props;
+interface Props { tabs: Tab[]; strings?: Record<string, string> | undefined; class?: string | undefined; [attr: string]: unknown }
+const { tabs, strings, class: extra = '', ...rest } = Astro.props;
+const s = { ...STRINGS, ...strings };
 ---
-<nav class:list={['ggds-tab-bar', extra]} aria-label="Quick links" {...rest}>
+<nav class:list={['ggds-tab-bar', extra]} aria-label={s['tabBar.label']} {...rest}>
   <ul class="ggds-tab-bar__list">
     {tabs.map((t) => <li><a class="ggds-tab-bar__link" href={t.href} aria-current={t.current ? 'page' : undefined} {...(t.attrs ?? {})}><Fragment set:html={icon(t.icon, 'ggds-tab-bar__icon')} /><span>{t.label}</span></a></li>)}
   </ul>

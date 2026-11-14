@@ -1,0 +1,29 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-side-nav",
+      "The pages of one section, beside its content."
+    ],
+    [
+      ".ggds-side-nav__list",
+      "The list of pages."
+    ],
+    [
+      ".ggds-side-nav__list--sub",
+      "The pages under the current one, indented."
+    ],
+    [
+      ".ggds-side-nav__link",
+      "A page. The current page has aria-current=\"page\" and a line beside it."
+    ]
+  ],
+  "states": [],
+  "astro": "<SideNav items={items} current={Astro.url.pathname} />",
+  "django": "{% ggds_side_nav items %}",
+  "tests": [
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

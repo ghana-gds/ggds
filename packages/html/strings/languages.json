@@ -1,0 +1,11 @@
+{
+  "$comment": "The languages GGDS's own text is prepared for. own: the language's name in that language, shown in the language switcher. checked: false until a speaker has confirmed the name and the translations in <code>.json; until then a site shows English for every text a language file does not have. Codes are ISO 639 (BCP 47), as in <html lang>.",
+  "languages": [
+    { "code": "en", "name": "English", "own": "English", "checked": true },
+    { "code": "tw", "name": "Twi", "own": "Twi", "checked": false },
+    { "code": "ee", "name": "Ewe", "own": "Eʋegbe", "checked": false },
+    { "code": "gaa", "name": "Ga", "own": "Gã", "checked": false },
+    { "code": "ha", "name": "Hausa", "own": "Hausa", "checked": false },
+    { "code": "dag", "name": "Dagbani", "own": "Dagbanli", "checked": false }
+  ]
+}

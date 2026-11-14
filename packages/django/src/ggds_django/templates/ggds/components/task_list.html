@@ -1,0 +1,8 @@
+{% if summary %}<p class="ggds-task-list__summary">{{ summary }}</p>
+{% endif %}<ol class="ggds-task-list">
+  {% for t in tasks %}<li class="ggds-task-list__item{% if t.open %} ggds-task-list__item--link{% endif %}">
+    <div class="ggds-task-list__name">{% if t.open %}<a class="ggds-task-list__link" href="{{ t.href }}" aria-describedby="{{ t.described_by }}">{{ t.label }}</a>{% else %}{{ t.label }}{% endif %}{% if t.hint %}<p class="ggds-task-list__hint" id="{{ t.key }}-hint">{{ t.hint }}</p>{% endif %}</div>
+    {% if t.status == "cannotStart" %}<div class="ggds-task-list__status ggds-task-list__status--cannot-start" id="{{ t.key }}-status">{{ t.words }}</div>{% else %}<div class="ggds-task-list__status" id="{{ t.key }}-status"><strong class="{{ t.tag }}">{{ t.words }}</strong></div>{% endif %}
+  </li>
+  {% endfor %}
+</ol>

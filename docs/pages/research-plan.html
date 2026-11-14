@@ -1,0 +1,64 @@
+<!-- title: Testing with people; lead: How GGDS will be tested by an accessibility auditor and by people in Ghana before it becomes official guidance, and what each round must show. -->
+<div class="ggds-notice ggds-notice--warning">
+<p class="ggds-notice__title"><span class="ggds-visually-hidden">Warning:</span> This is a plan, not a result</p>
+<p>None of this testing has been done yet. It is a draft for NITA to agree, so that the audit and the research can be commissioned. Until they are done, GGDS is tested only automatically: see <a href="conformance.html">Accessibility conformance</a>.</p>
+</div>
+
+<h2 id="why">Why</h2>
+<p>Automated tests find only some accessibility problems, and none of the problems people have understanding a page. GGDS checks every change with axe on phones and computers, at 320 pixels wide, with large text and without JavaScript. That makes problems rarer. It does not show that people can use a GGDS service. Only testing with people shows that.</p>
+
+<h2 id="core-set">What to test first</h2>
+<p>Test the parts every government website uses, not all of GGDS. These are most of what people meet on any service, so problems found here are fixed for every website at once.</p>
+<ul>
+<li><strong>The page frame</strong>: the skip link, government website banner, header with its phone menu, footer and tab bar (the <a href="components/page.html">page template</a>).</li>
+<li><strong>A whole service, start to finish</strong>: a start page, questions one at a time, <a href="components/error-summary.html">errors</a>, check your answers, <a href="patterns/take-a-payment.html">paying with mobile money</a> and the confirmation.</li>
+<li><strong>What is particular to Ghana</strong>: the <a href="patterns/ghana-card-number.html">Ghana Card number</a>, <a href="patterns/phone-numbers.html">phone numbers</a>, <a href="patterns/addresses.html">digital addresses</a>, approving a payment on the phone, and <a href="patterns/sign-in.html">signing in with a code sent by SMS</a>. Other design systems have not tested these, so they carry the most risk.</li>
+<li><strong>Losing the connection</strong> halfway through a form, on a slow or expensive mobile network.</li>
+</ul>
+
+<h2 id="before-the-audit">Before the audit: what the GGDS team checks</h2>
+<p>An auditor's time is paid for. Find and fix what the team can find first, so the audit finds what only an expert can.</p>
+<ul>
+<li>Every part of the core set with a keyboard only, with TalkBack on a low-cost Android phone, and with NVDA on Windows.</li>
+<li>At 200% and 400% zoom, with large text set on the phone, and in Windows high contrast mode.</li>
+<li>Record each check on the component's page (the <code>manual</code> checks in its <code>component.json</code>), so <a href="conformance.html">Accessibility conformance</a> shows it.</li>
+</ul>
+
+<h2 id="audit">The accessibility audit</h2>
+<ul>
+<li><strong>Standard</strong>: WCAG 2.2 level AA, on the core set and the example website (<code>npx @ggds/create</code>), in plain HTML and in one framework.</li>
+<li><strong>With disabled people</strong>: the auditor works with Ghanaian disability organisations, with people who use screen readers, magnification and switch access every day.</li>
+<li><strong>The result</strong>: a report GGDS publishes, each problem as an issue, fixed in a release, and the conformance page updated. GGDS then states what it conforms to (decision D-09 in the <a href="accessibility.html">accessibility statement</a>).</li>
+</ul>
+
+<h2 id="research">Research with people in Ghana</h2>
+<p>In short rounds, often, rather than one large study. Five or six people in a round find most of the problems in one task.</p>
+<ul>
+<li><strong>Who</strong>: people who rarely use the internet; people on low-cost Android phones and pay-as-you-go data; people who read English as a second language; older people; disabled people. Recruit outside Accra too.</li>
+<li><strong>Where</strong>: places people already go for government services, such as a Ghana Card registration office, a district assembly or a digital centre, and in people's homes for those who cannot travel.</li>
+<li><strong>How</strong>: people do a real task on their own phone (for example, apply for a licence and pay with mobile money) while a researcher watches and notes where they stop, go wrong or give up. Pay people for their time, ask their consent in a language they speak, and keep no recordings of their faces or numbers.</li>
+<li><strong>With an agency</strong>: hold a round when an agency is about to launch a service built with GGDS. The agency shares the cost and fixes its own service; GGDS fixes the parts.</li>
+</ul>
+
+<h2 id="measures">What each round must show</h2>
+<p>Agree these targets with NITA before the first round. They are proposals.</p>
+<div class="ggds-table-wrap" role="region" aria-labelledby="measures-caption" tabindex="0"><table class="ggds-table">
+<caption class="ggds-table__caption" id="measures-caption">Proposed targets for the core set</caption>
+<thead><tr><th scope="col">Measure</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr><th scope="row">People who finish the task without help</th><td>95% or more</td></tr>
+<tr><th scope="row">Errors that stop someone, found by the audit</th><td>None</td></tr>
+<tr><th scope="row">A page on a low-cost phone on a slow 3G connection</th><td>Usable within 5 seconds</td></tr>
+<tr><th scope="row">Live pages where most answers to “Did this page help you?” are No</th><td>Each one researched and rewritten</td></tr>
+</tbody></table></div>
+<p>On live websites, the <a href="components/feedback.html">feedback</a> component gives every page the same measure, so services can find their worst pages without building their own analytics.</p>
+
+<h2 id="languages">Languages</h2>
+<p>GGDS's own words (100 of them, such as “Skip to main content” and “There is a problem”) are ready to translate into Twi, Ewe, Ga, Hausa and Dagbani. Each translation must be written or checked by speakers, then tried with people who read that language, starting with the words the core set uses.</p>
+
+<h2 id="results">Where the results go</h2>
+<ul>
+<li>Each component's page gets a “Research” section: what was tested, with whom, and what changed.</li>
+<li>A component becomes stable when it is used on live government websites, research and the audit found no blocking problem in it, and it is not expected to change (see <a href="components/index.html#status">what the status means</a>).</li>
+<li>The <a href="changelog.html">changelog</a> says what changed because of research.</li>
+</ul>

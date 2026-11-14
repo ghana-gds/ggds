@@ -1,0 +1,18 @@
+{
+  "css": "password-input",
+  "javascript": "Optional: @ggds/js shows the Show button, switches the field between hidden and visible, tells screen readers which it is, and hides the password again when the form is sent. Without it, a normal password field.",
+  "classes": [
+    [".ggds-password-input", "On the field: a password with a Show button."],
+    [".ggds-password-input__wrapper", "The input and the button, side by side, wrapping on a narrow screen."],
+    [".ggds-password-input__input", "The password input, as well as .ggds-input."],
+    [".ggds-password-input__toggle", "The Show / Hide button, as well as .ggds-button--secondary. Hidden until the script runs."]
+  ],
+  "states": [
+    ["aria-label=\"Hide password\"", "The password is visible."]
+  ],
+  "astro": "---\nimport PasswordInput from '@ggds/astro/PasswordInput.astro';\n---\n<PasswordInput id=\"password\" name=\"password\" label=\"Password\" />",
+  "django": "class SignInForm(forms.Form):\n    password = forms.CharField(widget=forms.PasswordInput)  # GGDSFormRenderer adds the Show button",
+  "tests": [
+    "password input: Show reveals the password, says so, and hides it again when the form is sent"
+  ]
+}

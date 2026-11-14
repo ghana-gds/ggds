@@ -1,0 +1,20 @@
+---
+/**
+ * GGDS dialog: a box over the page to confirm something. Open it with a link to a confirmation page that has
+ * data-ggds-dialog="<id>"; @ggds/js opens the dialog instead. The default slot says what will happen; the "actions"
+ * slot holds the action's button; Cancel comes first, in the page's language (strings). With action, the buttons go in a
+ * form that posts there.
+ */
+import { STRINGS } from './strings.mjs';
+interface Props { id: string; title: string; warning?: boolean | undefined; action?: string | undefined; cancel?: string | undefined; strings?: Record<string, string> | undefined }
+const { id, title, warning = false, action, cancel, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const cancelLabel = cancel ?? s['dialog.cancel'];
+---
+<dialog class={warning ? 'ggds-dialog ggds-dialog--warning' : 'ggds-dialog'} id={id} aria-labelledby={`${id}-title`}>
+  <h2 class="ggds-dialog__title" id={`${id}-title`}>{title}</h2>
+  <div class="ggds-dialog__body"><slot /></div>
+  {action
+    ? <form class="ggds-dialog__actions" action={action} method="post"><button class="ggds-button ggds-button--secondary" type="button" data-ggds-dialog-close>{cancelLabel}</button><slot name="actions" /></form>
+    : <div class="ggds-dialog__actions"><button class="ggds-button ggds-button--secondary" type="button" data-ggds-dialog-close>{cancelLabel}</button><slot name="actions" /></div>}
+</dialog>

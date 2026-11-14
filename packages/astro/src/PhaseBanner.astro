@@ -1,0 +1,15 @@
+---
+/** GGDS phase banner: under the header, the service is new (alpha or beta) and feedback helps improve it. */
+import { STRINGS, fillHtml } from './strings.mjs';
+interface Props { phase?: 'alpha' | 'beta' | undefined; feedbackHref?: string | undefined; strings?: Record<string, string> | undefined }
+const { phase = 'beta', feedbackHref, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const word = fillHtml('{x}', {}, { x: s['phaseBanner.feedback'] });
+const feedback = feedbackHref ? `<a href="${fillHtml('{x}', {}, { x: feedbackHref })}">${word}</a>` : word;
+---
+<div class="ggds-phase-banner">
+  <p class="ggds-container ggds-phase-banner__content">
+    <strong class="ggds-phase-banner__tag">{s[`phaseBanner.${phase}`]}</strong>
+    <span class="ggds-phase-banner__text" set:html={fillHtml(s['phaseBanner.text'], { feedback })} />
+  </p>
+</div>

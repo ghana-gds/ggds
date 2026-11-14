@@ -36,12 +36,24 @@ test('!important only in utilities (visually hidden, print); no raw z-index', ()
   }
 });
 
-test('ggds.css puts base and components in cascade layers', () => {
+test('ggds.css puts base, components and layout in cascade layers, in that order', () => {
   const css = readFileSync(new URL('../../packages/css/dist/ggds.css', import.meta.url), 'utf8');
-  assert.match(css, /@layer ggds\.base, ggds\.components;/);
-  // 70 KB before minifying (about 8.5 KB minified and gzipped, what a phone downloads). Raised from 60 KB for key
-  // figures, progress, timeline, meter, steps and page heading. Sites can load only the components they use.
-  assert.ok(css.length < 70_000, `ggds.css is ${css.length} bytes`);
+  assert.match(css, /@layer ggds\.base, ggds\.components, ggds\.utilities;/);
+  assert.ok(css.indexOf('@layer ggds.components {') < css.indexOf('@layer ggds.utilities {'));
+  // 80 KB before minifying (about 10 KB minified and gzipped, what a phone downloads). Raised from 60 KB for key
+  // figures, progress, timeline, meter, steps and page heading, to 75 KB for the layout classes (about 1 KB gzipped),
+  // then to 80 KB for the back link, side navigation, contents list, language switcher, character count, phase banner
+  // and cookie banner, then to 86 KB for the task list, password input, code input, dialog, timeout warning and input
+  // prefix and suffix (about 1 KB gzipped), then to 88 KB for the feedback component (about 0.5 KB gzipped). Sites
+  // can load only the components they use.
+  assert.ok(css.length < 88_000, `ggds.css is ${css.length} bytes`);
+});
+
+test('the layout file is in the utilities layer and core.css declares every layer', () => {
+  const dist = new URL('../../packages/css/dist/', import.meta.url);
+  assert.match(readFileSync(new URL('components/layout.css', dist), 'utf8'), /@layer ggds\.utilities \{/);
+  assert.match(readFileSync(new URL('components/card.css', dist), 'utf8'), /@layer ggds\.components \{/);
+  assert.match(readFileSync(new URL('core.css', dist), 'utf8'), /@layer ggds\.base, ggds\.components, ggds\.utilities;/);
 });
 
 // WCAG 2.2.2 (Pause, Stop, Hide): anything that moves on its own must stop within 5 seconds, or have a pause

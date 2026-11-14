@@ -25,3 +25,10 @@ packages/wordpress/ggds/LICENSE
 packages/wordpress/ggds/LICENSE.md
 packages/react/.typecheck/
 .starter-build/
+
+# GGDS's own text, generated from packages/html/strings/ (pnpm run build:strings)
+packages/react/src/strings.ts
+packages/astro/src/strings.mjs
+packages/django/src/ggds_django/strings.json
+packages/django/src/ggds_django/locale/
+packages/astro/.render-test/

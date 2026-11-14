@@ -1,0 +1,59 @@
+<!-- title: Service Standard; lead: Twelve things every Government of Ghana website and online service should do, so that everyone can use it, trust it and rely on it. -->
+<div class="ggds-notice ggds-notice--warning">
+<p class="ggds-notice__title"><span class="ggds-visually-hidden">Warning:</span> This is a draft for discussion</p>
+<p>It has not been approved by the National Information Technology Agency (NITA) or any ministry, and it is not yet a rule any institution must follow. It is written so that it can become one. Tell us what to change through <a href="contribute.html">Contribute</a>.</p>
+</div>
+
+<p>GGDS gives government websites the same parts. This standard says what the website or service built with them must do. It is for the people who own a service, the teams who build it and the people who buy it from a supplier: the same twelve points for all three.</p>
+<p>Each point says what to do and how to show you have done it. Where a check can be automated, the GGDS check does it: <code>npx @ggds/check https://your-address.gov.gh</code>. The rest needs people.</p>
+
+<h2 id="people">1. Understand the people who use it</h2>
+<p>Find out who needs the service and what they are trying to do, including people on basic phones, people who read little English, older people and disabled people. Talk to them before you build, and while you build.</p>
+<p><strong>Show it:</strong> who you spoke to, how many, where, and what you changed because of it.</p>
+
+<h2 id="whole-problem">2. Solve the whole problem</h2>
+<p>Design the whole journey, not one web page: how people find out they need the service, what happens offline (an office, a phone call, USSD or SMS), and what happens after they apply. Never make people bring a printout of something the government already has.</p>
+<p><strong>Show it:</strong> a map of the journey from start to finish, online and offline.</p>
+
+<h2 id="accessible">3. Make it accessible to everyone</h2>
+<p>Meet WCAG 2.2 at level AA on every page. Test with a keyboard, with a screen reader, at 200% and 400% zoom, and with disabled people who use the service.</p>
+<p><strong>Show it:</strong> no failures in the GGDS check's accessibility checks; a record of manual testing; an <a href="accessibility.html">accessibility statement</a> on the website that says what does not work yet and when it will.</p>
+
+<h2 id="any-phone">4. Work on any phone, on any connection</h2>
+<p>Most people use government websites on a phone, many on slow or costly data. Every page must fit a 320px screen, download no more than 500 KB on its first visit, and show its content without JavaScript.</p>
+<p><strong>Show it:</strong> the GGDS check's reflow, weight and no-JavaScript checks pass. See <a href="performance.html">Fast pages</a>.</p>
+
+<h2 id="ggds">5. Use GGDS</h2>
+<p>Use the GGDS page template, banner, header and footer, and its components and patterns, instead of making your own. People learn one way to use government websites, and every fix in GGDS reaches every website.</p>
+<p><strong>Show it:</strong> the GGDS version the website uses. Where you needed something GGDS does not have, tell us, so it can be added for everyone.</p>
+
+<h2 id="language">6. Use plain words, in the languages people speak</h2>
+<p>Write so that people understand the first time: short sentences, common words, the most important thing first. Where many of the people who use the service speak Twi, Ewe, Ga, Hausa, Dagbani or another language, publish in it, translated and checked by people who speak it, never by a machine alone.</p>
+<p><strong>Show it:</strong> the reading level of the main pages; which languages the service is in and who translated and checked them. GGDS's own text comes ready to translate: see <a href="get-started/developers.html#languages">Languages</a>.</p>
+
+<h2 id="trust">7. Make it clear it is official</h2>
+<p>Run the website at a <code>.gov.gh</code> address, with the GGDS government website banner, and send its email from the same domain. People must be able to tell a real government website from a fake one.</p>
+<p><strong>Show it:</strong> the address; the banner on every page; the email domain's SPF and DMARC records.</p>
+
+<h2 id="secure">8. Keep it secure</h2>
+<p>Serve every page over HTTPS with HSTS, set a Content Security Policy and the other security headers, keep the software supported and patched, and test for the OWASP Top 10. Follow the Cybersecurity Act, 2020 (Act 1038) and the Cyber Security Authority's directives.</p>
+<p><strong>Show it:</strong> the GGDS check's security checks pass; when each part of the software stops getting security fixes, and the plan to upgrade before then; the last security test and what was fixed.</p>
+
+<h2 id="data">9. Protect people's data</h2>
+<p>Collect only what the service needs, say why, keep it only as long as you must, and never share it without a lawful reason. Load nothing from other websites and set no cookies that the website does not need until people agree. Follow the Data Protection Act, 2012 (Act 843).</p>
+<p><strong>Show it:</strong> a privacy notice on the website; the institution's registration with the Data Protection Commission; the GGDS check's third-party and cookie checks pass, or each warning is explained.</p>
+
+<h2 id="measure">10. Measure whether it works</h2>
+<p>Know how many people start and finish the service, how long it takes, what goes wrong and how satisfied they are, and publish it. Measure on the server, without tracking people, where you can.</p>
+<p><strong>Show it:</strong> the numbers, and what you changed because of them.</p>
+
+<h2 id="own">11. Own it, and keep it running</h2>
+<p>The institution must own its website's code, content, address and accounts, so it can change supplier without starting again. Use open standards and supported, long-term versions of the software, and plan each upgrade before support ends.</p>
+<p><strong>Show it:</strong> where the code is and who can change it; the list of the software's support dates; a handover document a new team could follow. See <a href="buying.html">Buying a website or service</a>.</p>
+
+<h2 id="improve">12. Keep improving it</h2>
+<p>A website is never finished. While a service is new, say so with a <a href="components/phase-banner.html">phase banner</a> and ask for feedback. Run the GGDS check on every release and fix what it finds. Review the content at least once a year.</p>
+<p><strong>Show it:</strong> the GGDS check in the release pipeline; when each page was last reviewed.</p>
+
+<h2 id="levels">How far a website has gone</h2>
+<p>The <a href="maturity-model.html">maturity model</a> groups these points into three levels, so an institution can say where its website is now and what comes next.</p>

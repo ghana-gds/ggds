@@ -5,11 +5,12 @@
 
 **Documentation:** [ghana-gds.github.io/ggds](https://ghana-gds.github.io/ggds/) · [Get started as a developer](https://ghana-gds.github.io/ggds/get-started/developers.html)
 
-The small, optional script for GGDS, the Ghana Government Design System. It adds the phone menu to the header and
-moves focus to the error summary. Every GGDS part works without it: this script only makes two of them easier to
-use.
+The small, optional script for GGDS, the Ghana Government Design System. It adds the phone menu to the header,
+moves focus to the error summary, counts characters, adds the Show button to password fields, opens dialogs and runs
+the timeout warning. Every GGDS part works without it except a dialog and the timeout warning, which need it: a
+dialog's opener is a link to a confirmation page, so the task still works.
 
-ES modules, about 4 KB unminified, no dependencies, TypeScript types included. No inline scripts, so it runs under
+ES modules, about 17 KB unminified (5 KB with gzip), no dependencies, TypeScript types included. No inline scripts, so it runs under
 a strict Content Security Policy (`script-src 'self'`).
 
 > **Draft, version 0.1.** Changes are listed in the
@@ -44,6 +45,11 @@ Without a bundler, copy the files from the release zip and load `auto.js`. It ru
 | `initAll(root?)` | Enhances every GGDS part inside `root` (default: the whole document). Safe to call more than once, for example after adding content to the page |
 | `initMenu(button)` | Enhances one header menu button |
 | `initErrorSummary(element)` | Enhances one error summary |
+| `initCharacterCount(field)` | Enhances one character count |
+| `initPasswordInput(field)` | Adds the Show / Hide button to one password field |
+| `initDialogOpener(link)` | Makes one `[data-ggds-dialog]` link open its dialog |
+| `initDialog(dialog)` | Makes the `[data-ggds-dialog-close]` buttons in one dialog close it |
+| `initTimeoutWarning(dialog)` | Starts one timeout warning |
 
 `@ggds/js/auto` runs `initAll()` when it loads.
 
@@ -62,6 +68,28 @@ so without the script it stays hidden and the navigation shows as a list. With t
 Finds `[data-ggds-module="error-summary"]`. When the page loads, it moves focus to the summary, so screen-reader
 and keyboard users hear the errors first. The summary's links (`href="#field-id"`) work without the script; with
 it, following a link also scrolls the field's label or legend into view, not only the input.
+
+### Character count
+
+Finds `[data-ggds-module="character-count"]`. The limit hint becomes a count that updates as people type, and
+screen readers hear it when they pause.
+
+### Password input
+
+Finds `[data-ggds-module="password-input"]`. Shows the hidden Show button, which switches the field between hidden
+and visible, says which it is to screen readers, and hides the password again when the form is sent.
+
+### Dialog
+
+Finds `[data-ggds-dialog]` links. The link goes to a confirmation page without the script; with it, it opens the
+`<dialog class="ggds-dialog">` it names as a modal. Escape and `[data-ggds-dialog-close]` close it, and focus goes
+back to the link.
+
+### Timeout warning
+
+Finds `[data-ggds-module="timeout-warning"]`. Opens the warning `data-ggds-warn` seconds before `data-ggds-timeout`,
+counts down, requests `data-ggds-keep-alive` when people choose "Stay signed in" (or press Escape), and goes to
+`data-ggds-sign-out` when time runs out.
 
 ## Browser support
 

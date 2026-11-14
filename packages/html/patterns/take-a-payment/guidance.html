@@ -1,0 +1,38 @@
+<!-- name: Take a payment; icon: wallet; order: 12; components: summary-list, choices, field, notice, panel, button, error-summary; summary: Take a fee by mobile money or card: say what it is for, let people approve it on their phone, say clearly if it did not work, and give a receipt. -->
+<p class="ggds-lead">Take a fee by mobile money or card: say what it is for, let people approve it on their phone, say clearly if it did not work, and give a receipt.</p>
+<h2>When to use</h2>
+<ul><li>When people pay a fee, a fine, a licence or a renewal as part of a service.</li></ul>
+<h2>When not to use</h2>
+<ul><li>To ask people to pay into an account and upload proof. Take the payment in the service, so you know at once that it arrived.</li></ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>What you are paying:</strong> the amount, what it is for and who it is paid to, then how to pay: MTN MoMo, Telecel Cash, AT Money or a bank card.</li>
+<li><strong>The number:</strong> the mobile money number, prefilled if you have it. Never the PIN.</li>
+<li><strong>Approve on your phone:</strong> people approve the request on their phone. The page checks by itself, and says what to do if no request arrives.</li>
+<li><strong>Paid:</strong> a <a href="../components/panel.html">confirmation panel</a> with the receipt number, and the receipt as a summary list they can print or save. Send it by SMS too.</li>
+<li><strong>Not paid:</strong> a page that says the payment did not go through, that no money was taken, and how to try again.</li>
+</ol>
+<h2>The amount</h2>
+<ul>
+<li>Write amounts as GH₵ 150.00: the symbol, a space and two decimal places. In sentences, "150 Ghana cedis" reads better for screen readers.</li>
+<li>If people choose the amount (a donation, paying part of a fine), use a text input with the <a href="../components/field.html">GH₵ prefix</a> and <code>inputmode="decimal"</code>.</li>
+<li>Show any fee the payment provider charges before people pay, not after.</li>
+</ul>
+<h2>Mobile money</h2>
+<ul>
+<li>Never ask for a mobile money PIN on a website. People enter it on their phone, where the network asks for it.</li>
+<li>Say which number the request went to, how long people have to approve it, and that the payment is to your institution by name: that is what the phone will show.</li>
+<li>If no request arrives, offer to send it again, or to pay another way. Do not ask people to dial a code unless your provider requires it.</li>
+<li>Do not take the money twice: give each payment a reference, and check it before you send a new request.</li>
+</ul>
+<h2>Error messages</h2>
+<ul>
+<li>"Your payment did not go through. No money was taken from your account." Then what to do.</li>
+<li>Too little balance: "There was not enough money in your mobile money account. Top up and try again, or pay another way."</li>
+<li>Timed out: "You did not approve the payment in time. Try again."</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>When the page checks for the payment by itself, tell screen readers when it changes, and give a button to check now as well.</li>
+<li>The receipt is text, never only an image, so people can read it aloud, copy it and print it.</li>
+</ul>

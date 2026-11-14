@@ -1,0 +1,59 @@
+/* Task list: the sections of a long application, each with its status, so people can do them in any order and come
+   back later. The whole row is the target; the status is text, and colour only supports it. */
+.ggds-task-list__summary {
+  margin: 0 0 var(--ggds-space-4);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-task-list {
+  margin: 0 0 var(--ggds-space-8);
+  padding: 0;
+  border-top: 1px solid var(--ggds-color-border-subtle);
+  list-style: none;
+}
+
+.ggds-task-list__item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ggds-space-2) var(--ggds-space-4);
+  min-height: var(--ggds-size-target);
+  padding: var(--ggds-space-3) var(--ggds-space-2);
+  border-bottom: 1px solid var(--ggds-color-border-subtle);
+}
+
+.ggds-task-list__item--link:hover {
+  background: var(--ggds-color-surface-sunken);
+}
+
+.ggds-task-list__name {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.ggds-task-list__link {
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+/* The link covers the row, so the status is part of the target too. */
+.ggds-task-list__link::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+}
+
+.ggds-task-list__hint {
+  margin: var(--ggds-space-1) 0 0;
+  color: var(--ggds-color-text-muted);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-task-list__status {
+  flex: none;
+}
+
+.ggds-task-list__status--cannot-start {
+  color: var(--ggds-color-text-muted);
+}

@@ -1,0 +1,30 @@
+{
+  "css": "field",
+  "javascript": "Optional: @ggds/js counts as people type and tells screen readers the count when they pause. Without it, the limit is a hint and the server checks the length.",
+  "classes": [
+    [
+      ".ggds-character-count",
+      "On the field: a textarea with a limit. data-ggds-max gives the limit."
+    ],
+    [
+      ".ggds-character-count__message",
+      "The limit, as a hint (\"You can enter up to 500 characters\")."
+    ],
+    [
+      ".ggds-character-count__status--over",
+      "Added by the script when there are too many characters."
+    ],
+    [
+      ".ggds-character-count__textarea--over",
+      "Added by the script to the textarea when there are too many characters."
+    ]
+  ],
+  "states": [],
+  "astro": null,
+  "django": "class ComplaintForm(forms.Form):\n    details = forms.CharField(max_length=500, widget=forms.Textarea)  # GGDSFormRenderer adds the count",
+  "tests": [
+    "character count updates as people type and tells screen readers when they pause",
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

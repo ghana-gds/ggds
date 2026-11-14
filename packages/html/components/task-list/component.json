@@ -1,0 +1,23 @@
+{
+  "css": "task-list",
+  "javascript": null,
+  "classes": [
+    [".ggds-task-list__summary", "How many sections are complete, above the list."],
+    [".ggds-task-list", "The list of sections, in an <ol>."],
+    [".ggds-task-list__item", "One section: its name and its status."],
+    [".ggds-task-list__item--link", "A section people can open: the whole row is the target."],
+    [".ggds-task-list__name", "The section's name, as a link when people can open it, and its hint."],
+    [".ggds-task-list__link", "The link to the section. Its aria-describedby names the status."],
+    [".ggds-task-list__hint", "Extra help under the name, such as why a section cannot start yet."],
+    [".ggds-task-list__status", "The status: a tag, or plain text for a section that cannot start yet."],
+    [".ggds-task-list__status--cannot-start", "The muted text of a section people cannot open yet."]
+  ],
+  "states": [
+    [":hover", "The row's background turns grey."]
+  ],
+  "astro": "---\nimport TaskList from '@ggds/astro/TaskList.astro';\n---\n<TaskList tasks={[\n  { label: 'Your details', href: '/apply/details/', status: 'completed' },\n  { label: 'Pay the fee', status: 'cannotStart', hint: 'You can pay once the other sections are complete' },\n]} />",
+  "django": "{% load ggds %}\n{% ggds_task_list tasks %}  {# [{\"label\", \"href\", \"status\": \"completed\" | \"inProgress\" | \"notStarted\" | \"cannotStart\", \"hint\"}] #}",
+  "tests": [
+    "task list: the whole row opens the section, and screen readers hear its status"
+  ]
+}

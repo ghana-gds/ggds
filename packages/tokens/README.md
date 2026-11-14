@@ -49,12 +49,17 @@ token also updates the tokens that depend on it.
 ## Make a theme from an institution's colour
 
 ```js
-import { institutionColourProblems, institutionPalette, institutionCss } from '@ggds/tokens/institution.mjs';
+import { checkInstitutionColour, institutionCss, institutionTokens } from '@ggds/tokens/institution.mjs';
 
-institutionColourProblems('#7fb3d5'); // ['#7fb3d5 has 2.26:1 contrast on white; …']
-institutionPalette('#006e35');        // { accent: '#006e35', deep: '#006732' }
-institutionCss('#006e35');            // CSS to load after ggds.css
+checkInstitutionColour('#7fb3d5');   // { ok: false, suggestion: '#577b92', accent, deep, checks: [...] }
+institutionCss('#006e35');           // CSS to load after ggds.css
+institutionCss('#006e35', { slug: 'my-agency', name: 'My Agency' }); // only for data-ggds-theme="my-agency"
+institutionTokens('#006e35');        // the same colours as W3C design tokens, for Figma
 ```
+
+No code to write? Use `npx @ggds/themes '#006e35'`, or the
+[theme builder](https://ghana-gds.github.io/ggds/themes.html#make-a-theme). Both use this file. It has no Node
+imports, so it also runs in the browser.
 
 The colour must have at least 4.5:1 contrast on white, because the header shows the institution's name in it. The
 deep shade, used behind white text in the footer, is darkened only as far as 7:1 contrast needs, so it keeps the
@@ -69,7 +74,11 @@ blocks inline styles.
 |---|---|
 | `institutionColourProblems(hex)` | Why a `#rrggbb` colour cannot be an institution colour, as an array of messages; `[]` when it can |
 | `institutionPalette(hex)` | `{ accent, deep }`: the colour, and a deep shade of it for the footer. Throws for a colour that fails the rule |
-| `institutionCss(hex)` | A stylesheet that sets the institution colour for a site |
+| `checkInstitutionColour(hex)` | Everything about a candidate colour, without throwing: `{ ok, colour, problems, suggestion, accent, deep, checks }`. Each check is `{ id, label, fg, bg, ratio, min, pass }` |
+| `suggestInstitutionColour(hex)` | The lightest shade with the same hue that passes the rule (the colour itself when it passes) |
+| `institutionCss(hex, { slug, name })` | A stylesheet that sets the institution colour: for the whole site, or with `slug` only for elements marked `data-ggds-theme="<slug>"` |
+| `institutionTokens(hex, { name })` | The colours as W3C design tokens (DTCG), named `color.institution.default` and `color.institution.deep` |
+| `SLUG` | The pattern a theme name must match: lower-case letters, digits and hyphens |
 | `MIN_ON_WHITE` | `4.5`: the contrast the colour needs on white |
 | `MIN_WHITE_ON_DEEP`, `MIN_GOLD_ON_DEEP` | `7` and `4.5`: the contrast white text and the gold accent need on the deep shade |
 | `GOLD` | The flag gold, `#fcd116` (a placeholder until the flag colours are officially specified) |
@@ -85,7 +94,7 @@ For build tools in Node. No dependencies.
 | `resolveAll(tokens)` | A map from dotted path to resolved token, following `{a.b.c}` references |
 | `cssName(path)` | The custom property name: `color.text.default` → `--ggds-color-text` |
 | `cssValue(token, all)` | A token's value written as CSS |
-| `contrast(a, b)` | The WCAG 2.2 contrast ratio between two `#rrggbb` colours |
+| `contrast(a, b)` | The WCAG 2.2 contrast ratio between two `#rrggbb` colours (also in `@ggds/tokens/color.mjs`, which has no imports and runs in the browser, with `normaliseHex()`) |
 | `luminance(hex)` | The relative luminance of a `#rrggbb` colour |
 
 ## Accessibility

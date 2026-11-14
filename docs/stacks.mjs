@@ -28,6 +28,7 @@ export function stackLogo(key, logos) {
 export function stacksSection({ code, version, repo }) {
   return `<h2 id="frameworks">Set it up in your framework</h2>
 <p>Every framework needs the same three things: the GGDS stylesheet, your theme if you have one, and the small script for the phone menu and the error summary. Here is where each goes. The <a href="../components/index.html">component pages</a> have the HTML for every part, and a JSX version for React.</p>
+<p><strong>Starting a new website?</strong> <code>npx @ggds/create --stack next</code>, <code>--stack astro</code> or <code>--stack django</code> makes a whole government website in that framework, with GGDS set up as below: a homepage, services, forms, search and the required pages, from your institution's details. The <a href="../builder.html">website builder</a> makes the same projects. Every page comes from the framework's <code>Page</code> component, so a newer GGDS updates the parts around it.</p>
 
 <h3 id="react">React (with Vite)</h3>
 <p><code>@ggds/react</code> has the page parts and form fields as components: <code>Header</code>, <code>Footer</code>, <code>TextInput</code>, <code>Radios</code>, <code>ErrorSummary</code> and more. They write the HTML GGDS tests, with labels, hints and errors wired up for screen readers, and the menu and error summary work inside React, so you do not need <code>@ggds/js</code>.</p>

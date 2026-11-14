@@ -1,0 +1,19 @@
+<!-- name: Password input; icon: lock; status: alpha; order: 29; group: Forms; related: field, code-input, error-summary; summary: A password field with a Show button, so people can check what they typed before they send it. -->
+<p class="ggds-lead">A password field with a Show button, so people can check what they typed before they send it.</p>
+<h2>When to use</h2>
+<ul><li>When people sign in, or create or change a password.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For a one-time code sent by SMS or email. Use a <a href="code-input.html">code input</a>: it is not secret once used.</li><li>For a PIN: never ask for a mobile money or bank PIN on a website. People enter it on their phone.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Use the label "Password". When people create one, say what it needs in the hint, and only rules your system really has.</li>
+<li>Set <code>autocomplete="current-password"</code> to sign in, and <code>autocomplete="new-password"</code> to create one, so password managers can fill and suggest it.</li>
+<li>Let people paste. Do not limit the length to less than 64 characters.</li>
+<li>Add <code>data-ggds-module="password-input"</code>. The GGDS script shows the Show button, switches it to Hide, and hides the password again when the form is sent, so the browser does not keep it as plain text.</li>
+<li>The button's words can be translated: <code>data-ggds-show</code>, <code>data-ggds-hide</code>, <code>data-ggds-show-label</code>, <code>data-ggds-hide-label</code>, <code>data-ggds-shown</code> and <code>data-ggds-hidden</code> on the field. The React, Astro and Django parts set them from GGDS's text in the page's language.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The button says what it does ("Show password") and screen readers hear "Your password is visible" when it changes.</li><li>The password goes back to hidden when the form is sent.</li><li>Without JavaScript there is no button, and the field still works.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Never stop people pasting into the field (WCAG 3.3.8, accessible authentication).</li><li>If sign-in fails, say "The phone number or password is not right", without saying which.</li></ul>

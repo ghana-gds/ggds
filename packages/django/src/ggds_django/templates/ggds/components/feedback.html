@@ -1,0 +1,13 @@
+<section class="ggds-feedback" aria-labelledby="ggds-feedback-title">
+  {% if answered %}<p class="ggds-feedback__thanks" id="ggds-feedback-title" role="status" tabindex="-1">{{ thanks }}</p>
+  {% else %}<form class="ggds-feedback__form" action="{{ action }}" method="post">
+    {% if csrf_token %}<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">{% endif %}
+    <input type="hidden" name="page" value="{{ page }}">
+    <h2 class="ggds-feedback__title" id="ggds-feedback-title">{{ question }}</h2>
+    <div class="ggds-feedback__answers">
+      <button class="ggds-button ggds-button--secondary ggds-feedback__answer" type="submit" name="helpful" value="yes">{{ yes }} <span class="ggds-visually-hidden">{{ yes_hidden }}</span></button>
+      <button class="ggds-button ggds-button--secondary ggds-feedback__answer" type="submit" name="helpful" value="no">{{ no }} <span class="ggds-visually-hidden">{{ no_hidden }}</span></button>
+    </div>
+  </form>{% endif %}
+  {% if report_url %}<p class="ggds-feedback__report"><a href="{{ report_url }}">{{ report }}</a></p>{% endif %}
+</section>

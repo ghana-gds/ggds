@@ -5,7 +5,11 @@
  * Slots: "logo", "contact" (more contact lines, social links) and "bar" (more <li> items in the bottom bar).
  */
 interface Link { label: string; href: string; attrs?: Record<string, unknown> | undefined }
+import { STRINGS, fillHtml } from './strings.mjs';
+
 interface Props {
+  /** GGDS's own text in another language (stringsFor('tw') from @ggds/astro/strings.mjs) or other words, by key. */
+  strings?: Record<string, string> | undefined;
   name: string;
   purpose?: string | undefined;
   contact?: { address?: string | undefined; email?: string | undefined; phone?: string | undefined; phoneHref?: string | undefined; moreHref?: string | undefined; moreLabel?: string | undefined };
@@ -15,7 +19,8 @@ interface Props {
   class?: string | undefined;
   [attr: string]: unknown;
 }
-const { name, purpose, contact, sections = [], bar = [], year = new Date().getFullYear(), class: extra = '', ...rest } = Astro.props;
+const { name, purpose, contact, sections = [], bar = [], year = new Date().getFullYear(), strings, class: extra = '', ...rest } = Astro.props;
+const s = { ...STRINGS, ...strings };
 ---
 <footer class:list={['ggds-footer', extra]} {...rest}>
   <div class="ggds-container ggds-footer__main">
@@ -26,10 +31,10 @@ const { name, purpose, contact, sections = [], bar = [], year = new Date().getFu
         <address class="ggds-footer__contact">
           {contact.address && <span>{contact.address}</span>}
           {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
-          {contact.phone && <span>General enquiries: {contact.phoneHref ? <a href={contact.phoneHref}>{contact.phone}</a> : contact.phone}</span>}
+          {contact.phone && <span set:html={fillHtml(s['footer.enquiries'], contact.phoneHref ? { phone: `<a href="${fillHtml('{x}', {}, { x: contact.phoneHref })}">${fillHtml('{x}', {}, { x: contact.phone })}</a>` } : {}, { phone: contact.phone })} />}
         </address>
       )}
-      {contact?.moreHref && <p class="ggds-footer__more"><a href={contact.moreHref}>{contact.moreLabel ?? 'All contact details and offices'}</a></p>}
+      {contact?.moreHref && <p class="ggds-footer__more"><a href={contact.moreHref}>{contact.moreLabel ?? s['footer.contactMore']}</a></p>}
       <slot name="contact" />
     </div>
     <div class="ggds-footer__sections">

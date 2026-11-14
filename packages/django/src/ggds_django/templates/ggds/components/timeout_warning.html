@@ -1,0 +1,11 @@
+<dialog class="ggds-dialog ggds-timeout-warning" id="{{ id }}" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-message" data-ggds-module="timeout-warning" data-ggds-timeout="{{ timeout }}" data-ggds-warn="{{ warn }}" data-ggds-keep-alive="{{ keep_alive }}" data-ggds-sign-out="{{ sign_out }}" data-ggds-minutes-one="{{ words.minutesOne }}" data-ggds-minutes-other="{{ words.minutesOther }}" data-ggds-seconds-one="{{ words.secondsOne }}" data-ggds-seconds-other="{{ words.secondsOther }}">
+  <h2 class="ggds-dialog__title" id="{{ id }}-title">{% load ggds %}{% ggds_text "timeoutWarning.title" %}</h2>
+  <div class="ggds-dialog__body">
+    <p id="{{ id }}-message">{{ before }}<span class="ggds-timeout-warning__time">{{ time }}</span>{{ after }}</p>
+    <p class="ggds-visually-hidden" aria-live="polite"></p>
+  </div>
+  <div class="ggds-dialog__actions">
+    <button class="ggds-button" type="button" data-ggds-timeout-continue>{% ggds_text "timeoutWarning.continue" %}</button>
+    <a href="{{ sign_out_href }}">{% ggds_text "timeoutWarning.signOut" %}</a>
+  </div>
+</dialog>

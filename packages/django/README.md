@@ -48,6 +48,32 @@ To use GGDS for some forms only, leave `FORM_RENDERER` out and add `GGDSFormMixi
 Links are dicts (`{"label": "Services", "href": "/services/"}`) or `("Services", "/services/")` pairs. The header
 marks the section the page's address is in; the tab bar marks the current tab.
 
+### Or extend GGDS's page
+
+Put your details in settings once, and every page extends `ggds/page.html`: the skip link, banner, header,
+`<main>`, footer and tab bar come in GGDS's order, so a newer ggds-django updates the whole frame.
+
+```python
+TEMPLATES = [{..., "OPTIONS": {"context_processors": [..., "django.template.context_processors.request",
+                                                      "ggds_django.context_processors.site"]}}]
+GGDS_SITE = {
+    "name": "Example Agency", "short_name": "EA", "host": "www.example.gov.gh", "theme": "<theme>",
+    "purpose": "We license communications services.", "nav": [...], "sections": [...], "tabs": [...],
+    "links": [{"label": "Accessibility", "href": "/accessibility/"}, ...],   # the footer's bottom bar
+    "address": "1 Example Road, Accra", "email": "info@example.gov.gh", "phone": "030 000 0000",
+}
+```
+
+```django
+{% extends "ggds/page.html" %}
+{% block title %}Make a complaint | Example Agency{% endblock %}
+{% block content %}<h1>Make a complaint</h1>…{% endblock %}
+```
+
+Other blocks: `head` (your own CSS and scripts), `main_class`, `scripts`, and one per part to replace it. A view can
+mark the header link with `ggds_current` and the tab with `ggds_tab` in its context. `npx @ggds/create --stack
+django` makes a whole website this way.
+
 ## Forms
 
 With the renderer, `{{ form }}` shows an error summary after a failed submit (focused on load by the GGDS
@@ -60,6 +86,9 @@ script, each item linking to its field, a radio group's to its first option), th
 | `RadioSelect`, `CheckboxSelectMultiple` | a `ggds-fieldset` with a legend and `ggds-choices` |
 | `CheckboxInput` | a single `ggds-choice` |
 | `GGDSDateField` | a `ggds-fieldset` with day, month and year boxes (`ggds-date-input`) |
+| `PasswordInput` | a GGDS password input: the GGDS script adds the Show button; `autocomplete="current-password"` unless the widget says `new-password` |
+| `OneTimeCodeField` | a GGDS code input (`ggds-input--code`, `autocomplete="one-time-code"`) |
+| `AffixInput(prefix="GH₵")` | a text input with a unit before (`prefix`) or after (`suffix`) it, hidden from screen readers |
 
 Each control gets `aria-describedby` (hint, then error) and, with an error, `aria-invalid="true"`. Errors start
 with a hidden "Error:". Fields that are not required say "(optional)". Set `autocomplete` on personal details with
@@ -81,6 +110,21 @@ must be a real date", and with `birthday=True` or `past=True`, "Date of birth mu
 with the problem are marked invalid, and the error summary links to the first of them. `birthday=True` also adds
 `autocomplete="bday-day"` and so on.
 
+### Codes and amounts
+
+```python
+from ggds_django.forms import AffixInput, OneTimeCodeField
+
+class PayForm(forms.Form):
+    amount = forms.DecimalField(label="How much do you want to pay, in Ghana cedis?", widget=AffixInput(prefix="GH₵"))
+
+class CodeForm(forms.Form):
+    code = OneTimeCodeField(label="Enter the code we sent you", digits=6)
+```
+
+`OneTimeCodeField` removes spaces and dashes, keeps leading zeros, and says "Enter the code we sent you" or "Enter
+the 6-digit code we sent you".
+
 ## Page parts
 
 | Tag | |
@@ -101,8 +145,19 @@ with the problem are marked invalid, and the error summary links to the first of
 | `{% ggds_steps steps %}` | Steps: dicts of `{"icon", "title", "text"}`. `urgent=True` for an emergency; `heading_level=2` if they sit under the `<h1>` |
 | `{% ggds_pagination page_obj %}` | From Django's `Paginator`; keeps other query parameters |
 | `{% ggds_footer name purpose address email phone sections links %}` | Footer |
-| `{% ggds_tab_bar tabs %}` | Phone quick links: each tab has an `icon` |
+| `{% ggds_tab_bar tabs %}` | Phone quick links: each tab has an `icon`. The current tab is the request's path, or `current=` |
 | `{% ggds_error_summary form %}` | On its own, for forms you lay out yourself |
+| `{% ggds_back_link href %}` | Back to the previous page of a task. `label=` only if "Back" would be unclear |
+| `{% ggds_phase_banner "beta" feedback_href %}` | Under the header for a new service (`"alpha"` or `"beta"`) |
+| `{% ggds_side_nav items %}` | The pages of one section; the current page is the request's path, or `current=` |
+| `{% ggds_contents items %}` | "On this page": links to the page's own headings |
+| `{% ggds_language_switcher %}` | The same page in each language Django is set up for, or `links=` |
+| `{% ggds_cookie_banner "Example Agency" choice %}` | Asks before setting analytics cookies; works without JavaScript |
+| `{% ggds_task_list tasks %}` | Task list: dicts of `{"label", "href", "status", "hint"}`, where status is `"completed"`, `"inProgress"`, `"notStarted"` or `"cannotStart"` (no link) |
+| `{% ggds_dialog id title body action confirm warning=True %}` | A dialog that confirms an action, Cancel first; its form posts to `action` with the CSRF token. Open it with a link to `action` that has `data-ggds-dialog="<id>"` |
+| `{% ggds_timeout_warning timeout=1200 keep_alive=... sign_out=... %}` | Timeout warning on every signed-in page: match `timeout` to `SESSION_COOKIE_AGE` and set `SESSION_SAVE_EVERY_REQUEST = True`, so each page extends the session as the warning counts. `keep_alive` is a view that sets `request.session.modified = True`, and redirects or fails once the session has ended |
+| `{% ggds_feedback action="/feedback/" report_url="/report-a-problem/" %}` | "Did this page help you?" at the end of a page: Yes and No post to `action` with the CSRF token and the page's path; `answered=True` says thank you |
+| `{% ggds_text "key" %}`, `{% ggds_icon "name" %}` | GGDS's own words in the active language, and any GGDS icon |
 
 Everything else (buttons, notices, tags, cards, tables) is plain GGDS HTML: copy it from the documentation.
 

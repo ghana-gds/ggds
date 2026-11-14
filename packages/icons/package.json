@@ -1,6 +1,6 @@
 {
   "name": "@ggds/icons",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Icons for the Ghana Government Design System (GGDS): 143 line icons for government services on one 24px grid, as SVG files, a sprite, tree-shakeable JavaScript and JSON.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
@@ -29,8 +29,12 @@
   "files": [
     "dist",
     "src",
-    "catalogue.json"
+    "catalogue.json",
+    "subset.mjs"
   ],
+  "bin": {
+    "ggds-icons-subset": "./subset.mjs"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -45,6 +49,7 @@
     "./catalogue.json": "./dist/catalogue.json",
     "./ggds-icons.svg": "./dist/ggds-icons.svg",
     "./svg/*": "./dist/svg/*",
+    "./subset": "./subset.mjs",
     "./package.json": "./package.json"
   },
   "types": "./dist/index.d.ts",

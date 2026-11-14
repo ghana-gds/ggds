@@ -2,9 +2,9 @@
 {% if kind == "choices" %}
 <div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
   <fieldset class="ggds-fieldset"{% if described %} aria-describedby="{{ described }}"{% endif %}>
-    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</legend>
+    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</legend>
     {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
-    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
     <div class="ggds-choices">
       {% for choice in field|ggds_choices %}<div class="ggds-choice">{{ choice.input }}<label class="ggds-choice__label" for="{{ choice.id }}">{{ choice.label }}</label></div>
       {% endfor %}
@@ -14,9 +14,9 @@
 {% elif kind == "date" %}
 <div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
   <fieldset class="ggds-fieldset" role="group"{% if described %} aria-describedby="{{ described }}"{% endif %}>
-    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</legend>
+    <legend class="ggds-fieldset__legend">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</legend>
     {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
-    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+    {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
     <div class="ggds-date-input">
       {% for part in field|ggds_date_parts %}<div class="ggds-date-input__item">
         <label class="ggds-date-input__label" for="{{ part.id }}">{{ part.label }}</label>
@@ -29,16 +29,45 @@
 {% elif kind == "checkbox" %}
 <div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
   {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
-  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
   <div class="ggds-choices">
     <div class="ggds-choice">{{ field|ggds_widget }}<label class="ggds-choice__label" for="{{ field.id_for_label }}">{{ field.label }}</label></div>
   </div>
 </div>
+{% elif kind == "count" %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %} ggds-character-count" data-ggds-module="character-count" data-ggds-max="{{ field.field.max_length }}" data-ggds-remaining-one="{% ggds_text "characterCount.remainingOne" %}" data-ggds-remaining-other="{% ggds_text "characterCount.remainingOther" %}" data-ggds-over-one="{% ggds_text "characterCount.overOne" %}" data-ggds-over-other="{% ggds_text "characterCount.overOther" %}">
+  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</label>
+  {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
+  {{ field|ggds_widget }}
+  <p class="ggds-hint ggds-character-count__message" id="{{ field.auto_id }}-info">{% ggds_text "characterCount.limit" max=field.field.max_length %}</p>
+</div>
+{% elif kind == "password" %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %} ggds-password-input" data-ggds-module="password-input" data-ggds-show="{% ggds_text "passwordInput.show" %}" data-ggds-hide="{% ggds_text "passwordInput.hide" %}" data-ggds-show-label="{% ggds_text "passwordInput.showLabel" %}" data-ggds-hide-label="{% ggds_text "passwordInput.hideLabel" %}" data-ggds-shown="{% ggds_text "passwordInput.shown" %}" data-ggds-hidden="{% ggds_text "passwordInput.hidden" %}">
+  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</label>
+  {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
+  <div class="ggds-password-input__wrapper">
+    {{ field|ggds_widget }}
+    <button class="ggds-button ggds-button--secondary ggds-password-input__toggle" type="button" aria-controls="{{ field.id_for_label }}" aria-label="{% ggds_text "passwordInput.showLabel" %}" hidden>{% ggds_text "passwordInput.show" %}</button>
+  </div>
+</div>
+{% elif kind == "affix" %}{% with affix=field|ggds_affix %}
+<div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
+  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</label>
+  {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
+  <div class="ggds-input-wrapper">
+    {% if affix.prefix %}<span class="ggds-input__prefix" aria-hidden="true">{{ affix.prefix }}</span>{% endif %}
+    {{ field|ggds_widget }}
+    {% if affix.suffix %}<span class="ggds-input__suffix" aria-hidden="true">{{ affix.suffix }}</span>{% endif %}
+  </div>
+</div>{% endwith %}
 {% else %}
 <div class="ggds-field{% if field.errors %} ggds-field--error{% endif %}">
-  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %} (optional){% endif %}</label>
+  <label class="ggds-label" for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required %}{% ggds_text "field.optional" %}{% endif %}</label>
   {% if field.help_text %}<p class="ggds-hint" id="{{ field.auto_id }}-hint">{{ field.help_text }}</p>{% endif %}
-  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">Error: </span>{{ field.errors|join:" " }}</p>{% endif %}
+  {% if field.errors %}<p class="ggds-error-message" id="{{ field.auto_id }}-error"><span class="ggds-visually-hidden">{% ggds_text "field.errorPrefix" %}</span>{{ field.errors|join:" " }}</p>{% endif %}
   {{ field|ggds_widget }}
 </div>
 {% endif %}{% endwith %}

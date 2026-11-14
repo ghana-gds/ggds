@@ -16,7 +16,7 @@
   <b><a href="https://ghana-gds.github.io/ggds/get-started/tutorial.html">Tutorial</a></b> ·
   <b><a href="https://ghana-gds.github.io/ggds/components/index.html">Components</a></b> ·
   <b><a href="https://ghana-gds.github.io/ggds/showcase/index.html">Showcase</a></b> ·
-  <b><a href="https://ghana-gds.github.io/ggds/showcase/index.html#starter-h">Download a website</a></b>
+  <b><a href="https://ghana-gds.github.io/ggds/builder.html">Make your website</a></b>
 </p>
 
 ---
@@ -29,7 +29,7 @@ everyone, including disabled people.
 Use it with plain HTML or any framework. Give it your institution's colour. Spend your time on your service, not
 on rebuilding a header for the hundredth time.
 
-<p align="center"><img src=".github/assets/stats.svg" alt="30 components, 10 patterns, 143 icons, 12 institution themes, WCAG 2.2 AA on every change, 8.3 KB of CSS and 1.7 KB of optional JavaScript, gzipped" width="100%"></p>
+<p align="center"><img src=".github/assets/stats.svg" alt="44 components, 12 patterns, 143 icons, 12 institution themes, WCAG 2.2 AA on every change, 10.1 KB of CSS and 6.0 KB of optional JavaScript, gzipped" width="100%"></p>
 
 ## See what you can build
 
@@ -49,25 +49,41 @@ through, read the code of, and copy.
 
 Every example lists the GGDS parts it is built from and what your team still has to build behind it.
 
-## Download a whole website
+## Make your institution's website
 
-<a href="https://ghana-gds.github.io/ggds/starter/index.html"><img src=".github/assets/starter.jpg" alt="The agency website starter: Example Agency's homepage, with search and common tasks" width="100%"></a>
+<a href="https://ghana-gds.github.io/ggds/builder.html"><img src=".github/assets/starter.jpg" alt="A website made with GGDS: an agency homepage, with search and common tasks" width="100%"></a>
 
-**The agency website starter** is a complete website for a made-up institution: 20 pages, including a homepage,
-services, a licence application from start to confirmation, a complaint form, news, publications, jobs, about,
-contact, search and an accessibility statement. Forms check their answers, search works, and none of it needs a
-server. Change the name, the theme and the words, and put it online.
+**[Make your website](https://ghana-gds.github.io/ggds/builder.html)**: give your institution's name, address,
+contact details and colour, choose what it needs, and download a complete government website. It has a homepage,
+services, an application from start to confirmation, a complaint form, news, publications, jobs, about, contact,
+search, and the accessibility, privacy and disclaimer pages. It takes about five minutes, in the browser, and
+nothing you type leaves it.
 
-**[See it working](https://ghana-gds.github.io/ggds/starter/index.html)** ·
-**[Download it](https://github.com/ghana-gds/ggds/releases/latest)** (`ggds-agency-starter-<version>.zip`, with every release)
+Every website comes with what it takes to go live: the server settings for security and speed (Apache and cPanel,
+nginx, Netlify, Cloudflare Pages), the DNS records for your email domain, and a guide to hosting it. It passes
+[`@ggds/check`](packages/check) as it is. Its `ggds-site.json` makes the same website again with a newer GGDS.
+
+Plain HTML by default, or the same website as a **Next.js, Astro or Django** project, with GGDS's own components
+around every page. GGDS's tests check every page of each against the plain HTML.
+
+```sh
+npm init @ggds                              # the same questions, on the command line
+npx @ggds/create --from ggds-site.json      # the same website again, with this GGDS
+npx @ggds/create --stack next               # in Next.js (or astro, django)
+npx @ggds/create --update my-website        # a newer GGDS for a website you have changed: your pages are kept
+npx @ggds/check https://www.example.gov.gh  # when it is online: what it still needs
+```
+
+**[See an example](https://ghana-gds.github.io/ggds/starter/index.html)** ·
+**[Download the example](https://github.com/ghana-gds/ggds/releases/latest)** (`ggds-agency-starter-<version>.zip`, with every release)
 
 ## Start in one minute
 
 Put two lines in the `<head>` of any page:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ggds/css@0.3.0/dist/ggds.min.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@ggds/js@0.3.0/dist/auto.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ggds/css@0.4.0/dist/ggds.min.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ggds/js@0.4.0/dist/auto.js"></script>
 ```
 
 Then copy the HTML for any part from the [components](https://ghana-gds.github.io/ggds/components/index.html). For a
@@ -136,19 +152,21 @@ Every claim here is checked automatically on every change:
 | Package | What it is |
 |---|---|
 | [`@ggds/css`](packages/css) | The styles for every part, in one file or one per component |
-| [`@ggds/js`](packages/js) | The small optional script: phone menu and error summary |
+| [`@ggds/js`](packages/js) | The small optional script: phone menu, error summary, character count, password Show button, dialogs and timeout warning |
 | [`@ggds/themes`](packages/themes) | The ready-made institution themes |
 | [`@ggds/tokens`](packages/tokens) | The design tokens as CSS custom properties and W3C JSON, and the colour rule |
 | [`@ggds/icons`](packages/icons) | 143 line icons for government services: SVG files, a sprite, JavaScript and JSON |
 | [`@ggds/react`](packages/react) | Page parts and form fields as React components, for React and Next.js |
 | [`@ggds/astro`](packages/astro) | The page parts as Astro components |
+| [`@ggds/check`](packages/check) | `npx @ggds/check <address or folder>`: what a government website still needs (page parts, accessibility, security headers, email domain, speed), each rule with its source |
+| [`@ggds/create`](packages/create) | `npm init @ggds`: makes a complete government website from your institution's details, as the [website builder](https://ghana-gds.github.io/ggds/builder.html) does |
 | [`ggds-django`](packages/django) | Template tags, a form renderer, a Django admin theme and the static files |
 | [GGDS for WordPress](packages/wordpress) | A WordPress theme, `ggds-wordpress-<version>.zip` from the releases |
 | [`@ggds/html`](packages/html) | The HTML and guidance for every component and pattern: the documentation is built from it (not published) |
 
 ## Status
 
-**Draft, version 0.3.0.** GGDS is maintained by the National Information Technology Agency (NITA). Version 1.0 will
+**Draft, version 0.4.0.** GGDS is maintained by the National Information Technology Agency (NITA). Version 1.0 will
 be NITA guidance, recommended for every government website, after the independent accessibility audit. Until then
 names may change; every change is in [`CHANGELOG.md`](CHANGELOG.md), and
 [Versions and support](https://ghana-gds.github.io/ggds/versions.html) says how long each version is supported.
@@ -166,10 +184,11 @@ Node (the version in `.nvmrc`), pnpm, and [uv](https://docs.astral.sh/uv/) for t
 
 ```sh
 pnpm install
-pnpm run build        # tokens → icons → themes → css → js → react → django → wordpress → documentation in site/
+pnpm run build        # every package, then the documentation in site/: independent steps at the same time (scripts/build.mjs)
 pnpm run serve        # http://localhost:4173, with a strict Content Security Policy
 pnpm test             # build, Django tests, unit tests, then accessibility and behaviour tests (desktop and phone)
-pnpm run screenshots  # the showcase pictures, after a build
+pnpm run test:fast    # the same tests without building first
+pnpm run screenshots  # the showcase pictures, after a build (and their AVIF and WebP copies: pnpm run images)
 pnpm run readme:art   # this README's pictures, drawn from GGDS's own icons, themes and sizes
 ```
 

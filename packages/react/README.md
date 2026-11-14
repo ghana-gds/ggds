@@ -86,6 +86,7 @@ export function SiteHeader() {
 
 | Component | What it is |
 |---|---|
+| `Page` | A whole page inside `<body>`: skip link, banner, header, `<main id="main">`, footer and tab bar in GGDS's order, from `banner`, `header`, `footer` and `tabs` props (server component) |
 | `SkipLink` | "Skip to main content", first on every page |
 | `Banner` | "An official website of the Government of Ghana", and how to tell |
 | `Header` | The institution's name and main sections; a menu on phones (client component) |
@@ -101,9 +102,23 @@ export function SiteHeader() {
 | `Tag` | A short status, such as "Approved" |
 | `Card`, `CardGrid` | Linked summaries in a grid; `icon` adds a GGDS icon |
 | `Icon` | Any of the [GGDS icons](https://ghana-gds.github.io/ggds/icons.html) by name, hidden from screen readers unless it has a `label` |
+| `CodeInput` | One box for a code sent by SMS or email, which phones fill in; text, so leading zeros stay |
+| `PasswordInput` | A password field with a Show button that tells screen readers what it did (client component) |
+| `CharacterCount` | A textarea with a limit and a count that updates as people type (client component) |
+| `TaskList` | The sections of a long application, each with its status, and how many are complete |
+| `Dialog` | A box over the page to confirm an action, with Cancel first (client component) |
+| `TimeoutWarning` | Warns before people are signed out, counts down and lets them stay signed in (client component) |
+| `PageHeading`, `KeyFigures` | The top of an inner page in the institution's colour, and figures that matter |
+| `Progress`, `Timeline`, `Steps`, `Meter` | How far through a task, what happens next, what to do, an amount as a bar |
+| `BackLink`, `SideNav`, `Contents` | Back to the previous page, the pages of a section, and "On this page" |
+| `PhaseBanner`, `CookieBanner`, `LanguageSwitcher` | A new service, the cookie question, and the page in other languages |
+| `Feedback` | "Did this page help you?" at the end of a page: Yes and No send a form (`action`) with the `page` address; `answered` says thank you; `reportHref` links to report a problem |
+| `errorTitle()` | The page title while a form has errors: "Error: Apply for a licence" |
+| `stringsFor(code)`, `STRINGS`, `TRANSLATIONS`, `LANGUAGES` | GGDS's own words in a language, for the `strings` prop |
 
 Every component takes the props its documentation page shows, with TypeScript types. The form fields pass any other
 props (`autoComplete`, `inputMode`, `defaultValue`, `onChange`…) to the `<input>`, `<textarea>` or `<select>`.
+`TextInput` takes `prefix` and `suffix` for a unit beside the box, such as `prefix="GH₵"`: say the unit in the label too.
 
 ### Field ids
 

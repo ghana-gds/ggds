@@ -1,0 +1,26 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-language-switcher",
+      "The languages this page is in."
+    ],
+    [
+      ".ggds-language-switcher__list",
+      "One link per language."
+    ],
+    [
+      ".ggds-language-switcher__link",
+      "A language, named in that language, with lang and hreflang. The current one has aria-current=\"true\"."
+    ]
+  ],
+  "states": [],
+  "astro": "<LanguageSwitcher languages={[{ code: 'en', href: '/' }, { code: 'tw', href: '/tw/' }]} current=\"en\" />",
+  "django": "{% ggds_language_switcher %}",
+  "tests": [
+    "the language switcher names each language in its own language",
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

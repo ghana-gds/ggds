@@ -1,0 +1,13 @@
+---
+/** GGDS contents list: "On this page", linking to the page's own headings by their ids. */
+import { STRINGS } from './strings.mjs';
+interface Props { items: { label: string; href: string }[]; title?: string | undefined; id?: string | undefined; strings?: Record<string, string> | undefined }
+const { items, title, id = 'contents-title', strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+---
+<nav class="ggds-contents" aria-labelledby={id}>
+  <h2 class="ggds-contents__title" id={id}>{title ?? s['contents.title']}</h2>
+  <ol class="ggds-contents__list">
+    {items.map((i) => <li><a class="ggds-contents__link" href={i.href}>{i.label}</a></li>)}
+  </ol>
+</nav>

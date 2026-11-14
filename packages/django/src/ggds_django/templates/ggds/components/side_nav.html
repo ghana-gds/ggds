@@ -1,0 +1,11 @@
+<nav class="ggds-side-nav" aria-label="{{ label }}">
+  <ul class="ggds-side-nav__list">
+    {% for item in items %}<li><a class="ggds-side-nav__link" href="{{ item.href }}"{% if item.current %} aria-current="page"{% endif %}>{{ item.label }}</a>{% if item.open and item.links %}
+      <ul class="ggds-side-nav__list ggds-side-nav__list--sub">
+        {% for sub in item.links %}<li><a class="ggds-side-nav__link" href="{{ sub.href }}"{% if sub.current %} aria-current="page"{% endif %}>{{ sub.label }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}</li>
+    {% endfor %}
+  </ul>
+</nav>

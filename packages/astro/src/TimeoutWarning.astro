@@ -1,0 +1,32 @@
+---
+/**
+ * GGDS timeout warning: on every signed-in page. @ggds/js opens it warn seconds before timeout, counts down, requests
+ * keepAlive when people stay signed in, and goes to signOut when time runs out. The words come from strings.
+ */
+import { STRINGS } from './strings.mjs';
+interface Props {
+  timeout: number; warn?: number | undefined; keepAlive: string; signOut: string; signOutHref?: string | undefined;
+  id?: string | undefined; strings?: Record<string, string> | undefined;
+}
+const { timeout, warn = 120, keepAlive, signOut, signOutHref, id = 'timeout-warning', strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const first = Math.min(warn > 0 ? warn : 120, timeout);
+const minutes = Math.round(first / 60);
+const time = first >= 60 ? (minutes === 1 ? s['timeoutWarning.minutesOne'] : s['timeoutWarning.minutesOther'].replace('{count}', String(minutes)))
+  : (first === 1 ? s['timeoutWarning.secondsOne'] : s['timeoutWarning.secondsOther'].replace('{count}', String(first)));
+const [before, after] = s['timeoutWarning.message'].split('{time}');
+---
+<dialog class="ggds-dialog ggds-timeout-warning" id={id} aria-labelledby={`${id}-title`} aria-describedby={`${id}-message`}
+  data-ggds-module="timeout-warning" data-ggds-timeout={timeout} data-ggds-warn={warn} data-ggds-keep-alive={keepAlive} data-ggds-sign-out={signOut}
+  data-ggds-minutes-one={s['timeoutWarning.minutesOne']} data-ggds-minutes-other={s['timeoutWarning.minutesOther']}
+  data-ggds-seconds-one={s['timeoutWarning.secondsOne']} data-ggds-seconds-other={s['timeoutWarning.secondsOther']}>
+  <h2 class="ggds-dialog__title" id={`${id}-title`}>{s['timeoutWarning.title']}</h2>
+  <div class="ggds-dialog__body">
+    <p id={`${id}-message`}>{before}<span class="ggds-timeout-warning__time">{time}</span>{after}</p>
+    <p class="ggds-visually-hidden" aria-live="polite"></p>
+  </div>
+  <div class="ggds-dialog__actions">
+    <button class="ggds-button" type="button" data-ggds-timeout-continue>{s['timeoutWarning.continue']}</button>
+    <a href={signOutHref ?? signOut}>{s['timeoutWarning.signOut']}</a>
+  </div>
+</dialog>

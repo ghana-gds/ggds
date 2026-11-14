@@ -1,0 +1,37 @@
+{
+  "css": "dialog",
+  "javascript": "Needed to open it: @ggds/js turns the link into a button that opens the dialog, and closes it with data-ggds-dialog-close. Without it, the link goes to a confirmation page.",
+  "classes": [
+    [
+      ".ggds-dialog",
+      "On a <dialog>: a box over the page, opened as a modal."
+    ],
+    [
+      ".ggds-dialog--warning",
+      "For an action that cannot be undone: an orange line at the top."
+    ],
+    [
+      ".ggds-dialog__title",
+      "The heading, named by the dialog's aria-labelledby."
+    ],
+    [
+      ".ggds-dialog__body",
+      "What will happen."
+    ],
+    [
+      ".ggds-dialog__actions",
+      "The buttons, the safe one first."
+    ]
+  ],
+  "states": [
+    [
+      "[open]",
+      "The dialog is showing, over a darkened page."
+    ]
+  ],
+  "astro": "---\nimport Dialog from '@ggds/astro/Dialog.astro';\n---\n<a class=\"ggds-button ggds-button--warning\" href=\"/drafts/delete/\" data-ggds-dialog=\"delete-draft\">Delete draft</a>\n<Dialog id=\"delete-draft\" title=\"Delete this draft?\" warning action=\"/drafts/delete/\">\n  <p>Your answers will be deleted. You cannot get them back.</p>\n  <button slot=\"actions\" class=\"ggds-button ggds-button--warning\" type=\"submit\">Delete draft</button>\n</Dialog>  {/* Cancel comes first */}",
+  "django": "{% load ggds %}\n{% ggds_dialog id=\"delete-draft\" title=\"Delete this draft?\" body=\"Your answers will be deleted.\" action=\"/drafts/delete/\" confirm=\"Delete draft\" warning=True %}",
+  "tests": [
+    "dialog: the link opens it, Escape and Cancel close it, and focus goes back to the link"
+  ]
+}

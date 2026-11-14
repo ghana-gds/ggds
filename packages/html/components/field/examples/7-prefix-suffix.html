@@ -1,0 +1,16 @@
+<!-- title: Prefix and suffix: an amount in cedis, a weight; layout: main; height: 380 -->
+<div class="ggds-field">
+  <label class="ggds-label" for="amount">How much do you want to pay, in Ghana cedis?</label>
+  <p class="ggds-hint" id="amount-hint">For example, 150.00</p>
+  <div class="ggds-input-wrapper">
+    <span class="ggds-input__prefix" aria-hidden="true">GH₵</span>
+    <input class="ggds-input ggds-input--width-short" id="amount" name="amount" type="text" inputmode="decimal" spellcheck="false" aria-describedby="amount-hint">
+  </div>
+</div>
+<div class="ggds-field">
+  <label class="ggds-label" for="catch">Weight of the catch, in kilograms</label>
+  <div class="ggds-input-wrapper">
+    <input class="ggds-input ggds-input--width-short" id="catch" name="catch" type="text" inputmode="decimal" spellcheck="false">
+    <span class="ggds-input__suffix" aria-hidden="true">kg</span>
+  </div>
+</div>

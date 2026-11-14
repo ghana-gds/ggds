@@ -25,7 +25,8 @@ test('no inline scripts, styles, style attributes or event handlers', () => {
     assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/i, `${name}: inline <script>`);
     assert.doesNotMatch(html, /<style\b/i, `${name}: <style>`);
     assert.doesNotMatch(html, /\sstyle=/i, `${name}: style attribute`);
-    assert.doesNotMatch(html, /\son[a-z]+=/i, `${name}: event handler attribute`);
+    // Code samples are escaped text: a React example's onClick={…} is not an attribute of the page.
+    assert.doesNotMatch(html.replace(/<code\b[\s\S]*?<\/code>/g, ''), /\son[a-z]+=/i, `${name}: event handler attribute`);
   }
 });
 

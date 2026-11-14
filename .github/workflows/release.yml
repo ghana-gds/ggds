@@ -1,6 +1,6 @@
 # Pushing a tag such as v0.1.0 publishes that version:
 #   1. builds and tests it;
-#   2. publishes @ggds/tokens, icons, themes, css, js, astro and react to npm, with provenance (skipping any
+#   2. publishes @ggds/tokens, icons, themes, css, js, astro, react and check to npm, with provenance (skipping any
 #      already published);
 #   3. makes a GitHub release with ggds-<version>.zip, the WordPress theme, the agency website starter, SHA256SUMS,
 #      integrity.json and the ggds-django files;

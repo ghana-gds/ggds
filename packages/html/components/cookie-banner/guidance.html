@@ -1,0 +1,20 @@
+<!-- name: Cookie banner; icon: shield; status: alpha; order: 11; group: Page structure; related: banner, button; summary: Asks people before setting cookies the website does not need to work, such as analytics, and remembers their choice. -->
+<p class="ggds-lead">Asks people before setting cookies the website does not need to work, such as analytics, and remembers their choice.</p>
+<h2>When to use</h2>
+<ul><li>Only when the website wants to set cookies it does not need to work, such as analytics or video from another website.</li></ul>
+<h2>When not to use</h2>
+<ul><li>When the website uses only essential cookies, such as to remember a form's answers or keep people signed in. The best government website needs no cookie banner: measure visits on the server, without cookies, where you can.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Put it first in <code>&lt;body&gt;</code>, before the skip link, on every page until the person chooses.</li>
+<li>Set no analytics cookie, and load no analytics, until the person accepts.</li>
+<li>Give both choices the same button style and the same place, so neither is easier to press. Rejecting must be as easy as accepting.</li>
+<li>The buttons send a form to your website, which remembers the choice in an essential cookie and shows the page again with the confirmation, then nothing once people hide it. No JavaScript is needed.</li>
+<li>Link "View cookies" to a page that lists every cookie, what it is for and how long it lasts, where people can change their choice at any time.</li>
+<li>Follow the Data Protection Act, 2012 (Act 843) and any guidance from the Data Protection Commission.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>It is a named region with a heading, so screen reader users know what it is.</li><li>It sits in the page, not over it: it never hides the content or traps the keyboard.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>After a choice, show the confirmation in the same place, so people know it worked.</li><li>Do not move focus into the banner when the page loads.</li></ul>

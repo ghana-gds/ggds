@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1276" height="148" viewBox="0 0 1276 148" role="img" aria-labelledby="t">
-  <title id="t">30 components, 10 patterns, 143 icons, 12 institution themes, WCAG 2.2 AA, on every change, 8.3 KB of CSS, gzipped, 1.7 KB of optional JavaScript</title>
+  <title id="t">44 components, 12 patterns, 143 icons, 12 institution themes, WCAG 2.2 AA, on every change, 10.1 KB of CSS, gzipped, 6.0 KB of optional JavaScript</title>
   <g font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif">
   <g transform="translate(0 0)">
     <rect width="172" height="148" rx="16" fill="#062a44"/>
     <rect width="172" height="4" rx="2" fill="#ce1126"/>
     <circle cx="36" cy="40" r="20" fill="#ffffff" fill-opacity=".1"/>
     <g transform="translate(24 28) scale(1)" fill="none" stroke="#fcd116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></g>
-    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">30</text>
+    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">44</text>
     <text x="20" y="124" fill="#a9c6dc" font-size="13.5" font-weight="600">components</text>
   </g>
   <g transform="translate(184 0)">
@@ -14,7 +14,7 @@
     <rect width="172" height="4" rx="2" fill="#fcd116"/>
     <circle cx="36" cy="40" r="20" fill="#ffffff" fill-opacity=".1"/>
     <g transform="translate(24 28) scale(1)" fill="none" stroke="#fcd116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v3H9z"/><path d="M9 4.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5.5a1 1 0 0 0-1-1h-3"/><path d="M9 11h6M9 15h4"/></g>
-    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">10</text>
+    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">12</text>
     <text x="20" y="124" fill="#a9c6dc" font-size="13.5" font-weight="600">patterns</text>
   </g>
   <g transform="translate(368 0)">
@@ -46,7 +46,7 @@
     <rect width="172" height="4" rx="2" fill="#006b3f"/>
     <circle cx="36" cy="40" r="20" fill="#ffffff" fill-opacity=".1"/>
     <g transform="translate(24 28) scale(1)" fill="none" stroke="#fcd116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></g>
-    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">8.3 KB</text>
+    <text x="20" y="98" fill="#ffffff" font-size="26" font-weight="800">10.1 KB</text>
     <text x="20" y="124" fill="#a9c6dc" font-size="13.5" font-weight="600">of CSS, gzipped</text>
   </g>
   <g transform="translate(1104 0)">
@@ -54,7 +54,7 @@
     <rect width="172" height="4" rx="2" fill="#ce1126"/>
     <circle cx="36" cy="40" r="20" fill="#ffffff" fill-opacity=".1"/>
     <g transform="translate(24 28) scale(1)" fill="none" stroke="#fcd116" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></g>
-    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">1.7 KB</text>
+    <text x="20" y="98" fill="#ffffff" font-size="32" font-weight="800">6.0 KB</text>
     <text x="20" y="124" fill="#a9c6dc" font-size="13.5" font-weight="600">of optional JavaScript</text>
   </g>
   </g>

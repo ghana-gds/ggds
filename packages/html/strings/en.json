@@ -1,0 +1,128 @@
+{
+  "$comment": "Every piece of text GGDS writes itself, in English: the source for translations. {name} is filled in by the component; a placeholder may become a link or bold text, so keep every one in a translation. Django reads these through gettext (ggds_django/locale), React and Astro take a strings prop. Keys never change meaning: a new wording gets a new key.",
+  "skipLink.label": "Skip to main content",
+
+  "banner.label": "Official government website",
+  "banner.official": "An official website of the Government of Ghana",
+  "banner.unofficial": "This copy is not the official {shortName} website",
+  "banner.howToTell": "How to tell",
+  "banner.checkAddress": "Check the address",
+  "banner.noAddress": "The {shortName} has not confirmed its official address yet.",
+  "banner.officialAddress": "The official address of this website is {host}.",
+  "banner.otherAddress": "The official {shortName} website is {host}{note}.",
+  "banner.domain": "Most government websites end in {domain}, but some official websites do not.",
+  "banner.register": "You can check it in the {register}.",
+  "banner.registerLabel": "register of official government websites",
+  "banner.padlockHeading": "A padlock is not proof",
+  "banner.padlock": "A padlock or {https} before the address means your connection to the website is private. It does not show who runs the website.",
+  "banner.pinHeading": "We will never ask for your PIN",
+  "banner.pin": "Government officials will never ask for your PIN, password or mobile money code, by phone, by SMS or on a website.",
+
+  "header.country": "Republic of Ghana",
+  "header.home": " – home",
+  "header.navLabel": "Main",
+  "header.search": "Search",
+  "header.menu": "Menu",
+
+  "hero.searchLabel": "Search this website",
+  "hero.search": "Search",
+  "hero.tasks": "Common tasks:",
+
+  "breadcrumbs.label": "Breadcrumb",
+
+  "pagination.label": "Pages",
+  "pagination.previous": "Previous",
+  "pagination.next": "Next",
+  "pagination.hiddenPage": " page",
+  "pagination.page": "Page {number}",
+
+  "footer.enquiries": "General enquiries: {phone}",
+  "footer.contactMore": "All contact details and offices",
+
+  "tabBar.label": "Quick links",
+
+  "errorSummary.title": "There is a problem",
+  "field.errorPrefix": "Error: ",
+  "field.optional": " (optional)",
+  "page.errorTitle": "Error: {title}",
+
+  "notice.info": "Information:",
+  "notice.success": "Success:",
+  "notice.warning": "Warning:",
+  "notice.danger": "Important:",
+
+  "summaryList.notGiven": "Not given",
+  "summaryList.change": "Change",
+
+  "panel.reference": "Your reference number",
+
+  "progress.label": "Question {current} of {total}",
+
+  "timeline.done": "Done",
+  "timeline.current": "Now",
+  "timeline.next": "Next",
+
+  "backLink.label": "Back",
+
+  "phaseBanner.alpha": "Alpha",
+  "phaseBanner.beta": "Beta",
+  "phaseBanner.text": "This is a new service. Your {feedback} will help us improve it.",
+  "phaseBanner.feedback": "feedback",
+
+  "sideNav.label": "In this section",
+
+  "contents.title": "On this page",
+
+  "characterCount.limit": "You can enter up to {max} characters",
+  "characterCount.remainingOne": "You have 1 character remaining",
+  "characterCount.remainingOther": "You have {count} characters remaining",
+  "characterCount.overOne": "You have 1 character too many",
+  "characterCount.overOther": "You have {count} characters too many",
+
+  "cookieBanner.label": "Cookies on {service}",
+  "cookieBanner.title": "Cookies on {service}",
+  "cookieBanner.essential": "We use some essential cookies to make this website work.",
+  "cookieBanner.analytics": "We would also like to use analytics cookies to understand how you use the website, so we can improve it.",
+  "cookieBanner.accept": "Accept analytics cookies",
+  "cookieBanner.reject": "Reject analytics cookies",
+  "cookieBanner.view": "View cookies",
+  "cookieBanner.accepted": "You have accepted analytics cookies.",
+  "cookieBanner.rejected": "You have rejected analytics cookies.",
+  "cookieBanner.change": "You can {change} at any time.",
+  "cookieBanner.changeLink": "change your cookie settings",
+  "cookieBanner.hide": "Hide cookie message",
+
+  "languageSwitcher.label": "Choose a language",
+
+  "taskList.completed": "Completed",
+  "taskList.inProgress": "In progress",
+  "taskList.notStarted": "Not started",
+  "taskList.cannotStart": "Cannot start yet",
+  "taskList.summary": "You have completed {done} of {total} sections.",
+
+  "passwordInput.show": "Show",
+  "passwordInput.hide": "Hide",
+  "passwordInput.showLabel": "Show password",
+  "passwordInput.hideLabel": "Hide password",
+  "passwordInput.shown": "Your password is visible",
+  "passwordInput.hidden": "Your password is hidden",
+
+  "dialog.cancel": "Cancel",
+
+  "timeoutWarning.title": "You will be signed out soon",
+  "timeoutWarning.message": "To protect your information, we will sign you out in {time}.",
+  "timeoutWarning.continue": "Stay signed in",
+  "timeoutWarning.signOut": "Sign out",
+  "timeoutWarning.minutesOne": "1 minute",
+  "timeoutWarning.minutesOther": "{count} minutes",
+  "timeoutWarning.secondsOne": "1 second",
+  "timeoutWarning.secondsOther": "{count} seconds",
+
+  "feedback.question": "Did this page help you?",
+  "feedback.yes": "Yes",
+  "feedback.yesHidden": "this page helped me",
+  "feedback.no": "No",
+  "feedback.noHidden": "this page did not help me",
+  "feedback.thanks": "Thank you for your feedback.",
+  "feedback.report": "Report a problem with this page"
+}

@@ -1,6 +1,7 @@
 // Showcase pages (docs/showcase.mjs): see the template in any institution's theme. The choice loads that theme's
 // stylesheet (assets/themes/<slug>.css) after the page's own colour, is kept in the address (?theme=<slug>) so it can
-// be shared, and follows links to the showcase's other pages. Without JavaScript the picker stays hidden.
+// be shared, and follows links to the showcase's other pages. A chosen theme is also saved for the whole documentation
+// site (docs/theme-pref.js). Without JavaScript the picker stays hidden.
 const bar = document.querySelector('[data-sc-theme]');
 const select = bar?.querySelector('select');
 if (bar && select) {
@@ -23,13 +24,18 @@ if (bar && select) {
     }
   };
 
-  const start = new URLSearchParams(location.search).get('theme') ?? '';
+  // A theme in the address wins; otherwise the one chosen on the documentation homepage (docs/theme-pref.js).
+  const PREF = 'ggds-docs-theme';
+  let saved = '';
+  try { saved = localStorage.getItem(PREF) ?? ''; } catch { /* storage blocked */ }
+  const start = new URLSearchParams(location.search).get('theme') ?? saved;
   select.value = valid.has(start) ? start : '';
   apply(select.value);
   bar.hidden = false;
 
   select.addEventListener('change', () => {
     apply(select.value);
+    if (select.value) try { localStorage.setItem(PREF, select.value); } catch { /* storage blocked */ }
     const url = new URL(location.href);
     if (select.value) url.searchParams.set('theme', select.value);
     else url.searchParams.delete('theme');

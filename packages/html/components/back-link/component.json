@@ -1,0 +1,17 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-back-link",
+      "A link to the previous page of a task, with an arrow drawn before it."
+    ]
+  ],
+  "states": [],
+  "astro": "<BackLink href=\"/services/licence/apply/contact/\" />",
+  "django": "{% ggds_back_link \"/services/licence/apply/contact/\" %}",
+  "tests": [
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

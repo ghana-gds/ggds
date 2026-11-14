@@ -12,7 +12,7 @@ import { mkdirSync, readFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ORDER = ['tokens', 'icons', 'themes', 'css', 'js', 'astro', 'react'];
+const ORDER = ['tokens', 'icons', 'themes', 'css', 'js', 'astro', 'react', 'check', 'create'];
 const root = fileURLToPath(new URL('../', import.meta.url));
 const out = join(root, 'release', 'npm');
 const publish = process.argv.includes('--publish');

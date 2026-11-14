@@ -1,0 +1,64 @@
+/* Dialog: the browser's own <dialog>, opened as a modal. The browser keeps focus inside it, closes it with Escape and
+   returns focus to what opened it. For confirmations and the timeout warning only: a page is better for anything
+   people need to read or fill in. */
+.ggds-dialog {
+  width: min(32rem, calc(100% - 2 * var(--ggds-space-4)));
+  max-height: calc(100% - 2 * var(--ggds-space-4));
+  padding: var(--ggds-space-6);
+  border: 0;
+  border-top: 6px solid var(--ggds-color-brand-700);
+  border-radius: var(--ggds-radius-md);
+  background: var(--ggds-color-surface);
+  color: var(--ggds-color-text);
+  box-shadow: var(--ggds-shadow-sheet);
+}
+
+.ggds-dialog::backdrop {
+  background: color-mix(in srgb, var(--ggds-color-text) 60%, transparent);
+}
+
+.ggds-dialog--warning {
+  border-top-color: var(--ggds-color-status-warning-strong);
+}
+
+.ggds-dialog__title {
+  margin: 0 0 var(--ggds-space-3);
+  font-size: var(--ggds-font-size-xl);
+  line-height: var(--ggds-line-height-tight);
+}
+
+.ggds-dialog__body > :last-child {
+  margin-bottom: 0;
+}
+
+.ggds-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-3) var(--ggds-space-4);
+  margin-top: var(--ggds-space-6);
+}
+
+.ggds-dialog__actions .ggds-button {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ggds-dialog[open] {
+    animation: ggds-dialog-in var(--ggds-motion-duration-base) ease-out;
+  }
+
+  @keyframes ggds-dialog-in {
+    from { opacity: 0; transform: translateY(var(--ggds-space-2)); }
+  }
+}
+
+/* Timeout warning: a dialog that counts down before people are signed out. */
+.ggds-timeout-warning {
+  border-top-color: var(--ggds-color-status-warning-strong);
+}
+
+.ggds-timeout-warning__time {
+  font-weight: var(--ggds-font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}

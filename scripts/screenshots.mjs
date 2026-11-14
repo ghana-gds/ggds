@@ -61,6 +61,7 @@ try {
   await readme.close();
   await browser.close();
   console.log(`docs/screenshots: ${SHOTS.length + SHOWCASES.length} screenshots`);
+  await (await import('./images.mjs')).optimise(); // the AVIF and WebP copies the site serves
 } finally {
   server.kill();
 }

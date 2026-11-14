@@ -1,0 +1,20 @@
+<!-- name: Language switcher; icon: globe; status: alpha; order: 16; group: Navigation; related: header, banner; summary: Links to the same page in other languages, each named in its own language. -->
+<p class="ggds-lead">Links to the same page in other languages, each named in its own language.</p>
+<h2>When to use</h2>
+<ul><li>When the page is published in more than one language: English and Twi, Ewe, Ga, Hausa or Dagbani, for example.</li></ul>
+<h2>When not to use</h2>
+<ul><li>When only some pages are translated: link to the translated page from the text instead, and say which language it is in.</li><li>With automatic translation that no speaker has checked. Government information must be accurate in every language it is published in.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Put it at the top of every page, above or in the header, in the same place on every page.</li>
+<li>Name each language in that language ("Eʋegbe", not "Ewe"), so people who do not read English can find theirs.</li>
+<li>Link each language to the same page in that language, not to the homepage.</li>
+<li>Set <code>&lt;html lang&gt;</code> to the page's language on every page, and <code>lang</code> on any passage in another language.</li>
+<li>GGDS's own text, such as "Skip to main content" and "There is a problem", comes in each language from GGDS, as far as speakers have translated it: see <a href="../get-started/developers.html#languages">Languages</a> in the developers' guide. Until then it is shown in English.</li>
+<li>The names of the languages GGDS lists have not yet been checked by speakers. Check them with a speaker before you publish.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>Each link has <code>lang</code>, so a screen reader reads the language's name in that language, and <code>hreflang</code>.</li><li>The current language is bold, not a link style, and is announced as current (<code>aria-current="true"</code>).</li><li>Every link is at least 44px tall.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Set <code>lang</code> on the page, so screen readers and translation tools use the right language (WCAG 3.1.1).</li><li>Do not use flags for languages: a flag is a country, not a language, and Ghana has many languages.</li></ul>

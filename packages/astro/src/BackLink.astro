@@ -1,0 +1,8 @@
+---
+/** GGDS back link: to the previous page of a task, above the content. label: only if "Back" would be unclear. */
+import { STRINGS } from './strings.mjs';
+interface Props { href: string; label?: string | undefined; strings?: Record<string, string> | undefined }
+const { href, label, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+---
+<a class="ggds-back-link" href={href}>{label ?? s['backLink.label']}</a>

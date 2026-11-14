@@ -1,6 +1,6 @@
 {
   "name": "@ggds/css",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Styles for the Ghana Government Design System (GGDS): accessible components for government websites. Plain CSS, no JavaScript needed, works under a strict CSP.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
@@ -25,8 +25,12 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "subset.mjs"
   ],
+  "bin": {
+    "ggds-css-subset": "./subset.mjs"
+  },
   "exports": {
     ".": "./dist/ggds.css",
     "./ggds.css": "./dist/ggds.css",
@@ -36,6 +40,10 @@
     "./core.css": "./dist/core.css",
     "./core.min.css": "./dist/core.min.css",
     "./components/*.css": "./dist/components/*.css",
+    "./base.css": "./dist/base.css",
+    "./base.min.css": "./dist/base.min.css",
+    "./components.json": "./dist/components.json",
+    "./subset": "./subset.mjs",
     "./package.json": "./package.json"
   },
   "dependencies": {

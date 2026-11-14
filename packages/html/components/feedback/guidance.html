@@ -1,0 +1,15 @@
+<!-- name: Feedback; icon: comment; status: alpha; order: 30; group: Content; related: phase-banner, button, panel; summary: Asks "Did this page help you?" at the end of a page, so a service learns which pages fail people, and links to report a problem. -->
+<p class="ggds-lead">Asks “Did this page help you?” at the end of a page, so a service learns which pages fail people, and links to report a problem.</p>
+<h2>When to use</h2>
+<ul><li>At the end of information pages and the last page of a service, such as a confirmation, so every page of the website reports the same measure.</li></ul>
+<h2>When not to use</h2>
+<ul><li>In the middle of a form: it takes people away from their task. Ask on the confirmation page instead.</li><li>When nobody will read the answers. Before you add it, agree who looks at the results each month and what they will change.</li></ul>
+<h2>How to use</h2>
+<ul><li>Put it after the page's content, before the footer.</li><li>Send the page's address with the answer (the hidden <code>page</code> field), and count the Yes and No answers for each page. A page with many No answers is the one to research and rewrite first.</li><li>After an answer, show the same page with the thank-you state, so people stay where they were.</li><li>Link “Report a problem with this page” to a short form that asks what they were trying to do and what went wrong. Tell people not to type personal details such as their Ghana Card number.</li><li>Keep only the page, the answer and the date. Do not store who answered, and do not set a cookie for it.</li></ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The buttons say what they mean to screen readers: “Yes this page helped me” and “No this page did not help me”.</li><li>The thank-you message has <code>role="status"</code>, so screen readers announce it, and the buttons are at least 44 pixels high.</li><li>It works without JavaScript: the buttons send an ordinary form.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Keep it after the main content, so it is not the first thing people hear.</li><li>If you send the answer with JavaScript instead, move focus to the thank-you message (it has <code>tabindex="-1"</code>).</li></ul>
+<h2>Research</h2>
+<p>Alpha: tested automatically, not yet with people on a live website. The question follows the pattern used by government websites that measure every page; check its wording with Ghanaian users and in the GGDS languages.</p>

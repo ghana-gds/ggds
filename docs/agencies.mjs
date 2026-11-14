@@ -5,12 +5,13 @@
 // The build reads a cleaned copy of those settings, docs/example-sites.json, so the example sites build anywhere,
 // including on GitHub. `pnpm run sync:examples` makes the copy from the platform (GGDS_PLATFORM_DIR, default
 // ../agencies/platform): only names, colours, sections, common tasks and descriptions, with no logos, contact
-// details or web addresses. It also checks every agency colour with both GGDS (packages/tokens/institution.mjs)
-// and the platform (packages/design-tokens/agency-colour.mjs), and the sections against the platform's nav.ts.
+// details or web addresses. It also checks that GGDS's institution colour rule (packages/tokens/institution.mjs),
+// which the platform uses, still gives the answers the platform's own copy is tested against
+// (packages/agency-schema/fixtures/institution-colours.json), and the sections against the platform's nav.ts.
 // GGDS_EXAMPLE_UNVERIFIED=1 reads the platform directly instead, with logos and contacts, for agency reviews only.
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { getTheme } from '../packages/themes/index.mjs';
 import { institutionPalette } from '../packages/tokens/institution.mjs';
 import { contrast } from '../packages/tokens/lib.mjs';
@@ -83,8 +84,11 @@ function checkSections(dir) {
   const navTs = join(dir, 'apps', 'web', 'src', 'lib', 'nav.ts');
   if (!existsSync(navTs)) return;
   const src = readFileSync(navTs, 'utf8');
-  const block = src.slice(src.indexOf('const ALL_SECTIONS'), src.indexOf('];', src.indexOf('const ALL_SECTIONS')));
-  const theirs = [...block.matchAll(/\{ label: (['`])(.*?)\1, href: '([^']+)' \}/g)].map((m) => `${m[2].replace('${AGENCY.shortName}', '{short}')} ${m[3]}`);
+  // The list is in sectionsFor(shortName) (earlier: const ALL_SECTIONS = [...]); it ends at the first "\n];".
+  const start = ['sectionsFor = (', 'const ALL_SECTIONS'].map((a) => src.indexOf(a)).find((i) => i >= 0) ?? -1;
+  const block = start < 0 ? '' : src.slice(start, src.indexOf('\n];', start));
+  const theirs = [...block.matchAll(/\{ label: (['`])(.*?)\1, href: '([^']+)' \}/g)].map((m) => `${m[2].replace(/\$\{(?:AGENCY\.)?shortName\}/, '{short}')} ${m[3]}`);
+  if (!theirs.length) throw new Error(`docs/agencies.mjs could not read the sections in ${navTs}: its layout has changed; update checkSections`);
   const ours = SECTIONS.flatMap((s) => s.children.map((c) => `${c.label} ${c.href}`));
   const missing = theirs.filter((x) => !ours.includes(x));
   const extra = ours.filter((x) => !theirs.includes(x));
@@ -107,7 +111,6 @@ export async function readPlatform(dir) {
   if (!existsSync(agenciesDir)) return null;
   checkSections(dir);
   const registry = readJson(join(dir, 'packages', 'agency-schema', 'modules.json')).modules;
-  const { agencyPalette } = await import(pathToFileURL(join(dir, 'packages', 'design-tokens', 'agency-colour.mjs')).href);
   const agencies = readdirSync(agenciesDir, { withFileTypes: true })
     .filter((d) => d.isDirectory() && existsSync(join(agenciesDir, d.name, 'profile.json')))
     .map((d) => {
@@ -118,12 +121,24 @@ export async function readPlatform(dir) {
     })
     .filter((a) => a.profile.status !== 'fixture')
     .sort((a, b) => a.profile.identity.legalName.localeCompare(b.profile.identity.legalName));
-  for (const a of agencies) {
-    const ggds = institutionPalette(a.profile.identity.themeColor);
-    const platform = agencyPalette(a.profile.identity.themeColor);
-    if (ggds.accent !== platform.accent || ggds.deep !== platform.deep) throw new Error(`Institution colours differ from the platform for ${a.slug}`);
-  }
+  checkColourCases(dir);
   return { registry, agencies };
+}
+
+/**
+ * The platform uses GGDS's colour rule on its websites and keeps a Python copy for its CMS, tested against shared
+ * cases. If GGDS's rule changes, those cases must be regenerated on the platform (scripts/institution-colour-cases.mjs).
+ */
+function checkColourCases(dir) {
+  const file = join(dir, 'packages', 'agency-schema', 'fixtures', 'institution-colours.json');
+  if (!existsSync(file)) return;
+  for (const c of readJson(file).cases) {
+    let deep = null;
+    try { deep = institutionPalette(c.colour).deep; } catch { deep = null; }
+    if ((deep !== null) !== c.usable || (c.usable && deep !== c.deep)) {
+      throw new Error(`GGDS's colour rule no longer gives the platform's answer for ${c.colour}: regenerate the platform's cases (scripts/institution-colour-cases.mjs)`);
+    }
+  }
 }
 
 /** Every string in a value, with email addresses and phone numbers hidden. */

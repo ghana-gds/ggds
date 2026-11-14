@@ -1,0 +1,29 @@
+{
+  "css": "navigation",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-contents",
+      "The list of the page's own sections."
+    ],
+    [
+      ".ggds-contents__title",
+      "\"On this page\"."
+    ],
+    [
+      ".ggds-contents__list",
+      "The sections, in the order they appear."
+    ],
+    [
+      ".ggds-contents__link",
+      "A link to a section's heading."
+    ]
+  ],
+  "states": [],
+  "astro": "<Contents items={[{ label: 'What it costs', href: '#what-it-costs' }]} />",
+  "django": "{% ggds_contents items %}",
+  "tests": [
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

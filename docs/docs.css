@@ -324,6 +324,114 @@
   color: inherit;
 }
 
+/* Themes page: the theme builder (theme-builder.js). Colours reach the preview through custom properties set with
+   the CSSOM, so the page needs no style attributes. */
+.docs-builder:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* long code lines scroll inside their block, not the page */
+}
+
+.docs-builder {
+  gap: var(--ggds-space-6);
+  margin: 0 0 var(--ggds-space-8);
+  padding: var(--ggds-space-4);
+  border: 1px solid var(--ggds-color-border-strong);
+  border-radius: var(--ggds-radius-md);
+  background: var(--ggds-color-surface-sunken);
+}
+
+@media (min-width: 48rem) {
+  .docs-builder {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    padding: var(--ggds-space-6);
+  }
+
+  .docs-builder__checks,
+  .docs-builder__files {
+    grid-column: 1 / -1;
+  }
+}
+
+.docs-builder__form .ggds-field:last-child {
+  margin-bottom: 0;
+}
+
+.docs-builder__colour {
+  display: flex;
+  align-items: center;
+  gap: var(--ggds-space-2);
+}
+
+.docs-builder__colour .ggds-input {
+  margin: 0;
+  font-family: var(--ggds-font-family-mono);
+}
+
+.docs-builder__picker {
+  inline-size: 3rem;
+  block-size: 2.75rem;
+  padding: 2px;
+  border: 2px solid var(--ggds-color-border-strong);
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-surface);
+  cursor: pointer;
+}
+
+.docs-builder__result {
+  min-width: 0;
+}
+
+.docs-builder__result .ggds-notice .ggds-button {
+  margin: var(--ggds-space-2) 0 0;
+}
+
+.docs-builder__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ggds-space-4);
+  margin: 0 0 var(--ggds-space-4);
+}
+
+.docs-builder__swatches dt {
+  font-weight: var(--ggds-font-weight-bold);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.docs-builder__swatches dd {
+  margin: 0;
+}
+
+.docs-builder__figure {
+  margin: 0;
+}
+
+.docs-builder__caption {
+  margin-bottom: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-sm);
+  color: var(--ggds-color-text-muted);
+}
+
+.docs-builder__checks {
+  margin: 0;
+}
+
+.docs-builder__files h3 {
+  margin-top: 0;
+}
+
+/* "Download my-agency.tokens.json" is longer than a 320px screen: let the file name wrap. */
+.docs-builder__files .ggds-button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.docs-theme-files a {
+  display: inline-block;
+  margin-inline-end: var(--ggds-space-2);
+  white-space: nowrap;
+}
+
 /* Example sites: inner pages */
 .docs-example-note {
   margin-block: var(--ggds-space-6);
@@ -1009,6 +1117,12 @@
   color: var(--ggds-color-link);
   font-weight: var(--ggds-font-weight-bold);
   text-decoration: underline;
+}
+
+/* Screenshots are <picture> elements (AVIF, WebP, JPEG): the box is the <img>'s, styled below. */
+.docs-shots__link > picture,
+.docs-showcase__screen > picture {
+  display: contents;
 }
 
 .docs-shots__img {

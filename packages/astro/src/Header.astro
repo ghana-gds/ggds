@@ -6,6 +6,7 @@
  * badge used until a logo is approved. Extra attributes (data-*) go on the <header>; nav items take their own.
  */
 import { icon } from '../icons.mjs';
+import { STRINGS } from './strings.mjs';
 
 interface NavItem { label: string; href: string; attrs?: Record<string, unknown> | undefined }
 interface Props {
@@ -17,10 +18,14 @@ interface Props {
   home?: string | undefined;
   search?: { href: string } | false;
   navId?: string | undefined;
+  /** GGDS's own text in another language (stringsFor('tw') from @ggds/astro/strings.mjs) or other words, by key. */
+  strings?: Record<string, string> | undefined;
   class?: string | undefined;
   [attr: string]: unknown;
 }
-const { name, country = 'Republic of Ghana', initials, nav, current, home = '/', search = { href: '/search/' }, navId = 'ggds-header-nav', class: extra = '', ...rest } = Astro.props;
+const { name, country: countryProp, initials, nav, current, home = '/', search = { href: '/search/' }, navId = 'ggds-header-nav', strings, class: extra = '', ...rest } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const country = countryProp ?? s['header.country'];
 const hasLogo = Astro.slots.has('logo');
 ---
 <header class:list={['ggds-header', extra]} {...rest}>
@@ -30,15 +35,15 @@ const hasLogo = Astro.slots.has('logo');
       <span class="ggds-header__text">
         <span class:list={['ggds-header__name', name.length > 45 && 'ggds-header__name--long']}>{name}</span>
         {country && <span class="ggds-header__country">{country}</span>}
-        <span class="ggds-visually-hidden"> – home</span>
+        <span class="ggds-visually-hidden">{s['header.home']}</span>
       </span>
     </a>
-    <nav class="ggds-header__nav" id={navId} aria-label="Main">
+    <nav class="ggds-header__nav" id={navId} aria-label={s['header.navLabel']}>
       <ul class="ggds-header__list">
         {nav.map((n) => <li><a class="ggds-header__link" href={n.href} aria-current={n.href === current ? 'page' : undefined} {...(n.attrs ?? {})}>{n.label}</a></li>)}
       </ul>
     </nav>
-    {search && <a class="ggds-header__search" href={search.href}><Fragment set:html={icon('search', 'ggds-header__icon')} /><span class="ggds-header__search-label">Search</span></a>}
-    <button type="button" class="ggds-header__menu-button" aria-controls={navId} aria-expanded="false" hidden><Fragment set:html={icon('menu', 'ggds-header__icon ggds-header__icon--menu') + icon('close', 'ggds-header__icon ggds-header__icon--close')} /><span class="ggds-visually-hidden">Menu</span></button>
+    {search && <a class="ggds-header__search" href={search.href}><Fragment set:html={icon('search', 'ggds-header__icon')} /><span class="ggds-header__search-label">{s['header.search']}</span></a>}
+    <button type="button" class="ggds-header__menu-button" aria-controls={navId} aria-expanded="false" hidden><Fragment set:html={icon('menu', 'ggds-header__icon ggds-header__icon--menu') + icon('close', 'ggds-header__icon ggds-header__icon--close')} /><span class="ggds-visually-hidden">{s['header.menu']}</span></button>
   </div>
 </header>

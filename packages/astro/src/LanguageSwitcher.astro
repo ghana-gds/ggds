@@ -1,0 +1,15 @@
+---
+/** GGDS language switcher: the same page in each language, named in that language. Nothing for one language. */
+import { LANGUAGES, STRINGS } from './strings.mjs';
+interface Props { languages: { code: string; href: string; own?: string | undefined }[]; current: string; label?: string | undefined; strings?: Record<string, string> | undefined }
+const { languages, current, label, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const own = (code: string) => LANGUAGES.find((l: { code: string }) => l.code === code)?.own ?? code;
+---
+{languages.length > 1 && (
+  <nav class="ggds-language-switcher" aria-label={label ?? s['languageSwitcher.label']}>
+    <ul class="ggds-language-switcher__list">
+      {languages.map((l) => <li><a class="ggds-language-switcher__link" href={l.href} lang={l.code} hreflang={l.code} aria-current={l.code === current ? 'true' : undefined}>{l.own ?? own(l.code)}</a></li>)}
+    </ul>
+  </nav>
+)}

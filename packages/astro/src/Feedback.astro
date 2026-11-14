@@ -1,0 +1,25 @@
+---
+/**
+ * GGDS feedback: at the end of a page, "Did this page help you?" with Yes and No, sent as an ordinary form (POST to
+ * action, with the page's address in the hidden "page" field), and a link to report a problem. answered: say thank
+ * you instead of asking again.
+ */
+import { STRINGS } from './strings.mjs';
+interface Props { action: string; page: string; reportHref?: string | undefined; answered?: boolean | undefined; strings?: Record<string, string> | undefined }
+const { action, page, reportHref, answered = false, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const report = reportHref ? `${reportHref}${reportHref.includes('?') ? '&' : '?'}page=${encodeURI(page)}` : '';
+---
+<section class="ggds-feedback" aria-labelledby="ggds-feedback-title">
+  {answered
+    ? <p class="ggds-feedback__thanks" id="ggds-feedback-title" role="status" tabindex="-1">{s['feedback.thanks']}</p>
+    : <form class="ggds-feedback__form" action={action} method="post">
+        <input type="hidden" name="page" value={page}>
+        <h2 class="ggds-feedback__title" id="ggds-feedback-title">{s['feedback.question']}</h2>
+        <div class="ggds-feedback__answers">
+          <button class="ggds-button ggds-button--secondary ggds-feedback__answer" type="submit" name="helpful" value="yes">{s['feedback.yes']} <span class="ggds-visually-hidden">{s['feedback.yesHidden']}</span></button>
+          <button class="ggds-button ggds-button--secondary ggds-feedback__answer" type="submit" name="helpful" value="no">{s['feedback.no']} <span class="ggds-visually-hidden">{s['feedback.noHidden']}</span></button>
+        </div>
+      </form>}
+  {report && <p class="ggds-feedback__report"><a href={report}>{s['feedback.report']}</a></p>}
+</section>

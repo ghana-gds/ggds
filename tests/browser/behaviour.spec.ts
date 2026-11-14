@@ -439,3 +439,257 @@ test.describe('moving drawings', () => {
     });
   }
 });
+
+// Layout classes (packages/css/src/components/layout.css): one column on phones, more as the screen allows, and the
+// same space between the parts of a stack whatever their own margins.
+test('layout classes change columns at the breakpoints', async ({ page }) => {
+  const columns = (selector: string) => page.locator(selector).evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+  for (const [width, grid, aside] of [[375, 1, 1], [800, 2, 1], [1280, 3, 2]] as const) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/examples/layout/2-grid.html');
+    expect(await columns('[data-test="grid-3"]'), `grid at ${width}px`).toBe(grid);
+    await page.goto('/examples/layout/1-with-aside.html');
+    expect(await columns('[data-test="with-aside"]'), `side column at ${width}px`).toBe(aside);
+  }
+  // In a stack, a paragraph's own margin is replaced by the stack's gap (spacing 4, 16px at the default text size).
+  const gaps = await page.locator('[data-test="with-aside"] > .ggds-stack > p').evaluateAll((ps) => ps.map((p) => {
+    const s = getComputedStyle(p);
+    return [s.marginBlockStart, s.marginBlockEnd];
+  }));
+  expect(gaps).toEqual([['16px', '0px'], ['16px', '0px']]);
+});
+
+test('character count updates as people type and tells screen readers when they pause', async ({ page }) => {
+  await page.goto('/examples/character-count/1-default.html');
+  const field = page.locator('.ggds-character-count');
+  const status = field.locator('.ggds-character-count__status');
+  const live = field.locator('[aria-live="polite"]');
+  await expect(status).toHaveText('You have 500 characters remaining');
+  await expect(status).toHaveAttribute('aria-hidden', 'true');
+  // The limit stays the textarea's description, hidden.
+  await expect(page.locator('#details')).toHaveAttribute('aria-describedby', 'details-hint details-info');
+  await expect(page.locator('#details-info')).toHaveClass(/ggds-visually-hidden/);
+  await page.locator('#details').fill('x'.repeat(499));
+  await expect(status).toHaveText('You have 1 character remaining');
+  await expect(live).toHaveText('You have 1 character remaining', { timeout: 3000 });
+  await page.locator('#details').fill('x'.repeat(503));
+  await expect(status).toHaveText('You have 3 characters too many');
+  await expect(status).toHaveClass(/ggds-character-count__status--over/);
+  await expect(page.locator('#details')).toHaveClass(/ggds-character-count__textarea--over/);
+  // Nothing is cut off: there is no maxlength.
+  await expect(page.locator('#details')).toHaveValue('x'.repeat(503));
+});
+
+test.describe('character count without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('shows the limit as a hint', async ({ page }) => {
+    await page.goto('/examples/character-count/1-default.html');
+    await expect(page.locator('#details-info')).toBeVisible();
+    await expect(page.locator('#details-info')).toHaveText('You can enter up to 500 characters');
+  });
+});
+
+test('the language switcher names each language in its own language', async ({ page }) => {
+  await page.goto('/examples/language-switcher/1-default.html');
+  const links = page.locator('.ggds-language-switcher__link');
+  await expect(links).toHaveCount(6);
+  for (const [code, own] of [['en', 'English'], ['tw', 'Twi'], ['ee', 'Eʋegbe'], ['gaa', 'Gã'], ['ha', 'Hausa'], ['dag', 'Dagbanli']]) {
+    const link = page.locator(`.ggds-language-switcher__link[lang="${code}"]`);
+    await expect(link).toHaveText(own);
+    await expect(link).toHaveAttribute('hreflang', code);
+  }
+  await expect(page.locator('[aria-current="true"]')).toHaveText('English');
+  for (const box of await Promise.all((await links.all()).map((l) => l.boundingBox()))) expect(box?.height ?? 0).toBeGreaterThanOrEqual(44);
+});
+
+test.describe('cookie banner without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('the cookie banner offers both choices equally, without JavaScript', async ({ page }) => {
+    await page.goto('/examples/cookie-banner/1-question.html');
+    const banner = page.getByRole('region', { name: 'Cookies on Example Agency' });
+    await expect(banner).toBeVisible();
+    const accept = banner.getByRole('button', { name: 'Accept analytics cookies' });
+    const reject = banner.getByRole('button', { name: 'Reject analytics cookies' });
+    await expect(accept).toHaveAttribute('type', 'submit');
+    await expect(reject).toHaveAttribute('type', 'submit');
+    // The same style and the same size: rejecting is as easy as accepting.
+    expect(await accept.getAttribute('class')).toBe(await reject.getAttribute('class'));
+    const [a, r] = await Promise.all([accept.boundingBox(), reject.boundingBox()]);
+    expect(Math.abs((a?.height ?? 0) - (r?.height ?? 0))).toBeLessThanOrEqual(1);
+    await expect(banner.locator('form')).toHaveAttribute('method', 'post');
+  });
+});
+
+// Transactional components: task list, password input, code input, dialog and timeout warning.
+test('task list: the whole row opens the section, and screen readers hear its status', async ({ page }) => {
+  await page.goto('/examples/task-list/1-application.html');
+  const link = page.getByRole('link', { name: 'Upload your documents' });
+  await expect(link).toHaveAccessibleDescription('Your Ghana Card and a photo of the canoe In progress');
+  // Clicking the status, at the far end of the row, follows the link: the link covers the whole row.
+  const status = await page.locator('#task-documents-status').boundingBox();
+  await page.mouse.click((status?.x ?? 0) + (status?.width ?? 0) / 2, (status?.y ?? 0) + (status?.height ?? 0) / 2);
+  await expect(page).toHaveURL(/#documents$/);
+  // A section that cannot start yet is not a link, and says so in words.
+  await expect(page.getByRole('link', { name: 'Pay the fee' })).toHaveCount(0);
+  await expect(page.locator('#task-pay-status')).toHaveText('Cannot start yet');
+  const row = await page.locator('.ggds-task-list__item').first().boundingBox();
+  expect(row?.height ?? 0).toBeGreaterThanOrEqual(44);
+});
+
+test('password input: Show reveals the password, says so, and hides it again when the form is sent', async ({ page }) => {
+  await page.goto('/examples/password-input/1-sign-in.html');
+  const input = page.locator('#password');
+  const toggle = page.getByRole('button', { name: 'Show password' });
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveText('Show');
+  await input.fill('correct horse');
+  await toggle.click();
+  await expect(input).toHaveAttribute('type', 'text');
+  await expect(page.getByRole('button', { name: 'Hide password' })).toHaveText('Hide');
+  await expect(page.locator('.ggds-password-input [aria-live="polite"]')).toHaveText('Your password is visible');
+  await page.getByRole('button', { name: 'Hide password' }).click();
+  await expect(input).toHaveAttribute('type', 'password');
+  await expect(page.locator('.ggds-password-input [aria-live="polite"]')).toHaveText('Your password is hidden');
+  // Shown, then the form is sent: the field is a password field again first.
+  await page.getByRole('button', { name: 'Show password' }).click();
+  await page.evaluate(() => {
+    const form = document.createElement('form');
+    form.addEventListener('submit', (e) => e.preventDefault());
+    const field = document.querySelector('.ggds-password-input');
+    field?.before(form);
+    if (field) form.append(field);
+    form.requestSubmit();
+  });
+  await expect(input).toHaveAttribute('type', 'password');
+});
+
+test.describe('password input without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('is a plain password field with no button', async ({ page }) => {
+    await page.goto('/examples/password-input/1-sign-in.html');
+    await expect(page.locator('#password')).toHaveAttribute('type', 'password');
+    await expect(page.locator('.ggds-password-input__toggle')).toBeHidden();
+  });
+});
+
+test('code input: one box that phones can fill in, and keeps leading zeros', async ({ page }) => {
+  await page.goto('/examples/code-input/1-sms-code.html');
+  const code = page.getByLabel('Enter the code we sent you');
+  await expect(code).toHaveAttribute('autocomplete', 'one-time-code');
+  await expect(code).toHaveAttribute('inputmode', 'numeric');
+  await expect(code).toHaveAttribute('type', 'text');
+  await code.fill('012 345');
+  await expect(code).toHaveValue('012 345');
+  await expect(page.locator('.ggds-input--code')).toHaveCount(1);
+});
+
+test('dialog: the link opens it, Escape and Cancel close it, and focus goes back to the link', async ({ page }) => {
+  await page.goto('/examples/dialog/1-confirm.html');
+  const opener = page.getByRole('link', { name: 'Delete draft' });
+  const dialog = page.getByRole('dialog', { name: 'Delete this draft?' });
+  await expect(dialog).toBeHidden();
+  await expect(opener).toHaveAttribute('aria-haspopup', 'dialog');
+  await opener.click();
+  await expect(dialog).toBeVisible();
+  // Focus starts on the safe choice.
+  await expect(page.getByRole('button', { name: 'Cancel' })).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+  await opener.press('Enter');
+  await expect(dialog).toBeVisible();
+  await page.getByRole('button', { name: 'Cancel' }).click();
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+  expect(page.url()).not.toContain('#delete-draft-page');
+});
+
+test.describe('dialog without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+  test('the link goes to the confirmation page instead', async ({ page }) => {
+    await page.goto('/examples/dialog/1-confirm.html');
+    await page.getByRole('link', { name: 'Delete draft' }).click();
+    await expect(page).toHaveURL(/#delete-draft-page$/);
+  });
+});
+
+test('timeout warning: opens before the end, Stay signed in extends the session, and time running out signs people out', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/examples/timeout-warning/1-default.html');
+  const dialog = page.getByRole('dialog', { name: 'You will be signed out soon' });
+  await expect(dialog).toBeHidden();
+  // The example signs out after 123 seconds and warns 120 seconds before.
+  await page.clock.runFor(4000);
+  await expect(dialog).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Stay signed in' })).toBeFocused();
+  await expect(dialog).toHaveAccessibleDescription('To protect your information, we will sign you out in 2 minutes.');
+  // The live region stays quiet on open (the description is read), then repeats the whole message at each milestone.
+  const live = dialog.locator('[aria-live]');
+  await expect(live).toHaveText('');
+  await page.clock.runFor(61_000);
+  await expect(dialog.locator('.ggds-timeout-warning__time')).toHaveText(/^\d+ seconds$/);
+  await expect(live).toHaveText('To protect your information, we will sign you out in 1 minute.');
+  // Stay signed in: the keep-alive address is requested and the count starts again.
+  const keepAlive = page.waitForRequest((r) => r.url().includes('/examples/timeout-warning/1-default.html') && r.resourceType() === 'fetch');
+  await page.getByRole('button', { name: 'Stay signed in' }).click();
+  await keepAlive;
+  await expect(dialog).toBeHidden();
+  // Escape keeps people signed in too.
+  await page.clock.runFor(4000);
+  await expect(dialog).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  // Nobody there: time runs out, and the page goes to the sign-out address.
+  await page.clock.runFor(124_000);
+  await expect(page).toHaveURL(/#signed-out$/);
+});
+
+test.describe('timeout warning, the session and other tabs', () => {
+  test('if the session has already ended, Stay signed in goes to the sign-out page', async ({ page }) => {
+    await page.clock.install();
+    await page.route('**/examples/timeout-warning/1-default.html', (route) =>
+      (route.request().resourceType() === 'fetch' ? route.fulfill({ status: 401, body: '' }) : route.continue()));
+    await page.goto('/examples/timeout-warning/1-default.html');
+    await page.clock.runFor(4000);
+    await page.getByRole('button', { name: 'Stay signed in' }).click();
+    await expect(page).toHaveURL(/#signed-out$/);
+  });
+
+  test('a tab where people are working keeps the warning closed in another tab', async ({ context }) => {
+    await context.clock.install();
+    const idle = await context.newPage();
+    await idle.goto('/examples/timeout-warning/1-default.html');
+    await idle.clock.runFor(4000);
+    const dialog = idle.getByRole('dialog', { name: 'You will be signed out soon' });
+    await expect(dialog).toBeVisible();
+    // People open another page of the website: the session starts again, and the idle tab follows.
+    const busy = await context.newPage();
+    await busy.goto('/examples/timeout-warning/1-default.html');
+    await idle.clock.runFor(2000);
+    await expect(dialog).toBeHidden();
+  });
+});
+
+// Feedback: "Did this page help you?" sends the answer and the page's address with no script, and says thank you.
+test('feedback: an answer sends the page address, and the thank-you is announced', async ({ page }) => {
+  await page.goto('/examples/feedback/1-default.html');
+  const sent: string[] = [];
+  // The documentation points the example's form at a placeholder page (links/), as it does every example link.
+  await page.route('**/links/1-default-feedback.html', async (route) => {
+    sent.push(route.request().postData() ?? '');
+    await route.fulfill({ status: 200, contentType: 'text/html', body: '<p>OK</p>' });
+  });
+  const no = page.getByRole('button', { name: 'No this page did not help me', exact: true });
+  await expect(page.getByRole('button', { name: 'Yes this page helped me', exact: true })).toBeVisible();
+  expect((await no.boundingBox())?.height ?? 0).toBeGreaterThanOrEqual(44);
+  await no.click();
+  await expect.poll(() => sent.length).toBe(1);
+  const answer = new URLSearchParams(sent[0]);
+  expect(answer.get('helpful')).toBe('no');
+  expect(answer.get('page')).toBe('/services/apply-for-a-licence/');
+  await expect(page.getByRole('link', { name: 'Report a problem with this page' })).toHaveCount(0); // left the page
+
+  await page.goto('/examples/feedback/2-thanks.html');
+  await expect(page.getByRole('status')).toHaveText('Thank you for your feedback.');
+  await expect(page.getByRole('link', { name: 'Report a problem with this page' })).toBeVisible(); // its address: the unit tests
+});

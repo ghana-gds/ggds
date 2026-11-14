@@ -1,6 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 import { Icon, type IconName } from './Icon.js';
-import { cx } from './util.js';
+import { cx, t, type StringsProp } from './util.js';
 
 const VARIANT = { primary: '', secondary: 'ggds-button--secondary', quiet: 'ggds-button--quiet', warning: 'ggds-button--warning' } as const;
 
@@ -30,12 +30,14 @@ export interface BreadcrumbsProps {
   items: { label: string; href: string }[];
   /** This page's name. */
   current: string;
+  /** GGDS's own text in another language: stringsFor('tw'). */
+  strings?: StringsProp;
 }
 
 /** Where the page sits in the website. */
-export function Breadcrumbs({ items, current }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, current, strings }: BreadcrumbsProps) {
   return (
-    <nav className="ggds-breadcrumbs" aria-label="Breadcrumb">
+    <nav className="ggds-breadcrumbs" aria-label={t(strings, 'breadcrumbs.label')}>
       <ol className="ggds-breadcrumbs__list">
         {items.map((i) => <li className="ggds-breadcrumbs__item" key={i.href}><a className="ggds-breadcrumbs__link" href={i.href}>{i.label}</a></li>)}
         <li className="ggds-breadcrumbs__item" aria-current="page">{current}</li>
@@ -44,18 +46,21 @@ export function Breadcrumbs({ items, current }: BreadcrumbsProps) {
   );
 }
 
-const NOTICE = { info: ['', 'Information:'], success: ['ggds-notice--success', 'Success:'], warning: ['ggds-notice--warning', 'Warning:'], danger: ['ggds-notice--danger', 'Important:'] } as const;
+const NOTICE = { info: '', success: 'ggds-notice--success', warning: 'ggds-notice--warning', danger: 'ggds-notice--danger' } as const;
 
 export interface NoticeProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   /** info (default), success, warning or danger. */
   type?: keyof typeof NOTICE;
   /** The message, in one line. */
   title: ReactNode;
+  /** GGDS's own text in another language: stringsFor('tw'). */
+  strings?: StringsProp;
 }
 
 /** A message to read before going on. Screen readers hear its type first ("Warning:"). */
-export function Notice({ type = 'info', title, children, className, ...rest }: NoticeProps) {
-  const [cls, word] = NOTICE[type];
+export function Notice({ type = 'info', title, strings, children, className, ...rest }: NoticeProps) {
+  const cls = NOTICE[type];
+  const word = t(strings, `notice.${type}`);
   return (
     <div className={cx('ggds-notice', cls, className)} {...rest}>
       <p className="ggds-notice__title"><span className="ggds-visually-hidden">{word}</span> {title}</p>

@@ -1,0 +1,11 @@
+<!-- title: Confirm before deleting; layout: main; height: 360 -->
+<p>Draft saved on 12 November 2026.</p>
+<a class="ggds-button ggds-button--warning" href="#delete-draft-page" data-ggds-dialog="delete-draft">Delete draft</a>
+<dialog class="ggds-dialog ggds-dialog--warning" id="delete-draft" aria-labelledby="delete-draft-title">
+  <h2 class="ggds-dialog__title" id="delete-draft-title">Delete this draft?</h2>
+  <div class="ggds-dialog__body"><p>Your answers will be deleted. You cannot get them back.</p></div>
+  <form class="ggds-dialog__actions" action="#delete-draft-page" method="post">
+    <button class="ggds-button ggds-button--secondary" type="button" data-ggds-dialog-close>Cancel</button>
+    <button class="ggds-button ggds-button--warning" type="submit">Delete draft</button>
+  </form>
+</dialog>

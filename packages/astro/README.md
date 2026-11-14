@@ -140,10 +140,31 @@ The components output the HTML that GGDS tests in its documentation: it meets WC
 at desktop and phone widths, and works under a strict Content Security Policy. They send no JavaScript to the
 browser; the phone menu comes from `@ggds/js`.
 
+### More parts
+
+Each takes a `strings` prop for GGDS's own words in another language. Their props are on each component's
+documentation page.
+
+| Component | What it is |
+|---|---|
+| `Page` | A whole page inside `<body>` in GGDS's order: `banner`, `header` and `footer` (each part's props), `tabs`, `mainClass`; the content in the default slot, your logo in the `logo` and `footer-logo` slots |
+| `BackLink` | Back to the previous page of a task: `href`, and `label` only if "Back" would be unclear |
+| `PhaseBanner` | Under the header for a new service: `phase` (`'alpha'` or `'beta'`) and `feedbackHref` |
+| `SideNav` | The pages of one section: `items` (each with optional `links`) and `current` |
+| `Contents` | "On this page": `items` linking to the page's own headings |
+| `LanguageSwitcher` | The same page in each language: `languages` and `current`. Nothing for one language |
+| `CookieBanner` | Asks before setting analytics cookies; works without JavaScript: `service` and `choice` |
+| `PasswordInput` | A password field; `@ggds/js` adds the Show button: `id`, `name`, `label`, `hint`, `error`, `autocomplete` |
+| `CodeInput` | One box for a code sent by SMS or email: `id`, `name`, `label`, `hint`, `error`, `value` |
+| `TaskList` | The sections of an application with their status: `tasks` of `{ label, href?, status, hint? }` |
+| `Dialog` | Confirms an action: `id`, `title`, `warning`, `action`; the default slot says what happens, the `actions` slot holds the button, and Cancel comes first |
+| `TimeoutWarning` | On every signed-in page: `timeout`, `warn`, `keepAlive` and `signOut`; `@ggds/js` runs it |
+| `Feedback` | "Did this page help you?" at the end of a page: `action`, `page`, `reportHref`, and `answered` for the thank-you |
+
 ## Related packages
 
 - [`@ggds/css`](https://www.npmjs.com/package/@ggds/css): the styles (required)
-- [`@ggds/js`](https://www.npmjs.com/package/@ggds/js): the optional script for the phone menu and error summary
+- [`@ggds/js`](https://www.npmjs.com/package/@ggds/js): the optional script: phone menu, error summary, character count, password Show button, dialogs and timeout warning
 - [`@ggds/themes`](https://www.npmjs.com/package/@ggds/themes): ready-made institution themes
 - [`@ggds/tokens`](https://www.npmjs.com/package/@ggds/tokens): the design tokens
 

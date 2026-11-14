@@ -1,0 +1,19 @@
+{% if choice != "hidden" %}<div class="ggds-cookie-banner" role="region" aria-label="{{ label }}">
+  <div class="ggds-container ggds-cookie-banner__inner">
+    {% if not choice %}<h2 class="ggds-cookie-banner__title">{{ title }}</h2>
+    <div class="ggds-cookie-banner__body">
+      <p>{{ essential }}</p>
+      <p>{{ analytics }}</p>
+    </div>
+    <form class="ggds-cookie-banner__actions" method="post" action="{{ action }}">{% if csrf_token %}<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">{% endif %}
+      <button class="ggds-button" type="submit" name="cookies" value="accept">{{ accept }}</button>
+      <button class="ggds-button" type="submit" name="cookies" value="reject">{{ reject }}</button>
+      <a href="{{ view_href }}">{{ view }}</a>
+    </form>{% else %}<div class="ggds-cookie-banner__body">
+      <p>{{ confirmation }} {{ change }}</p>
+    </div>
+    <form class="ggds-cookie-banner__actions" method="post" action="{{ action }}">{% if csrf_token %}<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">{% endif %}
+      <button class="ggds-button ggds-button--secondary" type="submit" name="cookies" value="hide">{{ hide }}</button>
+    </form>{% endif %}
+  </div>
+</div>{% endif %}

@@ -1,0 +1,13 @@
+<!-- name: Back link; icon: arrow-left; status: alpha; order: 13; group: Navigation; related: breadcrumbs, progress; summary: A link to the previous page of a task, for when the browser's back button might not take people there. -->
+<p class="ggds-lead">A link to the previous page of a task, for when the browser's back button might not take people there.</p>
+<h2>When to use</h2>
+<ul><li>On the question pages of a form or service, where going back keeps people's answers.</li><li>After a page that a form sent people to, where the browser's back button would send the form again.</li></ul>
+<h2>When not to use</h2>
+<ul><li>On information pages. Use <a href="breadcrumbs.html">breadcrumbs</a>, which show where the page sits.</li><li>With breadcrumbs on the same page: use one or the other.</li></ul>
+<h2>How to use</h2>
+<ul><li>Put it at the top of the main content, before the heading.</li><li>Link to the previous page itself, with its answers, not to the start of the task.</li><li>Keep the word "Back". Only change it when "Back" would be unclear, such as "Back to your applications".</li></ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The arrow is drawn with CSS and is not read out; the link says "Back".</li><li>The link is at least 44px tall.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Make it a real link with an <code>href</code>, not a script that calls <code>history.back()</code>, so it works without JavaScript and can be opened in a new tab.</li></ul>

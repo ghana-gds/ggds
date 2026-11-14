@@ -6,6 +6,8 @@
 <ul><li>Changing the order of the parts. People rely on finding them in the same place.</li></ul>
 <h2>How to use</h2>
 <ol><li>Skip link</li><li>Government website banner</li><li>Header</li><li>Main content, starting with breadcrumbs on inner pages or the hero on the homepage</li><li>Footer</li><li>Tab bar (phones only)</li></ol>
+<h3>In a framework</h3>
+<p>Let GGDS put the parts in order, so a newer GGDS updates the whole frame of every page: <code>Page</code> in <code>@ggds/react</code> and <code>@ggds/astro</code> takes the banner's, header's and footer's details and the tabs, with the page's content inside. In Django, put your details in <code>GGDS_SITE</code> and <code>{% extends "ggds/page.html" %}</code>. <code>npx @ggds/create --stack next</code> (or <code>astro</code>, <code>django</code>) makes a whole website this way.</p>
 <h2>Accessibility</h2>
 <h3>What GGDS does</h3>
 <ul><li>The page parts are landmarks in the expected order: banner, navigation, main content, footer.</li><li>Every part fits a 320px screen and works when text is enlarged.</li><li>The focus style is the same everywhere: a gold ring with a dark band inside it.</li></ul>

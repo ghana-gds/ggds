@@ -13,6 +13,9 @@
 <li>Accessibility, Privacy and Disclaimer pages, linked from the footer. NITA's standards ask every government website for these.</li>
 <li>An accessibility statement: how accessible the website is, what does not work yet, and how to report a problem.</li>
 </ul>
+<h2>The quickest way: make your website here</h2>
+<p class="ggds-measure">If your institution needs a website and has no developer, <a href="../builder.html">make your website</a>: give your name, address, contact details and colour, choose what it needs, and download a complete GGDS website. It comes with the server settings for security and speed and a guide to putting it online on any hosting, including shared hosting with cPanel. Your team or supplier then rewrites the example words for your own services.</p>
+<p class="ggds-measure">Keep the <code>ggds-site.json</code> in the download: it makes the same website again, with a newer GGDS.</p>
 <h2>Before you start</h2>
 <ol>
 <li>Confirm your theme colour and logo. Ready-made themes still need each institution's approval.</li>
@@ -31,6 +34,7 @@
 </ul>
 <h2>Check before launch</h2>
 <ul>
+<li>The website passes the GGDS check with no failures: <code>npx @ggds/check https://your-address</code> checks the pages, accessibility, security settings, email domain and speed, and says how to fix anything that fails.</li>
 <li>Every page passes an automated accessibility check (such as axe), and key tasks were tested with disabled people.</li>
 <li>Every form shows an error summary and clear messages when something is missing.</li>
 <li>The website works on a low-cost Android phone on a mobile connection.</li>

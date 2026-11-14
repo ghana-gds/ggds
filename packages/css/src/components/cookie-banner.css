@@ -1,0 +1,31 @@
+/* Cookie banner: asks before setting cookies a website does not need to work, such as analytics. At the very top
+   of the page, before the skip link's target. Works without JavaScript: the buttons submit a form, and the server
+   remembers the choice. A website that sets only essential cookies needs no banner. */
+.ggds-cookie-banner {
+  border-bottom: 4px solid var(--ggds-color-brand-700);
+  background: var(--ggds-color-surface-sunken);
+}
+
+.ggds-cookie-banner__inner {
+  padding-block: var(--ggds-space-6);
+}
+
+.ggds-cookie-banner__title {
+  font-size: var(--ggds-font-size-xl);
+}
+
+.ggds-cookie-banner__body > :last-child {
+  margin-bottom: 0;
+}
+
+.ggds-cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-3) var(--ggds-space-6);
+  margin-top: var(--ggds-space-4);
+}
+
+.ggds-cookie-banner__actions .ggds-button {
+  margin: 0;
+}

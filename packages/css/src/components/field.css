@@ -151,3 +151,72 @@
   display: block;
   color: var(--ggds-color-text-muted);
 }
+
+/* Character count: how many characters are left in a textarea. Without JavaScript, the limit is a hint; with it
+   (@ggds/js), the count updates as people type and screen readers hear it when they pause. */
+.ggds-character-count .ggds-textarea {
+  margin-bottom: var(--ggds-space-1);
+}
+
+.ggds-character-count__message {
+  margin: 0;
+}
+
+.ggds-character-count__status--over {
+  color: var(--ggds-color-status-danger-strong);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-textarea.ggds-character-count__textarea--over {
+  border-color: var(--ggds-color-status-danger-strong);
+}
+
+/* Prefix and suffix: a unit beside the answer, such as GH₵ or kg. The label or hint names the unit too, so the
+   prefix and suffix are hidden from screen readers and never the only place it is said. */
+.ggds-input-wrapper {
+  display: flex;
+  align-items: stretch;
+  max-width: 100%;
+}
+
+.ggds-input-wrapper .ggds-input {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.ggds-input__prefix,
+.ggds-input__suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--ggds-size-target);
+  padding: 0 var(--ggds-space-2);
+  border: 2px solid var(--ggds-color-border-control);
+  background: var(--ggds-color-surface-sunken);
+  font-size: max(16px, 1em);
+  font-weight: var(--ggds-font-weight-bold);
+  white-space: nowrap;
+}
+
+.ggds-input__prefix {
+  border-inline-end: 0;
+  border-radius: var(--ggds-radius-sm) 0 0 var(--ggds-radius-sm);
+}
+
+.ggds-input__suffix {
+  border-inline-start: 0;
+  border-radius: 0 var(--ggds-radius-sm) var(--ggds-radius-sm) 0;
+}
+
+.ggds-input__prefix + .ggds-input { border-start-start-radius: 0; border-end-start-radius: 0; }
+.ggds-input:has(+ .ggds-input__suffix) { border-start-end-radius: 0; border-end-end-radius: 0; }
+
+/* A code people copy from an SMS or email: wide letter spacing and figures that line up, so they can check it
+   digit by digit. */
+.ggds-input--code {
+  max-width: 12ch;
+  font-family: var(--ggds-font-family-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.15em;
+}

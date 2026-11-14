@@ -5,20 +5,26 @@
  * false, for a drawing with links) and "after" (anything below the tasks, such as a hotline card).
  */
 interface Task { label: string; href: string; tag?: string | undefined; attrs?: Record<string, unknown> | undefined }
+import { STRINGS } from './strings.mjs';
+
 interface Props {
+  /** GGDS's own text in another language (stringsFor('tw') from @ggds/astro/strings.mjs) or other words, by key. */
+  strings?: Record<string, string> | undefined;
   hub?: boolean | undefined;
   purpose?: string | undefined;
   title: string;
   lede?: string | undefined;
   ledeAttrs?: Record<string, unknown> | undefined;
-  search?: { action: string; label: string; placeholder?: string | undefined; inputAttrs?: Record<string, unknown> | undefined; formAttrs?: Record<string, unknown> | undefined; buttonAttrs?: Record<string, unknown> | undefined };
+  search?: { action: string; label?: string | undefined; placeholder?: string | undefined; inputAttrs?: Record<string, unknown> | undefined; formAttrs?: Record<string, unknown> | undefined; buttonAttrs?: Record<string, unknown> | undefined };
   tasksLabel?: string | undefined;
   tasks?: Task[] | undefined;
   artDecorative?: boolean | undefined;
   class?: string | undefined;
   [attr: string]: unknown;
 }
-const { hub = false, purpose, title, lede, ledeAttrs = {}, search, tasksLabel = 'Common tasks:', tasks = [], artDecorative = true, class: extra = '', ...rest } = Astro.props;
+const { hub = false, purpose, title, lede, ledeAttrs = {}, search, tasksLabel: tasksLabelProp, tasks = [], strings, artDecorative = true, class: extra = '', ...rest } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const tasksLabel = tasksLabelProp ?? s['hero.tasks'];
 const hasArt = Astro.slots.has('art');
 import { icon } from '../icons.mjs';
 ---
@@ -30,9 +36,9 @@ import { icon } from '../icons.mjs';
       {lede && <p class="ggds-hero__lede" {...ledeAttrs}>{lede}</p>}
       {search && (
         <form class="ggds-hero__search" action={search.action} method="get" role="search" {...(search.formAttrs ?? {})}>
-          <label class="ggds-visually-hidden" for="hero-q">{search.label}</label>
+          <label class="ggds-visually-hidden" for="hero-q">{search.label ?? s['hero.searchLabel']}</label>
           <input class="ggds-hero__input" id="hero-q" name="q" type="search" required minlength="2" enterkeyhint="search" autocomplete="off" placeholder={search.placeholder} {...(search.inputAttrs ?? {})} />
-          <button class="ggds-hero__button" type="submit" {...(search.buttonAttrs ?? {})}><Fragment set:html={icon('search', 'ggds-hero__button-icon')} /><span class="ggds-hero__button-label">Search</span></button>
+          <button class="ggds-hero__button" type="submit" {...(search.buttonAttrs ?? {})}><Fragment set:html={icon('search', 'ggds-hero__button-icon')} /><span class="ggds-hero__button-label">{s['hero.search']}</span></button>
         </form>
       )}
       {tasks.length > 0 && <>

@@ -1,0 +1,32 @@
+<!-- title: What you are paying, and how; layout: main; height: 720 -->
+<a class="ggds-back-link" href="/apply/">Back</a>
+<h1>Pay the licence fee</h1>
+<dl class="ggds-summary-list">
+  <div class="ggds-summary-list__row">
+    <dt class="ggds-summary-list__key">Amount</dt>
+    <dd class="ggds-summary-list__value"><strong>GH₵ 150.00</strong></dd>
+  </div>
+  <div class="ggds-summary-list__row">
+    <dt class="ggds-summary-list__key">For</dt>
+    <dd class="ggds-summary-list__value">Canoe fishing licence, 1 year</dd>
+  </div>
+  <div class="ggds-summary-list__row">
+    <dt class="ggds-summary-list__key">Paid to</dt>
+    <dd class="ggds-summary-list__value">Example Fisheries Service</dd>
+  </div>
+</dl>
+<form action="/pay/method/" method="post" novalidate>
+  <div class="ggds-field">
+    <fieldset class="ggds-fieldset" aria-describedby="pay-method-hint">
+      <legend class="ggds-fieldset__legend">How do you want to pay?</legend>
+      <p class="ggds-hint" id="pay-method-hint">There is no extra charge for any of these.</p>
+      <div class="ggds-choices">
+        <div class="ggds-choice"><input class="ggds-choice__input" id="pay-method-mtn" name="method" type="radio" value="mtn"><label class="ggds-choice__label" for="pay-method-mtn">MTN MoMo</label></div>
+        <div class="ggds-choice"><input class="ggds-choice__input" id="pay-method-telecel" name="method" type="radio" value="telecel"><label class="ggds-choice__label" for="pay-method-telecel">Telecel Cash</label></div>
+        <div class="ggds-choice"><input class="ggds-choice__input" id="pay-method-at" name="method" type="radio" value="at"><label class="ggds-choice__label" for="pay-method-at">AT Money</label></div>
+        <div class="ggds-choice"><input class="ggds-choice__input" id="pay-method-card" name="method" type="radio" value="card"><label class="ggds-choice__label" for="pay-method-card">Bank card (Visa or Mastercard)</label></div>
+      </div>
+    </fieldset>
+  </div>
+  <button class="ggds-button" type="submit">Continue</button>
+</form>

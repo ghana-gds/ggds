@@ -1,0 +1,20 @@
+<!-- name: Code input; icon: key; status: alpha; order: 30; group: Forms; related: field, password-input, error-summary; summary: One box for a code people receive by SMS or email, which their phone can fill in for them. -->
+<p class="ggds-lead">One box for a code people receive by SMS or email, which their phone can fill in for them.</p>
+<h2>When to use</h2>
+<ul><li>To check a phone number or email address, or as the second step of signing in.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For a mobile money PIN or a bank card's security code: people enter those on their phone or with their bank, never on a government website.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Use one box, not one box per digit: separate boxes break pasting, phones' automatic filling and screen readers.</li>
+<li>Set <code>autocomplete="one-time-code"</code>, <code>inputmode="numeric"</code> and <code>class="ggds-input ggds-input--code"</code>. Do not use <code>type="number"</code>: it drops leading zeros.</li>
+<li>Say where the code went and how long it lasts in the hint: "We sent a 6-digit code to 024 *** 4567. It expires in 10 minutes."</li>
+<li>Accept the code with spaces or dashes, and remove them before you check it.</li>
+<li>Under the field, link to "Send a new code", and to another way to prove who they are, such as by email.</li>
+<li>Say what went wrong, as in the second example: "The code is not right" or "The code has expired. Send a new code".</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The box is wide enough for the code, with spaced figures that are easy to check.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Give people enough time, and a way to get a new code (WCAG 2.2.1, timing adjustable).</li><li>Let them paste the code and let the phone fill it in (WCAG 3.3.8).</li></ul>

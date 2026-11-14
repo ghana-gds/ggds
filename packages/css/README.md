@@ -55,6 +55,8 @@ Then write the HTML for each part as shown in the
 | `@ggds/css/ggds-components.css` | Base styles and components without the tokens, for sites that load `@ggds/tokens/tokens.css` themselves |
 | `@ggds/css/core.css` | Tokens and base styles only |
 | `@ggds/css/components/<name>.css` | One component file (below) |
+| `@ggds/css/base.css` | Base styles only: `core.css` without the tokens |
+| `@ggds/css/components.json` | Which component styles each class, for `ggds-css-subset` |
 
 Every file has a minified copy: `ggds.min.css`, `core.min.css`, `components/header.min.css` and so on. The
 unbuilt sources are in `src/`.
@@ -86,11 +88,28 @@ unbuilt sources are in `src/`.
 | `steps.css` | Steps: a few numbered things to do |
 | `disclosure.css` | Accordions and details |
 | `prose.css` | Rich text from a CMS |
+| `layout.css` | Layout: stacks, rows that wrap, grids, a side column, and spacing, text, surface and size classes, so a website needs no CSS framework |
+
+## Only the components a site uses
+
+`ggds-css-subset` makes one minified file holding only the components a site uses, found from the `ggds-` classes
+in its own files. Pages look exactly the same as with `ggds.min.css`: each component keeps its cascade layer and order.
+
+```sh
+npx --package=@ggds/css ggds-css-subset --scan templates --out static/ggds/site.min.css   # scan files or folders
+npx --package=@ggds/css ggds-css-subset header footer button field > site.min.css         # or name the components
+```
+
+`--no-tokens` leaves the tokens out (for sites that load `@ggds/tokens`), `--readable` writes unminified CSS, and
+`--help` lists everything. Run it again when the site starts using another component. In a build script:
+`import { scan, subset } from '@ggds/css/subset'`. A form page (skip link, banner, header, footer, buttons,
+fields, error summary, tab bar) is about half of `ggds.min.css`, compressed. See [Fast pages](https://ghana-gds.github.io/ggds/performance.html) for caching and compression.
 
 ## Your own styles
 
-All GGDS styles sit in the cascade layers `ggds.base` and `ggds.components`. Styles you write outside a layer
-always win, so you never need `!important` to override GGDS. To change a colour or a size, override its token:
+All GGDS styles sit in the cascade layers `ggds.base`, `ggds.components` and `ggds.utilities` (the layout
+classes), in that order, so a layout class on a component wins over the component's own spacing. Styles you write
+outside a layer always win, so you never need `!important` to override GGDS. To change a colour or a size, override its token:
 
 ```css
 :root { --ggds-color-institution: #006e35; }
@@ -118,7 +137,7 @@ plainer version that still works.
 
 - [`@ggds/tokens`](https://www.npmjs.com/package/@ggds/tokens): the design tokens
 - [`@ggds/themes`](https://www.npmjs.com/package/@ggds/themes): ready-made institution themes
-- [`@ggds/js`](https://www.npmjs.com/package/@ggds/js): the optional script for the phone menu and error summary
+- [`@ggds/js`](https://www.npmjs.com/package/@ggds/js): the optional script: phone menu, error summary, character count, password Show button, dialogs and timeout warning
 - [`@ggds/astro`](https://www.npmjs.com/package/@ggds/astro): the page parts as Astro components
 - [`ggds-django`](https://github.com/ghana-gds/ggds/tree/main/packages/django): template tags and a form renderer for Django and Wagtail
 

@@ -1,0 +1,22 @@
+<!-- name: Layout; icon: grid; status: beta; order: 9; group: Page structure; related: page, card, panel; summary: Classes that arrange content on a page: stacks, rows that wrap, grids and a side column, with the GGDS spacing, text sizes and colours. -->
+<p class="ggds-lead">Classes that arrange content on a page: stacks, rows that wrap, grids and a side column, with the GGDS spacing, text sizes and colours.</p>
+<h2>When to use</h2>
+<ul><li>To arrange your own content between GGDS components: a list of services beside filters, a row of buttons, the parts of a card you made yourself.</li><li>Instead of writing your own spacing and grid CSS, or adding a CSS framework, so pages keep the same rhythm on every government website.</li></ul>
+<h2>When not to use</h2>
+<ul><li>To change how a GGDS component looks. Components already have their spacing; if one does not fit your page, tell us.</li><li>For a set of links to similar pages. Use <a href="card.html">cards</a> in a <code>ggds-card-grid</code>.</li><li>To show different information on phones and computers. Hide only what is shown another way on that screen.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li><strong>Stack</strong> (<code>ggds-stack</code>): put it on the element around things that go one above the other. It removes their own margins and puts the same space between each, so you do not set a margin on every paragraph.</li>
+<li><strong>Cluster</strong> (<code>ggds-cluster</code>): for buttons, tags and links side by side. They wrap onto the next line on a phone. Add <code>ggds-cluster--spread</code> for a title on one side and an action on the other.</li>
+<li><strong>Grid</strong>: <code>ggds-grid</code> fits as many columns of at least 16rem as the screen allows, with no breakpoints to choose. When you need a set number, use <code>ggds-grid--2</code>, <code>--3</code> or <code>--4</code>: always one column on phones.</li>
+<li><strong>Side column</strong>: <code>ggds-with-aside</code> puts the main content and a 20rem column side by side from desktops, and one under the other before. Add <code>ggds-sticky</code> to the side column to keep it in view while the page scrolls.</li>
+<li><strong>Gaps</strong>: change the space in a stack, cluster or grid with <code>ggds-gap-1</code> to <code>ggds-gap-12</code>, steps of the <a href="../foundations.html#spacing">spacing scale</a>. Use small steps inside a box, 4 and 6 between related things, and 8 and above between sections.</li>
+<li><strong>Text, surfaces and sizes</strong>: the text classes use the type scale and the two GGDS weights; the surface and border classes use the GGDS colours, so they keep their contrast in every theme.</li>
+<li>The layout classes sit in their own cascade layer, <code>ggds.utilities</code>, after the components. A layout class on a component wins over the component's own spacing, and your own CSS still wins over GGDS without <code>!important</code>. If you name the layers yourself, keep the order <code>ggds.base, ggds.components, ggds.utilities</code>.</li>
+<li>If you load GGDS one file at a time, add <code>components/layout.css</code>.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>Every layout is one column on a 320px phone and gains columns only as the screen allows, so nothing scrolls sideways, also with a wide font.</li><li>The layout classes change only where things appear on the screen, never the order a screen reader or the keyboard follows.</li><li><code>ggds-text-muted</code> and the surfaces keep text at 4.5 to 1 contrast or more.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Write the HTML in the order people should read it. A side column comes after the main content in the HTML.</li><li>Do not hide information on a screen size with <code>ggds-from-tablet</code>, <code>ggds-from-desktop</code> or <code>ggds-below-desktop</code> unless it is shown another way on that screen.</li><li>Use <code>ggds-target</code> or <code>ggds-target-square</code> on anything people tap that is not a GGDS button, link list or field, so it is at least 44px.</li><li>Do not make body text smaller than <code>ggds-text-base</code>; keep <code>ggds-text-sm</code> and <code>ggds-text-xs</code> for short labels and notes.</li></ul>

@@ -1,0 +1,20 @@
+<!-- name: Task list; icon: list; status: alpha; order: 28; group: Forms; related: summary-list, tag, progress; summary: The sections of a long application with the status of each, so people can do them in any order and come back later. -->
+<p class="ggds-lead">The sections of a long application with the status of each, so people can do them in any order and come back later.</p>
+<h2>When to use</h2>
+<ul><li>For an application that takes more than one sitting, or has sections people can do in any order, such as a licence or a permit with several documents to upload.</li><li>When people need to see what is left before they can send it.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For a short form that people finish in one go. Ask one question per page, with <a href="progress.html">progress</a> if it helps.</li><li>To show the stages of something your institution does after people apply. Use a <a href="timeline.html">timeline</a>.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Put the summary first: "You have completed 2 of 5 sections." Then the list, then a button to check answers and send, once every section is complete.</li>
+<li>Name each section by what people do or give: "Your details", "Upload your documents", "Pay the fee".</li>
+<li>Give each section one status, as text: <strong>Completed</strong>, <strong>In progress</strong>, <strong>Not started</strong> or <strong>Cannot start yet</strong>. Use the tag colours as in the example. Only completed is green.</li>
+<li>Link every section people can open. A section that cannot start yet (such as paying before the details are done) has no link, and its hint says why.</li>
+<li>Give each link <code>aria-describedby</code> naming its status, so screen readers hear "Your details, Completed".</li>
+<li>Save each section as people finish it, so they can leave and come back.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The whole row is the target, at least 44px tall, while the link text stays the link's name.</li><li>Status is in words, never colour alone.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Link each section's status to its link with <code>aria-describedby</code>.</li><li>Keep the summary up to date: it is the first thing people read when they come back.</li></ul>

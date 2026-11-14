@@ -1,0 +1,13 @@
+<!-- name: Side navigation; icon: list; status: alpha; order: 14; group: Navigation; related: layout, breadcrumbs, contents-list; summary: The pages of one section of a website, beside its content, so people can move between them. -->
+<p class="ggds-lead">The pages of one section of a website, beside its content, so people can move between them.</p>
+<h2>When to use</h2>
+<ul><li>For a section with several pages that people read in any order, such as the pages about fees or about the institution.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For the whole website: that is the header's job.</li><li>For the parts of one page: use a <a href="contents-list.html">contents list</a>.</li><li>For the steps of a task in order: people should follow the task one page at a time.</li></ul>
+<h2>How to use</h2>
+<ul><li>Put it in the side column of <a href="layout.html"><code>ggds-with-aside</code></a>. On phones it comes after the content; on desktops it sits beside it.</li><li>Mark the current page with <code>aria-current="page"</code>.</li><li>Show the pages under the current one in an indented list, one level deep at most.</li><li>Use the pages' own titles as link text.</li></ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The current page is shown by a line, a tint and bold text, and is announced as the current page, so it never depends on colour alone.</li><li>Every link is at least 44px tall.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Give the navigation a label that says what it lists, if "In this section" is not clear.</li><li>Keep it after the main content in the HTML, so people using a screen reader reach the page's content first.</li></ul>

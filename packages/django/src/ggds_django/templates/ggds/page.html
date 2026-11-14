@@ -1,0 +1,30 @@
+{% load ggds i18n %}{% get_current_language as LANGUAGE_CODE %}<!doctype html>
+{% comment %}
+A whole GGDS page: {% extends "ggds/page.html" %} and fill {% block content %}. The skip link, banner, header,
+<main id="main">, footer and tab bar come from GGDS_SITE in your settings (ggds_django.context_processors.site), in
+GGDS's order, so a newer ggds-django updates every part. Blocks: title, head (your own CSS and scripts), main_class,
+content, scripts, and skip_link, banner, header, footer and tab_bar to replace a part. A view marks the header link
+with ggds_current and the tab with ggds_tab (each an address); without them, the page's address decides.
+{% endcomment %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ ggds_site.name }}{% endblock %}</title>
+  {% if ggds_site.purpose %}<meta name="description" content="{{ ggds_site.purpose }}">{% endif %}
+  {% if ggds_site.noindex %}<meta name="robots" content="noindex, nofollow">{% endif %}
+  {% block assets %}{% ggds_assets theme=ggds_site.theme %}{% endblock %}
+  {% block head %}{% endblock %}
+</head>
+<body>
+{% block skip_link %}{% ggds_skip_link %}{% endblock %}
+{% block banner %}{% ggds_banner short_name=ggds_site.short_name host=ggds_site.host official=ggds_site.official address_note=ggds_site.address_note register_href=ggds_site.register_href %}{% endblock %}
+{% block header %}{% if ggds_current is not None %}{% ggds_header name=ggds_site.name nav=ggds_site.nav current=ggds_current country=ggds_site.country logo_url=ggds_site.logo_url logo_alt=ggds_site.logo_alt initials=ggds_site.initials home=ggds_site.home search_url=ggds_site.search_url nav_id=ggds_site.nav_id %}{% else %}{% ggds_header name=ggds_site.name nav=ggds_site.nav country=ggds_site.country logo_url=ggds_site.logo_url logo_alt=ggds_site.logo_alt initials=ggds_site.initials home=ggds_site.home search_url=ggds_site.search_url nav_id=ggds_site.nav_id %}{% endif %}{% endblock %}
+<main id="main" tabindex="-1"{% block main_class %} class="ggds-container ggds-main"{% endblock %}>
+{% block content %}{% endblock %}
+</main>
+{% block footer %}{% ggds_footer name=ggds_site.name purpose=ggds_site.purpose address=ggds_site.address email=ggds_site.email phone=ggds_site.phone contact_url=ggds_site.contact_url sections=ggds_site.sections links=ggds_site.links logo_url=ggds_site.logo_url logo_alt=ggds_site.logo_alt initials=ggds_site.initials %}{% endblock %}
+{% block tab_bar %}{% if ggds_site.tabs %}{% ggds_tab_bar ggds_site.tabs current=ggds_tab %}{% endif %}{% endblock %}
+{% block scripts %}{% endblock %}
+</body>
+</html>

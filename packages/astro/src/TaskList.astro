@@ -1,0 +1,35 @@
+---
+/**
+ * GGDS task list: the sections of a long application with the status of each. A section with an href is a link
+ * (the whole row is the target) and screen readers hear its status. status: completed, inProgress, notStarted or
+ * cannotStart (no link). id names a section's hint and status ids (<idPrefix>-<id>-status); default: its position.
+ * Give each task list on a page its own idPrefix.
+ */
+import { STRINGS } from './strings.mjs';
+type Status = 'completed' | 'inProgress' | 'notStarted' | 'cannotStart';
+interface Task { label: string; href?: string | undefined; status: Status; hint?: string | undefined; id?: string | undefined }
+interface Props { tasks: Task[]; summary?: boolean | undefined; idPrefix?: string | undefined; strings?: Record<string, string> | undefined }
+const { tasks, summary = true, idPrefix = 'task', strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const TAG = { completed: 'ggds-tag ggds-tag--success', inProgress: 'ggds-tag ggds-tag--info', notStarted: 'ggds-tag', cannotStart: '' };
+const done = tasks.filter((x) => x.status === 'completed').length;
+const items = tasks.map((task, i) => {
+  const key = `${idPrefix}-${task.id ?? i + 1}`;
+  const open = Boolean(task.href) && task.status !== 'cannotStart';
+  return { ...task, key, open, words: s[`taskList.${task.status}`], describedBy: [task.hint && `${key}-hint`, `${key}-status`].filter(Boolean).join(' ') };
+});
+---
+{summary && <p class="ggds-task-list__summary">{s['taskList.summary'].replace('{done}', String(done)).replace('{total}', String(tasks.length))}</p>}
+<ol class="ggds-task-list">
+  {items.map((t) => (
+    <li class={t.open ? 'ggds-task-list__item ggds-task-list__item--link' : 'ggds-task-list__item'}>
+      <div class="ggds-task-list__name">
+        {t.open ? <a class="ggds-task-list__link" href={t.href} aria-describedby={t.describedBy}>{t.label}</a> : t.label}
+        {t.hint && <p class="ggds-task-list__hint" id={`${t.key}-hint`}>{t.hint}</p>}
+      </div>
+      {t.status === 'cannotStart'
+        ? <div class="ggds-task-list__status ggds-task-list__status--cannot-start" id={`${t.key}-status`}>{t.words}</div>
+        : <div class="ggds-task-list__status" id={`${t.key}-status`}><strong class={TAG[t.status]}>{t.words}</strong></div>}
+    </li>
+  ))}
+</ol>

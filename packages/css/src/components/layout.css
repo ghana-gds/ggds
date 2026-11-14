@@ -1,0 +1,224 @@
+/* Layout: arranging content on the page, with the GGDS spacing, type and colour tokens. These classes sit in their
+   own cascade layer, ggds.utilities, after the components, so a layout class on a component wins over the
+   component's own spacing without !important, and a site's unlayered CSS still wins over both. */
+
+/* Stack, cluster and grid share one gap, set with the ggds-gap-* classes. Each sets its own default, so a stack
+   inside a grid does not take the grid's gap. */
+
+/* Stack: things one above the other, with the same space between each. Their own top and bottom margins go. */
+.ggds-stack {
+  --ggds-gap: var(--ggds-space-4);
+}
+
+.ggds-stack > * {
+  margin-block: 0;
+}
+
+.ggds-stack > * + * {
+  margin-block-start: var(--ggds-gap);
+}
+
+/* Cluster: things side by side that wrap onto the next line when there is no room: buttons, tags, links. */
+.ggds-cluster {
+  --ggds-gap: var(--ggds-space-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-gap);
+}
+
+.ggds-cluster--spread {
+  justify-content: space-between;
+}
+
+.ggds-cluster--top {
+  align-items: flex-start;
+}
+
+.ggds-cluster--baseline {
+  align-items: baseline;
+}
+
+/* Grid: as many columns of at least 16rem as fit, one column on phones. --ggds-grid-min changes the width. */
+.ggds-grid {
+  --ggds-gap: var(--ggds-space-4);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--ggds-grid-min, 16rem), 100%), 1fr));
+  gap: var(--ggds-gap);
+}
+
+/* A set number of columns: one on phones, two from tablets, the full number from desktops. */
+.ggds-grid--2,
+.ggds-grid--3,
+.ggds-grid--4 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 48rem) {
+  .ggds-grid--2,
+  .ggds-grid--3,
+  .ggds-grid--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 64rem) {
+  .ggds-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ggds-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Main content with a side column from desktops: related links, a contents list, filters. One column before. */
+.ggds-with-aside {
+  --ggds-gap: var(--ggds-space-8);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ggds-gap);
+}
+
+@media (min-width: 64rem) {
+  .ggds-with-aside {
+    grid-template-columns: minmax(0, 1fr) var(--ggds-aside-width, 20rem);
+  }
+
+  /* Stays in view while the main content scrolls, clear of the sticky header. */
+  .ggds-sticky {
+    position: sticky;
+    top: 6rem; /* the header's height, as scroll-padding-top in base.css */
+    align-self: start;
+  }
+}
+
+/* Centres its content both ways: an icon in a circle, a number in a badge. */
+.ggds-center {
+  display: grid;
+  place-items: center;
+}
+
+/* Children of a cluster or a flex row. */
+.ggds-grow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.ggds-fixed {
+  flex-shrink: 0;
+}
+
+/* Lets a grid or flex child shrink below its content's width, so long words and tables do not widen the page. */
+.ggds-shrink {
+  min-width: 0;
+}
+
+/* Pushes the last part of a card or column to its bottom edge. */
+.ggds-push-down {
+  margin-block-start: auto;
+}
+
+/* Gaps: for stack, cluster, grid and with-aside. */
+.ggds-gap-1 { --ggds-gap: var(--ggds-space-1); }
+.ggds-gap-2 { --ggds-gap: var(--ggds-space-2); }
+.ggds-gap-3 { --ggds-gap: var(--ggds-space-3); }
+.ggds-gap-4 { --ggds-gap: var(--ggds-space-4); }
+.ggds-gap-6 { --ggds-gap: var(--ggds-space-6); }
+.ggds-gap-8 { --ggds-gap: var(--ggds-space-8); }
+.ggds-gap-12 { --ggds-gap: var(--ggds-space-12); }
+
+/* Space outside: for the few places a stack does not fit. After the stack, so they win over it. */
+.ggds-flush { margin: 0; }
+.ggds-mt-0 { margin-block-start: 0; }
+.ggds-mt-2 { margin-block-start: var(--ggds-space-2); }
+.ggds-mt-4 { margin-block-start: var(--ggds-space-4); }
+.ggds-mt-6 { margin-block-start: var(--ggds-space-6); }
+.ggds-mt-8 { margin-block-start: var(--ggds-space-8); }
+.ggds-mt-12 { margin-block-start: var(--ggds-space-12); }
+.ggds-mb-0 { margin-block-end: 0; }
+
+/* Space inside. */
+.ggds-pad-0 { padding: 0; }
+.ggds-pad-3 { padding: var(--ggds-space-3); }
+.ggds-pad-4 { padding: var(--ggds-space-4); }
+.ggds-pad-6 { padding: var(--ggds-space-6); }
+
+/* More space on larger screens: a panel or section that needs room on a computer but not on a phone. */
+.ggds-pad-fluid {
+  padding: var(--ggds-space-4);
+}
+
+@media (min-width: 48rem) {
+  .ggds-pad-fluid {
+    padding: var(--ggds-space-8);
+  }
+}
+
+/* Text: the type scale, weights and colours. Headings already have their sizes; use these for other text. */
+.ggds-text-xs { font-size: var(--ggds-font-size-xs); }
+.ggds-text-sm { font-size: var(--ggds-font-size-sm); }
+.ggds-text-base { font-size: var(--ggds-font-size-base); }
+.ggds-text-lg { font-size: var(--ggds-font-size-lg); }
+.ggds-text-xl { font-size: var(--ggds-font-size-xl); }
+.ggds-text-2xl { font-size: var(--ggds-font-size-2xl); }
+.ggds-text-regular { font-weight: var(--ggds-font-weight-regular); }
+.ggds-text-bold { font-weight: var(--ggds-font-weight-bold); }
+.ggds-text-muted { color: var(--ggds-color-text-muted); }
+.ggds-text-institution { color: var(--ggds-color-institution); }
+.ggds-text-mono { font-family: var(--ggds-font-family-mono); }
+.ggds-text-tight { line-height: var(--ggds-line-height-tight); }
+.ggds-nowrap { white-space: nowrap; }
+
+/* Surfaces, borders and corners. */
+.ggds-surface { background: var(--ggds-color-surface); }
+.ggds-surface-raised { background: var(--ggds-color-surface-raised); }
+.ggds-surface-sunken { background: var(--ggds-color-surface-sunken); }
+.ggds-surface-brand { background: var(--ggds-color-brand-50); }
+.ggds-border { border: 1px solid var(--ggds-color-border-subtle); }
+.ggds-border-top { border-block-start: 1px solid var(--ggds-color-border-subtle); }
+.ggds-border-bottom { border-block-end: 1px solid var(--ggds-color-border-subtle); }
+.ggds-border-strong { border-color: var(--ggds-color-border-strong); }
+.ggds-rounded { border-radius: var(--ggds-radius-md); }
+.ggds-rounded-lg { border-radius: var(--ggds-radius-lg); }
+.ggds-rounded-full { border-radius: var(--ggds-radius-pill); }
+.ggds-clip { overflow: hidden; }
+
+/* An image or video that fills its box, cropped rather than stretched. */
+.ggds-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Sizes. */
+.ggds-full { width: 100%; }
+
+.ggds-width-narrow { max-width: 42rem; }
+.ggds-width-medium { max-width: 56rem; }
+
+/* At least 44px tall, the GGDS touch target, for anything people tap that is not a GGDS button or field. */
+.ggds-target { min-block-size: var(--ggds-size-target); }
+
+/* A 44px square, its content centred: an icon button. */
+.ggds-target-square {
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--ggds-size-target);
+  block-size: var(--ggds-size-target);
+}
+
+/* Full width on phones only: a button that is easy to reach on a phone and its own size on a computer. */
+@media (max-width: 47.99rem) {
+  .ggds-full-phone { width: 100%; }
+  .ggds-from-tablet { display: none; }
+}
+
+/* Shown only on some screens. Content must not depend on the screen: show the same information another way. */
+@media (max-width: 63.99rem) {
+  .ggds-from-desktop { display: none; }
+}
+
+@media (min-width: 64rem) {
+  .ggds-below-desktop { display: none; }
+}

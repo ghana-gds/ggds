@@ -53,6 +53,18 @@
     [
       ".ggds-file-upload",
       "A file input."
+    ],
+    [
+      ".ggds-input-wrapper",
+      "Around an input with a prefix or suffix."
+    ],
+    [
+      ".ggds-input__prefix",
+      "A unit before the answer, such as GH₵. Hidden from screen readers: say the unit in the label too."
+    ],
+    [
+      ".ggds-input__suffix",
+      "A unit after the answer, such as kg. Hidden from screen readers: say the unit in the label too."
     ]
   ],
   "states": [

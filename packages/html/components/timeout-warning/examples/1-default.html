@@ -1,0 +1,13 @@
+<!-- title: The warning, as it appears; layout: main; height: 420 -->
+<p>The warning opens by itself 2 minutes before the end of the session. Here it opens after 3 seconds, so you can see it.</p>
+<dialog class="ggds-dialog ggds-timeout-warning" id="timeout-warning" aria-labelledby="timeout-warning-title" aria-describedby="timeout-warning-message" data-ggds-module="timeout-warning" data-ggds-timeout="123" data-ggds-warn="120" data-ggds-keep-alive="#keep-alive" data-ggds-sign-out="#signed-out">
+  <h2 class="ggds-dialog__title" id="timeout-warning-title">You will be signed out soon</h2>
+  <div class="ggds-dialog__body">
+    <p id="timeout-warning-message">To protect your information, we will sign you out in <span class="ggds-timeout-warning__time">2 minutes</span>.</p>
+    <p class="ggds-visually-hidden" aria-live="polite"></p>
+  </div>
+  <div class="ggds-dialog__actions">
+    <button class="ggds-button" type="button" data-ggds-timeout-continue>Stay signed in</button>
+    <a href="#signed-out">Sign out</a>
+  </div>
+</dialog>

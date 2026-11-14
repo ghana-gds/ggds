@@ -1,0 +1,14 @@
+{
+  "css": "dialog",
+  "javascript": "Needed: @ggds/js counts the inactive time, opens the warning, counts down, extends the session with \"Stay signed in\" and goes to the sign-out page when time runs out.",
+  "classes": [
+    [".ggds-timeout-warning", "On the dialog: the timeout warning. data-ggds-timeout, -warn, -keep-alive and -sign-out configure it."],
+    [".ggds-timeout-warning__time", "The time left, updated every second."]
+  ],
+  "states": [],
+  "astro": "---\nimport TimeoutWarning from '@ggds/astro/TimeoutWarning.astro';\n---\n<TimeoutWarning timeout={1200} keepAlive=\"/session/keep-alive/\" signOut=\"/signed-out/\" />",
+  "django": "{% load ggds %}\n{% ggds_timeout_warning timeout=1200 keep_alive=\"/session/keep-alive/\" sign_out=\"/signed-out/\" %}",
+  "tests": [
+    "timeout warning: opens before the end, Stay signed in extends the session, and time running out signs people out"
+  ]
+}

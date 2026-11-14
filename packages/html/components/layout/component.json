@@ -1,0 +1,242 @@
+{
+  "css": "layout",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-stack",
+      "Things one above the other with the same space between each (spacing 4 unless a gap class says otherwise). Their own top and bottom margins are removed."
+    ],
+    [
+      ".ggds-cluster",
+      "Things side by side that wrap onto the next line: buttons, tags, links (gap 3)."
+    ],
+    [
+      ".ggds-cluster--spread",
+      "A cluster with its first and last parts at opposite ends."
+    ],
+    [
+      ".ggds-cluster--top",
+      "A cluster aligned to the top, for parts of different heights."
+    ],
+    [
+      ".ggds-cluster--baseline",
+      "A cluster aligned on the first line of text."
+    ],
+    [
+      ".ggds-grid",
+      "As many columns of at least 16rem as fit; one column on phones (gap 4). Set --ggds-grid-min to change the width."
+    ],
+    [
+      ".ggds-grid--2",
+      "Two columns from tablets; one on phones."
+    ],
+    [
+      ".ggds-grid--3",
+      "Two columns from tablets, three from desktops; one on phones."
+    ],
+    [
+      ".ggds-grid--4",
+      "Two columns from tablets, four from desktops; one on phones."
+    ],
+    [
+      ".ggds-with-aside",
+      "Main content with a 20rem side column from desktops (set --ggds-aside-width to change it); one column before (gap 8)."
+    ],
+    [
+      ".ggds-sticky",
+      "On desktops, stays in view while the page scrolls, clear of the header. For a side column."
+    ],
+    [
+      ".ggds-center",
+      "Centres its content both ways."
+    ],
+    [
+      ".ggds-grow",
+      "In a cluster: takes the room left over."
+    ],
+    [
+      ".ggds-fixed",
+      "In a cluster: keeps its own width."
+    ],
+    [
+      ".ggds-shrink",
+      "In a grid or cluster: may shrink below its content, so long words and tables do not widen the page."
+    ],
+    [
+      ".ggds-push-down",
+      "Pushes the last part of a card or column to its bottom edge."
+    ],
+    [
+      ".ggds-gap-*",
+      "The gap of a stack, cluster, grid or with-aside, from the spacing scale: 1, 2, 3, 4, 6, 8 or 12."
+    ],
+    [
+      ".ggds-flush",
+      "No margin."
+    ],
+    [
+      ".ggds-mt-*",
+      "Space above, from the spacing scale: 0, 2, 4, 6, 8 or 12. Prefer a stack."
+    ],
+    [
+      ".ggds-mb-0",
+      "No space below."
+    ],
+    [
+      ".ggds-pad-*",
+      "Space inside, from the spacing scale: 0, 3, 4 or 6."
+    ],
+    [
+      ".ggds-pad-fluid",
+      "Space inside: spacing 4 on phones, 8 from tablets."
+    ],
+    [
+      ".ggds-text-xs",
+      "Text sizes from the type scale: xs, sm, base, lg, xl and 2xl (.ggds-text-sm and so on)."
+    ],
+    [
+      ".ggds-text-sm",
+      "Small text."
+    ],
+    [
+      ".ggds-text-base",
+      "Body text size."
+    ],
+    [
+      ".ggds-text-lg",
+      "Large text."
+    ],
+    [
+      ".ggds-text-xl",
+      "Extra large text."
+    ],
+    [
+      ".ggds-text-2xl",
+      "The size of a second-level heading."
+    ],
+    [
+      ".ggds-text-regular",
+      "Regular weight."
+    ],
+    [
+      ".ggds-text-bold",
+      "Bold."
+    ],
+    [
+      ".ggds-text-muted",
+      "Secondary text colour, still easy to read (4.5 to 1 or more)."
+    ],
+    [
+      ".ggds-text-institution",
+      "The institution colour from its theme."
+    ],
+    [
+      ".ggds-text-mono",
+      "The monospace font, for reference numbers and codes."
+    ],
+    [
+      ".ggds-text-tight",
+      "Tight line height, for short text in cards and lists."
+    ],
+    [
+      ".ggds-nowrap",
+      "Keeps text on one line: dates, amounts."
+    ],
+    [
+      ".ggds-surface",
+      "The page background."
+    ],
+    [
+      ".ggds-surface-raised",
+      "The raised surface, for a box above the page."
+    ],
+    [
+      ".ggds-surface-sunken",
+      "The sunken surface, for a band or a box set into the page."
+    ],
+    [
+      ".ggds-surface-brand",
+      "A light tint of the government blue."
+    ],
+    [
+      ".ggds-border",
+      "A light border all round."
+    ],
+    [
+      ".ggds-border-top",
+      "A light line above."
+    ],
+    [
+      ".ggds-border-bottom",
+      "A light line below."
+    ],
+    [
+      ".ggds-border-strong",
+      "Makes any of the borders above darker."
+    ],
+    [
+      ".ggds-rounded",
+      "Rounded corners."
+    ],
+    [
+      ".ggds-rounded-lg",
+      "Larger rounded corners."
+    ],
+    [
+      ".ggds-rounded-full",
+      "Fully rounded ends: a pill or a circle."
+    ],
+    [
+      ".ggds-clip",
+      "Hides what goes past its edges, so an image follows rounded corners."
+    ],
+    [
+      ".ggds-cover",
+      "An image or video that fills its box, cropped rather than stretched."
+    ],
+    [
+      ".ggds-full",
+      "Full width."
+    ],
+    [
+      ".ggds-full-phone",
+      "Full width on phones only."
+    ],
+    [
+      ".ggds-width-narrow",
+      "At most 42rem wide."
+    ],
+    [
+      ".ggds-width-medium",
+      "At most 56rem wide."
+    ],
+    [
+      ".ggds-target",
+      "At least 44px tall, the GGDS touch target."
+    ],
+    [
+      ".ggds-target-square",
+      "A 44px square with its content centred, for an icon button."
+    ],
+    [
+      ".ggds-from-tablet",
+      "Hidden on phones."
+    ],
+    [
+      ".ggds-from-desktop",
+      "Hidden on phones and tablets."
+    ],
+    [
+      ".ggds-below-desktop",
+      "Hidden on desktops."
+    ]
+  ],
+  "states": [],
+  "astro": "<div class=\"ggds-with-aside\">\n  <div class=\"ggds-stack\">…</div>\n  <aside class=\"ggds-sticky\">…</aside>\n</div>",
+  "django": "<div class=\"ggds-with-aside\">\n  <div class=\"ggds-stack\">…</div>\n  <aside class=\"ggds-sticky\">…</aside>\n</div>",
+  "tests": [
+    "layout classes change columns at the breakpoints",
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

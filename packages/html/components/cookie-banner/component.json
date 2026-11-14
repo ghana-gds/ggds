@@ -1,0 +1,34 @@
+{
+  "css": "cookie-banner",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-cookie-banner",
+      "The question about cookies, at the top of the page."
+    ],
+    [
+      ".ggds-cookie-banner__inner",
+      "The content, at the page width."
+    ],
+    [
+      ".ggds-cookie-banner__title",
+      "The heading."
+    ],
+    [
+      ".ggds-cookie-banner__body",
+      "What the website uses cookies for, or the choice the person made."
+    ],
+    [
+      ".ggds-cookie-banner__actions",
+      "A form: the two choices, equally prominent, and a link to the cookies page."
+    ]
+  ],
+  "states": [],
+  "astro": "<CookieBanner service=\"Example Agency\" action=\"/cookies/\" />",
+  "django": "{% ggds_cookie_banner \"Example Agency\" action=\"/cookies/\" choice=choice %}",
+  "tests": [
+    "the cookie banner offers both choices equally, without JavaScript",
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

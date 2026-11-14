@@ -1,4 +1,4 @@
-<section class="ggds-hero{% if hub %} ggds-hero--hub{% endif %}{% if art %} ggds-hero--art{% endif %}" aria-labelledby="hero-title">
+{% load ggds %}<section class="ggds-hero{% if hub %} ggds-hero--hub{% endif %}{% if art %} ggds-hero--art{% endif %}" aria-labelledby="hero-title">
   <div class="ggds-hero__inner">
     <div class="ggds-hero__body">
       {% if purpose %}<p class="ggds-hero__purpose">{{ purpose }}</p>{% endif %}
@@ -8,7 +8,7 @@
       <form class="ggds-hero__search" action="{{ search_action }}" method="get" role="search">
         <label class="ggds-visually-hidden" for="hero-q">{{ search_label }}</label>
         <input class="ggds-hero__input" id="hero-q" name="q" type="search" required minlength="2" enterkeyhint="search" autocomplete="off"{% if search_placeholder %} placeholder="{{ search_placeholder }}"{% endif %}>
-        <button class="ggds-hero__button" type="submit">{{ search_icon }}<span class="ggds-hero__button-label">Search</span></button>
+        <button class="ggds-hero__button" type="submit">{{ search_icon }}<span class="ggds-hero__button-label">{% ggds_text "hero.search" %}</span></button>
       </form>
       {% endif %}
       {% if tasks %}

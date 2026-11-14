@@ -1,0 +1,50 @@
+<!-- title: Fast pages; lead: How to make a GGDS website load as fast as it can, on any phone and any connection: four steps, in the order that saves the most. -->
+<p>GGDS is small to begin with: all of its CSS is about 8 KB compressed, its optional script under 2 KB, and it uses the fonts already on people's phones, so there is no font to download. These steps make a website faster still. Each works on its own; do the first two on every website.</p>
+
+<h2 id="cache">1. Let browsers keep the files</h2>
+<p>A file the browser already has costs nothing. Put each GGDS version in its own folder, such as <code>/ggds/${version}/</code>, and tell browsers they may keep everything in it for a year:</p>
+<pre class="docs-code" tabindex="0" aria-label="Cache header"><code>Cache-Control: public, max-age=31536000, immutable</code></pre>
+<p>To update GGDS, add the new version's folder beside the old one and change the links. Never change the files inside a version's folder: browsers that kept the old ones would not see the change. From npm or a CDN the version is already in the address, so this is done for you.</p>
+<table class="ggds-table">
+<caption class="ggds-visually-hidden">Cache settings by web server</caption>
+<thead><tr><th scope="col">Server</th><th scope="col">Setting</th></tr></thead>
+<tbody>
+<tr><td>nginx</td><td><code>location /ggds/ { add_header Cache-Control "public, max-age=31536000, immutable"; }</code></td></tr>
+<tr><td>Apache</td><td><code>&lt;Location /ggds/&gt; Header set Cache-Control "public, max-age=31536000, immutable" &lt;/Location&gt;</code></td></tr>
+<tr><td>IIS</td><td><code>&lt;clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="365.00:00:00" /&gt;</code> in the folder's <code>web.config</code></td></tr>
+</tbody>
+</table>
+
+<h2 id="compress">2. Send the files compressed</h2>
+<p>Compression makes the CSS about a sixth of its size. In the download, every CSS, JavaScript, SVG and JSON file also comes ready-compressed, as a <code>.br</code> (Brotli) and a <code>.gz</code> (gzip) file made at the strongest setting, so the server does no work for it: switch on <code>gzip_static on;</code> in nginx (and <code>brotli_static on;</code> with the Brotli module), or <code>file_server { precompressed br gzip }</code> in Caddy. On other servers, switch on their own compression for CSS, JavaScript and SVG.</p>
+
+<h2 id="only-what-you-use">3. Load only the components and icons you use</h2>
+<p><code>ggds.min.css</code> holds every component. A website that uses a few of them can load one file holding only those, with the same result: the pages look exactly the same, because each component keeps its place in the cascade layers. The command finds the components from the <code>ggds-</code> classes in your website's own files:</p>
+<pre class="docs-code" tabindex="0" aria-label="CSS subset commands"><code># from npm
+npx --package=@ggds/css ggds-css-subset --scan templates --out static/ggds/site.min.css
+
+# from the download
+node ggds/${version}/subset.mjs --scan templates --out ggds/${version}/site.min.css
+
+# or name the components
+npx --package=@ggds/css ggds-css-subset header footer button field error-summary --out static/ggds/site.min.css</code></pre>
+<p>A form page with the parts every page needs (skip link, banner, header, footer, tab bar) and buttons, fields and an error summary loads about half the CSS, compressed. A website that uses most components saves less: the agency website starter uses 21 of the 27 and saves about an eighth. Add <code>--no-tokens</code> when the website loads <code>@ggds/tokens</code> separately. Run the command again whenever the website starts using another component, or put it in the website's build.</p>
+<p>Icons work the same way. The full sprite holds all 143 icons; this makes one with only the icons your files name:</p>
+<pre class="docs-code" tabindex="0" aria-label="Icon subset commands"><code>npx --package=@ggds/icons ggds-icons-subset --scan templates --out static/ggds/icons.svg
+# from the download: node ggds/${version}/icons/subset.mjs --scan templates --out ggds/${version}/icons/site.svg</code></pre>
+<p>Then use <code>icons.svg#search</code> where you used <code>sprite.svg#search</code>. An icon name your website builds while it runs (such as <code>arrow-${direction}</code>) cannot be found by scanning: name those icons on the command line too. With a JavaScript bundler, import single icons from <code>@ggds/icons</code> instead; the bundler keeps only those.</p>
+<p>A React website has no <code>ggds-</code> classes in its own files: scan the built pages (<code>--scan dist</code>) or name the components.</p>
+
+<h2 id="images">4. Make your images small</h2>
+<p>On most government websites, photographs, banners and PDFs weigh far more than GGDS. Save photographs as AVIF or WebP, no wider than they are shown, and give every <code>&lt;img&gt;</code> its <code>width</code> and <code>height</code> so the page does not move while it loads. Add <code>loading="lazy"</code> to images further down the page. Serve a JPEG to older browsers with <code>&lt;picture&gt;</code>:</p>
+<pre class="docs-code" tabindex="0" aria-label="Picture element"><code>&lt;picture&gt;
+  &lt;source srcset="minister.avif" type="image/avif"&gt;
+  &lt;source srcset="minister.webp" type="image/webp"&gt;
+  &lt;img src="minister.jpg" alt="The Minister at the launch" width="640" height="400" loading="lazy" decoding="async"&gt;
+&lt;/picture&gt;</code></pre>
+
+<h2 id="check">Check your website</h2>
+<p><code>npx @ggds/check https://www.example.gov.gh</code> reports what a live website still needs: the page parts, accessibility, security headers, its email domain and speed, with the source of every rule. <code>npx @ggds/check ./dist</code> checks the built pages before they go live. It is a readiness check, not a statement of NITA compliance. See <a href="${repo}/tree/main/packages/check#readme">@ggds/check</a>.</p>
+
+<h2 id="script">The script</h2>
+<p>The optional script loads as a module, so it never holds up the page, and every component works before it has loaded and without it. Load it only on pages that use the header menu or the error summary if you want to save the request elsewhere.</p>

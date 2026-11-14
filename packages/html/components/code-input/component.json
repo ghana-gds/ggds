@@ -1,0 +1,13 @@
+{
+  "css": "field",
+  "javascript": null,
+  "classes": [
+    [".ggds-input--code", "On a .ggds-input: a code, with spaced figures that line up."]
+  ],
+  "states": [],
+  "astro": "---\nimport CodeInput from '@ggds/astro/CodeInput.astro';\n---\n<CodeInput id=\"code\" name=\"code\" label=\"Enter the code we sent you\"\n  hint=\"We sent a 6-digit code to 024 *** 4567. It expires in 10 minutes.\" />",
+  "django": "from ggds_django.forms import OneTimeCodeField\n\nclass CodeForm(forms.Form):\n    code = OneTimeCodeField(label=\"Enter the code we sent you\", digits=6)  # removes spaces and dashes",
+  "tests": [
+    "code input: one box that phones can fill in, and keeps leading zeros"
+  ]
+}

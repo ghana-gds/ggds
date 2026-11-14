@@ -1,0 +1,21 @@
+<!-- name: Timeout warning; icon: clock; status: alpha; order: 32; group: Forms; related: dialog, password-input; summary: Warns people before they are signed out for being inactive, and lets them stay signed in with one button. -->
+<p class="ggds-lead">Warns people before they are signed out for being inactive, and lets them stay signed in with one button.</p>
+<h2>When to use</h2>
+<ul><li>On every page of a service where people are signed in and are signed out after a time without activity.</li></ul>
+<h2>When not to use</h2>
+<ul><li>On pages without a time limit. If you can, do not sign people out at all: keep their answers instead.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Add the dialog to every signed-in page, with <code>data-ggds-module="timeout-warning"</code> and:
+<ul><li><code>data-ggds-timeout</code>: seconds of inactivity before you sign people out (the same as your server's session);</li>
+<li><code>data-ggds-warn</code>: seconds before that to warn them, at least 120;</li>
+<li><code>data-ggds-keep-alive</code>: an address on your website that extends the session when the script requests it, and fails or redirects once the session has ended (the script then goes to the sign-out page);</li>
+<li><code>data-ggds-sign-out</code>: where to go when time runs out, a page that says they have been signed out and that their answers are saved.</li></ul></li>
+<li>"Stay signed in" extends the session and closes the warning. "Sign out" goes to your sign-out address.</li>
+<li>The time in the message can be translated: <code>data-ggds-minutes-one</code>, <code>data-ggds-minutes-other</code>, <code>data-ggds-seconds-one</code> and <code>data-ggds-seconds-other</code>, with <code>{count}</code> for the number.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>People get at least 2 minutes' warning and can extend the time with one button (WCAG 2.2.1, timing adjustable).</li><li>Screen readers read the whole message when the warning opens. The countdown on screen updates every second, but screen readers hear the message again only each minute, then at 30 and 10 seconds, so it does not talk over them.</li><li>The warning is a <a href="dialog.html">dialog</a>: focus moves to "Stay signed in", and Escape also keeps them signed in.</li><li>Every tab of your website shares one deadline, so a tab left open never signs people out while they work in another.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Extend the session on every page people load, as the warning counts from each page (in Django, <code>SESSION_SAVE_EVERY_REQUEST = True</code>).</li><li>Save people's answers before you sign them out, and say so on the signed-out page.</li><li>Match <code>data-ggds-timeout</code> to the server, or people will be signed out before the warning.</li></ul>

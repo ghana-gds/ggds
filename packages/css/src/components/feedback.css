@@ -1,0 +1,46 @@
+/* Feedback: "Did this page help you?" at the end of a page, with Yes and No, and a link to report a problem. The
+   buttons send a form, so it works without JavaScript; the server counts the answers for each page. */
+.ggds-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ggds-space-3) var(--ggds-space-6);
+  margin-block-start: var(--ggds-space-12);
+  padding: var(--ggds-space-4) var(--ggds-space-6);
+  border-block-start: 4px solid var(--ggds-color-institution);
+  background: var(--ggds-color-surface);
+}
+
+.ggds-feedback__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ggds-space-3) var(--ggds-space-4);
+}
+
+.ggds-feedback__title,
+.ggds-feedback__thanks {
+  margin: 0;
+  font-size: var(--ggds-font-size-base);
+  font-weight: var(--ggds-font-weight-bold);
+}
+
+.ggds-feedback__thanks:focus {
+  outline: none;
+}
+
+.ggds-feedback__answers {
+  display: flex;
+  gap: var(--ggds-space-3);
+}
+
+/* Two equal buttons, at least as wide as a fingertip needs, and on the same line as the question when it fits. */
+.ggds-feedback__answer {
+  min-width: 5rem;
+  margin: 0;
+}
+
+.ggds-feedback__report {
+  margin: 0;
+}

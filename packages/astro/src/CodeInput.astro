@@ -1,0 +1,17 @@
+---
+/** GGDS code input: one box for a code sent by SMS or email, which phones can fill in. Text, so leading zeros stay. */
+import { STRINGS } from './strings.mjs';
+interface Props {
+  id: string; name: string; label: string; hint?: string | undefined; error?: string | undefined; value?: string | undefined;
+  strings?: Record<string, string> | undefined;
+}
+const { id, name, label, hint, error, value, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const describedBy = [hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(' ') || undefined;
+---
+<div class={error ? 'ggds-field ggds-field--error' : 'ggds-field'}>
+  <label class="ggds-label" for={id}>{label}</label>
+  {hint && <p class="ggds-hint" id={`${id}-hint`}>{hint}</p>}
+  {error && <p class="ggds-error-message" id={`${id}-error`}><span class="ggds-visually-hidden">{s['field.errorPrefix'].trimEnd()}</span> {error}</p>}
+  <input class="ggds-input ggds-input--code" id={id} name={name} type="text" inputmode="numeric" autocomplete="one-time-code" spellcheck="false" aria-describedby={describedBy} aria-invalid={error ? 'true' : undefined} value={value} />
+</div>

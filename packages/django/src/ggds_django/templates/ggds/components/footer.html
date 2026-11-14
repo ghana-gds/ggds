@@ -1,4 +1,4 @@
-<footer class="ggds-footer">
+{% load ggds %}<footer class="ggds-footer">
   <div class="ggds-container ggds-footer__main">
     <div>
       <p class="ggds-footer__identity">{% if logo_url %}<img class="ggds-footer__logo" src="{{ logo_url }}" alt="{{ logo_alt }}" width="48" height="48">{% elif initials %}<span class="ggds-header__monogram" aria-hidden="true">{{ initials }}</span>{% endif %}<span>{{ name }}</span></p>
@@ -7,10 +7,10 @@
       <address class="ggds-footer__contact">
         {% if address %}<span>{{ address }}</span>{% endif %}
         {% if email %}<a href="mailto:{{ email }}">{{ email }}</a>{% endif %}
-        {% if phone %}<span>General enquiries: {{ phone }}</span>{% endif %}
+        {% if phone %}<span>{% ggds_text "footer.enquiries" phone=phone %}</span>{% endif %}
       </address>
       {% endif %}
-      {% if contact_url %}<p class="ggds-footer__more"><a href="{{ contact_url }}">All contact details and offices</a></p>{% endif %}
+      {% if contact_url %}<p class="ggds-footer__more"><a href="{{ contact_url }}">{% ggds_text "footer.contactMore" %}</a></p>{% endif %}
     </div>
     <div class="ggds-footer__sections">
       {% for s in sections %}

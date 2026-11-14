@@ -1,11 +1,14 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import { t, type StringsProp } from './util.js';
 
 export interface ErrorSummaryProps {
   /** Each problem: what to do, linking to its field (`#<input id>`, or the first radio or checkbox). */
   errors: { href: string; text: string }[];
   /** Default: "There is a problem". */
   title?: string;
+  /** GGDS's own text in another language: stringsFor('tw'). */
+  strings?: StringsProp;
 }
 
 /**
@@ -13,7 +16,7 @@ export interface ErrorSummaryProps {
  * readers read it first (WCAG 3.3.1), and each link moves to its field with the field's label in view.
  * Put it first in <main>, and start the page title with "Error: ". Renders nothing when there are no errors.
  */
-export function ErrorSummary({ errors, title = 'There is a problem' }: ErrorSummaryProps) {
+export function ErrorSummary({ errors, title, strings }: ErrorSummaryProps) {
   const box = useRef<HTMLDivElement>(null);
   const shown = errors.length > 0;
   const key = errors.map((e) => `${e.href}|${e.text}`).join('\n');
@@ -38,7 +41,7 @@ export function ErrorSummary({ errors, title = 'There is a problem' }: ErrorSumm
 
   return (
     <div ref={box} className="ggds-error-summary" role="alert" aria-labelledby="error-summary-title" tabIndex={-1} onClick={onClick}>
-      <h2 className="ggds-error-summary__title" id="error-summary-title">{title}</h2>
+      <h2 className="ggds-error-summary__title" id="error-summary-title">{title ?? t(strings, 'errorSummary.title')}</h2>
       <ul className="ggds-error-summary__list">
         {errors.map((e) => <li key={e.href}><a href={e.href}>{e.text}</a></li>)}
       </ul>

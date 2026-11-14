@@ -1,0 +1,6 @@
+{% if languages|length > 1 %}<nav class="ggds-language-switcher" aria-label="{{ label }}">
+  <ul class="ggds-language-switcher__list">
+    {% for l in languages %}<li><a class="ggds-language-switcher__link" href="{{ l.href }}" lang="{{ l.code }}" hreflang="{{ l.code }}"{% if l.current %} aria-current="true"{% endif %}>{{ l.own }}</a></li>
+    {% endfor %}
+  </ul>
+</nav>{% endif %}

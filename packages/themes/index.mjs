@@ -6,7 +6,7 @@
 // An institution without a theme here uses institutionCss('#rrggbb') from @ggds/tokens/institution.mjs.
 // No dependencies beyond @ggds/tokens.
 import { readFileSync } from 'node:fs';
-import { institutionPalette } from '@ggds/tokens/institution.mjs';
+import { institutionDeclarations, institutionPalette, institutionTokens } from '@ggds/tokens/institution.mjs';
 
 const data = JSON.parse(readFileSync(new URL('./themes.json', import.meta.url), 'utf8'));
 
@@ -23,7 +23,6 @@ export function getTheme(slug) {
   return t;
 }
 
-const declarations = (t) => `  --ggds-color-institution: ${t.accent};\n  --ggds-color-institution-deep: ${t.deep};\n`;
 
 /**
  * A theme as CSS. scope "root" (default) themes the whole page: link it after ggds.css. scope "attribute" themes
@@ -32,10 +31,16 @@ const declarations = (t) => `  --ggds-color-institution: ${t.accent};\n  --ggds-
 export function themeCss(slug, { scope = 'root' } = {}) {
   const t = getTheme(slug);
   const selector = scope === 'attribute' ? `:root[data-ggds-theme="${t.slug}"],\n[data-ggds-theme="${t.slug}"]` : ':root';
-  return `/* ${t.name} (${t.shortName}) */\n${selector} {\n${declarations(t)}}\n`;
+  return `/* ${t.name} (${t.shortName}) */\n${selector} {\n${institutionDeclarations(t)}}\n`;
 }
 
 /** Every theme keyed by data-ggds-theme, for a page that switches themes or shows several institutions. */
 export function allThemesCss() {
   return themes.map((t) => themeCss(t.slug, { scope: 'attribute' })).join('\n');
+}
+
+/** A theme as W3C design tokens (DTCG), for Figma (local variables, Import), Tokens Studio or Style Dictionary. */
+export function themeTokens(slug) {
+  const t = getTheme(slug);
+  return institutionTokens(t.color, { name: `${t.name} (${t.shortName})` });
 }

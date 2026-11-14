@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
-import { cx } from './util.js';
+import { cx, fill, t, type StringsProp } from './util.js';
 
 export interface FooterLink { label: string; href: string; attrs?: AnchorHTMLAttributes<HTMLAnchorElement> }
 
@@ -17,10 +17,12 @@ export interface FooterProps extends HTMLAttributes<HTMLElement> {
   year?: number;
   /** The institution's logo or initials badge, before its name. */
   logo?: ReactNode;
+  /** GGDS's own text in another language: stringsFor('tw'). */
+  strings?: StringsProp;
 }
 
 /** The footer: who runs the website, how to contact them, the main sections and the links every website must have. */
-export function Footer({ name, purpose, contact, sections = [], bar = [], year = new Date().getFullYear(), logo, className, ...rest }: FooterProps) {
+export function Footer({ name, purpose, contact, sections = [], bar = [], year = new Date().getFullYear(), logo, strings, className, ...rest }: FooterProps) {
   return (
     <footer className={cx('ggds-footer', className)} {...rest}>
       <div className="ggds-container ggds-footer__main">
@@ -31,10 +33,10 @@ export function Footer({ name, purpose, contact, sections = [], bar = [], year =
             <address className="ggds-footer__contact">
               {contact.address && <span>{contact.address}</span>}
               {contact.email && <a href={`mailto:${contact.email}`}>{contact.email}</a>}
-              {contact.phone && <span>General enquiries: {contact.phoneHref ? <a href={contact.phoneHref}>{contact.phone}</a> : contact.phone}</span>}
+              {contact.phone && <span>{fill(strings, 'footer.enquiries', { phone: contact.phoneHref ? <a href={contact.phoneHref}>{contact.phone}</a> : contact.phone })}</span>}
             </address>
           )}
-          {contact?.moreHref && <p className="ggds-footer__more"><a href={contact.moreHref}>{contact.moreLabel ?? 'All contact details and offices'}</a></p>}
+          {contact?.moreHref && <p className="ggds-footer__more"><a href={contact.moreHref}>{contact.moreLabel ?? t(strings, 'footer.contactMore')}</a></p>}
         </div>
         <div className="ggds-footer__sections">
           {sections.map((s) => (

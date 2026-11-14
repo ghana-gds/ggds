@@ -65,6 +65,17 @@ In HTML, with the sprite (the browser downloads it once and keeps it):
 </a>
 ```
 
+The full sprite holds all 143 icons. `ggds-icons-subset` makes one with only the icons a site's files name
+(`sprite.svg#name`, `icon('name')`, `{% ggds_icon "name" %}`, `<Icon name="name">` and other quoted names):
+
+```sh
+npx --package=@ggds/icons ggds-icons-subset --scan templates --out static/ggds/icons.svg
+npx --package=@ggds/icons ggds-icons-subset search menu close arrow-right > icons.svg
+```
+
+Use it the same way (`icons.svg#search`). Name any icon whose name is built while the site runs, such as
+`` icon(`arrow-${dir}`) ``: scanning cannot see it. Bundled JavaScript does not need this: import single icons.
+
 In Django, `{% ggds_icon "download" %}` (from `ggds-django`); in the GGDS WordPress theme, `ggds_icon( 'download' )`;
 in Astro, `icon('download')` from `@ggds/astro/icons.mjs`.
 

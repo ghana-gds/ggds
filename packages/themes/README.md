@@ -63,21 +63,49 @@ Several institutions on one page, such as a list of agencies: load `themes.css` 
 Each theme is `@ggds/themes/<slug>.css`. All of them together, keyed by `data-ggds-theme`, are
 `@ggds/themes/themes.css`. The data is in `@ggds/themes/themes.json`.
 
-No theme for your institution yet? Make one with `institutionCss('#rrggbb')` from
-[`@ggds/tokens/institution.mjs`](https://www.npmjs.com/package/@ggds/tokens). It rejects colours too light to read
-on white. To add your institution to this package, open an
-[issue](https://github.com/ghana-gds/ggds/issues).
+## Make your own theme
+
+No theme for your institution yet? You need only its colour.
+
+- **Designers and anyone without code:** use the
+  [theme builder](https://ghana-gds.github.io/ggds/themes.html#make-a-theme). Type or pick the colour, see it on a
+  page, and download the stylesheet and the design tokens. If the colour is too light to read, it suggests the
+  nearest shade that passes.
+- **Developers:** use the command line. It needs Node.js and no code.
+
+```sh
+npx @ggds/themes check '#7fb3d5'                  # does it pass? If not, the nearest shade that does (exit 1)
+npx @ggds/themes '#006e35' --out theme.css         # the stylesheet, for the whole site
+npx @ggds/themes '#006e35' --slug my-agency        # only for elements marked data-ggds-theme="my-agency"
+npx @ggds/themes '#006e35' --format tokens --out theme.tokens.json   # design tokens for Figma
+npx @ggds/themes nca --format tokens               # a ready-made theme, in any format
+npx @ggds/themes list                              # the ready-made themes
+```
+
+In a build script, use `institutionCss()`, `institutionTokens()` and `checkInstitutionColour()` from
+[`@ggds/tokens/institution.mjs`](https://www.npmjs.com/package/@ggds/tokens). The builder, the command line and this
+package all use that one rule.
+
+To add your institution to this package, open an [issue](https://github.com/ghana-gds/ggds/issues).
+
+## Design tokens for Figma
+
+Every theme is also `@ggds/themes/tokens/<slug>.tokens.json`: W3C design tokens with the same names as
+`@ggds/tokens` (`color.institution.default` and `color.institution.deep`). In Figma, open **Local variables >
+Import** and choose the file. Import several as modes of one collection to switch a design between institutions.
+They also work with Tokens Studio and Style Dictionary.
 
 ## API
 
 For build tools in Node.
 
 ```js
-import { themes, getTheme, themeCss, allThemesCss, DEFAULT_THEME } from '@ggds/themes';
+import { themes, getTheme, themeCss, themeTokens, allThemesCss, DEFAULT_THEME } from '@ggds/themes';
 
 getTheme('nca');                        // { slug, name, shortName, color, accent, deep, status, source }
 themeCss('nca');                        // the theme as CSS for the whole page (:root)
 themeCss('nca', { scope: 'attribute' }); // the theme for elements marked data-ggds-theme="nca"
+themeTokens('nca');                     // the theme as W3C design tokens
 ```
 
 | Export | What it is |
@@ -85,6 +113,7 @@ themeCss('nca', { scope: 'attribute' }); // the theme for elements marked data-g
 | `themes` | Every theme, the default first. Frozen objects: `slug`, `name`, `shortName`, `color`, `accent`, `deep`, `status`, `source` |
 | `getTheme(slug)` | One theme. Throws for an unknown slug, so a typo cannot silently fall back to the default |
 | `themeCss(slug, { scope })` | A theme as CSS. `scope: 'root'` (default) themes the whole page; `'attribute'` themes elements with `data-ggds-theme` |
+| `themeTokens(slug)` | A theme as W3C design tokens (DTCG), the same as `tokens/<slug>.tokens.json` |
 | `allThemesCss()` | Every theme keyed by `data-ggds-theme`, the same as `themes.css` |
 | `DEFAULT_THEME` | `'mocdti'` |
 

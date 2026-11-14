@@ -10,7 +10,8 @@
 import { ICONS } from '../packages/icons/dist/all.js';
 
 /**
- * themes: [{ shortName, accent, deep }]; the first (the default theme) colours the drawing. The service links to the
+ * themes: [{ shortName, accent, deep }]; the drawing follows the page's theme (the institution custom properties), with
+ * the first (the default theme) as the fallback. The service links to the
  * showcase. Returns the SVG and its CSS.
  */
 export function heroArt(themes, { iconCount = Object.keys(ICONS).length } = {}) {
@@ -215,14 +216,14 @@ export function heroArt(themes, { iconCount = Object.keys(ICONS).length } = {}) 
 .ga-flag-green { fill: var(--ggds-color-flag-green); }
 .ga-flag-red, .ga-flag-gold, .ga-flag-green { stroke: none; }
 .ga-layer--foundations circle { stroke: var(--ggds-color-text-inverse); stroke-width: 2; }
-.ga-swatch { fill: ${accent}; }
+.ga-swatch { fill: var(--ggds-color-institution, ${accent}); }
 .ga-type { fill: var(--ggds-color-text-inverse); font-size: 28px; font-weight: 700; }
 .ga-icon { fill: none; stroke: var(--ggds-color-text-inverse); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .ga-space { fill: none; stroke: var(--ggds-color-flag-gold); stroke-width: 2; stroke-linejoin: round; }
 .ga-badge { fill: none; stroke: var(--ggds-color-text-inverse); stroke-width: 2; }
 .ga-badge-text { fill: var(--ggds-color-text-inverse); font-size: 13px; font-weight: 700; }
-.ga-accent { fill: ${accent}; }
-.ga-deep { fill: ${deep}; }
+.ga-accent { fill: var(--ggds-color-institution, ${accent}); }
+.ga-deep { fill: var(--ggds-color-institution-deep, ${deep}); }
 /* Interactive: rings, fading, where each part is used, and the caption. */
 .ga-hit { cursor: pointer; outline: none; text-decoration: none; }
 .ga-hit text { text-decoration: none; }

@@ -1,6 +1,6 @@
 {
   "name": "@ggds/themes",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Institution themes for the Ghana Government Design System (GGDS): the ministry and each agency, as CSS and data. Identity colours only.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
@@ -24,9 +24,13 @@
     "url": "https://github.com/ghana-gds/ggds/issues"
   },
   "type": "module",
+  "bin": {
+    "ggds-themes": "./cli.mjs"
+  },
   "files": [
     "themes.json",
     "index.mjs",
+    "cli.mjs",
     "dist"
   ],
   "exports": {
@@ -34,6 +38,7 @@
     "./themes.json": "./dist/themes.json",
     "./themes.css": "./dist/themes.css",
     "./*.css": "./dist/*.css",
+    "./tokens/*.tokens.json": "./dist/tokens/*.tokens.json",
     "./package.json": "./package.json"
   },
   "dependencies": {

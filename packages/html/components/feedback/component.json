@@ -1,0 +1,21 @@
+{
+  "css": "feedback",
+  "javascript": null,
+  "classes": [
+    [".ggds-feedback", "At the end of the page: the question and the report link."],
+    [".ggds-feedback__form", "The question and the two answers, sent with the page's address."],
+    [".ggds-feedback__title", "\"Did this page help you?\""],
+    [".ggds-feedback__answers", "Yes and No, side by side."],
+    [".ggds-feedback__answer", "Each answer: a secondary button that sends the form."],
+    [".ggds-feedback__thanks", "After an answer: the thank-you message, announced by screen readers."],
+    [".ggds-feedback__report", "The link to report a problem with the page."]
+  ],
+  "states": [],
+  "astro": "<Feedback action=\"/feedback/\" page={Astro.url.pathname} reportHref=\"/report-a-problem/\" />",
+  "django": "{% ggds_feedback action=\"/feedback/\" report_url=\"/report-a-problem/\" %}",
+  "tests": [
+    "feedback: an answer sends the page address, and the thank-you is announced",
+    "no horizontal scrolling at 320px",
+    "no horizontal scrolling at 320px with a wide font"
+  ]
+}

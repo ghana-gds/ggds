@@ -1,0 +1,48 @@
+{
+  "name": "@ggds/create",
+  "version": "0.4.0",
+  "description": "Makes a complete Government of Ghana website with GGDS, from your institution's name, address, contact details and colour: every page, the server settings for security and speed, and a guide to putting it online. Run npm init @ggds.",
+  "author": "Ghana Government Design System (GGDS) contributors",
+  "keywords": [
+    "ghana",
+    "government",
+    "design-system",
+    "ggds",
+    "website",
+    "starter",
+    "create",
+    "accessibility"
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ghana-gds/ggds/tree/main/packages/create#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ghana-gds/ggds.git",
+    "directory": "packages/create"
+  },
+  "bugs": {
+    "url": "https://github.com/ghana-gds/ggds/issues"
+  },
+  "type": "module",
+  "files": [
+    "bin",
+    "lib",
+    "ggds"
+  ],
+  "bin": {
+    "ggds-create": "./bin/create.mjs"
+  },
+  "exports": {
+    ".": "./lib/starter.js",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "prepack": "node build.mjs && node ../../scripts/package-files.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

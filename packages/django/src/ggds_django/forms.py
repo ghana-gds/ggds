@@ -105,3 +105,45 @@ class GGDSDateField(forms.MultiValueField):
 
     def compress(self, data_list):  # clean() does the work; MultiValueField requires the method
         return data_list
+
+
+# --- Code input, and inputs with a prefix or suffix -----------------------------------------------------------
+
+class OneTimeCodeField(forms.CharField):
+    """A code sent by SMS or email, in one box that phones can fill in (a GGDS code input).
+
+    It accepts the code with spaces or dashes and removes them, keeps leading zeros (it is text, not a number) and
+    gives the error messages GGDS recommends: OneTimeCodeField(label="Enter the code we sent you", digits=6).
+    """
+
+    def __init__(self, *, digits: int = 6, **kwargs):
+        self.digits = digits
+        kwargs.setdefault("widget", forms.TextInput(attrs={
+            "class": "ggds-input--code", "inputmode": "numeric", "autocomplete": "one-time-code", "spellcheck": "false"}))
+        kwargs.setdefault("error_messages", {"required": "Enter the code we sent you"})
+        super().__init__(**kwargs)
+
+    def to_python(self, value):
+        value = super().to_python(value)
+        if value in self.empty_values:
+            return value
+        return "".join(str(value).split()).replace("-", "")
+
+    def validate(self, value):
+        super().validate(value)
+        # Only 0 to 9: other scripts' digits (and superscripts) are not codes anyone was sent.
+        if value and not (value.isascii() and value.isdigit() and len(value) == self.digits):
+            raise ValidationError(f"Enter the {self.digits}-digit code we sent you", code="invalid")
+
+
+class AffixInput(forms.TextInput):
+    """A text input with a unit before or after it, such as GH₵ or kg: AffixInput(prefix="GH₵").
+
+    GGDSFormRenderer draws the unit beside the box and hides it from screen readers, so say the unit in the label
+    too ("How much do you want to pay, in Ghana cedis?").
+    """
+
+    def __init__(self, attrs=None, *, prefix: str = "", suffix: str = ""):
+        self.prefix = prefix
+        self.suffix = suffix
+        super().__init__({"inputmode": "decimal", "spellcheck": "false", **(attrs or {})})

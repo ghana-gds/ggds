@@ -1,0 +1,24 @@
+---
+/** GGDS side navigation: the pages of one section. The current page's own pages are shown under it. */
+import { STRINGS } from './strings.mjs';
+interface Link { label: string; href: string }
+interface Props { items: (Link & { links?: Link[] | undefined })[]; current?: string | undefined; label?: string | undefined; strings?: Record<string, string> | undefined }
+const { items, current = Astro.url.pathname, label, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+---
+<nav class="ggds-side-nav" aria-label={label ?? s['sideNav.label']}>
+  <ul class="ggds-side-nav__list">
+    {items.map((i) => {
+      const open = i.href === current || (i.links ?? []).some((l) => l.href === current);
+      return (
+        <li><a class="ggds-side-nav__link" href={i.href} aria-current={i.href === current ? 'page' : undefined}>{i.label}</a>
+          {open && i.links && i.links.length > 0 && (
+            <ul class="ggds-side-nav__list ggds-side-nav__list--sub">
+              {i.links.map((l) => <li><a class="ggds-side-nav__link" href={l.href} aria-current={l.href === current ? 'page' : undefined}>{l.label}</a></li>)}
+            </ul>
+          )}
+        </li>
+      );
+    })}
+  </ul>
+</nav>

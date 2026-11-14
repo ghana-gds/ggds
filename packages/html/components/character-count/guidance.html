@@ -1,0 +1,19 @@
+<!-- name: Character count; icon: edit; status: alpha; order: 27; group: Forms; related: field, error-summary; summary: Tells people how many characters they can enter in a textarea, and how many they have left as they type. -->
+<p class="ggds-lead">Tells people how many characters they can enter in a textarea, and how many they have left as they type.</p>
+<h2>When to use</h2>
+<ul><li>When there is a real limit on the length of an answer, such as a system that stores no more than 500 characters.</li></ul>
+<h2>When not to use</h2>
+<ul><li>To make people write less when there is no real limit. Ask a clearer question instead.</li><li>On a one-line text input.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Put <code>ggds-character-count</code> on the field and the limit in <code>data-ggds-max</code>. Add the limit as a hint after the textarea, and name it in the textarea's <code>aria-describedby</code>.</li>
+<li>Do not put <code>maxlength</code> on the textarea: it silently cuts off what people paste. Let them write more, show that it is too long, and check the length on the server.</li>
+<li>With the GGDS script, the hint becomes a count that updates as people type ("You have 120 characters remaining", "You have 12 characters too many").</li>
+<li>In Django, a <code>CharField</code> with <code>max_length</code> and a <code>Textarea</code> gets a character count from the GGDS form renderer.</li>
+<li>The count's text can be translated: <code>data-ggds-remaining-one</code>, <code>data-ggds-remaining-other</code>, <code>data-ggds-over-one</code> and <code>data-ggds-over-other</code> on the field, with <code>{count}</code> for the number. The Django and React parts set them from GGDS's text in the page's language.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The count is shown at once, but screen readers hear it only when people pause typing, so it does not interrupt every key.</li><li>Too many characters is shown in words, in red and bold, never by colour alone.</li><li>Without JavaScript, people still see the limit as a hint.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Check the length on the server and show an <a href="error-summary.html">error</a> that says the limit, as in the second example.</li></ul>

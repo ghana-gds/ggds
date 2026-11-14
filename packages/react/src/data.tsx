@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Icon, type IconName } from './Icon.js';
-import { cx } from './util.js';
+import { cx, t, type StringsProp } from './util.js';
 
 export interface PageHeadingProps {
   /** The page's <h1>. */
@@ -60,11 +60,13 @@ export interface ProgressProps {
   label?: string;
   /** Default: "ggds-progress". */
   id?: string;
+  /** GGDS's own text in another language: stringsFor('tw'). */
+  strings?: StringsProp;
 }
 
 /** How far through a task: in words, and as a native <progress> bar. */
-export function Progress({ current, total, label, id = 'ggds-progress' }: ProgressProps) {
-  const text = label || `Question ${current} of ${total}`;
+export function Progress({ current, total, label, id = 'ggds-progress', strings }: ProgressProps) {
+  const text = label || t(strings, 'progress.label', { current, total });
   return (
     <div className="ggds-progress">
       <label className="ggds-progress__label" htmlFor={id}>{text}</label>
@@ -81,17 +83,17 @@ export interface Stage {
   /** The hidden words before the title. Default: "Done", "Now" or "Next". */
   words?: string;
 }
-const STATE_WORDS = { done: 'Done', current: 'Now', '': 'Next' } as const;
+const STATE_WORDS = { done: 'timeline.done', current: 'timeline.current', '': 'timeline.next' } as const;
 
 /** What has happened and what happens next. Each stage says its state in words, not only by its look. */
-export function Timeline({ stages }: { stages: Stage[] }) {
+export function Timeline({ stages, strings }: { stages: Stage[]; strings?: StringsProp }) {
   return (
     <ol className="ggds-timeline">
       {stages.map((s, i) => {
         const state = s.state ?? '';
         return (
           <li className={cx('ggds-timeline__item', state && `ggds-timeline__item--${state}`)} key={i}>
-            <p className="ggds-timeline__title"><span className="ggds-visually-hidden">{s.words ?? STATE_WORDS[state]}: </span>{s.title}</p>
+            <p className="ggds-timeline__title"><span className="ggds-visually-hidden">{s.words ?? t(strings, STATE_WORDS[state])}: </span>{s.title}</p>
             {s.when && <p className="ggds-timeline__when">{s.when}</p>}
           </li>
         );
@@ -135,5 +137,55 @@ export function Steps({ steps, urgent = false, headingLevel = 3 }: { steps: Step
         </li>
       ))}
     </ol>
+  );
+}
+
+export type TaskStatus = 'completed' | 'inProgress' | 'notStarted' | 'cannotStart';
+export interface Task {
+  label: ReactNode;
+  /** The section's address. Leave it out when people cannot open it yet. */
+  href?: string;
+  status: TaskStatus;
+  /** Extra help under the name, such as why it cannot start yet. */
+  hint?: ReactNode;
+  /** Used for the ids of its hint and status: <idPrefix>-<id>-status. Default: its position. */
+  id?: string;
+}
+const TASK_TAG = { completed: 'ggds-tag ggds-tag--success', inProgress: 'ggds-tag ggds-tag--info', notStarted: 'ggds-tag', cannotStart: '' } as const;
+
+/**
+ * The sections of a long application with the status of each. Sections people can open are links, the whole row
+ * being the target, and screen readers hear each link's status. The summary counts the completed sections.
+ */
+export function TaskList({ tasks, summary = true, idPrefix = 'task', strings }: {
+  tasks: Task[];
+  summary?: boolean;
+  /** The start of each section's ids: give each task list on a page its own. */
+  idPrefix?: string;
+  strings?: StringsProp;
+}) {
+  const done = tasks.filter((x) => x.status === 'completed').length;
+  return (
+    <>
+      {summary && <p className="ggds-task-list__summary">{t(strings, 'taskList.summary', { done, total: tasks.length })}</p>}
+      <ol className="ggds-task-list">
+        {tasks.map((task, i) => {
+          const key = `${idPrefix}-${task.id ?? i + 1}`;
+          const status = t(strings, `taskList.${task.status}`);
+          const open = Boolean(task.href) && task.status !== 'cannotStart';
+          return (
+            <li className={cx('ggds-task-list__item', open && 'ggds-task-list__item--link')} key={key}>
+              <div className="ggds-task-list__name">
+                {open ? <a className="ggds-task-list__link" href={task.href} aria-describedby={[task.hint && `${key}-hint`, `${key}-status`].filter(Boolean).join(' ')}>{task.label}</a> : task.label}
+                {task.hint && <p className="ggds-task-list__hint" id={`${key}-hint`}>{task.hint}</p>}
+              </div>
+              {task.status === 'cannotStart'
+                ? <div className="ggds-task-list__status ggds-task-list__status--cannot-start" id={`${key}-status`}>{status}</div>
+                : <div className="ggds-task-list__status" id={`${key}-status`}><strong className={TASK_TAG[task.status]}>{status}</strong></div>}
+            </li>
+          );
+        })}
+      </ol>
+    </>
   );
 }

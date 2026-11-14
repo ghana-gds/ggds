@@ -1,0 +1,37 @@
+/* Phase banner: says a service is new (alpha or beta) and asks for feedback. Under the header, on every page of the
+   service, until it is finished. */
+.ggds-phase-banner {
+  border-bottom: 1px solid var(--ggds-color-border-subtle);
+  background: var(--ggds-color-surface);
+}
+
+.ggds-phase-banner__content {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ggds-space-3);
+  margin: 0;
+  padding-block: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-phase-banner__tag {
+  flex-shrink: 0;
+  padding: 0 var(--ggds-space-2);
+  border-radius: var(--ggds-radius-sm);
+  background: var(--ggds-color-brand-700);
+  color: var(--ggds-color-text-inverse);
+  font-weight: var(--ggds-font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Lets a long sentence wrap beside the tag instead of widening the page. */
+.ggds-phase-banner__text {
+  min-width: 0;
+}
+
+@media (forced-colors: active) {
+  .ggds-phase-banner__tag {
+    border: 1px solid CanvasText;
+  }
+}

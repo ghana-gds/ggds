@@ -28,8 +28,8 @@
     ]
   ],
   "states": [],
-  "astro": "<SkipLink />\n<Banner official shortName=\"NCA\" host=\"nca.org.gh\" />\n<Header name=\"National Communications Authority\" initials=\"NCA\" nav={nav} current={Astro.url.pathname} />\n<main id=\"main\" tabindex=\"-1\" class=\"ggds-container ggds-main\">…</main>\n<Footer name=\"National Communications Authority\" />\n<TabBar tabs={tabs} />",
-  "django": "{% load ggds %}\n{% ggds_skip_link %}\n{% ggds_banner short_name=\"NCA\" host=\"nca.org.gh\" official=True %}\n{% ggds_header name=\"National Communications Authority\" nav=nav %}\n<main id=\"main\" tabindex=\"-1\" class=\"ggds-container ggds-main\">…</main>\n{% ggds_footer name=\"National Communications Authority\" sections=sections links=links %}\n{% ggds_tab_bar tabs %}",
+  "astro": "---\nimport Page from '@ggds/astro/Page.astro';\n---\n<Page banner={{ shortName: 'NCA', host: 'nca.org.gh', official: true }} header={{ name: 'National Communications Authority', initials: 'NCA', nav, current: Astro.url.pathname }} footer={{ name: 'National Communications Authority', sections, bar }} tabs={tabs}>\n  …\n</Page>",
+  "django": "{% extends \"ggds/page.html\" %}\n{% block title %}Apply for a licence | National Communications Authority{% endblock %}\n{% block content %}…{% endblock %}\n\n{# settings.py: GGDS_SITE = {\"name\": \"National Communications Authority\", \"short_name\": \"NCA\", \"host\": \"nca.org.gh\", \"nav\": [...], ...} #}",
   "tests": [
     "no horizontal scrolling at 320px",
     "no horizontal scrolling at 320px with a wide font"

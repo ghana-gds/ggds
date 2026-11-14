@@ -1,0 +1,32 @@
+<!-- name: Sign in; icon: sign-in; order: 11; components: field, password-input, code-input, error-summary, timeout-warning, button; summary: Sign people in with their phone number and a password, check it is them with a code by SMS, and keep their answers when the session ends. -->
+<p class="ggds-lead">Sign people in with their phone number and a password, check it is them with a code by SMS, and keep their answers when the session ends.</p>
+<h2>When to use</h2>
+<ul><li>When people need to come back to something that is theirs: an application in progress, a business account, their licences.</li></ul>
+<h2>When not to use</h2>
+<ul><li>To do a one-off task such as reporting a problem or paying a fee: let people do it without an account, and send a reference by SMS.</li><li>Only to collect contact details. An account is one more password to remember.</li></ul>
+<h2>How it works</h2>
+<ol>
+<li><strong>Sign in:</strong> a phone number (or email address) and a <a href="../components/password-input.html">password</a> with a Show button, on one page.</li>
+<li><strong>Check it is them:</strong> a 6-digit <a href="../components/code-input.html">code</a> by SMS, which their phone can fill in. Offer email as another way.</li>
+<li><strong>While signed in:</strong> a <a href="../components/timeout-warning.html">timeout warning</a> on every page, 2 minutes before the end of the session.</li>
+<li><strong>Signed out:</strong> a page that says why, and that their answers are saved.</li>
+</ol>
+<h2>The sign-in page</h2>
+<ul>
+<li>Ask for what people already use with you: most people in Ghana have a phone number before an email address.</li>
+<li>Use <code>autocomplete="tel"</code> (or <code>email</code>) and <code>autocomplete="current-password"</code>, so password managers and phones can fill them in.</li>
+<li>Link to "Forgotten your password?" and to "Create an account" under the button, never above it.</li>
+<li>Never ask for a Ghana Card number and date of birth as a way to sign in: they are not secret.</li>
+</ul>
+<h2>Error messages</h2>
+<ul>
+<li>Empty: "Enter your phone number", "Enter your password".</li>
+<li>Wrong: "The phone number or password is not right". Do not say which, or people can find out who has an account.</li>
+<li>Too many tries: "You have tried too many times. Try again in 15 minutes, or reset your password". Say how long.</li>
+<li>Code: "The code is not right" and "The code has expired. Send a new code".</li>
+</ul>
+<h2>Accessibility</h2>
+<ul>
+<li>Never block pasting into the password or the code, and never ask people to solve a puzzle to sign in (WCAG 3.3.8, accessible authentication).</li>
+<li>Give people at least 20 minutes of inactivity before signing them out, warn them, and let them extend it (WCAG 2.2.1).</li>
+</ul>

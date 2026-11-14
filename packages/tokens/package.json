@@ -1,6 +1,6 @@
 {
   "name": "@ggds/tokens",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Design tokens for the Ghana Government Design System (GGDS): colours, type and spacing as CSS custom properties and W3C DTCG JSON, with the institution colour rule.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
@@ -28,6 +28,7 @@
   "files": [
     "tokens.json",
     "lib.mjs",
+    "color.mjs",
     "institution.mjs",
     "dist"
   ],
@@ -37,6 +38,7 @@
     "./tokens.flat.json": "./dist/tokens.json",
     "./compat-site.css": "./dist/compat-site.css",
     "./lib.mjs": "./lib.mjs",
+    "./color.mjs": "./color.mjs",
     "./institution.mjs": "./institution.mjs",
     "./package.json": "./package.json"
   },

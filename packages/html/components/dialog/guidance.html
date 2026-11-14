@@ -1,0 +1,19 @@
+<!-- name: Dialog; icon: warning; status: alpha; order: 31; group: Forms; related: button, timeout-warning, notice; summary: A box over the page that asks people to confirm something before it happens, such as deleting a draft. -->
+<p class="ggds-lead">A box over the page that asks people to confirm something before it happens, such as deleting a draft.</p>
+<h2>When to use</h2>
+<ul><li>To confirm an action that cannot be undone, such as deleting a draft application or withdrawing one.</li><li>For the <a href="timeout-warning.html">timeout warning</a>.</li></ul>
+<h2>When not to use</h2>
+<ul><li>For anything people need to read carefully, fill in or come back to: use a page.</li><li>For messages: use a <a href="notice.html">notice</a> on the page. A dialog interrupts people, and some find it hard to use with a screen magnifier.</li></ul>
+<h2>How to use</h2>
+<ul>
+<li>Make the opener a link to a confirmation page, so it works without JavaScript, and add <code>data-ggds-dialog="&lt;the dialog's id&gt;"</code>. With the GGDS script, the link opens the dialog instead.</li>
+<li>Use the browser's <code>&lt;dialog&gt;</code> with <code>class="ggds-dialog"</code> and <code>aria-labelledby</code> naming its heading.</li>
+<li>Ask a question as the heading ("Delete this draft?") and say what will happen. Name the action on the button ("Delete draft", not "OK"), and give a way out ("Cancel") with <code>data-ggds-dialog-close</code>.</li>
+<li>Put the action in a form that posts, inside the dialog, so the server does it, as on the confirmation page.</li>
+<li>Use <code>ggds-dialog--warning</code> for an action that cannot be undone.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul><li>The browser keeps focus inside the dialog, makes the page behind it unavailable, closes it with Escape and returns focus to the link that opened it.</li><li>Focus starts on the first button, which is never the action that cannot be undone.</li><li>Without JavaScript, the link opens the confirmation page.</li></ul>
+<h3>What you need to do</h3>
+<ul><li>Keep it short: a heading, a sentence and two buttons.</li><li>Put the safe choice first, so it gets focus.</li></ul>

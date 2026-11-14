@@ -1,0 +1,8 @@
+<dialog class="ggds-dialog{% if warning %} ggds-dialog--warning{% endif %}" id="{{ id }}" aria-labelledby="{{ id }}-title">
+  <h2 class="ggds-dialog__title" id="{{ id }}-title">{{ title }}</h2>
+  <div class="ggds-dialog__body"><p>{{ body }}</p></div>
+  <form class="ggds-dialog__actions" action="{{ action }}" method="post">{% if csrf_token %}<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">{% endif %}
+    <button class="ggds-button ggds-button--secondary" type="button" data-ggds-dialog-close>{{ cancel }}</button>
+    <button class="ggds-button{% if warning %} ggds-button--warning{% endif %}" type="submit">{{ confirm }}</button>
+  </form>
+</dialog>

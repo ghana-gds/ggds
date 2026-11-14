@@ -18,6 +18,12 @@ Page parts (they output the same markup as the GGDS documentation and @ggds/astr
     {% ggds_timeline stages %}        what has happened and what happens next
     {% ggds_meter value max=1100 %}   an amount as a bar, in a table
     {% ggds_steps steps urgent=True %} numbered things to do
+    {% ggds_back_link "/apply/contact/" %}
+    {% ggds_phase_banner "beta" feedback_href="/feedback/" %}
+    {% ggds_side_nav items %}         the pages of one section
+    {% ggds_contents items %}         "On this page"
+    {% ggds_language_switcher %}      the same page in each language in settings.LANGUAGES
+    {% ggds_cookie_banner "Example Agency" choice=choice %}   asks before analytics cookies
 Forms (GGDSFormRenderer uses these; you rarely need them yourself):
     {% ggds_error_summary form %}, {{ field|ggds_widget }}, {{ field|ggds_choices }}
 
@@ -34,9 +40,13 @@ from django.forms.utils import flatatt
 from django.templatetags.static import static
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.translation import get_language
 
 from ..forms import PARTS, GGDSDateWidget
 from ..icons import icon
+from ..strings import html as _html
+from ..strings import text as _text
+from ..strings import LANGUAGES as _LANGUAGES
 
 register = template.Library()
 
@@ -63,6 +73,12 @@ def _initials(name: str) -> str:
 
 
 @register.simple_tag
+def ggds_text(key: str, **values):
+    """GGDS's own text for key (packages/html/strings/en.json) in the active language: {% ggds_text "header.menu" %}."""
+    return _html(key, **values)
+
+
+@register.simple_tag
 def ggds_icon(name: str, cls: str = "ggds-icon"):
     return icon(name, cls)
 
@@ -80,21 +96,35 @@ def ggds_assets(theme: str = "", script: bool = True, minified: bool = True):
 
 
 @register.inclusion_tag("ggds/components/skip_link.html")
-def ggds_skip_link(href: str = "#main", label: str = "Skip to main content"):
-    return {"href": href, "label": label}
+def ggds_skip_link(href: str = "#main", label: str = ""):
+    return {"href": href, "label": label or _text("skipLink.label")}
 
 
 @register.inclusion_tag("ggds/components/banner.html")
 def ggds_banner(short_name: str = "", host: str = "", official: bool = False, address_note: str = "",
-                register_href: str = "", register_label: str = "register of official government websites"):
+                register_href: str = "", register_label: str = ""):
     """The government website banner. official: this page is served from the official address. host: the
     official address to name ("" when there is none the banner may name)."""
-    return {"short_name": short_name, "host": host, "official": official, "address_note": address_note,
-            "register_href": register_href, "register_label": register_label}
+    strong = format_html("<strong>{}</strong>", host)
+    if not host:
+        address = _html("banner.noAddress", shortName=short_name)
+    elif official:
+        address = _html("banner.officialAddress", host=strong)
+    else:
+        address = _html("banner.otherAddress", shortName=short_name, host=strong, note=address_note)
+    register = format_html('<a href="{}">{}</a>', register_href, register_label or _text("banner.registerLabel"))
+    return {"official": official, "label": _text("banner.label"),
+            "summary": _text("banner.official") if official else _text("banner.unofficial", shortName=short_name),
+            "how_to_tell": _text("banner.howToTell"), "check_address": _text("banner.checkAddress"),
+            "address": address, "domain": _html("banner.domain", domain=mark_safe("<strong>.gov.gh</strong>")),
+            "register": _html("banner.register", register=register) if register_href else "",
+            "padlock_heading": _text("banner.padlockHeading"),
+            "padlock": _html("banner.padlock", https=mark_safe("<strong>https://</strong>")),
+            "pin_heading": _text("banner.pinHeading"), "pin": _text("banner.pin")}
 
 
 @register.inclusion_tag("ggds/components/header.html", takes_context=True)
-def ggds_header(context, name: str, nav=None, current: str | None = None, country: str = "Republic of Ghana",
+def ggds_header(context, name: str, nav=None, current: str | None = None, country: str | None = None,
                 logo_url: str = "", logo_alt: str = "", initials: str = "", home: str = "/",
                 search_url: str = "/search/", nav_id: str = "ggds-header-nav"):
     """The header. The current section is the nav link the page's address starts with (or current=)."""
@@ -105,7 +135,8 @@ def ggds_header(context, name: str, nav=None, current: str | None = None, countr
         current = max(matches, key=len) if matches else None
     for i in items:
         i["current"] = i["href"] == current
-    return {"name": name, "long": len(name) > 45, "country": country, "items": items, "logo_url": logo_url,
+    return {"name": name, "long": len(name) > 45, "country": _text("header.country") if country is None else country,
+            "items": items, "logo_url": logo_url,
             "logo_alt": logo_alt, "initials": initials or (_initials(name) if not logo_url else ""), "home": home,
             "search_url": search_url, "nav_id": nav_id,
             "search_icon": icon("search", "ggds-header__icon"),
@@ -114,13 +145,13 @@ def ggds_header(context, name: str, nav=None, current: str | None = None, countr
 
 @register.inclusion_tag("ggds/components/hero.html")
 def ggds_hero(title: str, purpose: str = "", lede: str = "", search_action: str = "",
-              search_label: str = "Search this website", search_placeholder: str = "", tasks=None,
-              tasks_label: str = "Common tasks:", hub: bool = False, art: str = "", art_decorative: bool = True):
+              search_label: str = "", search_placeholder: str = "", tasks=None,
+              tasks_label: str = "", hub: bool = False, art: str = "", art_decorative: bool = True):
     """The top of a homepage. tasks: links, each with an optional "tag" (on a ministry hub, the agency's name).
     art: an SVG or image to show beside the text (marked safe by you)."""
     return {"title": title, "purpose": purpose, "lede": lede, "search_action": search_action,
-            "search_label": search_label, "search_placeholder": search_placeholder, "tasks": _links(tasks),
-            "tasks_label": tasks_label, "hub": hub, "art": art, "art_decorative": art_decorative,
+            "search_label": search_label or _text("hero.searchLabel"), "search_placeholder": search_placeholder,
+            "tasks": _links(tasks), "tasks_label": tasks_label or _text("hero.tasks"), "hub": hub, "art": art, "art_decorative": art_decorative,
             "search_icon": icon("search", "ggds-hero__button-icon")}
 
 
@@ -132,7 +163,7 @@ def ggds_breadcrumbs(crumbs):
 
 
 @register.inclusion_tag("ggds/components/pagination.html", takes_context=True)
-def ggds_pagination(context, page_obj, label: str = "Pages", param: str = "page"):
+def ggds_pagination(context, page_obj, label: str = "", param: str = "page"):
     """Pagination from Django's Paginator page. Other query parameters (filters, a search) are kept."""
     request = context.get("request")
     query = request.GET.copy() if request is not None else None
@@ -153,8 +184,8 @@ def ggds_pagination(context, page_obj, label: str = "Pages", param: str = "page"
     for i, n in enumerate(shown):
         if i and n - shown[i - 1] > 1:
             pages.append({"gap": True})
-        pages.append({"number": n, "href": href(n), "current": n == number})
-    return {"show": count > 1, "label": label, "pages": pages,
+        pages.append({"number": n, "href": href(n), "current": n == number, "label": _text("pagination.page", number=n)})
+    return {"show": count > 1, "label": label or _text("pagination.label"), "pages": pages,
             "previous": href(number - 1) if page_obj.has_previous() else "",
             "next": href(number + 1) if page_obj.has_next() else ""}
 
@@ -176,15 +207,31 @@ def ggds_footer(name: str, purpose: str = "", address: str = "", email: str = ""
 
 
 @register.inclusion_tag("ggds/components/tab_bar.html", takes_context=True)
-def ggds_tab_bar(context, tabs):
-    """Phone-only quick links: Home first, Search last, three sections between. Each tab has an "icon"."""
+def ggds_tab_bar(context, tabs, current: str | None = None):
+    """Phone-only quick links: Home first, Search last, three sections between. Each tab has an "icon". The
+    current tab is the one whose address is current=, or else the one the page's address starts with."""
     path = _path(context)
     items = _links(tabs)
     for t in items:
-        t["current"] = path == "/" if t["href"] == "/" else bool(path) and path.startswith(t["href"])
+        if current:
+            t["current"] = t["href"] == current
+        else:
+            t["current"] = path == "/" if t["href"] == "/" else bool(path) and path.startswith(t["href"])
         t["icon_svg"] = icon(t.get("icon", "services"), "ggds-tab-bar__icon")
     return {"tabs": items}
 
+
+@register.inclusion_tag("ggds/components/feedback.html", takes_context=True)
+def ggds_feedback(context, action: str, report_url: str = "", page: str = "", answered: bool = False):
+    """At the end of a page: "Did this page help you?" with Yes and No, sent (POST, with the CSRF token) to action
+    with the page's address, and a link to report_url with ?page=. answered: say thank you instead of asking again."""
+    page = page or _path(context)
+    report = f"{report_url}{'&' if '?' in report_url else '?'}{urlencode({'page': page}, safe='/')}" if report_url else ""
+    return {"action": action, "page": page, "answered": answered, "report_url": report,
+            "csrf_token": context.get("csrf_token", ""),
+            "question": _text("feedback.question"), "yes": _text("feedback.yes"), "no": _text("feedback.no"),
+            "yes_hidden": _text("feedback.yesHidden"), "no_hidden": _text("feedback.noHidden"),
+            "thanks": _text("feedback.thanks"), "report": _text("feedback.report")}
 
 # --- Forms -------------------------------------------------------------------------------------------------
 
@@ -211,7 +258,18 @@ def ggds_kind(field) -> str:
         return "choices"
     if isinstance(widget, forms.CheckboxInput):
         return "checkbox"
+    if isinstance(widget, forms.PasswordInput):
+        return "password"
+    if _counted(field):
+        return "count"
+    if getattr(widget, "prefix", "") or getattr(widget, "suffix", ""):
+        return "affix"
     return "control"
+
+
+def _counted(field) -> bool:
+    """A textarea with a length limit gets a character count."""
+    return isinstance(field.field.widget, forms.Textarea) and bool(getattr(field.field, "max_length", None))
 
 
 @register.filter
@@ -221,6 +279,8 @@ def ggds_described_by(field) -> str:
         ids.append(f"{field.auto_id}-hint")
     if field.errors:
         ids.append(f"{field.auto_id}-error")
+    if _counted(field):
+        ids.append(f"{field.auto_id}-info")
     return " ".join(ids)
 
 
@@ -236,15 +296,31 @@ def ggds_widget(field):
         cls = "ggds-file-upload"
     elif isinstance(widget, forms.CheckboxInput):
         cls = "ggds-choice__input"
+    elif isinstance(widget, forms.PasswordInput):
+        cls = "ggds-input ggds-password-input__input"
     else:
         cls = "ggds-input"
+    if _counted(field):
+        # No maxlength: it silently cuts off pasted text. The count shows the limit and the form checks it.
+        widget.attrs.pop("maxlength", None)
     attrs = {"class": " ".join(filter(None, [cls, widget.attrs.get("class", "")]))}
+    if isinstance(widget, forms.PasswordInput):
+        # Password managers fill it in; phones neither correct nor capitalise it.
+        attrs.update({"spellcheck": "false", "autocapitalize": "none"})
+        attrs["autocomplete"] = widget.attrs.get("autocomplete", "current-password")
     described = ggds_described_by(field)
     if described:
         attrs["aria-describedby"] = described
     if field.errors:
         attrs["aria-invalid"] = "true"
     return field.as_widget(attrs=attrs)
+
+
+@register.filter
+def ggds_affix(field) -> dict:
+    """An AffixInput's unit before (prefix) and after (suffix) the box."""
+    widget = field.field.widget
+    return {"prefix": getattr(widget, "prefix", ""), "suffix": getattr(widget, "suffix", "")}
 
 
 @register.filter
@@ -284,19 +360,19 @@ def ggds_date_parts(field) -> list[dict]:
 
 
 @register.inclusion_tag("ggds/forms/error_summary.html")
-def ggds_error_summary(form, title: str = "There is a problem"):
+def ggds_error_summary(form, title: str = ""):
     """Every problem in the form, each linking to its field. data-ggds-module: @ggds/js focuses it on load."""
     items = [{"text": e, "href": ""} for e in form.non_field_errors()]
     for field in list(form.visible_fields()) + list(form.hidden_fields()):
         for e in field.errors:
             items.append({"text": e, "href": f"#{_first_id(field)}" if not field.is_hidden else ""})
-    return {"items": items, "title": title}
+    return {"items": items, "title": title or _text("errorSummary.title")}
 
 
 @register.simple_tag
 def ggds_error_title(form, title: str) -> str:
     """The page title, starting with "Error: " while the form has errors: {% ggds_error_title form "Apply" %}."""
-    return f"Error: {title}" if form.errors else title
+    return _text("page.errorTitle", title=title) if form.errors else title
 
 
 # --- Summary list and confirmation panel -------------------------------------------------------------------
@@ -309,16 +385,16 @@ def ggds_summary_list(rows, plain: bool = False):
     for r in rows:
         r = dict(r)
         value = r.get("value")
-        out.append({"key": r["key"], "value": value if value not in (None, "") else "Not given",
+        out.append({"key": r["key"], "value": value if value not in (None, "") else _text("summaryList.notGiven"),
                     "href": r.get("href", ""), "label": r.get("label") or str(r["key"]).lower(),
-                    "action": r.get("action", "Change")})
+                    "action": r.get("action") or _text("summaryList.change")})
     return {"rows": out, "plain": plain}
 
 
 @register.inclusion_tag("ggds/components/panel.html")
-def ggds_panel(title: str, reference: str = "", reference_label: str = "Your reference number"):
+def ggds_panel(title: str, reference: str = "", reference_label: str = ""):
     """The confirmation panel: the page's <h1>, and the reference people need later."""
-    return {"title": title, "reference": reference, "reference_label": reference_label}
+    return {"title": title, "reference": reference, "reference_label": reference_label or _text("panel.reference")}
 
 
 # --- Key figures, progress, timeline, meter, steps and page heading ----------------------------------------------
@@ -332,10 +408,10 @@ def ggds_key_figures(figures, inverse: bool = False):
 @register.inclusion_tag("ggds/components/progress.html")
 def ggds_progress(current: int, total: int, label: str = "", id: str = "ggds-progress"):
     """How far through a task: "Question 3 of 4" in words, and the same as a native <progress>."""
-    return {"current": current, "total": total, "label": label or f"Question {current} of {total}", "id": id}
+    return {"current": current, "total": total, "label": label or _text("progress.label", current=current, total=total), "id": id}
 
 
-_STATE_WORDS = {"done": "Done", "current": "Now", "": "Next"}
+_STATE_WORDS = {"done": "timeline.done", "current": "timeline.current", "": "timeline.next"}
 
 
 @register.inclusion_tag("ggds/components/timeline.html")
@@ -348,7 +424,7 @@ def ggds_timeline(stages):
         state = s.get("state") or ""
         if state not in _STATE_WORDS:
             raise ValueError(f'ggds_timeline: state must be "done", "current" or "", not {state!r}')
-        out.append({**s, "state": state, "words": s.get("words") or _STATE_WORDS[state]})
+        out.append({**s, "state": state, "words": s.get("words") or _text(_STATE_WORDS[state])})
     return {"stages": out}
 
 
@@ -368,3 +444,133 @@ def ggds_steps(steps, urgent: bool = False, heading_level: int = 3):
 def ggds_page_heading(title: str, eyebrow: str = "", lede: str = "", danger: bool = False):
     """The top of an inner page in the institution's colour; the title is the page's <h1>."""
     return {"title": title, "eyebrow": eyebrow, "lede": lede, "danger": danger}
+
+
+# --- Back link, phase banner, side navigation, contents list, language switcher and cookie banner ---------------
+
+@register.inclusion_tag("ggds/components/back_link.html")
+def ggds_back_link(href: str, label: str = ""):
+    """A link to the previous page of a task. label: only if "Back" would be unclear."""
+    return {"href": href, "label": label or _text("backLink.label")}
+
+
+@register.inclusion_tag("ggds/components/phase_banner.html")
+def ggds_phase_banner(phase: str = "beta", feedback_href: str = ""):
+    """Says the service is new: phase is "alpha" or "beta". feedback_href: where people tell you what went wrong."""
+    if phase not in ("alpha", "beta"):
+        raise ValueError(f'ggds_phase_banner: phase must be "alpha" or "beta", not {phase!r}')
+    feedback = format_html('<a href="{}">{}</a>', feedback_href, _text("phaseBanner.feedback")) if feedback_href else _text("phaseBanner.feedback")
+    return {"tag": _text(f"phaseBanner.{phase}"), "text": _html("phaseBanner.text", feedback=feedback)}
+
+
+@register.inclusion_tag("ggds/components/side_nav.html", takes_context=True)
+def ggds_side_nav(context, items, current: str | None = None, label: str = ""):
+    """The pages of one section: links, each with optional "links" under it (shown under the current page or its
+    parent). The current page is the one whose href is the request's path (or current=)."""
+    path = current if current is not None else _path(context)
+    out = []
+    for item in _links(items):
+        subs = _links(item.get("links"))
+        for sub in subs:
+            sub["current"] = sub["href"] == path
+        item["links"] = subs
+        item["current"] = item["href"] == path
+        item["open"] = item["current"] or any(sub["current"] for sub in subs)
+        out.append(item)
+    return {"items": out, "label": label or _text("sideNav.label")}
+
+
+@register.inclusion_tag("ggds/components/contents.html")
+def ggds_contents(items, title: str = "", id: str = "contents-title"):
+    """"On this page": links to the page's own headings (href "#heading-id"), in order."""
+    return {"items": _links(items), "title": title or _text("contents.title"), "id": id}
+
+
+@register.inclusion_tag("ggds/components/language_switcher.html", takes_context=True)
+def ggds_language_switcher(context, links=None, current: str = "", label: str = ""):
+    """The same page in each language. links: {"code", "href"} for each; by default every language in
+    settings.LANGUAGES, linked with django.urls.translate_url (for sites that use i18n_patterns). Each is named in its
+    own language from GGDS's list, or by Django's name for a language GGDS does not list."""
+    from django.conf import settings
+    from django.urls import translate_url
+
+    own = {lang["code"]: lang["own"] for lang in _LANGUAGES}
+    active = current or get_language() or settings.LANGUAGE_CODE
+    request = context.get("request")
+    if links is None:
+        path = request.get_full_path() if request is not None else "/"
+        links = [{"code": code, "href": translate_url(path, code), "name": name} for code, name in settings.LANGUAGES]
+    languages = []
+    for link in links:
+        code = link["code"]
+        languages.append({"code": code, "href": link["href"], "own": link.get("own") or own.get(code) or str(link.get("name", code)),
+                          "current": code == active or code == active.split("-")[0]})
+    return {"languages": languages, "label": label or _text("languageSwitcher.label")}
+
+
+@register.inclusion_tag("ggds/components/cookie_banner.html", takes_context=True)
+def ggds_cookie_banner(context, service: str, choice: str = "", action: str = "/cookies/", view_href: str = "/cookies/"):
+    """Asks before setting analytics cookies. choice: "" (not chosen yet: ask), "accept" or "reject" (just chosen:
+    confirm), or "hidden" (chosen and the message hidden: nothing). Your view handles the form's POST (name "cookies":
+    accept, reject or hide), remembers the choice in an essential cookie, and redirects back."""
+    if choice not in ("", "accept", "reject", "hidden"):
+        raise ValueError(f'ggds_cookie_banner: choice must be "", "accept", "reject" or "hidden", not {choice!r}')
+    change = format_html('<a href="{}">{}</a>', view_href, _text("cookieBanner.changeLink"))
+    return {"choice": choice, "action": action, "view_href": view_href, "csrf_token": context.get("csrf_token", ""),
+            "label": _text("cookieBanner.label", service=service), "title": _text("cookieBanner.title", service=service),
+            "essential": _text("cookieBanner.essential"), "analytics": _text("cookieBanner.analytics"),
+            "accept": _text("cookieBanner.accept"), "reject": _text("cookieBanner.reject"), "view": _text("cookieBanner.view"),
+            "confirmation": _text("cookieBanner.accepted" if choice == "accept" else "cookieBanner.rejected"),
+            "change": _html("cookieBanner.change", change=change), "hide": _text("cookieBanner.hide")}
+
+
+# --- Task list, dialog and timeout warning ----------------------------------------------------------------------
+
+_TASK_STATUS = {"completed": "ggds-tag ggds-tag--success", "inProgress": "ggds-tag ggds-tag--info", "notStarted": "ggds-tag", "cannotStart": ""}
+
+
+@register.inclusion_tag("ggds/components/task_list.html")
+def ggds_task_list(tasks, summary: bool = True, id_prefix: str = "task"):
+    """Sections as dicts: label, href (left out when people cannot open it yet), status ("completed", "inProgress",
+    "notStarted" or "cannotStart"), and optionally hint and id (for its ids: <id_prefix>-<id>-status; default:
+    position). Give each task list on a page its own id_prefix."""
+    out = []
+    for i, t in enumerate(tasks, 1):
+        t = dict(t)
+        status = t.get("status", "notStarted")
+        if status not in _TASK_STATUS:
+            raise ValueError(f"ggds_task_list: status must be one of {', '.join(_TASK_STATUS)}, not {status!r}")
+        key = f"{id_prefix}-{t.get('id') or i}"
+        hint = t.get("hint", "")
+        out.append({**t, "key": key, "status": status, "tag": _TASK_STATUS[status], "words": _text(f"taskList.{status}"),
+                    "open": bool(t.get("href")) and status != "cannotStart",
+                    "described_by": " ".join(filter(None, [f"{key}-hint" if hint else "", f"{key}-status"]))})
+    done = sum(1 for t in out if t["status"] == "completed")
+    return {"tasks": out, "summary": _text("taskList.summary", done=done, total=len(out)) if summary else ""}
+
+
+@register.inclusion_tag("ggds/components/dialog.html", takes_context=True)
+def ggds_dialog(context, id: str, title: str, body: str, action: str, confirm: str, cancel: str = "", warning: bool = False):
+    """A dialog that confirms an action: its form posts to action, which is also where the opener links without
+    JavaScript. Open it with a link that has data-ggds-dialog="<id>"."""
+    return {"id": id, "title": title, "body": body, "action": action, "confirm": confirm,
+            "cancel": cancel or _text("dialog.cancel"), "warning": warning, "csrf_token": context.get("csrf_token")}
+
+
+@register.inclusion_tag("ggds/components/timeout_warning.html")
+def ggds_timeout_warning(timeout: int, keep_alive: str, sign_out: str, warn: int = 120, sign_out_href: str = "",
+                         id: str = "timeout-warning"):
+    """The timeout warning, on every signed-in page. timeout: seconds of inactivity before the session ends (the
+    same as SESSION_COOKIE_AGE, with SESSION_SAVE_EVERY_REQUEST = True so every page extends it, as the warning
+    assumes); warn: seconds before that to warn; keep_alive: a view that touches the session and fails or redirects
+    when it has ended; sign_out: where to go when time runs out."""
+    first = min(int(warn) if int(warn) > 0 else 120, int(timeout))
+    minutes = int(first / 60 + 0.5)
+    if first >= 60:
+        time = _text("timeoutWarning.minutesOne") if minutes == 1 else _text("timeoutWarning.minutesOther", count=minutes)
+    else:
+        time = _text("timeoutWarning.secondsOne") if first == 1 else _text("timeoutWarning.secondsOther", count=first)
+    before, _, after = _text("timeoutWarning.message", time="\0").partition("\0")
+    return {"id": id, "timeout": timeout, "warn": warn, "keep_alive": keep_alive, "sign_out": sign_out,
+            "sign_out_href": sign_out_href or sign_out, "time": time, "before": before, "after": after,
+            "words": {k: _text(f"timeoutWarning.{k}") for k in ("minutesOne", "minutesOther", "secondsOne", "secondsOther")}}

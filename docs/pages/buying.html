@@ -1,0 +1,57 @@
+<!-- title: Buying a website or service; lead: What to put in a tender and a contract when a supplier builds or runs a government website, so the institution gets one that meets the standard and that it owns. -->
+<div class="ggds-notice ggds-notice--warning">
+<p class="ggds-notice__title"><span class="ggds-visually-hidden">Warning:</span> This is a draft for discussion, not legal advice</p>
+<p>It has not been approved by NITA or the Public Procurement Authority. Check every clause with your institution's procurement unit and legal adviser, and follow the Public Procurement Act, 2003 (Act 663), as amended.</p>
+</div>
+
+<p>Most government websites are built by suppliers. What the contract says decides whether the website will be accessible, secure and fast, and whether the institution can change it, or change supplier, later. Put these requirements in the tender, so every supplier prices them, and in the contract, so they can be checked.</p>
+
+<h2 id="requirements">What to require</h2>
+<p>Each requirement below can be copied into a tender. Replace the words in brackets.</p>
+
+<h3>The standard</h3>
+<ol>
+<li><strong>GGDS:</strong> "The website shall be built with the Ghana Government Design System (GGDS), version [0.4] or later, using its page template, banner, header, footer, components and patterns. Any part GGDS does not provide shall be agreed with [the institution] and offered to GGDS."</li>
+<li><strong>The GGDS check:</strong> "Before handover, and before every later release, every page shall pass the GGDS check (<code>npx @ggds/check</code>) with no failures. The supplier shall give [the institution] the check's report, and run the check in the release pipeline."</li>
+<li><strong>Maturity:</strong> "The website shall reach level [2] of the GGDS maturity model at handover, and level [3] by [date]."</li>
+<li><strong>Accessibility:</strong> "Every page shall meet WCAG 2.2 level AA. The supplier shall test with a keyboard, a screen reader and zoom, with people who use assistive technology, and shall give [the institution] the results and a draft accessibility statement."</li>
+<li><strong>Phones and connections:</strong> "Every page shall fit a 320px screen without scrolling sideways, download no more than [500] KB on its first visit, and show its content without JavaScript."</li>
+<li><strong>Languages:</strong> "The website shall be published in [English and Twi]. Translations shall be written or checked by people who speak the language; machine translation shall not be published unchecked."</li>
+</ol>
+
+<h3>Security and data</h3>
+<ol start="7">
+<li><strong>Security:</strong> "The website shall be served only over HTTPS, with HSTS, a Content Security Policy without unsafe-inline scripts, and the other headers the GGDS check tests. The supplier shall follow the Cybersecurity Act, 2020 (Act 1038), test for the OWASP Top 10 before handover, and fix any critical security problem within [2] working days of finding it."</li>
+<li><strong>Personal data:</strong> "The supplier shall process personal data only as [the institution] instructs and as the Data Protection Act, 2012 (Act 843) requires. No analytics, advertising or other third-party code, and no cookies the website does not need, shall be added without [the institution]'s written agreement, and none shall run before visitors agree."</li>
+<li><strong>Hosting:</strong> "The website and its data shall be hosted [in Ghana / where [the institution] approves], with backups that are tested at least every [3] months."</li>
+</ol>
+
+<h3>Ownership and handover</h3>
+<ol start="10">
+<li><strong>Ownership:</strong> "[The institution] shall own the website's source code, content, design, domain name, hosting accounts and analytics data. The supplier shall keep the source code in a repository [the institution] controls, from the start of the work."</li>
+<li><strong>Open standards:</strong> "The website shall use open standards and openly licensed software where it can, and no part that only the supplier can change."</li>
+<li><strong>Supported software:</strong> "Every framework, language and server the website uses shall be a version that receives security fixes, and the supplier shall give [the institution] a list of when each stops, with a plan to upgrade before then."</li>
+<li><strong>Handover:</strong> "At the end of the contract the supplier shall hand over the code, content, accounts, passwords and documentation, so that another team can run and change the website without the supplier, and shall answer that team's questions for [30] days."</li>
+</ol>
+
+<h3>Running it</h3>
+<ol start="14">
+<li><strong>Support:</strong> "For [12] months after launch the supplier shall fix faults, apply security updates and keep the GGDS version supported, and shall upgrade to each new GGDS version within [3] months of its release."</li>
+<li><strong>Measures:</strong> "The supplier shall measure, without tracking visitors where possible, how many people start and finish each online service, and shall report it to [the institution] every [month]."</li>
+</ol>
+
+<h2 id="evaluate">Judging the bids</h2>
+<ul>
+<li>Ask each supplier for a government or other public website they have built, and run the GGDS check on it. Ask how they would fix what it finds.</li>
+<li>Ask who will test with disabled people, and how.</li>
+<li>Weigh the quality of the approach as well as the price. A cheap website that people cannot use costs more later.</li>
+</ul>
+
+<h2 id="accept">Accepting the work</h2>
+<p>Before you accept the website and pay the final part of the contract, check:</p>
+<ul>
+<li>the GGDS check's report, with no failures, on the live address;</li>
+<li>the record of manual accessibility testing, and the accessibility statement on the website;</li>
+<li>that [the institution] can sign in to the repository, the hosting and the domain without the supplier;</li>
+<li>the handover document, by asking someone who did not build the website to follow it.</li>
+</ul>

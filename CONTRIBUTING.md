@@ -63,6 +63,7 @@ pnpm test           # build, Django tests, unit tests, then axe and behaviour te
 | The script | `packages/js/src/` (TypeScript) |
 | Astro components | `packages/astro/src/` |
 | Django template tags | `packages/django/src/ggds_django/` |
+| GGDS's own text, and its translations | `packages/html/strings/en.json`, and `<code>.json` for each language |
 
 ## The rules every change must follow
 
@@ -81,6 +82,23 @@ The tests check most of these; a pull request that fails them cannot be merged.
   Django template too. The Django tests check that Django's output matches the documentation.
 - **Plain English** in guidance: short sentences, British spelling, addressed to the website team. Say when to use
   it, when not to, how, and what websites need to do for accessibility.
+
+## Translations
+
+GGDS writes some text itself, such as "Skip to main content" and "There is a problem". The English is in
+`packages/html/strings/en.json`; each language in `packages/html/strings/languages.json` has its own file with the
+same keys, such as `tw.json` for Twi. `pnpm run build` makes the Django catalogues and the React and Astro modules
+from them.
+
+- **Only people who speak the language translate.** Do not add machine or AI translations unless a speaker has
+  checked every one. Say in the pull request who translated and who checked.
+- Translate the meaning for someone using a government service, not word for word. Keep it as plain as the English.
+- Keep every `{placeholder}` exactly as it is; the build stops if a translation loses one or adds one.
+- A key you leave out is shown in English, so a language can be translated a part at a time.
+- When a speaker has checked a language's name and its translations, set `"checked": true` for it in
+  `languages.json`.
+- To add a language, add it to `languages.json` (an ISO 639 code, as in `<html lang>`) and add its file.
+- A new or changed English text gets a new key, so no translation is left saying something else.
 
 ## Record your change
 

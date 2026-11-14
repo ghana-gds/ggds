@@ -1,4 +1,5 @@
-/* Breadcrumbs, pagination and tab links: navigation patterns built from plain links. */
+/* Breadcrumbs, pagination, tab links, back link, side navigation, contents list and language switcher: navigation
+   built from plain links. */
 
 /* Breadcrumbs */
 .ggds-breadcrumbs {
@@ -107,4 +108,122 @@
   font-weight: var(--ggds-font-weight-bold);
   text-decoration: none;
   box-shadow: inset 0 -4px 0 var(--ggds-color-brand-700);
+}
+
+/* Back link: to the previous page of a task, above the content. Only where the browser's back button might not
+   do the same, such as after a form submits. */
+.ggds-back-link,
+.ggds-back-link:visited {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ggds-space-2);
+  min-height: var(--ggds-size-target);
+  margin-bottom: var(--ggds-space-4);
+  color: var(--ggds-color-text);
+}
+
+.ggds-back-link::before {
+  content: "";
+  width: 0.45em;
+  height: 0.45em;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+/* Side navigation: the pages of one section, beside its content (in ggds-with-aside) or above it on phones. */
+.ggds-side-nav {
+  margin-bottom: var(--ggds-space-6);
+}
+
+.ggds-side-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-side-nav__list--sub {
+  padding-inline-start: var(--ggds-space-4);
+}
+
+.ggds-side-nav__link,
+.ggds-side-nav__link:visited {
+  display: flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+  padding: var(--ggds-space-2) var(--ggds-space-3);
+  border-inline-start: 4px solid transparent;
+  color: var(--ggds-color-link);
+}
+
+.ggds-side-nav__link[aria-current="page"],
+.ggds-side-nav__link[aria-current="page"]:visited {
+  border-inline-start-color: var(--ggds-color-brand-700);
+  background: var(--ggds-color-brand-50);
+  color: var(--ggds-color-text);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
+}
+
+/* Contents list: "On this page", linking to the page's own headings. */
+.ggds-contents {
+  margin-bottom: var(--ggds-space-8);
+}
+
+.ggds-contents__title {
+  margin-bottom: var(--ggds-space-2);
+  font-size: var(--ggds-font-size-base);
+}
+
+.ggds-contents__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-contents__list > li {
+  position: relative;
+  padding-inline-start: var(--ggds-space-6);
+}
+
+.ggds-contents__list > li::before {
+  content: "—" / ""; /* drawn, not read aloud */
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--ggds-color-text-muted);
+}
+
+.ggds-contents__link {
+  display: inline-block;
+  padding-block: var(--ggds-space-1);
+}
+
+/* Language switcher: the same page in another language, each named in its own language. */
+.ggds-language-switcher {
+  font-size: var(--ggds-font-size-sm);
+}
+
+.ggds-language-switcher__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 var(--ggds-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ggds-language-switcher__link,
+.ggds-language-switcher__link:visited {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ggds-size-target);
+  padding-inline: var(--ggds-space-2);
+  color: var(--ggds-color-link);
+}
+
+.ggds-language-switcher__link[aria-current="true"] {
+  color: var(--ggds-color-text);
+  font-weight: var(--ggds-font-weight-bold);
+  text-decoration: none;
 }

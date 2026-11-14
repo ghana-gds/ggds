@@ -1,0 +1,44 @@
+---
+/**
+ * GGDS cookie banner: asks before setting cookies the website does not need, such as analytics. Works without
+ * JavaScript: the form posts to action (name "cookies": accept, reject or hide), and the server remembers the choice.
+ * choice: "" (ask), "accept" or "reject" (confirm the choice just made), "hidden" (nothing). Default slot: anything
+ * else the form must send, such as a hidden CSRF input.
+ */
+import { STRINGS, fillHtml } from './strings.mjs';
+interface Props { service: string; choice?: '' | 'accept' | 'reject' | 'hidden' | undefined; action?: string | undefined; viewHref?: string | undefined; strings?: Record<string, string> | undefined }
+const { service, choice = '', action = '/cookies/', viewHref = '/cookies/', strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
+const change = fillHtml(s['cookieBanner.change'], { change: `<a href="${fillHtml('{x}', {}, { x: viewHref })}">${fillHtml('{x}', {}, { x: s['cookieBanner.changeLink'] })}</a>` });
+---
+{choice !== 'hidden' && (
+  <div class="ggds-cookie-banner" role="region" aria-label={s['cookieBanner.label'].replace('{service}', service)}>
+    <div class="ggds-container ggds-cookie-banner__inner">
+      {!choice ? (
+        <>
+          <h2 class="ggds-cookie-banner__title">{s['cookieBanner.title'].replace('{service}', service)}</h2>
+          <div class="ggds-cookie-banner__body">
+            <p>{s['cookieBanner.essential']}</p>
+            <p>{s['cookieBanner.analytics']}</p>
+          </div>
+          <form class="ggds-cookie-banner__actions" method="post" action={action}>
+            <slot />
+            <button class="ggds-button" type="submit" name="cookies" value="accept">{s['cookieBanner.accept']}</button>
+            <button class="ggds-button" type="submit" name="cookies" value="reject">{s['cookieBanner.reject']}</button>
+            <a href={viewHref}>{s['cookieBanner.view']}</a>
+          </form>
+        </>
+      ) : (
+        <>
+          <div class="ggds-cookie-banner__body">
+            <p>{s[choice === 'accept' ? 'cookieBanner.accepted' : 'cookieBanner.rejected']} <Fragment set:html={change} /></p>
+          </div>
+          <form class="ggds-cookie-banner__actions" method="post" action={action}>
+            <slot />
+            <button class="ggds-button ggds-button--secondary" type="submit" name="cookies" value="hide">{s['cookieBanner.hide']}</button>
+          </form>
+        </>
+      )}
+    </div>
+  </div>
+)}

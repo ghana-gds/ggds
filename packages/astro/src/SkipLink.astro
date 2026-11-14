@@ -1,6 +1,9 @@
 ---
 /** GGDS skip link: the first thing on every page. Point it at <main id="main" tabindex="-1">. */
-interface Props { href?: string | undefined; label?: string | undefined }
-const { href = '#main', label = 'Skip to main content' } = Astro.props;
+import { STRINGS } from './strings.mjs';
+
+interface Props { href?: string | undefined; label?: string | undefined; strings?: Record<string, string> | undefined }
+const { href = '#main', label, strings } = Astro.props;
+const s = { ...STRINGS, ...strings };
 ---
-<a class="ggds-skip-link" href={href}>{label}</a>
+<a class="ggds-skip-link" href={href}>{label ?? s['skipLink.label']}</a>

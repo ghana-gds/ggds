@@ -1,0 +1,39 @@
+---
+/**
+ * A whole GGDS page, everything inside <body>: the skip link, banner, header, <main id="main">, footer and tab bar,
+ * in GGDS's order. A newer @ggds/astro updates every part.
+ *
+ * banner, header and footer take the props of Banner, Header and Footer; tabs, TabBar's (left out when empty).
+ * Put the page's content in the default slot, your logo in the "logo" slot (class ggds-header__logo, 44px) and in
+ * the "footer-logo" slot (class ggds-footer__logo, 48px). Without them, the header's initials badge shows. mainClass: classes on <main> (default
+ * "ggds-container ggds-main"; "" for full-width parts such as a hero). strings: GGDS's own text, for every part.
+ */
+import SkipLink from './SkipLink.astro';
+import Banner from './Banner.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import TabBar from './TabBar.astro';
+
+interface Props {
+  banner: Record<string, any>;
+  header: Record<string, any>;
+  footer: Record<string, any>;
+  tabs?: Record<string, any>[] | undefined;
+  skipLink?: Record<string, any> | undefined;
+  mainClass?: string | undefined;
+  strings?: Record<string, string> | undefined;
+}
+const { banner, header, footer, tabs = [], skipLink = {}, mainClass = 'ggds-container ggds-main', strings } = Astro.props;
+const logo = Astro.slots.has('logo') ? await Astro.slots.render('logo') : '';
+const footerLogo = Astro.slots.has('footer-logo') ? await Astro.slots.render('footer-logo') : '';
+---
+<SkipLink strings={strings} {...skipLink} />
+<Banner strings={strings} {...banner} />
+{logo
+  ? <Header strings={strings} {...header}><Fragment slot="logo" set:html={logo} /></Header>
+  : <Header strings={strings} {...header} />}
+<main id="main" tabindex="-1" class={mainClass || undefined}><slot /></main>
+<Footer strings={strings} {...footer}>
+  {footerLogo ? <Fragment slot="logo" set:html={footerLogo} /> : header.initials && <span slot="logo" class="ggds-header__monogram" aria-hidden="true">{header.initials}</span>}
+</Footer>
+{tabs.length > 0 && <TabBar strings={strings} tabs={tabs} />}

@@ -5,7 +5,7 @@
 <h2>When not to use</h2>
 <ul><li>For a choice from a short list. Use <a href="choices.html">radios or checkboxes</a>.</li></ul>
 <h2>How to use</h2>
-<ul><li>Every field has a visible label.</li><li>Put extra help in a hint under the label, and connect it with <code>aria-describedby</code>.</li><li>On error: add <code>ggds-field--error</code>, an error message starting with a hidden "Error:", and <code>aria-invalid="true"</code> on the input. Also list it in the error summary.</li><li>Use <code>autocomplete</code> for personal details such as name, phone and email.</li></ul>
+<ul><li>Every field has a visible label.</li><li>Put extra help in a hint under the label, and connect it with <code>aria-describedby</code>.</li><li>On error: add <code>ggds-field--error</code>, an error message starting with a hidden "Error:", and <code>aria-invalid="true"</code> on the input. Also list it in the error summary.</li><li>Use <code>autocomplete</code> for personal details such as name, phone and email.</li><li>For an amount or a measurement, put the unit beside the input with <code>ggds-input__prefix</code> (GH₵) or <code>ggds-input__suffix</code> (kg) inside <code>ggds-input-wrapper</code>. Say the unit in the label as well ("in Ghana cedis"): the prefix and suffix are hidden from screen readers. Use <code>inputmode="decimal"</code>, not <code>type="number"</code>.</li></ul>
 <div class="docs-dodont">
 <div class="docs-dodont__do"><h3>Do</h3><ul><li>Say how to fix an error: "Enter your phone number".</li><li>Size the input to the answer: short for a code, long for a name.</li></ul></div>
 <div class="docs-dodont__dont"><h3>Don't</h3><ul><li>Use placeholder text instead of a label.</li><li>Write "Invalid input".</li></ul></div>
