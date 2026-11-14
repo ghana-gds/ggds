@@ -87,10 +87,18 @@ function ggds_mark( string $cls = 'ggds-header__logo' ): string {
 /** Top-level items of a menu location, each with its children: [ [ 'label', 'href', 'description', 'children' ] ]. */
 function ggds_menu( string $location ): array {
 	$locations = get_nav_menu_locations();
-	if ( empty( $locations[ $location ] ) ) {
+	$menu      = (int) ( $locations[ $location ] ?? 0 );
+	// No menu in this place: a menu with the place's own name, as an import from the website builder makes them, so
+	// an imported website needs no Appearance > Menus step. A menu chosen in Appearance > Menus always comes first.
+	if ( ! $menu ) {
+		$names = array( 'primary' => 'Main sections', 'tasks' => 'Common tasks', 'footer' => 'Footer sections', 'legal' => 'Footer links' );
+		$named = isset( $names[ $location ] ) ? wp_get_nav_menu_object( $names[ $location ] ) : false;
+		$menu  = $named ? (int) $named->term_id : 0;
+	}
+	if ( ! $menu ) {
 		return array();
 	}
-	$items = wp_get_nav_menu_items( $locations[ $location ] ) ?: array();
+	$items = wp_get_nav_menu_items( $menu ) ?: array();
 	$top   = array();
 	foreach ( $items as $item ) {
 		if ( ! (int) $item->menu_item_parent ) {

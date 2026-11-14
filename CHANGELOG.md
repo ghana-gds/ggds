@@ -1,6 +1,65 @@
 # What's new
 
-## Unreleased
+## Version 0.5.0 (draft, 14 November 2026)
+
+### Motion
+
+- New: [scroll effects](https://ghana-gds.github.io/ggds/components/motion.html), played by the browser from the scroll position, with no script: `ggds-reveal` (rise, fade or grow into view), `ggds-stagger` (a list's items in turn), `ggds-parallax` (layers with depth), `ggds-draw` (SVG lines that draw themselves) and `ggds-scene` (a story that plays as people scroll, pinned on screen with its parts arriving in order). Still and finished for anyone who asks for less motion and in browsers without scroll-driven animations; a pinned scene is an ordinary section on a short screen or at high zoom, so nothing is cut off. Only position, transparency and SVG lines move, so the page never jumps. Under 2 KB with compression. <!-- components: motion -->
+- New token: `breakpoint.tall` (36rem), the height from which a scroll scene is pinned.
+- A test keeps scroll effects out of every form component and pattern: a service's steps stay still.
+- Cards and list items (`ggds-stagger`) rise into place without fading, so their words are at full contrast even half way on screen.
+- The Foundations page now says when movement may follow the scroll.
+
+### Make your website
+
+- The [website builder](https://ghana-gds.github.io/ggds/builder.html) is rebuilt so that anyone who runs a government website can make theirs, not only a developer. It is a guided form in five steps: who you are, what people come to do, your other pages, contact details and look, and how it goes online. It checks each step the GGDS way before the next, and keeps what people type on their own device, so they can stop and come back.
+- Five kinds of institution, each with its own services, pages and example words: an agency or regulator, a ministry, a district assembly, a hospital or health service, and a school, college or university. Changing the kind changes the example words, never the ones someone has written. An institution GGDS already knows fills in its name, initials and colour.
+- People write their own services, each with its own page (who it is for, what they need, how long it takes, what it costs, what to do), choose which ones are common tasks on the homepage, and which one has the online application. They also write their homepage question, about us, fees, news, documents and jobs. No code: plain boxes, a line for each item of a list.
+- The preview shows any page of the website, at desktop or phone size, and follows what is being written.
+- Before the download, the builder lists the words that are still the example's, so they are rewritten before the website goes live.
+- How it goes online, with a guide written for that way:
+  - a zip for an IT team or web host, now with `HANDOVER.md`, one page in their words;
+  - step-by-step hosting for someone on their own, with cPanel or free hosting;
+  - a WordPress import (`wordpress-import.xml`) for the GGDS theme, with the pages, the news as posts and the four menus, tested in a real WordPress;
+  - a Next.js, Astro or Django project for a developer, as before.
+- `ggds-site.json` keeps the words too (`kind`, `question`, `lede`, `services`, `fees`, `news`, `publications`, `jobs`, `about`, in [its schema](https://ghana-gds.github.io/ggds/ggds-site.schema.json)). Settings files from 0.4.0 still make the same website, with the agency's words.
+- `npx @ggds/create` asks for the kind of institution, makes the WordPress import with `--stack wordpress`, and names the pages whose words are still the example's.
+- Already have a WordPress website? The builder points to GGDS Switch, which keeps the pages you have.
+
+### WordPress
+
+- New: GGDS Switch (`ggds-switch-<version>.zip`), a plugin that turns an existing WordPress website into a GGDS one. Upload it in Plugins, open **GGDS > Switch to GGDS**, and it:
+  - shows what it found: the theme, pages made with a page builder (Elementor, WPBakery, Divi, Beaver Builder, Avada, SiteOrigin, Oxygen, Brizy), pages with their own colours and styles, the logo, the homepage, widgets, comments, and plugins that may break a strict security policy;
+  - fills in the institution's details from the website (the short name from the site title, the official address, the institution colour, and the email and phone from the contact page) and the menus from the old theme's places, for a person to check;
+  - previews the website with GGDS, every page cleaned, before anyone else sees it;
+  - switches: installs the GGDS theme it carries, brings the logo, menus and details over, and cleans every page and post into plain, accessible content. The builder's own rendering is used while it is installed, and a builder that is gone has its shortcodes unwrapped. Wrappers, inline styles, colours, fonts, scripts, sliders and forms are taken out. Headings are put in order under the page title. Lazy-loaded images get their real address. Block content keeps its blocks without their colours. The old homepage layout is kept as a draft;
+  - then lists, in plain words, what to do next and each page to look at;
+  - undoes the switch at any time: the old theme, and every page's content and page-builder settings exactly as they were.
+- GGDS Switch has its own **GGDS** menu in the WordPress sidebar, with "Switch to GGDS" and "Tidy up content" under it (editors, who may tidy up but not change the theme, see Tidy up content). Activating the plugin opens the Switch screen, and the Plugins list links to both. The old addresses under Tools still work.
+- The Switch screen fills in the institution's details from the [website builder](https://ghana-gds.github.io/ggds/builder.html)'s `ggds-site.json`, for a person to check: the short name, official address, institution theme, email, phone, address and what the institution does. From WP-CLI: `wp ggds-switch run --from=ggds-site.json`.
+- The GGDS theme uses a menu named "Main sections", "Common tasks", "Footer sections" or "Footer links" for that place when none is chosen in Appearance > Menus, so a website imported from the builder needs no menu step.
+- `wp ggds-switch scan`, `show <id>`, `run [--dry-run]` and `undo`: the same switch from WP-CLI, for many websites at once.
+- New in GGDS Switch: **GGDS > Tidy up content**, for any WordPress website, switched or not. It finds what should never be on a live government website: sample text (lorem ipsum), WordPress's own example post, page, comment and tagline, a theme's demonstration pages ("Home Version 4", "Blog Grid"), page builders' example text, published pages with nothing on them or only headings, pages with no title, "coming soon", and sample text in sidebar widgets. For each it says why, quoting the words, and where the page is used: the homepage, a menu (and what is under it there), pages under it, and other pages that link to it.
+  - What to do is chosen for people only where that is safe: WordPress's examples and demonstration pages go to the Bin; an institution's own page with sample text is unpublished, so it can be rewritten; the tagline is cleared. Anything a person should judge is left: "coming soon", pages with no title, drafts, the privacy page, and a page with others under it in a menu. The homepage and news page always stay.
+  - One button makes the changes and says what it will do ("Unpublish 3 items, move 4 items to the Bin and clear the tagline"). The message afterwards has an undo button, and every change stays in "Recent changes", with who made it and its own undo. Nothing is deleted for good: WordPress's Bin does that, after 30 days.
+  - Only statuses change, written straight to the database: a page's content, dates and author are never saved again. An unpublished page leaves the menus with it, and comes back to them on undo. A removed page's address answers 410 Gone, so search engines drop it.
+  - The dashboard and the lists of pages and posts say when there is something to tidy up.
+  - `wp ggds-switch tidy scan`, `apply [--dry-run]`, `undo` and `log`: the same from WP-CLI, for many websites at once.
+- The WordPress tests now also switch a stand-in heavy website (a heavy theme, a page builder and another's leftovers) from the admin screen. They test every switched page with axe, at desktop and phone widths, under a strict security policy, then undo and check every page is back byte for byte.
+
+### Check
+
+- New: `content.placeholder`, on every page: sample text (lorem ipsum), WordPress's and page builders' example content, and themes' demonstration pages fail; "coming soon" and "under construction" are warnings for a person to check, because they can be real.
+- New: `content.wp-sample`, on a live WordPress website: searches the whole website through WordPress's own search for the same phrases, so pages that nothing links to are found too, and reads each page found to confirm it. Not run, never passed, when the website is not WordPress or its search is off.
+- The phrases are one list, `@ggds/check/placeholders.json`, shared with GGDS Switch's Tidy up content, so the check and the plugin always find the same things.
+
+### Documentation
+
+- New page: [GGDS for WordPress](https://ghana-gds.github.io/ggds/wordpress.html), in the main navigation. It leads with GGDS Switch (what happens to your pages, before and after, the undo, and Tidy up content first), then the theme for a new website, questions people ask, and the WP-CLI commands. The homepage has an "Already on WordPress?" section with the download.
+- The homepage tells GGDS's story as people scroll: "Woven for everyone". Kente and fugu are woven in narrow strips and sewn into one cloth, and GGDS is made the same way. Threads fan into the hero and run straight on into a loom, where the cloth grows and flows down as people scroll. Then six scenes: the basics every website shares, the ready-made parts, whole services, each institution's colours (with the theme picker), the people GGDS is made for, and the proof, counted from the build. Written in plain words for everyone, not only developers. Built only from the new scroll effects, with transform and opacity alone: a steady 60 frames a second, even on a phone with its processor slowed four times. The weave is a simple original placeholder, to be replaced by a pattern drawn by Ghanaian weavers and designers. It replaces the homepage's earlier hero drawing.
+- The woven thread runs through the whole documentation site, in small touches: the header stays in place as pages change and the new page settles in; a woven thread under the header fills as people read; a short woven strip under every page title, and a stitch under every section heading; cards arrive in turn and show a woven edge when pointed at; the footer's woven band unrolls; the current page in a menu is marked with a woven thread. Never on examples, showcase services or example sites, which stay still as services must. Nothing moves for people who ask for less motion.
+
+### Fixes
 
 - The ministry's name is "Ministry of Communication, Digital Technology and Innovations", not "Communications": in the MoCDTI theme (`@ggds/themes`), its example site and the themes documentation.
 

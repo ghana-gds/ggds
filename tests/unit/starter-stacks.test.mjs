@@ -20,7 +20,7 @@ const astroBin = join(astroPkg, 'node_modules', 'astro', 'bin', 'astro.mjs');
 const reactReady = { skip: !existsSync(reactDist) && 'run pnpm run build' };
 const astroReady = { skip: (!existsSync(astroBin) && 'Astro is not installed') || (!existsSync(join(root, 'packages', 'js', 'dist', 'auto.js')) && 'run pnpm run build') };
 
-const VERSION = '0.4.0';
+const VERSION = '0.5.0';
 // The made-up Example Agency, and a website with its own colour, a logo, a forms server and fewer parts.
 const SITES = {
   example: { version: VERSION, theme: 'mocdti' },

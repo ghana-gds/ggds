@@ -1,6 +1,6 @@
 {
   "name": "@ggds/check",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Checks a Government of Ghana website, or its built pages, for what every government website needs: the GGDS page parts, accessibility, security headers, the email domain and speed. Each result names its published source.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [
@@ -27,7 +27,8 @@
   "type": "module",
   "files": [
     "check.mjs",
-    "rules.mjs"
+    "rules.mjs",
+    "placeholders.json"
   ],
   "bin": {
     "ggds-check": "./check.mjs"
@@ -35,6 +36,7 @@
   "exports": {
     ".": "./check.mjs",
     "./rules": "./rules.mjs",
+    "./placeholders.json": "./placeholders.json",
     "./package.json": "./package.json"
   },
   "engines": {

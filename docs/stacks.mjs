@@ -10,7 +10,7 @@ export const STACKS = [
   ['angular', 'Angular', 'angular', 'Paste the HTML into templates as it is.'],
   ['astro', 'Astro', 'astro', 'Components from @ggds/astro.'],
   ['django', 'Django and Wagtail', 'django', 'Template tags and every form, from ggds-django.'],
-  ['wordpress', 'WordPress', 'wordpress', 'The GGDS theme.'],
+  ['wordpress', 'WordPress', 'wordpress', 'The GGDS theme, and GGDS Switch for websites you already have.'],
   ['server', 'Laravel, PHP, Rails and others', 'laravel', 'The download, or npm with your build tool.'],
   ['download-the-files', 'Plain HTML', 'html', 'The download: no tools needed.'],
 ];
@@ -176,7 +176,7 @@ ${code('Django template', `{% load ggds %}
 <li>Make four menus: main sections, common tasks, footer sections and footer links.</li>
 <li>Its front end has no inline scripts or styles, so you can serve it with a strict Content Security Policy. Every template is tested with axe in a real WordPress.</li>
 </ul>
-<p>The full set-up is in the theme's <a href="${repo}/tree/main/packages/wordpress#readme">README</a>.</p>
+<p><strong>Already have a WordPress website?</strong> GGDS Switch, a plugin, turns it into a GGDS website: your pages, menus and logo come with you, page-builder layouts become plain, accessible pages, and you can undo it. Everything is on <a href="../wordpress.html">GGDS for WordPress</a>.</p>
 
 <h3 id="server">Laravel, PHP, Rails, .NET, Go and other server-rendered websites</h3>
 <p>Anything that sends HTML pages can use GGDS: write the GGDS HTML in your templates. Add the files one of two ways.</p>

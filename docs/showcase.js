@@ -36,6 +36,7 @@ if (bar && select) {
   select.addEventListener('change', () => {
     apply(select.value);
     if (select.value) try { localStorage.setItem(PREF, select.value); } catch { /* storage blocked */ }
+    if (select.value) try { sessionStorage.setItem('ggds-docs-theme-chosen', '1'); } catch { /* storage blocked */ }
     const url = new URL(location.href);
     if (select.value) url.searchParams.set('theme', select.value);
     else url.searchParams.delete('theme');

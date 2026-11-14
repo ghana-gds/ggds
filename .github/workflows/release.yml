@@ -63,8 +63,8 @@ jobs:
       - name: Make the GitHub release
         run: |
           gh release create "$GITHUB_REF_NAME" \
-            "release/ggds-${GITHUB_REF_NAME#v}.zip" "release/ggds-wordpress-${GITHUB_REF_NAME#v}.zip" "release/ggds-agency-starter-${GITHUB_REF_NAME#v}.zip" release/SHA256SUMS release/integrity.json release/pypi/* \
-            --title "GGDS ${GITHUB_REF_NAME#v}" --notes "See CHANGELOG.md for what changed. Download ggds-${GITHUB_REF_NAME#v}.zip and copy its ggds folder into your website, or install from npm (npm install @ggds/css) or, for Django, from PyPI (pip install ggds-django). For WordPress, upload ggds-wordpress-${GITHUB_REF_NAME#v}.zip in Appearance > Themes. For a whole website to start from, download ggds-agency-starter-${GITHUB_REF_NAME#v}.zip." \
+            "release/ggds-${GITHUB_REF_NAME#v}.zip" "release/ggds-wordpress-${GITHUB_REF_NAME#v}.zip" "release/ggds-switch-${GITHUB_REF_NAME#v}.zip" "release/ggds-agency-starter-${GITHUB_REF_NAME#v}.zip" release/SHA256SUMS release/integrity.json release/pypi/* \
+            --title "GGDS ${GITHUB_REF_NAME#v}" --notes "See CHANGELOG.md for what changed. Download ggds-${GITHUB_REF_NAME#v}.zip and copy its ggds folder into your website, or install from npm (npm install @ggds/css) or, for Django, from PyPI (pip install ggds-django). For WordPress, upload ggds-wordpress-${GITHUB_REF_NAME#v}.zip in Appearance > Themes; to turn an existing WordPress website into a GGDS one, upload ggds-switch-${GITHUB_REF_NAME#v}.zip in Plugins and open Tools > Switch to GGDS. For a whole website to start from, download ggds-agency-starter-${GITHUB_REF_NAME#v}.zip." \
             --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}

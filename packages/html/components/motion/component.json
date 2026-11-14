@@ -1,0 +1,73 @@
+{
+  "css": "motion",
+  "javascript": null,
+  "classes": [
+    [
+      ".ggds-reveal",
+      "Rises into place as it comes into view."
+    ],
+    [
+      ".ggds-reveal--fade",
+      "Fades in instead of rising."
+    ],
+    [
+      ".ggds-reveal--scale",
+      "Grows into place instead of rising."
+    ],
+    [
+      ".ggds-stagger",
+      "On a list or grid: each child arrives a little after the one before it. It rises without fading, so its words are always at full contrast."
+    ],
+    [
+      ".ggds-parallax",
+      "A layer that moves a little against the scroll, for depth."
+    ],
+    [
+      ".ggds-parallax--near",
+      "Moves more: a layer that seems closer."
+    ],
+    [
+      ".ggds-parallax--far",
+      "Moves less: a layer that seems further away."
+    ],
+    [
+      ".ggds-draw",
+      "On an SVG: its lines draw themselves as it comes into view. Give each path pathLength=\"1\"."
+    ],
+    [
+      ".ggds-scene",
+      "A part of the page that tells a story as people scroll. Its parts use its own timeline."
+    ],
+    [
+      ".ggds-scene--pinned",
+      "The scene stays on screen while people scroll through it, and its parts play in order. Only on screens wide and tall enough to hold its words beside its picture; on a phone the picture builds itself as it rises up the screen."
+    ],
+    [
+      ".ggds-scene__stage",
+      "What stays on screen in a pinned scene: the words and the picture."
+    ],
+    [
+      ".ggds-scene__part",
+      "One part of the picture, which arrives in its turn: first by default, or --2 to --6 for later turns."
+    ],
+    [
+      ".ggds-scene__part--*",
+      "How and when it arrives: --fade, --grow, --from-start, --from-end, --draw (an SVG line drawing itself), and its turn, --2 to --6."
+    ]
+  ],
+  "states": [
+    [
+      "prefers-reduced-motion: reduce",
+      "Nothing moves: the page is still and finished."
+    ],
+    [
+      "no scroll-driven animations",
+      "A browser without them shows the still, finished page."
+    ]
+  ],
+  "astro": null,
+  "django": null,
+  "tests": [
+    "scroll effects: still and fully visible for people who ask for less motion, and play as people scroll otherwise"
+  ]
+}

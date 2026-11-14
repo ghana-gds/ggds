@@ -32,3 +32,9 @@ packages/astro/src/strings.mjs
 packages/django/src/ggds_django/strings.json
 packages/django/src/ggds_django/locale/
 packages/astro/.render-test/
+
+# GGDS Switch: its copy of the theme (packages/wordpress/build.mjs)
+packages/wordpress/ggds-switch/theme/
+packages/wordpress/ggds-switch/placeholders.json
+packages/wordpress/ggds-switch/LICENSE
+packages/wordpress/ggds-switch/LICENSE.md

@@ -72,6 +72,30 @@
   }
 }
 
+/* Scroll row: on phones, a set of cards people swipe through sideways instead of scrolling past one under another,
+   so a long set does not make the page long. Each card snaps into place and the next one peeks in from the edge,
+   so people can see there is more. From 48rem it is laid out by its own grid again. Only for sets people browse
+   (examples, stories, related links), never for steps, answers or anything people must read in order. */
+@media (max-width: 47.99rem) {
+  .ggds-scroll-row {
+    --ggds-scroll-row-bleed: var(--ggds-size-gutter);
+    display: grid;
+    grid-auto-columns: var(--ggds-scroll-row-size, min(82%, 22rem));
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    margin-inline: calc(-1 * var(--ggds-scroll-row-bleed));
+    padding: 0 var(--ggds-scroll-row-bleed) var(--ggds-space-3);
+    overflow-x: auto;
+    overscroll-behavior-x: contain; /* a swipe moves the row, never back a page */
+    scroll-padding-inline: var(--ggds-scroll-row-bleed);
+    scroll-snap-type: x mandatory;
+  }
+
+  .ggds-scroll-row > * {
+    scroll-snap-align: start;
+  }
+}
+
 /* Main content with a side column from desktops: related links, a contents list, filters. One column before. */
 .ggds-with-aside {
   --ggds-gap: var(--ggds-space-8);

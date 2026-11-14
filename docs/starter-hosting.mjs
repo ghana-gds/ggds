@@ -149,3 +149,38 @@ records in \`hosting/dns-records.txt\`.
 **Check it.** When it is live: \`npx @ggds/check https://${host}\`. It checks every page, the server settings and the
 email records, and says how to fix anything that fails.
 `;
+
+/**
+ * HANDOVER.md: one page for the IT team or web host who puts the website online, in their words. site: the
+ * normalised settings (docs/starter-site.mjs).
+ */
+export const handover = (site) => `# Handover: the ${site.name} website
+
+For the IT team or web host who puts this website online. It was made with the
+[GGDS website builder](https://ghana-gds.github.io/ggds/builder.html), so it follows the Ghana Government Design System.
+
+## What it is
+
+A website of plain HTML, CSS and JavaScript files. There is no database and no code to run on the server: any web
+server or static hosting can serve it. It runs under a strict Content Security Policy (no inline scripts or styles).
+
+## Put it online
+
+1. Copy every file in this folder to the web root for **${site.host}**, including the hidden \`.htaccess\`.
+2. Serve it over HTTPS only.
+3. The security headers, HTTPS redirect, compression and caching are already written for:
+   - Apache and cPanel: \`.htaccess\` (needs mod_headers, mod_rewrite, mod_deflate and mod_expires);
+   - Netlify and Cloudflare Pages: \`_headers\`;
+   - nginx: \`hosting/nginx.conf\`, a server block to adapt.
+4. Add the DNS records in \`hosting/dns-records.txt\`: they stop people forging email from the institution's domain.
+   Addresses that end in .gov.gh are managed by the National Information Technology Agency (NITA).
+5. ${site.forms ? `The forms send their answers to **${site.forms}**, with a hidden field \`form\` saying which form. That server must check every answer again, and reply with the next page.` : 'The forms do not send anything yet: they show the next page of the example. When the institution has a server to receive applications, complaints and messages, make the website again in the builder with its address ("For your developer: forms"), or change each form\'s \`action\`.'}
+6. ${site.live ? 'Search engines may find it.' : 'Search engines are asked not to list it yet (\`noindex\` in each page). When the example words are rewritten, make the website again in the builder with "Ready to go live", or remove that line from each page.'}
+7. Check it: \`npx @ggds/check https://${site.host}\`. It tests the page parts, accessibility, the security headers, the email
+   records and speed.
+
+## Changing it later
+
+The institution's settings and words are in \`ggds-site.json\`. Opening it in the builder makes the same website again,
+changed, or with a newer GGDS. The README says how the files are organised.
+`;

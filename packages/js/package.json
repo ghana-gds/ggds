@@ -1,6 +1,6 @@
 {
   "name": "@ggds/js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Optional script for the Ghana Government Design System (GGDS): the phone menu and error summary focus. ES modules, no dependencies, CSP-safe.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [

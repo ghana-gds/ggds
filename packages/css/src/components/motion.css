@@ -1,0 +1,192 @@
+/* Scroll effects: parts that rise into view, layers that move at different speeds, lines that draw themselves, and
+   scenes that stay on screen while their story plays as people scroll.
+
+   The browser drives them from the scroll position (animation-timeline), so there is no script, the page always
+   scrolls at the person's own speed, and only transform, opacity and SVG strokes move: nothing shifts the layout.
+   Everything here is inside @supports and prefers-reduced-motion: in a browser without scroll-driven animations,
+   and for anyone who asks for less motion, the page is simply still and finished. Content is never hidden waiting
+   for an animation.
+
+   For homepages, campaign and information pages. Never inside a service's steps: questions, check your answers,
+   errors, payment and confirmation stay still. */
+
+/* Every moving part turns and grows around its own centre, SVG shapes included (which would otherwise move from the
+   drawing's top-left corner). */
+.ggds-reveal,
+.ggds-stagger > *,
+.ggds-parallax,
+.ggds-scene__part {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Reveal: rises (or fades, or grows) as it comes into view. */
+    .ggds-reveal {
+      animation: ggds-motion-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    .ggds-reveal--fade { animation-name: ggds-motion-fade; }
+    .ggds-reveal--scale { animation-name: ggds-motion-grow; }
+
+    /* Stagger: each child of a list or grid arrives a little after the one before it. It rises without fading, so the
+       words on a card are at full contrast even when it is only half way on screen. */
+    .ggds-stagger > * {
+      animation: ggds-motion-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 90%;
+    }
+
+    .ggds-stagger > :nth-child(2) { animation-range: entry 8% entry 98%; }
+    .ggds-stagger > :nth-child(3) { animation-range: entry 16% cover 30%; }
+    .ggds-stagger > :nth-child(4) { animation-range: entry 24% cover 35%; }
+    .ggds-stagger > :nth-child(5) { animation-range: entry 32% cover 40%; }
+    .ggds-stagger > :nth-child(n + 6) { animation-range: entry 40% cover 45%; }
+
+    /* Parallax: a layer that moves a little against the scroll, so the page has depth. Kept small. */
+    .ggds-parallax {
+      --ggds-parallax: var(--ggds-space-8);
+      animation: ggds-motion-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    .ggds-parallax--near { --ggds-parallax: var(--ggds-space-12); }
+    .ggds-parallax--far { --ggds-parallax: var(--ggds-space-4); }
+
+    /* Draw: the lines of an SVG draw themselves as it comes into view. Give each path pathLength="1". */
+    .ggds-draw :is(path, line, polyline, circle, rect) {
+      stroke-dasharray: 1;
+      animation: ggds-motion-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+
+    /* Scene: a story told as people scroll. Its parts (.ggds-scene__part) use the scene's own timeline, so they can
+       play in order: --1 first, --6 last. */
+    .ggds-scene {
+      view-timeline: --ggds-scene block;
+    }
+
+    .ggds-scene__stage {
+      animation: ggds-motion-fade linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+/* A pinned scene stays on screen while people scroll through it, and its parts play in order. Only where the screen
+   is wide enough to set the words beside the drawing and tall enough to hold them: at high zoom, on a short screen
+   or on a phone, it is never pinned, so nothing is ever cut off (WCAG 1.4.10, reflow). */
+@media (prefers-reduced-motion: no-preference) and (min-width: 64rem) and (min-height: 36rem) {
+  @supports (animation-timeline: view()) {
+    .ggds-scene--pinned {
+      min-height: 240svh;
+    }
+
+    .ggds-scene--pinned .ggds-scene__stage {
+      position: sticky;
+      top: calc(var(--ggds-space-16) + var(--ggds-space-4)); /* below the sticky header */
+      min-height: calc(100svh - 2 * var(--ggds-space-16));
+      animation: none;
+    }
+
+    .ggds-scene--pinned .ggds-scene__part {
+      animation: ggds-motion-rise linear both;
+      animation-timeline: --ggds-scene;
+      animation-range: contain 0% contain 18%;
+    }
+
+    .ggds-scene--pinned .ggds-scene__part--2 { animation-range: contain 14% contain 32%; }
+    .ggds-scene--pinned .ggds-scene__part--3 { animation-range: contain 28% contain 46%; }
+    .ggds-scene--pinned .ggds-scene__part--4 { animation-range: contain 42% contain 60%; }
+    .ggds-scene--pinned .ggds-scene__part--5 { animation-range: contain 56% contain 74%; }
+    .ggds-scene--pinned .ggds-scene__part--6 { animation-range: contain 70% contain 88%; }
+  }
+}
+
+/* On a phone the words come first and the drawing under them, which together are taller than the screen: pinned,
+   people would scroll through words that do not move while the drawing waits below. Instead the scene scrolls like
+   any section, its drawing builds itself as it rises from the bottom of the screen to the middle, and it drifts a
+   little slower than the words, so the page has depth. Reading is never paused. */
+@media (prefers-reduced-motion: no-preference) and (max-width: 63.99rem) {
+  @supports (animation-timeline: view()) {
+    .ggds-scene--pinned .ggds-scene__stage {
+      animation: none;
+    }
+
+    .ggds-scene--pinned .ggds-scene__stage > :has(.ggds-scene__part) {
+      --ggds-parallax: var(--ggds-space-6);
+      view-timeline: --ggds-scene-art block;
+      animation: ggds-motion-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    .ggds-scene--pinned .ggds-scene__part {
+      animation: ggds-motion-rise linear both;
+      animation-timeline: --ggds-scene-art;
+      animation-range: cover 4% cover 20%;
+    }
+
+    .ggds-scene--pinned .ggds-scene__part--2 { animation-range: cover 11% cover 27%; }
+    .ggds-scene--pinned .ggds-scene__part--3 { animation-range: cover 18% cover 34%; }
+    .ggds-scene--pinned .ggds-scene__part--4 { animation-range: cover 25% cover 41%; }
+    .ggds-scene--pinned .ggds-scene__part--5 { animation-range: cover 32% cover 48%; }
+    .ggds-scene--pinned .ggds-scene__part--6 { animation-range: cover 39% cover 55%; }
+  }
+}
+
+/* The kind of movement of a part, pinned or not. Three classes, so it wins over the default rise, with no need to
+   force it. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .ggds-scene--pinned .ggds-scene__part.ggds-scene__part--fade { animation-name: ggds-motion-fade; }
+    .ggds-scene--pinned .ggds-scene__part.ggds-scene__part--grow { animation-name: ggds-motion-grow; }
+    .ggds-scene--pinned .ggds-scene__part.ggds-scene__part--from-start { animation-name: ggds-motion-from-start; }
+    .ggds-scene--pinned .ggds-scene__part.ggds-scene__part--from-end { animation-name: ggds-motion-from-end; }
+
+    .ggds-scene--pinned .ggds-scene__part.ggds-scene__part--draw {
+      stroke-dasharray: 1;
+      animation-name: ggds-motion-draw;
+    }
+  }
+}
+
+@keyframes ggds-motion-rise {
+  from { opacity: 0; transform: translateY(var(--ggds-space-8)); }
+}
+
+@keyframes ggds-motion-lift {
+  from { transform: translateY(var(--ggds-space-8)); }
+}
+
+@keyframes ggds-motion-fade {
+  from { opacity: 0; }
+}
+
+@keyframes ggds-motion-grow {
+  from { opacity: 0; transform: scale(0.85); }
+}
+
+@keyframes ggds-motion-from-start {
+  from { opacity: 0; transform: translateX(-40%); }
+}
+
+@keyframes ggds-motion-from-end {
+  from { opacity: 0; transform: translateX(40%); }
+}
+
+@keyframes ggds-motion-parallax {
+  from { transform: translateY(var(--ggds-parallax)); }
+  to { transform: translateY(calc(var(--ggds-parallax) * -1)); }
+}
+
+@keyframes ggds-motion-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}

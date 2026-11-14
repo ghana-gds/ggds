@@ -1,6 +1,8 @@
 // Builds the GGDS WordPress theme: copies the built GGDS styles, themes, script and icons into ggds/assets/, and
 // sets the theme's version (style.css) to the GGDS version. Run after the CSS, theme and JavaScript builds
 // (pnpm run build does). The theme for a website is the ggds/ folder; the release has it as a zip.
+// Then GGDS Switch (ggds-switch/), the plugin that turns an existing website into a GGDS one, gets its own copy of
+// the theme (ggds-switch/theme/ggds/), so one upload does everything, and the same version.
 import { cpSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,4 +24,12 @@ writeFileSync(join(out, 'icons.json'), `${JSON.stringify(ICONS)}\n`);
 
 const style = join(theme, 'style.css');
 writeFileSync(style, readFileSync(style, 'utf8').replace(/^Version: .*$/m, `Version: ${version}`));
-console.log(`wordpress: theme ${version} → ${theme}`);
+
+const plugin = join(here, 'ggds-switch');
+rmSync(join(plugin, 'theme'), { recursive: true, force: true });
+cpSync(theme, join(plugin, 'theme', 'ggds'), { recursive: true, filter: (f) => !/\/\.[^/]*$/.test(f) });
+const main = join(plugin, 'ggds-switch.php');
+writeFileSync(main, readFileSync(main, 'utf8').replace(/^( \* Version: +).*$/m, `$1${version}`));
+// Tidy up content's phrases: the same list ggds-check uses, so the plugin and the check always agree.
+cpSync(join(packages, 'check', 'placeholders.json'), join(plugin, 'placeholders.json'));
+console.log(`wordpress: theme and GGDS Switch ${version} → ${theme}, ${plugin}`);

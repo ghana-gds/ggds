@@ -1,6 +1,6 @@
 {
   "name": "@ggds/create",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Makes a complete Government of Ghana website with GGDS, from your institution's name, address, contact details and colour: every page, the server settings for security and speed, and a guide to putting it online. Run npm init @ggds.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [

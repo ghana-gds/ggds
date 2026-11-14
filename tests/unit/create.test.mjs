@@ -27,7 +27,7 @@ test('from saved settings: the builder’s website, with GGDS, and it will not w
     writeFileSync(join(dir, 'settings.json'), JSON.stringify(SITE));
     const made = create(dir, '--from', 'settings.json');
     assert.equal(made.status, 0, made.stderr);
-    assert.match(made.stdout, /Made gra-website\/: 20 pages for Ghana Roads Authority/);
+    assert.match(made.stdout, /Made gra-website\/: 21 pages for Ghana Roads Authority/);
     const out = join(dir, 'gra-website');
     for (const [file, text] of Object.entries(starterFiles({ version, site: SITE }))) assert.equal(readFileSync(join(out, file), 'utf8'), text, file);
     for (const f of ['ggds/ggds.min.css', 'ggds/auto.js', 'ggds/index.js', 'ggds/themes/nca.css', 'LICENSE', 'LICENSE.md']) assert.ok(existsSync(join(out, f)), f);

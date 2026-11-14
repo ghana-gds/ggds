@@ -17,6 +17,12 @@ banner, header, homepage hero, footer and tab bar, readable pages and news, sear
 Needs WordPress 6.5 or later and PHP 8.1 or later. A classic theme, so it works with the block editor for
 content and gives GGDS full control of the page.
 
+## Already have a WordPress website?
+
+[GGDS Switch](ggds-switch/README.md) turns it into a GGDS one: it carries your pages, menus and logo over, cleans
+page-builder layouts into plain, accessible pages, and can be undone. Upload `ggds-switch-<version>.zip` in Plugins,
+then open **GGDS > Switch to GGDS**.
+
 ## Install
 
 1. Download `ggds-wordpress-<version>.zip` from the

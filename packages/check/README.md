@@ -22,6 +22,7 @@ published. Automated checks find only some problems, accessibility ones especial
 | Group | Checks |
 |---|---|
 | Every page | Language, title, zoom, image alternative text, skip link, government website banner, header, one main landmark, footer, the footer's Accessibility, Privacy and Disclaimer links, phone tab bar, image sizes |
+| Content | No sample text (lorem ipsum), WordPress's or page builders' example content, or themes' demonstration pages; "coming soon" is a warning. On a live WordPress website, its whole search too, so pages nothing links to are found |
 | GGDS | The site uses GGDS, and which version |
 | Accessibility | WCAG 2.2 A and AA rules with [axe-core](https://github.com/dequelabs/axe-core) in a real browser, on a computer and on a phone; nothing scrolls sideways at 320px (WCAG 1.4.10); the first Tab goes to a working skip link (WCAG 2.4.1); the main content shows without JavaScript |
 | Address and server | A `.gov.gh` address, HTTPS only, Strict-Transport-Security, Content-Security-Policy, framing, `nosniff`, Referrer-Policy, Permissions-Policy, no software version announced, no public list of WordPress user accounts |

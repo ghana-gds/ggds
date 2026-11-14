@@ -277,7 +277,7 @@ export function tutorialBody({ esc, version, repo, themes, defaultName }) {
 
 <h2 id="set-up">Step 1: Set GGDS up</h2>
 <p>Make a new folder for your website, such as <code>my-service</code>. Then choose one way to add GGDS. You can change later: only the lines that load GGDS are different.</p>
-<div class="ggds-table-wrap" role="region" aria-labelledby="setup-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="setup-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="setup-caption">Ways to set GGDS up</caption>
 <thead><tr><th scope="col">Way</th><th scope="col">Best for</th><th scope="col">You need</th></tr></thead>
 <tbody>
@@ -365,7 +365,7 @@ ${demo('account.html', 'See the finished account page')}
 <p>Every government website looks the same except for one thing: the institution's colour. A theme sets it. It changes five places only: the line under the header, the institution's name, the homepage hero, the footer and the institution's card in a list. Links, buttons, form fields and error messages stay the same on every government website, so people recognise them wherever they are.</p>
 <h3 id="choose-a-theme">Choose your theme</h3>
 <p>GGDS has a ready-made theme for each of these institutions. Without one, your website uses the default, ${esc(defaultName)}.</p>
-<div class="ggds-table-wrap" role="region" aria-labelledby="themes-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="themes-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="themes-caption">Ready-made themes</caption>
 <thead><tr><th scope="col" class="docs-nowrap">Colour</th><th scope="col">Institution</th><th scope="col" class="docs-nowrap">Theme name</th></tr></thead>
 <tbody>

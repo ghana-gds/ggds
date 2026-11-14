@@ -1,0 +1,39 @@
+/* GGDS > Switch to GGDS and GGDS > Tidy up content. WordPress's admin styles do the rest. */
+.ggds-tidy__lead { font-size: 15px; max-width: 46em; }
+.ggds-tidy__summary { font-size: 14px; }
+.ggds-tidy__table, .ggds-tidy__recent { margin-top: 8px; }
+.ggds-tidy__table th[scope="row"], .ggds-tidy__table td { vertical-align: top; }
+.ggds-tidy__what { width: 22%; }
+.ggds-tidy__do { width: 210px; }
+.ggds-tidy__do select { max-width: 100%; }
+.ggds-tidy__meta { display: block; color: #50575e; font-weight: 400; margin-top: 2px; }
+.ggds-tidy__view { display: inline-block; margin-top: 4px; font-weight: 400; }
+.ggds-tidy__list { margin: 0; }
+.ggds-tidy__list li { margin: 0 0 6px; }
+.ggds-tidy__list q { display: block; color: #50575e; font-style: italic; overflow-wrap: anywhere; }
+.ggds-tidy__chosen { display: block; color: #50575e; font-size: 12px; margin-top: 4px; }
+.ggds-tidy__locked { margin: 0; color: #50575e; }
+.ggds-tidy__hidden { margin-top: 1.5em; }
+.ggds-tidy__hidden > summary { cursor: pointer; }
+.ggds-tidy__hidden > summary h2 { display: inline; }
+.ggds-tidy__apply { position: sticky; bottom: 0; background: #f0f0f1; padding: 4px 0 12px; border-top: 1px solid #c3c4c7; margin-top: 16px; }
+.ggds-tidy__apply p { margin: 8px 0 0; }
+.ggds-tidy__inline { display: inline; margin-left: 6px; }
+@media (max-width: 782px) {
+  /* Phones: each row as a card, the question first. */
+  .ggds-tidy__table, .ggds-tidy__table tbody { display: block; width: 100%; }
+  .ggds-tidy__table thead { display: none; }
+  /* On a phone the bar would cover what is under it: it sits after the lists instead. */
+  .ggds-tidy__apply { position: static; }
+  .ggds-tidy__table tr, .ggds-tidy__table th[scope="row"], .ggds-tidy__table td { display: block; width: auto; }
+  .ggds-tidy__table td { padding-top: 0; }
+  .ggds-tidy__do select { width: 100%; }
+}
+/* Links in the screen's notes are underlined, so they never depend on colour alone (WCAG 1.4.1). */
+.ggds-tidy__table a, .ggds-tidy__locked a, .ggds-tidy .description a { text-decoration: underline; }
+/* GGDS > Switch to GGDS: links in its tables are underlined too. */
+.ggds-switch td a, .ggds-switch .description a { text-decoration: underline; }
+.ggds-switch__import { margin: 16px 0 0; padding: 4px 16px 8px; background: #fff; border: 1px solid #c3c4c7; max-width: 60em; }
+.ggds-switch__import h2 { margin-top: 12px; }
+/* The button says what it will do, which can be long: it wraps rather than run off a phone's screen. */
+.ggds-tidy__apply .button { white-space: normal; height: auto; max-width: 100%; line-height: 1.4; padding-top: 6px; padding-bottom: 6px; text-align: left; }

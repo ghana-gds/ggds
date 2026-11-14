@@ -36,3 +36,58 @@
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
+
+/* Stacked: on a narrow screen each row becomes a card, its row title on top and each cell under its column's name,
+   so people read down, never sideways, and long notes get the full width. @ggds/js names the cells (data-label)
+   and keeps the table's meaning for screen readers (explicit roles, as display changes can remove it); without the
+   script, or when there is room, it stays a table. */
+.ggds-table-wrap:has(.ggds-table--stack) {
+  container: ggds-table / inline-size;
+}
+
+@container ggds-table (max-width: 36rem) {
+  .ggds-table--stack[data-ggds-stacked] :is(thead, tbody, tr, th, td) {
+    display: block;
+  }
+
+  .ggds-table--stack[data-ggds-stacked] thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .ggds-table--stack[data-ggds-stacked] tbody tr {
+    margin-bottom: var(--ggds-space-3);
+    padding: var(--ggds-space-3) var(--ggds-space-4);
+    border: 1px solid var(--ggds-color-border-subtle);
+    border-inline-start: 4px solid var(--ggds-color-institution);
+    border-radius: var(--ggds-radius-md);
+    background: var(--ggds-color-surface);
+  }
+
+  .ggds-table--stack[data-ggds-stacked] :is(th, td) {
+    padding: var(--ggds-space-1) 0;
+    border: 0;
+    text-align: start;
+    overflow-wrap: anywhere;
+  }
+
+  .ggds-table--stack[data-ggds-stacked] tbody th {
+    padding-bottom: var(--ggds-space-2);
+    font-size: var(--ggds-font-size-base);
+  }
+
+  .ggds-table--stack[data-ggds-stacked] td[data-label]:not(:empty)::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--ggds-color-text-muted);
+    font-size: var(--ggds-font-size-xs);
+    font-weight: var(--ggds-font-weight-bold);
+  }
+
+  .ggds-table--stack[data-ggds-stacked] td:empty {
+    display: none;
+  }
+}

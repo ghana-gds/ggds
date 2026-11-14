@@ -41,7 +41,7 @@ function assertLinksWork(files, label) {
 
 test('with no settings, the made-up Example Agency, as the preview and the release download show it', () => {
   const files = starterFiles({ version, theme: 'mocdti' });
-  assert.equal(html(files).length, 21);
+  assert.equal(html(files).length, 22);
   assert.match(files['index.html'], /<title>Example Agency<\/title>/);
   assert.match(files['index.html'], /href="ggds\/themes\/mocdti\.css"/);
   assert.match(files['index.html'], /noindex, nofollow/);
@@ -169,4 +169,86 @@ test('the zip the builder downloads: one folder, every file as it was made', () 
   for (const [f, text] of Object.entries(files)) assert.equal(dec.decode(out[`grba-website/${f}`]), text, f);
   assert.deepEqual(makeZip(files), makeZip(files), 'the same files make the same zip');
   assert.throws(() => makeZip({ '../outside.txt': 'x' }), /unsafe path/);
+});
+
+// ---- Kinds of institution, and the words people write in the builder ----------------------------------------------
+import { execFileSync } from 'node:child_process';
+import { KINDS } from '../../docs/starter-kinds.mjs';
+import { exampleWords, servicePages } from '../../docs/starter-site.mjs';
+import { starterProject } from '../../docs/starter.mjs';
+
+test('every kind of institution, with every choice of parts: its own services, every link works, one h1 a page', () => {
+  for (const kind of KINDS) {
+    for (let mask = 0; mask < 2 ** PARTS.length; mask += 7) {
+      const parts = Object.fromEntries(PARTS.map((p, i) => [p.id, Boolean(mask & (1 << i))]));
+      const files = starterFiles({ version, site: { ...AGENCY, kind: kind.id, parts } });
+      const label = `${kind.id} ${mask}`;
+      assert.deepEqual(new Set(html(files).map(([f]) => f)), pagesFor({ kind: kind.id, parts }), `${label}: the pages`);
+      assertLinksWork(files, label);
+      for (const [page, text] of html(files)) assert.equal((text.match(/<h1\b/g) ?? []).length, 1, `${label}: ${page} has one h1`);
+      for (const s of kind.services) assert.match(files['services.html'], new RegExp(s.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/'/g, '&#39;')), `${label}: ${s.title} on Services`);
+    }
+    if (kind.id !== 'agency') {
+      const files = starterFiles({ version, site: { ...AGENCY, kind: kind.id } });
+      for (const [file, text] of html(files)) for (const left of ['Apply for a licence', 'Internet service provider', 'mobile money complaints', 'licence fees']) assert.ok(!text.includes(left), `${kind.id}: ${file} still has the agency's "${left}"`);
+    }
+  }
+});
+
+test('the institution\'s own services and words: their own pages, and nothing they typed can break the HTML', () => {
+  const evil = '<script>alert(1)</script> & "q"';
+  const site = { ...AGENCY, kind: 'assembly', question: `Q ${evil}`, lede: evil,
+    services: [
+      { title: 'Get a market stall', summary: evil, task: true, online: true, who: [evil, 'traders'], need: 'a Ghana Card\nyour trade', time: 'A week.\n\nOr two.', options: ['Lock-up shop', evil] },
+      { title: 'Get a market stall', summary: 'The same title again' },
+      { title: 'Services', summary: 'A title that is already a page' },
+      { title: '   ' },
+    ],
+    fees: { columns: ['What', 'Fee'], rows: [['Stall', 'GH₵ 20'], [evil, evil]] },
+    news: [{ title: evil, type: 'Notice', date: '1 December 2026', summary: evil, body: `${evil}\n\nSecond paragraph` }],
+    about: { what: [evil], who: evil, funded: '' },
+  };
+  assert.deepEqual(servicePages(site), ['get-a-market-stall.html', 'get-a-market-stall-2.html', 'services-2.html'], 'each service has its own address, never another page\'s');
+  const files = starterFiles({ version, site });
+  for (const [file, text] of html(files)) {
+    assert.ok(!text.includes('<script>alert'), `${file}: typed HTML is escaped`);
+    assert.doesNotMatch(text, /<script(?![^>]*\bsrc=)[^>]*>|<style\b|\sstyle=|\son[a-z]+=/i, `${file}: strict policy`);
+  }
+  const stall = files['get-a-market-stall.html'];
+  assert.match(stall, /<h1>Get a market stall<\/h1>/);
+  assert.match(stall, /<li>a Ghana Card<\/li><li>your trade<\/li>/, 'one item a line');
+  assert.match(stall, /<p>A week\.<\/p>\s*<p>Or two\.<\/p>/, 'paragraphs');
+  assert.match(stall, /href="apply\.html"><span>Start now/, 'the online service starts the application');
+  assert.match(files['apply.html'], /Which market stall do you need\?/);
+  assert.match(files['apply.html'], /<label class="ggds-choice__label" for="market-stall-lock-up-shop">Lock-up shop<\/label>/);
+  assert.match(files['index.html'], /Q &lt;script&gt;/);
+  assert.match(files['index.html'], /href="get-a-market-stall\.html">Get a market stall<\/a>/, 'a common task on the homepage');
+  assert.match(files['fees.html'], /<th scope="row">Stall<\/th><td class="ggds-table__numeric">GH₵ 20<\/td>/);
+  assert.match(files['about.html'], /<h2>Who runs us<\/h2>/);
+  assert.doesNotMatch(files['about.html'], /How we are funded/, 'an empty answer leaves its heading out');
+  assert.match(files['news-article.html'], /<p>Second paragraph<\/p>/);
+  const again = JSON.parse(files['ggds-site.json']);
+  assert.deepEqual(starterFiles({ version, site: again }), files, 'ggds-site.json keeps the words, and makes the same website again');
+});
+
+test('the builder says which words are still the example\'s, and none once they are rewritten', () => {
+  const left = exampleWords({ kind: 'health' }).map((x) => x.where);
+  assert.ok(left.includes('Homepage') && left.includes('Book an appointment') && left.includes('About us'), left.join(', '));
+  const own = { kind: 'health', question: 'How can we help?', lede: 'Our own words.', services: [{ title: 'See a doctor', summary: 'Ours.' }],
+    about: { what: ['Ours.'] }, fees: { columns: ['A', 'B'], rows: [['x', 'y']] }, news: [{ title: 'Ours' }], publications: [{ title: 'Ours' }], jobs: [{ title: 'Ours' }] };
+  assert.deepEqual(exampleWords(own), []);
+});
+
+test('WordPress: the pages, news and four menus as a WordPress import, for the GGDS theme', () => {
+  for (const kind of KINDS) {
+    const { files } = starterProject({ version, site: { ...AGENCY, kind: kind.id }, stack: 'wordpress' });
+    const wxr = files['wordpress-import.xml'];
+    try { execFileSync('xmllint', ['--noout', '-'], { input: wxr, stdio: ['pipe', 'ignore', 'pipe'] }); } catch (e) { if (e.code !== 'ENOENT') assert.fail(`${kind.id}: not well-formed XML: ${e.stderr}`); }
+    for (const name of ['Main sections', 'Common tasks', 'Footer sections', 'Footer links']) assert.match(wxr, new RegExp(`<wp:term_name><!\\[CDATA\\[${name}\\]\\]></wp:term_name>`), `${kind.id}: the "${name}" menu, named as the theme looks for it`);
+    for (const s of kind.services) assert.ok(wxr.includes(`<title>${s.title.replace(/&/g, '&amp;')}</title>`), `${kind.id}: ${s.title}`);
+    assert.doesNotMatch(wxr, /<form\b|<script\b|\sstyle=/, `${kind.id}: no forms, scripts or styles`);
+    assert.doesNotMatch(wxr, /href="[a-z0-9-]+\.html"/, `${kind.id}: links are WordPress addresses`);
+    assert.match(files['README.md'], /Tools > Import > WordPress/);
+    assert.ok(files['ggds-site.json']);
+  }
 });

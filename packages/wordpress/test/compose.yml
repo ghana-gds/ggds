@@ -1,4 +1,5 @@
-# A throwaway WordPress with the GGDS theme, for scripts/test-wordpress.mjs. Not for production.
+# A throwaway WordPress with the GGDS theme and GGDS Switch (and, for the switch tests, a stand-in heavy theme and
+# page builder), for scripts/test-wordpress.mjs. Not for production.
 name: ggds-wordpress-test
 services:
   db:
@@ -27,6 +28,9 @@ services:
     volumes:
       - wp:/var/www/html
       - ../ggds:/var/www/html/wp-content/themes/ggds:ro
+      - ../ggds-switch:/var/www/html/wp-content/plugins/ggds-switch:ro
+      - ./bloated:/var/www/html/wp-content/themes/bloated:ro
+      - ./fake-builder:/var/www/html/wp-content/plugins/fake-builder:ro
   cli:
     image: wordpress:cli-php8.3
     user: "33:33"
@@ -40,5 +44,8 @@ services:
     volumes:
       - wp:/var/www/html
       - ../ggds:/var/www/html/wp-content/themes/ggds:ro
+      - ../ggds-switch:/var/www/html/wp-content/plugins/ggds-switch:ro
+      - ./bloated:/var/www/html/wp-content/themes/bloated:ro
+      - ./fake-builder:/var/www/html/wp-content/plugins/fake-builder:ro
 volumes:
   wp:

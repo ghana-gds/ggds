@@ -27,7 +27,7 @@ const tokensCss = join(here, '..', 'tokens', 'dist', 'tokens.css');
 export const COMPONENTS = [
   'skip-link', 'cookie-banner', 'banner', 'phase-banner', 'header', 'footer', 'navigation', 'button', 'field', 'password-input', 'error-summary',
   'date-input', 'progress', 'summary-list', 'panel', 'notice', 'tag', 'icon', 'card', 'table', 'meter', 'key-figures',
-  'timeline', 'steps', 'task-list', 'dialog', 'disclosure', 'prose', 'feedback', 'hero', 'page-heading', 'tab-bar', 'layout',
+  'timeline', 'steps', 'task-list', 'dialog', 'disclosure', 'prose', 'feedback', 'hero', 'page-heading', 'tab-bar', 'motion', 'layout',
 ];
 // Layout classes go in their own layer after the components, so a layout class on a component wins over the
 // component's own spacing without !important. A site's unlayered CSS still wins over every layer.

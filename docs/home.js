@@ -14,7 +14,9 @@ if (themeInputs.length) {
     input.addEventListener('change', () => {
       if (!input.checked) return;
       root.setAttribute('data-ggds-theme', input.value);
+      root.setAttribute('data-docs-theme-chosen', ''); // cards' edges take the colour until a reload (theme-pref.js)
       try { localStorage.setItem(THEME_PREF, input.value); } catch { /* storage blocked: this page only */ }
+      try { sessionStorage.setItem('ggds-docs-theme-chosen', '1'); } catch { /* storage blocked: this page only */ }
     });
   }
 }

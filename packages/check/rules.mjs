@@ -18,6 +18,7 @@ export const SOURCES = {
   caa: { name: 'RFC 8659 (CAA)', url: 'https://www.rfc-editor.org/rfc/rfc8659' },
   axe: { name: 'axe-core WCAG 2.2 A and AA rules', url: 'https://github.com/dequelabs/axe-core' },
   ggdsNoJs: { name: 'GGDS: every part works without JavaScript', url: `${DOCS}/contribute.html` },
+  ggdsContent: { name: 'GGDS content guide (every page is real, finished content)', url: `${DOCS}/get-started/content.html` },
   ggdsCookies: { name: 'GGDS cookie banner guidance (nothing the website does not need before people agree)', url: `${DOCS}/components/cookie-banner.html` },
 };
 
@@ -36,6 +37,10 @@ export const RULES = {
   'page.footer-links': { group: 'Every page', title: 'The footer links Accessibility, Privacy and Disclaimer', sources: ['ggdsFooter'], nita: null },
   'page.tab-bar': { group: 'Every page', title: 'The phone tab bar', sources: ['ggdsPage'], nita: null },
   'page.image-size': { group: 'Every page', title: 'Images have width and height, so the page does not move as it loads', sources: ['ggdsFast'], nita: null },
+
+  // Content
+  'content.placeholder': { group: 'Content', title: 'No sample text (such as lorem ipsum), example content or "coming soon" pages', sources: ['ggdsContent'], nita: null },
+  'content.wp-sample': { group: 'Content', title: 'No sample text or example posts and pages anywhere on the website, linked or not (WordPress)', sources: ['ggdsContent'], nita: null },
 
   // GGDS
   'ggds.css': { group: 'GGDS', title: 'The site uses GGDS', sources: ['ggdsPage'], nita: null },
@@ -75,4 +80,4 @@ export const RULES = {
   'fast.weight': { group: 'Speed', title: 'What the homepage downloads', sources: ['ggdsFast'], nita: null },
 };
 
-export const GROUPS = ['Every page', 'GGDS', 'Accessibility', 'Address and server', 'Email domain', 'Privacy', 'Speed'];
+export const GROUPS = ['Every page', 'Content', 'GGDS', 'Accessibility', 'Address and server', 'Email domain', 'Privacy', 'Speed'];

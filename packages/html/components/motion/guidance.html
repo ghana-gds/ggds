@@ -1,0 +1,28 @@
+<!-- name: Scroll effects; icon: play; status: alpha; order: 70; group: Content; related: hero, card, layout; summary: Parts that rise into view, layers with depth, lines that draw themselves, and scenes that tell a story as people scroll. With no script, and still for anyone who asks for less motion. -->
+<p class="ggds-lead">Parts that rise into view, layers with depth, lines that draw themselves, and scenes that tell a story as people scroll. With no script, and still for anyone who asks for less motion.</p>
+<h2>When to use</h2>
+<ul><li>On a homepage, a campaign or an information page, to make the page feel alive and to show how things fit together, as the GGDS homepage does.</li></ul>
+<h2>When not to use</h2>
+<ul>
+<li>Inside a service's steps: questions, check your answers, errors, payment and confirmation. People finishing a task need a still page. A GGDS test checks that no form component or pattern uses these classes.</li>
+<li>To hide content until people scroll to it, or to make them wait. The words must be there and readable without the movement.</li>
+<li>On text people read for long. Move pictures, cards and headings, not paragraphs.</li>
+</ul>
+<h2>How to use</h2>
+<ul>
+<li>Add a class to the part that should move: <code>ggds-reveal</code> on a heading or card, <code>ggds-stagger</code> on a list or grid, <code>ggds-parallax</code> on a picture behind the text, <code>ggds-draw</code> on an SVG drawing (give each path <code>pathLength="1"</code>).</li>
+<li>To tell a story, use a scene: a <code>&lt;section class="ggds-scene ggds-scene--pinned"&gt;</code> holding one <code>ggds-scene__stage</code> with the words and a picture. Give each part of the picture <code>ggds-scene__part</code> and its turn, <code>--2</code> to <code>--6</code>. The scene stays on screen while people scroll, and its parts arrive in order. Put the words first and the picture after them, as the stage's two children.</li>
+<li>Choose how a part arrives: it rises by default, or <code>--fade</code>, <code>--grow</code>, <code>--from-start</code>, <code>--from-end</code> or <code>--draw</code>.</li>
+<li>Keep it small: a few things moving at once, never the whole page.</li>
+</ul>
+<h2>Accessibility</h2>
+<h3>What GGDS does</h3>
+<ul>
+<li>Nothing moves for people who have asked their device for less motion: they see the finished page (WCAG 2.3.3).</li>
+<li>Browsers without scroll-driven animations show the same still, finished page. Nothing is ever hidden waiting for an animation.</li>
+<li>Movement follows the person's own scrolling: nothing plays by itself, and the scroll is never slowed or taken over.</li>
+<li>Only position, transparency and SVG lines move, so the page never jumps.</li><li>Cards and list items rise without fading, so their words are at full contrast even when they are only half way on screen. Only pictures and headings fade.</li>
+<li>A pinned scene stays pinned only on a screen wide and tall enough to hold its words beside its picture. On a phone, at high zoom or on a short screen it is an ordinary section, so nothing is cut off (WCAG 1.4.10). On a phone the picture still builds itself as it rises up the screen, and drifts a little slower than the words, so people never scroll past words that do not move.</li>
+</ul>
+<h3>What you need to do</h3>
+<ul><li>Write the words so they make sense without the pictures: a scene's heading and text carry its meaning.</li><li>Give a drawing a text alternative, or hide it from screen readers (<code>aria-hidden="true"</code>) when the text already says it all.</li></ul>

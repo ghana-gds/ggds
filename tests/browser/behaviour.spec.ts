@@ -163,22 +163,26 @@ test.describe('documentation features', () => {
     expect(box.width).toBe('2px');
   });
 
-  test('the homepage drawing: each part shows what it is and where it is used, by mouse or keyboard, and links to its page', async ({ page }) => {
-    test.skip((page.viewportSize()?.width ?? 0) < 768, 'the drawing shows from 48rem');
+  test('the homepage loom: decoration only, its threads meet the loom\'s without a seam, and the cloth flows only as people scroll', async ({ page }) => {
+    test.skip((page.viewportSize()?.width ?? 0) < 1024, 'the hero shows the loom from 64rem');
     await page.goto('/index.html');
-    const opacity = (sel: string) => page.locator(sel).first().evaluate((el) => Number(getComputedStyle(el).opacity));
-    await expect.poll(() => opacity('.ga-tip--default')).toBeGreaterThan(0.5);
-    await page.locator('.ga-hit--button').hover();
-    await expect.poll(() => opacity('.ga-tip--button')).toBe(1);
-    await expect.poll(() => opacity('.ga-use--button')).toBe(1);
-    await expect.poll(() => opacity('.ga-tip--default')).toBe(0);
-    await page.mouse.move(0, 0);
-    await page.locator('.ga-hit--colour').focus();
-    await page.keyboard.press('Tab');
-    await expect(page.locator(':focus')).toHaveAttribute('aria-label', 'Aa: type');
-    await expect.poll(() => opacity('.ga-tip--type')).toBe(1);
-    await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/foundations\.html#text$/);
+    await expect(page.locator('.ggds-hero__art')).toHaveAttribute('aria-hidden', 'true');
+    // The hero's parallel threads end at the hero's bottom edge, exactly where the loom's begin.
+    const [hero, loom, heroWarp, loomWarp] = await Promise.all(['.ggds-hero', '.woven-loom', '.woven-hero-loom .woven-warp', '.woven-warp--loom']
+      .map((s) => page.locator(s).evaluate((el) => { const r = el.getBoundingClientRect(); return { top: r.top, bottom: r.bottom, left: r.left, width: r.width }; })));
+    expect(Math.abs(heroWarp.bottom - hero.bottom)).toBeLessThanOrEqual(1);
+    expect(Math.abs(loom.top - hero.bottom)).toBeLessThanOrEqual(1);
+    expect(Math.abs(loomWarp.top - loom.top)).toBeLessThanOrEqual(1);
+    expect(Math.abs(heroWarp.left - loomWarp.left)).toBeLessThanOrEqual(1);
+    expect(Math.abs(heroWarp.width - loomWarp.width)).toBeLessThanOrEqual(1);
+    // The cloth moves with the scroll, and only with it.
+    const weave = page.locator('.woven-cloth__weave');
+    const y = () => weave.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m42);
+    const before = await y();
+    await page.waitForTimeout(400);
+    expect(await y()).toBe(before);
+    await page.evaluate(() => window.scrollBy(0, 400));
+    await expect.poll(y).toBeGreaterThan(before);
   });
 
   test('the tutorial\'s sign-in page shows errors the GGDS way, then signs in', async ({ page }) => {
@@ -422,19 +426,20 @@ test.describe('ggds-django example site', () => {
   });
 });
 
-// WCAG 2.2.2 (Pause, Stop, Hide): the hero drawings move only while the page loads, and are still within 5
-// seconds, so they need no pause button.
-// The drawings show only on wide screens (they are hidden on phones), so this runs at desktop width.
+// WCAG 2.2.2 (Pause, Stop, Hide): anything that moves on its own stops within 5 seconds, so it needs no pause
+// button. Scroll effects are not counted: they move only while people scroll, and only as far as they scroll.
+// The hero drawing shows only on wide screens (it is hidden on phones), so this runs at desktop width.
 test.describe('moving drawings', () => {
   test.use({ viewport: { width: 1280, height: 900 } });
-  for (const path of ['/index.html', '/examples/hero/3-art.html']) {
+  const onItsOwn = () => document.getAnimations().filter((a) => a.timeline instanceof DocumentTimeline);
+  for (const [path, movesAtFirst] of [['/examples/hero/3-art.html', true], ['/index.html', false]] as const) {
     test(`everything on ${path} stops moving within 5 seconds`, async ({ page }) => {
       await page.emulateMedia({ reducedMotion: 'no-preference' });
       await page.goto(path);
-      expect(await page.evaluate(() => document.getAnimations().length), 'the drawing should move at first').toBeGreaterThan(0);
+      if (movesAtFirst) expect(await page.evaluate(`(${onItsOwn})().length`), 'the drawing should move at first').toBeGreaterThan(0);
       await page.waitForTimeout(5100);
-      const running = await page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running')
-        .map((a) => `${(a.effect as KeyframeEffect | null)?.target?.getAttribute('class') ?? '?'} (${(a as CSSAnimation).animationName})`));
+      const running = await page.evaluate(`(${onItsOwn})().filter((a) => a.playState === 'running')
+        .map((a) => (a.effect?.target?.getAttribute('class') ?? '?') + ' (' + a.animationName + ')')`);
       expect(running).toEqual([]);
     });
   }
@@ -692,4 +697,90 @@ test('feedback: an answer sends the page address, and the thank-you is announced
   await page.goto('/examples/feedback/2-thanks.html');
   await expect(page.getByRole('status')).toHaveText('Thank you for your feedback.');
   await expect(page.getByRole('link', { name: 'Report a problem with this page' })).toBeVisible(); // its address: the unit tests
+});
+
+// Scroll effects (motion.css): played by the scroll position, and still for anyone who asks for less motion.
+test('scroll effects: still and fully visible for people who ask for less motion, and play as people scroll otherwise', async ({ page }) => {
+  const opacity = (sel: string) => page.locator(sel).first().evaluate((el) => Number(getComputedStyle(el).opacity));
+  const animation = (sel: string) => page.locator(sel).first().evaluate((el) => getComputedStyle(el).animationName);
+  const last = '.ggds-scene__part--5';
+
+  // Less motion: nothing animates, nothing is pinned, everything is there.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/examples/motion/2-scene.html');
+  expect(await animation(last)).toBe('none');
+  expect(await opacity(last)).toBe(1);
+  const still = await page.locator('.ggds-scene').evaluate((el) => el.getBoundingClientRect().height);
+  expect(still).toBeLessThan(page.viewportSize()!.height * 1.5);
+
+  // Otherwise: on a screen tall enough, the scene is pinned and its parts arrive in order as people scroll.
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.setViewportSize({ width: 1024, height: 800 });
+  await page.goto('/examples/motion/2-scene.html');
+  expect(await animation(last)).not.toBe('none');
+  const pinned = await page.locator('.ggds-scene').evaluate((el) => el.getBoundingClientRect().height);
+  expect(pinned).toBeGreaterThan(800 * 2);
+  await page.evaluate(() => window.scrollTo(0, document.querySelector('.ggds-scene')!.getBoundingClientRect().top + window.scrollY));
+  await expect.poll(() => opacity(last)).toBeLessThan(0.5);
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect.poll(() => opacity(last)).toBe(1);
+});
+
+test.describe('the homepage story', () => {
+  for (const reducedMotion of ['reduce', 'no-preference'] as const) {
+    test(`every scene's heading and words are there (${reducedMotion} motion)`, async ({ page }) => {
+      await page.emulateMedia({ reducedMotion });
+      await page.goto('/index.html');
+      for (const h of ['Made the way Ghana makes cloth', 'It starts with a few good threads', 'Threads become parts', 'Parts become services', 'One design system, every institution', 'Made to be worn', 'Proof, not promises']) {
+        await expect(page.getByRole('heading', { level: 2, name: h })).toHaveCount(1);
+      }
+      // Scrolled all the way through, every scene's drawing is finished.
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      for (const part of await page.locator('.ggds-scene__part').all()) await expect.poll(() => part.evaluate((el) => Number(getComputedStyle(el).opacity))).toBe(1);
+    });
+  }
+});
+
+test.describe('on a phone', () => {
+  test.use({ viewport: { width: 375, height: 667 }, isMobile: true, hasTouch: true });
+
+  test('a stacked table shows each row as a card, each cell under its column name, and stays a table to screen readers', async ({ page }) => {
+    await page.goto('/components/table.html');
+    const table = page.locator('table.ggds-table--stack', { hasText: 'Keyboard only' });
+    await expect(table).toHaveAttribute('data-ggds-stacked', '');
+    await expect(table).toHaveAttribute('role', 'table');
+    const row = table.locator('tbody tr').first();
+    await expect(row).toHaveAttribute('role', 'row');
+    expect(await row.evaluate((el) => getComputedStyle(el).display)).toBe('block');
+    await expect(row.locator('td').first()).toHaveAttribute('data-label', 'Result');
+    await expect(row.locator('th')).toHaveAttribute('role', 'rowheader');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+  });
+
+  test('the homepage story never pins a scene, so reading never pauses, and its swipe rows never make the page scroll sideways', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.goto('/index.html');
+    for (const stage of await page.locator('.ggds-scene--pinned .ggds-scene__stage').all()) {
+      expect(await stage.evaluate((el) => getComputedStyle(el).position)).not.toBe('sticky');
+    }
+    const row = page.locator('.docs-showcase.ggds-scroll-row').first();
+    expect(await row.evaluate((el) => el.scrollWidth > el.clientWidth)).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+  });
+});
+
+test('a card\'s edge is kente until someone chooses an institution, then its colour, until a reload', async ({ page }) => {
+  const edge = async () => {
+    const card = page.locator('.ggds-main .ggds-card', { hasText: 'Next.js' }).first();
+    await card.scrollIntoViewIfNeeded();
+    return card.evaluate((el) => getComputedStyle(el, '::before').backgroundImage);
+  };
+  await page.goto('/get-started/developers.html');
+  expect(await edge()).toContain('repeating-linear-gradient');
+  await page.goto('/index.html');
+  await page.locator('label[for="home-theme-pcsrc"]').click();
+  await page.goto('/get-started/developers.html');
+  expect(await edge()).toBe('none');
+  await page.reload();
+  expect(await edge()).toContain('repeating-linear-gradient');
 });

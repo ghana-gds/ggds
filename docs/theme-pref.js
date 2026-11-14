@@ -6,3 +6,13 @@ try {
   const slug = localStorage.getItem('ggds-docs-theme');
   if (slug && /^[a-z0-9-]+$/.test(slug)) document.documentElement.setAttribute('data-ggds-theme', slug);
 } catch { /* storage blocked */ }
+
+// The kente edge on the documentation's cards (docs/woven.mjs) shows until someone chooses an institution; from then
+// on, page after page, the edge is in that institution's colour ([data-docs-theme-chosen] on <html>). A reload starts
+// the visit afresh, with the kente again. Remembered for this browser tab only (sessionStorage).
+try {
+  const CHOSEN = 'ggds-docs-theme-chosen';
+  const nav = performance.getEntriesByType('navigation')[0];
+  if (nav && nav.type === 'reload') sessionStorage.removeItem(CHOSEN);
+  else if (sessionStorage.getItem(CHOSEN)) document.documentElement.setAttribute('data-docs-theme-chosen', '');
+} catch { /* storage blocked: the kente edge stays */ }

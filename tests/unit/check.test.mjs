@@ -25,7 +25,33 @@ const status = (r) => Object.fromEntries(Object.entries(r).map(([k, v]) => [k, v
 test('a page with every part passes every page rule', () => {
   const r = status(checkPage(GOOD));
   for (const [id, s] of Object.entries(r)) assert.equal(s, 'pass', `${id}: ${checkPage(GOOD)[id].detail}`);
-  assert.deepEqual(Object.keys(r).sort(), Object.keys(RULES).filter((id) => id.startsWith('page.')).sort());
+  assert.deepEqual(Object.keys(r).sort(), Object.keys(RULES).filter((id) => id.startsWith('page.') || id === 'content.placeholder').sort());
+});
+
+test('content.placeholder finds sample text and example content, and asks a person to check "coming soon"', () => {
+  const page = (main) => GOOD.replace('<h1>Apply</h1>', main);
+  const lorem = checkPage(page('<h1>Apply</h1><p>Lorem&nbsp;ipsum dolor sit amet, consectetur adipiscing elit.</p>'))['content.placeholder'];
+  assert.equal(lorem.status, 'fail');
+  assert.match(lorem.detail, /Sample text: "lorem ipsum", "dolor sit amet", "consectetur adipiscing elit"/);
+  // WordPress's own example page and post, as WordPress shows them (curly apostrophes, the title as the heading).
+  assert.equal(checkPage(page('<h1>Sample Page</h1><p>This is an example page. It’s different from a blog post.</p>'))['content.placeholder'].status, 'fail');
+  assert.match(checkPage(page('<h1>Hello world!</h1><p>Our news.</p>'))['content.placeholder'].detail, /WordPress's example content: "hello world!"/);
+  assert.equal(checkPage(page('<h1>Apply</h1><p>I am text block. Click edit button to change this text.</p>'))['content.placeholder'].status, 'fail');
+  // "Coming soon" can be real ("online payment is coming soon"), so a person checks it; the longer phrase is named once.
+  const soon = checkPage(page('<h1>Apply</h1><p>Content coming soon.</p>'))['content.placeholder'];
+  assert.deepEqual([soon.status, soon.detail], ['warn', 'Says it is unfinished: "content coming soon"']);
+  // Real words that share a few of these words are not placeholders.
+  assert.equal(checkPage(page('<h1>Hello world</h1><p>Roads under construction in Accra. A sample of our licences. Your content goes to the board.</p>'))['content.placeholder'].status, 'pass');
+});
+
+test('the placeholder list is well formed: lower case, no apostrophes, every kind known', async () => {
+  const { PLACEHOLDERS } = await import('../../packages/check/check.mjs');
+  for (const p of [...PLACEHOLDERS.phrases, ...PLACEHOLDERS.titles]) {
+    assert.equal(p.text, p.text.toLowerCase().replace(/\s+/g, ' ').trim(), p.text);
+    assert.doesNotMatch(p.text, /['\u2019]/, p.text);
+    assert.ok(PLACEHOLDERS.kinds[p.kind], `${p.text}: kind ${p.kind}`);
+  }
+  for (const t of PLACEHOLDERS.taglines) assert.equal(t, t.toLowerCase());
 });
 
 test('each page rule fails on the problem it is for', () => {
@@ -138,4 +164,38 @@ test('the browser checks find a page that is too wide, has no skip link, needs J
 test('without the browser tools, the browser checks say they did not run, never that they passed', async () => {
   const res = await check(join(root, 'packages', 'html', 'components', 'back-link', 'examples'), { a11y: false });
   for (const id of ['a11y.axe', 'a11y.axe-phone', 'a11y.reflow', 'a11y.focus-start', 'a11y.no-javascript']) assert.equal(res.results[id].status, 'skip', id);
+});
+
+test('content.wp-sample searches a WordPress website for sample pages nothing links to, and confirms each one', async () => {
+  const { createServer } = await import('node:http');
+  const { checkWpSample } = await import('../../packages/check/check.mjs');
+  const pages = {
+    '/sample-page/': '<html><body><main><h1>Sample Page</h1><p>This is an example page.</p></main></body></html>',
+    '/about/': '<html><body><main><h1>About us</h1><p>Lorem has been fixed since the search index was built.</p></main></body></html>',
+  };
+  let wordpress = true;
+  const server = createServer((req, res) => {
+    const url = new URL(req.url, 'http://x');
+    if (url.pathname === '/wp-json/wp/v2/search' && wordpress) {
+      const q = url.searchParams.get('search');
+      const hits = q === '"this is an example page"' ? ['/sample-page/'] : q === '"lorem ipsum"' ? ['/about/'] : [];
+      res.writeHead(200, { 'content-type': 'application/json' });
+      return res.end(JSON.stringify(hits.map((p, i) => ({ id: i + 1, title: p, url: `http://127.0.0.1:${server.address().port}${p}` }))));
+    }
+    if (pages[url.pathname]) { res.writeHead(200, { 'content-type': 'text/html' }); return res.end(pages[url.pathname]); }
+    res.writeHead(404); res.end();
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const origin = `http://127.0.0.1:${server.address().port}`;
+  try {
+    const r = await checkWpSample(origin);
+    // The sample page fails; the page the search index wrongly remembers does not, because each page is read.
+    assert.equal(r.status, 'fail');
+    assert.deepEqual(r.pages, ['/sample-page/']);
+    assert.match(r.detail, /\/sample-page\/: WordPress's example content: "this is an example page", "sample page"/);
+    wordpress = false;
+    assert.equal((await checkWpSample(origin)).status, 'skip', 'not WordPress: not run, never passed');
+  } finally {
+    server.close();
+  }
 });

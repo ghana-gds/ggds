@@ -1,0 +1,151 @@
+{
+  "about": "Text that should never be on a live government website: sample text, WordPress's own example content, page builders' example text, and pages that say they are unfinished. Used by ggds-check (content.placeholder, content.wp-sample) and by GGDS Switch (Tools > Tidy up content), so both find the same things. Phrases are matched in the text and titles in the page's main heading (or WordPress title); titlePatterns are case-insensitive regular expressions that work the same in JavaScript and PHP. Each phrase is matched in lower case, as plain text, with spaces collapsed. Keep phrases specific enough that real content never matches them, and free of apostrophes (editors and WordPress write them differently).",
+  "kinds": {
+    "sample": {
+      "label": "Sample text",
+      "fix": true
+    },
+    "wordpress": {
+      "label": "WordPress's example content",
+      "fix": true
+    },
+    "builder": {
+      "label": "A page builder's example text",
+      "fix": true
+    },
+    "unfinished": {
+      "label": "Says it is unfinished",
+      "fix": false
+    },
+    "demo": {
+      "label": "A theme's demonstration page",
+      "fix": true
+    }
+  },
+  "phrases": [
+    {
+      "text": "lorem ipsum",
+      "kind": "sample"
+    },
+    {
+      "text": "dolor sit amet",
+      "kind": "sample"
+    },
+    {
+      "text": "consectetur adipiscing elit",
+      "kind": "sample"
+    },
+    {
+      "text": "sed do eiusmod tempor",
+      "kind": "sample"
+    },
+    {
+      "text": "dummy text",
+      "kind": "sample"
+    },
+    {
+      "text": "placeholder text",
+      "kind": "sample"
+    },
+    {
+      "text": "this is your first post",
+      "kind": "wordpress"
+    },
+    {
+      "text": "this is an example page",
+      "kind": "wordpress"
+    },
+    {
+      "text": "a bike messenger by day",
+      "kind": "wordpress"
+    },
+    {
+      "text": "the xyz doohickey company",
+      "kind": "wordpress"
+    },
+    {
+      "text": "hi, this is a comment.",
+      "kind": "wordpress"
+    },
+    {
+      "text": "suggested text: our website address is",
+      "kind": "wordpress"
+    },
+    {
+      "text": "click edit button to change this text",
+      "kind": "builder"
+    },
+    {
+      "text": "add your heading text here",
+      "kind": "builder"
+    },
+    {
+      "text": "your content goes here. edit or remove this text",
+      "kind": "builder"
+    },
+    {
+      "text": "i am text block",
+      "kind": "builder"
+    },
+    {
+      "text": "page under construction",
+      "kind": "unfinished"
+    },
+    {
+      "text": "site under construction",
+      "kind": "unfinished"
+    },
+    {
+      "text": "website under construction",
+      "kind": "unfinished"
+    },
+    {
+      "text": "this page is under construction",
+      "kind": "unfinished"
+    },
+    {
+      "text": "content coming soon",
+      "kind": "unfinished"
+    },
+    {
+      "text": "coming soon",
+      "kind": "unfinished"
+    }
+  ],
+  "titles": [
+    {
+      "text": "hello world!",
+      "kind": "wordpress"
+    },
+    {
+      "text": "sample page",
+      "kind": "wordpress"
+    }
+  ],
+  "titlePatterns": [
+    {
+      "pattern": "^home ?(page )?(version|v|style|layout|demo) ?(\\d+|one|two|three|four|five|six)\\b",
+      "kind": "demo"
+    },
+    {
+      "pattern": "^blog (grid|standard|list|masonry|classic|full ?width|with (left |right )?sidebar|(two|three|2|3) columns?)\\b",
+      "kind": "demo"
+    },
+    {
+      "pattern": "^(case stud(y|ies)|services?|portfolio|team|projects?|shop|about( us)?|contact( us)?) (version|style|layout|demo) ?(\\d+|one|two|three|four|five|six)\\b",
+      "kind": "demo"
+    },
+    {
+      "pattern": "^(services?|team|portfolio|project|case study|event|shop) single$",
+      "kind": "demo"
+    },
+    {
+      "pattern": "^(elementor|demo|test|untitled)( page| post)?( #?\\d+)?$",
+      "kind": "demo"
+    }
+  ],
+  "taglines": [
+    "just another wordpress site",
+    "just another wordpress weblog"
+  ]
+}

@@ -17,8 +17,8 @@ ROOT = Path(__file__).resolve().parents[3]
 SRC = ROOT / "packages" / "django" / "src"
 
 SITES = {
-    "example": {"version": "0.4.0", "theme": "mocdti"},
-    "own": {"version": "0.4.0", "site": {"name": "Fisheries Commission of the Republic of Ghana", "short": "FC",
+    "example": {"version": "0.5.0", "theme": "mocdti"},
+    "own": {"version": "0.5.0", "site": {"name": "Fisheries Commission of the Republic of Ghana", "short": "FC",
                                          "theme": "#7fd1ae", "logo": "assets/logo.svg",
                                          "forms": "https://forms.fc.gov.gh/submit", "live": True,
                                          "parts": {"news": False, "jobs": False}}},

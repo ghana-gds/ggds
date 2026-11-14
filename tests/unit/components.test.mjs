@@ -52,3 +52,15 @@ test('changelog component tags name real components', () => {
   assert.ok(tags.length > 0);
   assert.deepEqual(tags.filter((t) => !slugs.includes(t)), []);
 });
+
+test('scroll effects never move a service\'s steps: no form component or pattern uses them', () => {
+  const motion = /\bggds-(reveal|stagger|parallax|draw|scene)\b/;
+  const forms = Object.keys(refs).filter((slug) => readFileSync(join(componentsDir, slug, 'guidance.html'), 'utf8').match(/group: Forms/));
+  const patternsDir = join(componentsDir, '..', 'patterns');
+  const files = [
+    ...forms.flatMap((slug) => readdirSync(join(componentsDir, slug, 'examples')).map((f) => join(componentsDir, slug, 'examples', f))),
+    ...readdirSync(patternsDir).flatMap((p) => readdirSync(join(patternsDir, p, 'examples')).map((f) => join(patternsDir, p, 'examples', f))),
+  ];
+  assert.ok(files.length > 20);
+  for (const f of files) assert.doesNotMatch(readFileSync(f, 'utf8'), motion, f);
+});

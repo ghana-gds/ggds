@@ -1,6 +1,6 @@
 {
   "css": "table",
-  "javascript": null,
+  "javascript": "Optional, for ggds-table--stack: @ggds/js names each cell after its column and keeps the table roles for screen readers. Without it, the table stays a table that scrolls sideways.",
   "classes": [
     [
       ".ggds-table-wrap",
@@ -17,6 +17,10 @@
     [
       ".ggds-table__numeric",
       "Right-aligns a column of numbers."
+    ],
+    [
+      ".ggds-table--stack",
+      "On a narrow screen, each row becomes a card with every cell under its column's name, so people read down instead of sideways. Needs @ggds/js."
     ]
   ],
   "states": [],

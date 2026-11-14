@@ -21,10 +21,11 @@ test('no raw colours in component CSS: tokens only', () => {
   }
 });
 
-test('media queries use only the breakpoint tokens (48rem, 64rem, 80rem) or user preferences', () => {
-  const allowed = /^\((min-width: (48|64|80)rem|max-width: (47|63|79)\.99rem|prefers-reduced-motion: (reduce|no-preference)|forced-colors: active)\)$|^print$/;
+test('media queries use only the breakpoint tokens (48rem, 64rem, 80rem; 36rem tall) or user preferences', () => {
+  const allowed = /^\((min-width: (48|64|80)rem|max-width: (47|63|79)\.99rem|min-height: 36rem|prefers-reduced-motion: (reduce|no-preference)|forced-colors: active)\)$|^print$/;
   for (const [name, css] of sources) {
-    for (const [, q] of strip(css).matchAll(/@media\s+([^{]+?)\s*\{/g)) assert.match(q, allowed, `${name}: @media ${q}`);
+    // Conditions may be joined with "and", each one allowed on its own.
+    for (const [, q] of strip(css).matchAll(/@media\s+([^{]+?)\s*\{/g)) for (const part of q.split(/\s+and\s+/)) assert.match(part, allowed, `${name}: @media ${q}`);
   }
 });
 
@@ -44,9 +45,11 @@ test('ggds.css puts base, components and layout in cascade layers, in that order
   // figures, progress, timeline, meter, steps and page heading, to 75 KB for the layout classes (about 1 KB gzipped),
   // then to 80 KB for the back link, side navigation, contents list, language switcher, character count, phase banner
   // and cookie banner, then to 86 KB for the task list, password input, code input, dialog, timeout warning and input
-  // prefix and suffix (about 1 KB gzipped), then to 88 KB for the feedback component (about 0.5 KB gzipped). Sites
-  // can load only the components they use.
-  assert.ok(css.length < 88_000, `ggds.css is ${css.length} bytes`);
+  // prefix and suffix (about 1 KB gzipped), then to 88 KB for the feedback component (about 0.5 KB gzipped), then to
+  // 94 KB for the scroll effects (motion.css, under 2 KB gzipped), then to 98 KB for tables that stack into cards on
+  // phones and scenes that build as they rise on phones instead of pinning (about 0.5 KB gzipped). Sites can load only
+  // the components they use.
+  assert.ok(css.length < 98_000, `ggds.css is ${css.length} bytes`);
 });
 
 test('the layout file is in the utilities layer and core.css declares every layer', () => {
@@ -59,8 +62,9 @@ test('the layout file is in the utilities layer and core.css declares every laye
 // WCAG 2.2.2 (Pause, Stop, Hide): anything that moves on its own must stop within 5 seconds, or have a pause
 // button. GGDS has no pause buttons, so nothing may repeat for ever. (The browser tests also time it.)
 test('no animation repeats for ever', async () => {
-  const { heroArt } = await import('../../docs/hero-art.mjs');
+  const { wovenCss, wovenSiteCss } = await import('../../docs/woven.mjs');
+  const { homeCss } = await import('../../docs/home.mjs');
   const docs = [['docs/docs.css', readFileSync(new URL('../../docs/docs.css', import.meta.url), 'utf8')],
-    ['docs/hero-art.mjs', heroArt([{ shortName: 'A', accent: '#005f8f', deep: '#004466' }]).css]];
+    ['docs/woven.mjs', wovenCss()], ['docs/woven.mjs (site)', wovenSiteCss()], ['docs/home.mjs', homeCss([{ slug: 'a', shortName: 'A', accent: '#005f8f', deep: '#004466' }])]];
   for (const [name, css] of [...sources, ...docs]) assert.doesNotMatch(strip(css), /\binfinite\b/, name);
 });

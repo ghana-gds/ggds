@@ -1,6 +1,6 @@
 {
   "name": "@ggds/react",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "React components for the Ghana Government Design System (GGDS): page parts, form fields with errors wired up, and icons. Works with Next.js server components.",
   "author": "Ghana Government Design System (GGDS) contributors",
   "keywords": [

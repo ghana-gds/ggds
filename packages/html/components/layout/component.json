@@ -229,6 +229,10 @@
     [
       ".ggds-below-desktop",
       "Hidden on desktops."
+    ],
+    [
+      ".ggds-scroll-row",
+      "On phones, a set of cards people swipe through sideways, each snapping into place with the next peeking in. From 48rem its own grid lays it out. Give it tabindex=\"0\" and an aria-label if its cards hold no links, so keyboard users can scroll it."
     ]
   ],
   "states": [],

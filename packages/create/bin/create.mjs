@@ -8,7 +8,8 @@
 //                                               replaces only its ggds/ folder, so your words are kept
 //
 //   --stack <kind>    html (plain pages, the default), next (Next.js with @ggds/react), astro (Astro with
-//                     @ggds/astro) or django (Django with ggds-django): the same pages in each
+//                     @ggds/astro), django (Django with ggds-django), or wordpress (a WordPress import for the GGDS
+//                     theme): the same pages in each
 //   --out <folder>    where to make it (default: <initials>-website)
 //   --logo <file>     your approved logo: SVG, PNG, JPEG or WebP, under 200 KB
 //   --force           write into a folder that already has files in it
@@ -17,7 +18,7 @@ import { basename, dirname, extname, join, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { fileURLToPath } from 'node:url';
 import { starterProject } from '../lib/starter.js';
-import { DEFAULT_SITE, PARTS, SITE_FILE, checkSite, normaliseSite, pagesFor } from '../lib/starter-site.js';
+import { DEFAULT_SITE, KINDS, PARTS, SITE_FILE, checkSite, exampleWords, normaliseSite, pagesFor } from '../lib/starter-site.js';
 import { STACKS, STACK_IDS } from '../lib/starter-stacks.js';
 
 const here = fileURLToPath(new URL('../', import.meta.url));
@@ -46,7 +47,8 @@ if (flag('help') || flag('h')) {
 }
 if (flag('version')) { console.log(version); process.exit(0); }
 
-const stackProblem = (v) => (STACK_IDS.includes(v) ? '' : `choose ${STACK_IDS.join(', ')}`);
+const OUTPUTS = [...STACK_IDS, 'wordpress'];
+const stackProblem = (v) => (OUTPUTS.includes(v) ? '' : `choose ${OUTPUTS.join(', ')}`);
 let stack = option('stack');
 if (stack && stackProblem(stack)) fail(`--stack ${stack}: ${stackProblem(stack)}`);
 
@@ -116,6 +118,8 @@ async function ask() {
   site.purpose = await q('What you do, in one sentence', { example: DEFAULT_SITE.purpose });
   site.host = await q("Your website's address", { example: 'www.nca.gov.gh', check: fieldCheck('host') });
   if (!/\.gov\.gh$/.test(normaliseSite(site).host)) console.log('  Most government websites end in .gov.gh. Check the address before you go live.');
+  console.log(`\n  ${KINDS.map((k) => `${k.id}: ${k.label}. ${k.hint}`).join('\n  ')}`);
+  site.kind = await q('What kind of institution (your website starts with its services and pages)', { initial: 'agency', check: (v) => (KINDS.some((k) => k.id === v) ? '' : `choose ${KINDS.map((k) => k.id).join(', ')}`) });
   site.phone = await q('Phone number', { example: DEFAULT_SITE.phone, check: fieldCheck('phone') });
   site.hours = await q('Opening hours', { initial: DEFAULT_SITE.hours });
   site.email = await q('Email address for enquiries', { example: `info@${normaliseSite(site).host.replace(/^www\./, '')}`, check: fieldCheck('email') });
@@ -128,7 +132,7 @@ async function ask() {
   for (const p of PARTS) site.parts[p.id] = await yes(`  ${p.label}: ${p.hint.toLowerCase()}?`, true);
   site.forms = await q('\nThe address your forms send to (Enter to leave it for now)', { required: false, check: fieldCheck('forms') });
   if (!stack) {
-    console.log(`\n  ${STACKS.map((s) => `${s.id}: ${s.label}. ${s.hint}`).join('\n  ')}`);
+    console.log(`\n  ${STACKS.map((s) => `${s.id}: ${s.label}. ${s.hint}`).join('\n  ')}\n  wordpress: WordPress. Your pages, news and menus as an import, for the GGDS theme.`);
     stack = await q('What to make it with', { initial: 'html', check: stackProblem });
   }
   rl.close();
@@ -191,14 +195,17 @@ const RUN = {
   next: `cd ${name} && npm install && npm run dev   (npm run build writes the website to out/)`,
   astro: `cd ${name} && npm install && npm run dev   (npm run build writes the website to dist/)`,
   django: `cd ${name} && python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && python manage.py runserver`,
+  wordpress: `Read ${name}/README.md: install the GGDS theme, then Tools > Import > WordPress with wordpress-import.xml.`,
 };
+const label = stack === 'wordpress' ? 'WordPress' : STACKS.find((s) => s.id === stack)?.label;
+const left = exampleWords(clean);
 const again = `npx @ggds/create --from ${SITE_FILE}${stack === 'html' ? '' : ` --stack ${stack}`}`;
 console.log(`
-Made ${name}/: ${pages} pages for ${clean.name}, with GGDS ${version}${stack === 'html' ? '' : `, in ${STACKS.find((s) => s.id === stack).label}`}.
+Made ${name}/: ${pages} pages for ${clean.name}, with GGDS ${version}${stack === 'html' ? '' : `, in ${label}`}.
 
 Next:
   1. ${RUN[stack]}
-  2. Rewrite the example words on each page for your own services.
+  2. ${left.length ? `Rewrite the example words: ${left.map((x) => x.where).join(', ')}. Or write them in the website builder (https://ghana-gds.github.io/ggds/builder.html), opening ${SITE_FILE}.` : 'Your words are all your own.'}
   3. Keep ${SITE_FILE}: it makes this website again (${again}).
   4. When it is online, check it: npx @ggds/check https://${clean.host}
 `);

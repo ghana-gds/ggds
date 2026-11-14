@@ -115,13 +115,21 @@ if (!existsSync(join(wpTheme, 'assets', 'ggds.min.css'))) throw new Error('packa
 for (const f of ['LICENSE', 'LICENSE.md']) cpSync(join(root, f), join(wpTheme, f));
 execFileSync('zip', ['-X', '-q', '-r', join(out, wpName), 'ggds', '-x', 'ggds/.*'], { cwd: pkg('wordpress') });
 
+// GGDS Switch, the plugin that turns an existing WordPress website into a GGDS one (Plugins > Add New Plugin >
+// Upload Plugin). It carries its own copy of the theme, from pnpm run build.
+const switchName = `ggds-switch-${version}.zip`;
+const switchDir = join(pkg('wordpress'), 'ggds-switch');
+if (!existsSync(join(switchDir, 'theme', 'ggds', 'assets', 'ggds.min.css'))) throw new Error('packages/wordpress/ggds-switch/theme is missing: run pnpm run build first');
+for (const f of ['LICENSE', 'LICENSE.md']) cpSync(join(root, f), join(switchDir, f));
+execFileSync('zip', ['-X', '-q', '-r', join(out, switchName), 'ggds-switch', '-x', 'ggds-switch/.*'], { cwd: pkg('wordpress') });
+
 // The agency website starter (docs/starter.mjs), as the documentation offers it: built by pnpm run build.
 const starterName = `ggds-agency-starter-${version}.zip`;
 const starterZip = join(root, 'site', 'downloads', starterName);
 if (!existsSync(starterZip)) throw new Error(`site/downloads/${starterName} is missing: run pnpm run build first`);
 cpSync(starterZip, join(out, starterName));
 
-const sums = [join(out, zipName), join(out, wpName), join(out, starterName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
+const sums = [join(out, zipName), join(out, wpName), join(out, switchName), join(out, starterName), ...all].map((f) => `${digest('sha256', 'hex', f)}  ${relative(out, f)}`);
 writeFileSync(join(out, 'SHA256SUMS'), `${sums.join('\n')}\n`);
 const integrity = Object.fromEntries(all.filter((f) => /\.(css|js)$/.test(f))
   .map((f) => [relative(dir, f), `sha384-${digest('sha384', 'base64', f)}`]));

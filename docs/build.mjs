@@ -13,8 +13,8 @@ import { institutionCss, institutionTokens } from '../packages/tokens/institutio
 import { drift } from '../packages/themes/sync.mjs';
 import { esc, footer, header, hero, icon } from './parts.mjs';
 import { ICONS } from '../packages/icons/dist/all.js';
-import { heroArt } from './hero-art.mjs';
 import { homeCss, seeItWork, themeSection } from './home.mjs';
+import { heroLoom, woven, wovenCss, wovenLead, wovenSiteCss } from './woven.mjs';
 import { SHOWCASES, showcaseCss, showcaseFiles, showcasePages, showcaseThemes } from './showcase.mjs';
 import { STARTER, starterFiles } from './starter.mjs';
 import { starterModules } from './starter-bundle.mjs';
@@ -22,6 +22,7 @@ import { SITE_SCHEMA } from './starter-site.mjs';
 import { BUILDER_CSS, builderBody } from './builder.mjs';
 import { highlightCode } from './highlight.mjs';
 import { STACKS, stackLogo, stacksSection } from './stacks.mjs';
+import { wordpressBody, wordpressHome } from './wordpress.mjs';
 import { LANGUAGES as GGDS_LANGUAGES, STRINGS as GGDS_STRINGS, TRANSLATIONS as GGDS_TRANSLATIONS } from '../packages/html/strings/build.mjs';
 
 /** The developers' guide on languages: how GGDS's own text is translated in each package, and how far each language is. */
@@ -37,7 +38,7 @@ function languagesSection() {
 <p>GGDS writes some text itself: "Skip to main content", the banner, "Menu", "There is a problem", "Error:" and the like. All of it is in one list, <code>packages/html/strings/en.json</code>, so it can be translated once and used by every package. A text with no translation yet is shown in English.</p>
 <p>Translations are written by people who speak the language, never by a machine alone. The names of the languages below, and every translation, are marked as needing a speaker until one has checked them.</p>
 </div>
-<div class="ggds-table-wrap" role="region" aria-labelledby="languages-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="languages-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="languages-caption">GGDS's own text in each language</caption>
 <thead><tr><th scope="col">Language</th><th scope="col">Its own name</th><th scope="col">Code</th><th scope="col">Texts translated</th><th scope="col">Checked</th></tr></thead>
 <tbody>${rows}</tbody></table></div>
@@ -111,6 +112,7 @@ const forExamples = (html) => html.replace(/<!-- examples -->([\s\S]*?)<!-- \/ex
 rmSync(site, { recursive: true, force: true });
 mkdirSync(join(site, 'assets', 'js'), { recursive: true });
 mkdirSync(join(site, 'assets', 'themes'), { recursive: true });
+writeFileSync(join(site, 'assets', 'woven-site.css'), wovenSiteCss());
 
 // Assets
 copyFileSync(join(root, 'packages', 'css', 'dist', 'ggds.css'), join(site, 'assets', 'ggds.css'));
@@ -200,7 +202,9 @@ function shell({ title, depth, body, extraCss = [], bare = false, current = '', 
   const base = '../'.repeat(depth);
   // Documentation pages follow the institution chosen on the homepage: themes.css and theme-pref.js (docs/theme-pref.js).
   const siteTheme = bare ? [] : [`${base}assets/themes/themes.css`];
-  const css = [...new Set([`${base}assets/ggds.css`, ...siteTheme, `${base}assets/docs.css`, ...extraCss])].map((h) => `<link rel="stylesheet" href="${h}">`).join('\n  ');
+  // The woven thread through the documentation site (docs/woven.mjs); never on an example or a service, which stay still.
+  const woven = bare ? [] : [`${base}assets/woven-site.css`];
+  const css = [...new Set([`${base}assets/ggds.css`, ...siteTheme, `${base}assets/docs.css`, ...woven, ...extraCss])].map((h) => `<link rel="stylesheet" href="${h}">`).join('\n  ');
   const docsNav = [
     { label: 'Get started', href: `${base}get-started.html` },
     { label: 'Foundations', href: `${base}foundations.html` },
@@ -208,6 +212,7 @@ function shell({ title, depth, body, extraCss = [], bare = false, current = '', 
     { label: 'Components', href: `${base}components/index.html` },
     { label: 'Patterns', href: `${base}patterns/index.html` },
     { label: 'Showcase', href: `${base}showcase/index.html` },
+    { label: 'WordPress', href: `${base}wordpress.html` },
     ...(EXAMPLES ? [{ label: 'Example sites', href: `${base}agencies/index.html` }] : []),
   ];
   const content = bare ? body : `<a class="ggds-skip-link" href="#main">Skip to main content</a>
@@ -227,7 +232,7 @@ ${footer({
   logo: '<span class="ggds-header__monogram" aria-hidden="true">GGDS</span>',
   purpose: 'Ready-made styles and page parts for Government of Ghana websites, maintained by the National Information Technology Agency (NITA).',
   sections: [
-    { label: 'Design system', href: `${base}index.html`, links: [{ label: 'Get started', href: `${base}get-started.html` }, { label: 'For developers', href: `${base}get-started/developers.html` }, { label: 'Tutorial', href: `${base}get-started/tutorial.html` }, { label: 'For designers', href: `${base}get-started/designers.html` }, { label: 'Foundations', href: `${base}foundations.html` }, { label: 'Icons', href: `${base}icons.html` }, { label: 'Themes', href: `${base}themes.html` }] },
+    { label: 'Design system', href: `${base}index.html`, links: [{ label: 'Get started', href: `${base}get-started.html` }, { label: 'For developers', href: `${base}get-started/developers.html` }, { label: 'Tutorial', href: `${base}get-started/tutorial.html` }, { label: 'WordPress', href: `${base}wordpress.html` }, { label: 'For designers', href: `${base}get-started/designers.html` }, { label: 'Foundations', href: `${base}foundations.html` }, { label: 'Icons', href: `${base}icons.html` }, { label: 'Themes', href: `${base}themes.html` }] },
     { label: 'Components', href: `${base}components/index.html`, links: [...GROUPS.map((g) => ({ label: g, href: `${base}components/index.html#${slugify(g)}` })), { label: 'Patterns', href: `${base}patterns/index.html` }] },
     EXAMPLES
       ? { label: 'Examples', href: `${base}agencies/index.html`, links: [{ label: 'Example sites', href: `${base}agencies/index.html` }, { label: 'Register of government websites', href: `${base}register.html` }] }
@@ -356,7 +361,7 @@ function accessibilityTests(c) {
 <h3>By people, with assistive technology</h3>
 <p>${done ? `${done} of ${MANUAL.length} checks done.` : 'Automated tests find only some of the barriers people meet. These checks are still to be done.'}</p>
 <div class="ggds-table-wrap" role="region" tabindex="0" aria-labelledby="manual-caption-${c.slug}">
-<table class="ggds-table">
+<table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="manual-caption-${c.slug}">Manual accessibility checks for ${esc(c.name.toLowerCase())}</caption>
 <thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Notes</th></tr></thead>
 <tbody>
@@ -481,7 +486,7 @@ const REACT = {
 function reference(c) {
   const rows = (list) => list.map(([k, v]) => `<tr><th scope="row"><code>${esc(k)}</code></th><td>${esc(v)}</td></tr>`).join('\n');
   const table = (id, caption, head, list) => `<div class="ggds-table-wrap" role="region" tabindex="0" aria-labelledby="${id}">
-<table class="ggds-table">
+<table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="${id}">${caption}</caption>
 <thead><tr><th scope="col">${head}</th><th scope="col">What it does</th></tr></thead>
 <tbody>
@@ -557,7 +562,7 @@ ${sidenav(c.slug)}
   ${tests.html}
   <h2 id="changes">Changes</h2>
   ${changes.length ? `<div class="ggds-table-wrap" role="region" tabindex="0" aria-labelledby="changes-caption">
-<table class="ggds-table">
+<table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="changes-caption">Changes to ${esc(c.name.toLowerCase())}, newest first</caption>
 <thead><tr><th scope="col">Version</th><th scope="col">Change</th></tr></thead>
 <tbody>
@@ -665,7 +670,7 @@ const byPrefix = (prefix) => [...tokens.values()].filter((t) => `${t.path.join('
 const tokClass = (t) => `docs-tok--${t.path.join('-')}`;
 const SAMPLE_CSS = { space: 'inline-size', radius: 'border-radius', shadow: 'box-shadow' };
 const tokenCss = Object.entries(SAMPLE_CSS).flatMap(([prefix, prop]) => byPrefix(prefix).map((t) => `.${tokClass(t)} { ${prop}: var(${cssName(t.path)}); }`));
-const tokenTable = (id, caption, prefixes, sample) => `<div class="ggds-table-wrap" role="region" aria-labelledby="${id}" tabindex="0"><table class="ggds-table">
+const tokenTable = (id, caption, prefixes, sample) => `<div class="ggds-table-wrap" role="region" aria-labelledby="${id}" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="${id}">${caption}</caption>
 <thead><tr>${sample ? '<th scope="col">Sample</th>' : ''}<th scope="col">Token</th><th scope="col">Value</th><th scope="col">Use</th></tr></thead>
 <tbody>${prefixes.flatMap(byPrefix).map((t) => `<tr>${sample ? `<td><span class="docs-sample docs-sample--${sample} ${tokClass(t)}" aria-hidden="true"></span></td>` : ''}<th scope="row"><code>${cssName(t.path)}</code></th><td><code>${esc(String(t.resolved))}</code></td><td>${esc(t.description ?? '')}</td></tr>`).join('\n')}</tbody></table></div>`;
@@ -690,7 +695,7 @@ writeFileSync(join(site, 'foundations.html'), shell({ title: 'Foundations', dept
 <p class="ggds-measure">These are all the colour combinations GGDS uses, measured when this page was built. If a change made any of them too faint, the build would stop.</p>
 ${pairGroups}
 <h3>All colours</h3>
-<div class="ggds-table-wrap" role="region" aria-labelledby="colours-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="colours-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="colours-caption">Colour tokens</caption>
 <thead><tr><th scope="col">Swatch</th><th scope="col">Token</th><th scope="col">Value</th><th scope="col">Use</th></tr></thead>
 <tbody>${colourRows}</tbody></table></div>
@@ -736,6 +741,8 @@ ${tokenTable('shadow-caption', 'Shadow tokens', ['shadow'], 'shadow')}
 <li>Use the duration and easing tokens, so movement feels the same everywhere.</li>
 <li>Never make people wait for an animation before they can act.</li>
 <li>Anything that moves on its own must stop within 5 seconds, or have a pause button (WCAG 2.2.2). A finite <code>animation-iteration-count</code> does it without JavaScript; never use <code>infinite</code>.</li>
+<li>Movement can also follow the scroll: parts that rise into view, layers with depth, lines that draw themselves and scenes that tell a story, with the <a href="components/motion.html">scroll effects</a>. They follow the person's own scrolling, never take it over, and leave the page still and finished for anyone who asks for less motion.</li>
+<li>Keep scroll effects to homepages, campaign and information pages. Never inside a service's steps: questions, check your answers, errors, payment and confirmation stay still.</li>
 </ul>
 ${tokenTable('motion-caption', 'Motion tokens', ['motion'])}
 <h2>Layers</h2>
@@ -808,7 +815,7 @@ const themeBuilder = `
 </div>
 </figure>
 </div>
-<div class="docs-builder__checks ggds-table-wrap" role="region" aria-labelledby="tb-checks-caption" tabindex="0"><table class="ggds-table">
+<div class="docs-builder__checks ggds-table-wrap" role="region" aria-labelledby="tb-checks-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="tb-checks-caption">Contrast checks</caption>
 <thead><tr><th scope="col">Where the colour is used</th><th scope="col" class="ggds-table__numeric">Contrast</th><th scope="col" class="ggds-table__numeric">Needs</th><th scope="col">Result</th></tr></thead>
 <tbody id="tb-checks"></tbody></table></div>
@@ -883,7 +890,7 @@ ${themeBuilder}
 <p class="ggds-measure">These use each institution's current website colour. Each institution still has to confirm its colour, so treat them as provisional. To change one, open it in the builder.</p>
 <ul class="docs-themes">${themes.map(themePreview).join('')}
 </ul>
-<div class="ggds-table-wrap" role="region" aria-labelledby="themes-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="themes-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="themes-caption">Theme colours, contrast and files</caption>
 <thead><tr><th scope="col">Institution</th><th scope="col">Theme name</th><th scope="col">Colour</th><th scope="col">Dark shade</th><th scope="col" class="ggds-table__numeric">Colour on white</th><th scope="col" class="ggds-table__numeric">White on dark shade</th><th scope="col">Files</th></tr></thead>
 <tbody>${themes.map(themeRow).join('\n')}</tbody></table></div>
@@ -938,6 +945,10 @@ institutionTokens('#006e35');        // design tokens (W3C format)`)}
 </div>
 ${pager({ label: 'Foundations', href: 'foundations.html' }, { label: 'Components', href: 'components/index.html' })}` }));
 
+// GGDS for WordPress (docs/wordpress.mjs): the theme for a new website, GGDS Switch for an existing one.
+writeFileSync(join(site, 'wordpress.html'), shell({ title: 'GGDS for WordPress', depth: 0, current: 'WordPress', toc: true, feedback: { source: 'docs/wordpress.mjs' },
+  body: wordpressBody({ version, repo, icon, cardIcon, withIcon, code: (label, text) => `<pre class="docs-code" tabindex="0" aria-label="${esc(label)}"><code>${esc(text)}</code></pre>` }) }));
+
 writeFileSync(join(site, 'register.html'), shell({ title: 'Register of government websites', depth: 0, body: `
 <h1>Register of official government websites</h1>
 <div class="ggds-prose">
@@ -973,7 +984,7 @@ ${g.data.lead ? `<p class="ggds-lead ggds-measure">${esc(g.data.lead)}</p>\n` : 
 <h2 id="automated">Tested automatically, on every change</h2>
 <ul class="ggds-measure">${AUTOMATED.map((a) => `<li>${esc(a)}</li>`).join('')}<li>Each component's own behaviour tests, listed on its page.</li></ul>
 <h2 id="components">Every component</h2>
-<div class="ggds-table-wrap" role="region" aria-labelledby="conformance-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="conformance-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="conformance-caption">Testing for each component</caption>
 <thead><tr><th scope="col">Component</th><th scope="col">Status</th><th scope="col" class="ggds-table__numeric">Automated checks</th><th scope="col" class="ggds-table__numeric">Checks by people</th></tr></thead>
 <tbody>${rows}</tbody></table></div>
@@ -1077,7 +1088,7 @@ ${whereToGetIt()}
 <h3 id="download-the-files">From the download (recommended for live websites)</h3>
 <p>Download <code>ggds-${version}.zip</code> from the <a href="${repo}/releases/latest">latest GitHub release</a>. You do not need Node, npm or any build tools. The zip holds one <code>ggds</code> folder: copy it into your website as it is, then put these two lines in the <code>&lt;head&gt;</code> of each page:</p>
 <pre class="docs-code" tabindex="0" aria-label="Download links"><code>${esc(ways.download.head.replace(/^ {2}/gm, ''))}</code></pre>
-<div class="ggds-table-wrap" role="region" aria-labelledby="files-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="files-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="files-caption">The files in the ggds folder</caption>
 <thead><tr><th scope="col">File</th><th scope="col">What it is</th><th scope="col">Needed?</th></tr></thead>
 <tbody>
@@ -1091,7 +1102,7 @@ ${whereToGetIt()}
 <p>The packages are in the <a href="https://www.npmjs.com/org/ggds"><code>@ggds</code> organisation on npm</a>, at version <code>${version}</code>, with provenance.</p>
 <pre class="docs-code" tabindex="0" aria-label="Install command"><code>npm install @ggds/css @ggds/js
 npm install @ggds/themes   # for an institution theme</code></pre>
-<div class="ggds-table-wrap" role="region" aria-labelledby="packages-caption" tabindex="0"><table class="ggds-table">
+<div class="ggds-table-wrap" role="region" aria-labelledby="packages-caption" tabindex="0"><table class="ggds-table ggds-table--stack">
 <caption class="ggds-table__caption" id="packages-caption">The GGDS packages</caption>
 <thead><tr><th scope="col">Package</th><th scope="col">What it is</th></tr></thead>
 <tbody>
@@ -1168,6 +1179,7 @@ ${pager({ label: 'Get started', href: '../get-started.html' }, { label: 'Get sta
   <li class="ggds-card ggds-card--icon">${cardIcon(ROLE_ICONS[slug])}<h2 class="ggds-card__title"><a class="ggds-card__link" href="get-started/${slug}.html">${label}</a></h2><p class="ggds-card__body">${text}</p></li>`).join('')}
 </ul>
 <p class="ggds-measure">${withIcon('building', '<strong>Need a whole website?</strong>')} <a href="builder.html">Make your website</a>: give your institution's details and download a complete government website, ready to put online, in about five minutes.</p>
+<p class="ggds-measure">${withIcon('globe', '<strong>On WordPress?</strong>')} <a href="wordpress.html">GGDS for WordPress</a>: the GGDS theme for a new website, and GGDS Switch to turn an existing one into a GGDS website, with undo.</p>
 <p class="ggds-measure">${withIcon('lightbulb', '<strong>New to GGDS?</strong>')} <a href="get-started/tutorial.html">Follow the tutorial</a>: set GGDS up from a CDN, the download or npm, then build a page and a sign-in form, in about 20 minutes.</p>
 ${whereToGetIt()}
 <h2>What GGDS gives you</h2>
@@ -1233,9 +1245,17 @@ ${pager(null, { label: 'Get started as a developer', href: 'get-started/develope
   const sitePages = all.filter((f) => /[\\/]agencies[\\/]/.test(f)).length;
   const kb = (f) => Math.round(readFileSync(f).length / 1024);
   const jsKb = Math.round(readdirSync(join(site, 'assets', 'js')).filter((f) => f.endsWith('.js')).reduce((n, f) => n + readFileSync(join(site, 'assets', 'js', f)).length, 0) / 1024 * 10) / 10;
-  const art = heroArt(themes, { iconCount });
-  writeFileSync(join(site, 'assets', 'hero-art.css'), art.css);
   writeFileSync(join(site, 'assets', 'home.css'), homeCss(themes));
+  // "Woven for everyone" (docs/woven.mjs): the homepage's story, with the proof counted from this build. Sizes are
+  // what a website loads, compressed: measured as scripts/readme-art.mjs measures them, so the two always agree.
+  writeFileSync(join(site, 'assets', 'woven.css'), wovenCss());
+  const gzKb = (buf) => (gzipSync(buf).length / 1024).toFixed(1);
+  const jsDist = join(root, 'packages', 'js', 'dist');
+  const wovenCounts = {
+    components: components.length, patterns: patterns.length, icons: iconCount,
+    cssKb: gzKb(readFileSync(join(root, 'packages', 'css', 'dist', 'ggds.min.css'))),
+    jsKb: gzKb(Buffer.concat(readdirSync(jsDist).filter((f) => f.endsWith('.js')).map((f) => readFileSync(join(jsDist, f))))),
+  };
   // What GGDS has built: the ministry's website and its agencies' (the example sites show each one).
   const hubSite = agencies.find((a) => a.profile.modules.hub);
   const hubName = hubSite ? `${hubSite.profile.identity.legalName} (${hubSite.profile.identity.shortName})` : '';
@@ -1260,8 +1280,8 @@ ${pager(null, { label: 'Get started as a developer', href: 'get-started/develope
   };
   for (const s of shots) copyShot(s.file);
   const homeHero = hero({
-    art: art.svg,
-    artDecorative: false,
+    art: heroLoom(),
+    artDecorative: true,
     purpose: 'The design system for Government of Ghana websites',
     title: 'Build government websites people can trust',
     lede: 'Tested components, patterns and guidance for Government of Ghana websites. Build services people recognise and everyone can use, on any phone and any connection.',
@@ -1269,6 +1289,7 @@ ${pager(null, { label: 'Get started as a developer', href: 'get-started/develope
     tasksLabel: 'Start here:',
     tasks: [
       { label: 'Get started', href: 'get-started.html' },
+      { label: 'Switch your WordPress website', href: 'wordpress.html#switch' },
       { label: 'Browse components', href: 'components/index.html' },
       { label: 'Choose your theme', href: 'themes.html' },
       { label: 'See what you can build', href: 'showcase/index.html' },
@@ -1394,10 +1415,10 @@ ${pager(null, { label: 'Get started as a developer', href: 'get-started/develope
 <p class="ggds-measure">Each template works in any institution’s theme, including MoCDTI’s and each of its agencies’: open one and choose the theme at the top.</p>
 ${starterSection('')}
 <h3 class="docs-showcase__group">Built most often</h3>
-<ul class="docs-showcase">${common.map((sc) => showcaseTile(sc, '', `showcase/${sc.pages[0].file}`)).join('')}
+<ul class="docs-showcase ggds-scroll-row">${common.map((sc) => showcaseTile(sc, '', `showcase/${sc.pages[0].file}`)).join('')}
 </ul>
 <h3 class="docs-showcase__group">More examples</h3>
-<ul class="docs-showcase docs-showcase--more">${more.map((sc) => showcaseTile(sc, '', `showcase/${sc.pages[0].file}`)).join('')}
+<ul class="docs-showcase docs-showcase--more ggds-scroll-row">${more.map((sc) => showcaseTile(sc, '', `showcase/${sc.pages[0].file}`)).join('')}
 </ul>
 <p class="docs-shots__note">Every organisation, person and figure in the showcase is made up.</p>
 ${EXAMPLES && hubSite ? `<div class="docs-section-head docs-section-head--sub"><h3>And websites for real institutions</h3><a href="agencies/index.html">${withIcon('arrow-right', `See all ${agencies.length} example sites`, true)}</a></div>
@@ -1459,7 +1480,10 @@ ${list.map((sc) => `<section class="docs-scx" aria-labelledby="sc-${sc.slug}">
 </section>`).join('\n')}`).join('\n')}
 </ul>` }));
   }
-  writeFileSync(join(site, 'index.html'), shell({ title: 'Home', depth: 0, lead: homeHero, extraCss: ['assets/hero-art.css', 'assets/showcase-tiles.css', 'assets/home.css'], scripts: ['assets/home.js'], body: `${themeSection(themes)}
+  writeFileSync(join(site, 'index.html'), shell({ title: 'Home', depth: 0, lead: `${homeHero}${wovenLead()}`, extraCss: ['assets/showcase-tiles.css', 'assets/home.css', 'assets/woven.css'], scripts: ['assets/home.js'], body: `${woven({ themes, themeSection: themeSection(themes), icon, counts: wovenCounts })}
+${wordpressHome({ version, repo, icon })}
+${inUse}
+${seeItWork({ src: 'showcase/apply-start.html', title: 'Apply for a fishing licence: an example GGDS service page' })}
 <section class="docs-home-section" aria-labelledby="what-h">
 <h2 id="what-h">What is GGDS?</h2>
 <p class="ggds-lead ggds-measure">The Ghana Government Design System (GGDS) is a free, shared set of building blocks for government websites: page parts such as headers, forms and menus, the code for each, and guidance on using them. Websites built with it look and work the same way, so someone who has used one government website can use them all.</p>
@@ -1469,32 +1493,6 @@ ${list.map((sc) => `<section class="docs-scx" aria-labelledby="sc-${sc.slug}">
   <dt>What does it cost?</dt><dd>Nothing. Any institution or supplier can use it, change it and share it, free of charge.</dd>
   <dt>Who maintains it?</dt><dd>The National Information Technology Agency (NITA). Anyone can <a href="contribute.html">report a problem or suggest a change</a>.</dd>
 </dl>
-</section>
-<section class="docs-home-section" aria-labelledby="sections-h">
-<h2 id="sections-h">What is in GGDS</h2>
-<ul class="ggds-card-grid ggds-card-grid--4">${cards}
-</ul>
-</section>${inUse}
-${seeItWork({ src: 'showcase/apply-start.html', title: 'Apply for a fishing licence: an example GGDS service page' })}
-<section class="docs-home-section docs-proof" aria-labelledby="proof-h">
-<h2 id="proof-h">Built for the people who use government websites</h2>
-<p class="ggds-measure">This documentation is built only with GGDS, so every page here is a test of what it promises. Each check below runs every time GGDS changes.</p>
-<ul class="docs-proof__list">
-  <li><strong>Any phone</strong> No page scrolls sideways, even on a small 320px screen.</li>
-  <li><strong>Slow networks</strong> ${kb(join(site, 'assets', 'ggds.css'))} KB of styles and ${jsKb} KB of script for the whole system, and every page works without the script.</li>
-  <li><strong>Everyone</strong> Every kind of page is checked against the WCAG 2.2 AA accessibility standard, on phones and computers.</li>
-  <li><strong>Easy to read</strong> Every colour pair is measured. A colour too faint to read cannot be published.</li>
-</ul>
-<details class="ggds-disclosure">
-<summary class="ggds-disclosure__summary">Technical details for developers</summary>
-<div class="ggds-disclosure__content">
-<ul>
-<li>${components.length} components with ${exampleCount} live examples, and ${all.length + 1} pages built${EXAMPLES ? `, ${sitePages} of them on the example sites` : ''}.</li>
-<li>No inline scripts or styles: everything runs under a strict Content Security Policy.</li>
-<li>Plain HTML and CSS, with packages for npm, Django, Astro and WordPress.</li>
-</ul>
-</div>
-</details>
 </section>
 <section class="docs-home-section" aria-labelledby="licence">
 <h2 id="licence">Free to use</h2>

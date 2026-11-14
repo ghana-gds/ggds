@@ -77,13 +77,32 @@ npx @ggds/check https://www.example.gov.gh  # when it is online: what it still n
 **[See an example](https://ghana-gds.github.io/ggds/starter/index.html)** ·
 **[Download the example](https://github.com/ghana-gds/ggds/releases/latest)** (`ggds-agency-starter-<version>.zip`, with every release)
 
+## Already on WordPress? Switch to GGDS
+
+Most government websites in Ghana already run on WordPress, often with a heavy theme, a page builder and the
+sample pages they came with. **[GGDS Switch](packages/wordpress/ggds-switch)** turns that website into a GGDS one
+without rebuilding it. It is one plugin, `ggds-switch-<version>.zip`, with the GGDS theme inside.
+
+1. **Tidy up content.** It finds what should never be live, such as lorem ipsum, "Hello world!", "Sample Page", the
+   theme's demonstration pages and empty pages, and takes them off. It shows where each one is used, chooses the safe
+   action, and can undo it.
+2. **Switch to GGDS.** It fills in your institution's details and menus from the website for you to check, and
+   previews every page before anyone else sees it. Then it switches: page-builder layouts, inline styles, sliders and
+   scripts become plain, accessible pages, and your pages, posts, menus and logo come with you.
+3. **Undo at any time.** Your old theme, and every page exactly as it was.
+
+The same from WP-CLI, for many websites at once: `wp ggds-switch run --dry-run`, `wp ggds-switch tidy apply`.
+
+**[How it works](https://ghana-gds.github.io/ggds/wordpress.html)** ·
+**[Download GGDS Switch](https://github.com/ghana-gds/ggds/releases/latest)** (`ggds-switch-<version>.zip`, with every release)
+
 ## Start in one minute
 
 Put two lines in the `<head>` of any page:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ggds/css@0.4.0/dist/ggds.min.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@ggds/js@0.4.0/dist/auto.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ggds/css@0.5.0/dist/ggds.min.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ggds/js@0.5.0/dist/auto.js"></script>
 ```
 
 Then copy the HTML for any part from the [components](https://ghana-gds.github.io/ggds/components/index.html). For a
@@ -109,7 +128,7 @@ GGDS is plain HTML and CSS, so it works anywhere that makes web pages. Some fram
 |---|---|
 | **React, Next.js** | [`@ggds/react`](packages/react): page parts and form fields with errors wired up for screen readers, server components where possible, and a JSX version of every example in the docs |
 | **Django, Wagtail** | [`ggds-django`](packages/django): one setting renders every form the GGDS way, template tags for each part, and a GGDS theme for Django admin |
-| **WordPress** | [The GGDS theme](packages/wordpress): upload the zip, set your institution in the Customiser |
+| **WordPress** | [GGDS Switch](packages/wordpress/ggds-switch) turns an existing website into a GGDS one, with undo; [the GGDS theme](packages/wordpress) for a new one |
 | **Astro** | [`@ggds/astro`](packages/astro): the page parts as components |
 | **Vue, Svelte, Angular, Laravel, PHP, Rails…** | The HTML pastes in as it is: [where the styles and script go](https://ghana-gds.github.io/ggds/get-started/developers.html#frameworks) in each |
 
@@ -161,12 +180,13 @@ Every claim here is checked automatically on every change:
 | [`@ggds/check`](packages/check) | `npx @ggds/check <address or folder>`: what a government website still needs (page parts, accessibility, security headers, email domain, speed), each rule with its source |
 | [`@ggds/create`](packages/create) | `npm init @ggds`: makes a complete government website from your institution's details, as the [website builder](https://ghana-gds.github.io/ggds/builder.html) does |
 | [`ggds-django`](packages/django) | Template tags, a form renderer, a Django admin theme and the static files |
+| [GGDS Switch](packages/wordpress/ggds-switch) | A WordPress plugin that switches an existing website to GGDS and tidies up its sample content, with undo: `ggds-switch-<version>.zip` from the releases |
 | [GGDS for WordPress](packages/wordpress) | A WordPress theme, `ggds-wordpress-<version>.zip` from the releases |
 | [`@ggds/html`](packages/html) | The HTML and guidance for every component and pattern: the documentation is built from it (not published) |
 
 ## Status
 
-**Draft, version 0.4.0.** GGDS is maintained by the National Information Technology Agency (NITA). Version 1.0 will
+**Draft, version 0.5.0.** GGDS is maintained by the National Information Technology Agency (NITA). Version 1.0 will
 be NITA guidance, recommended for every government website, after the independent accessibility audit. Until then
 names may change; every change is in [`CHANGELOG.md`](CHANGELOG.md), and
 [Versions and support](https://ghana-gds.github.io/ggds/versions.html) says how long each version is supported.
@@ -197,7 +217,7 @@ pnpm run readme:art   # this README's pictures, drawn from GGDS's own icons, the
 Set the same version in each `packages/*/package.json`, `packages/django/pyproject.toml` and
 `packages/django/src/ggds_django/__init__.py`, add it to `CHANGELOG.md`, then push a tag such as `v0.3.0`. The
 release workflow tests the build, publishes the npm packages under `@ggds` with provenance and `ggds-django` to
-PyPI, and makes a GitHub release with the GGDS zip, the WordPress theme and the agency website starter. The
+PyPI, and makes a GitHub release with the GGDS zip, the WordPress theme, GGDS Switch and the agency website starter. The
 documentation is published from `main`. Details: [`docs/HANDOVER.md`](docs/HANDOVER.md#release).
 
 ### Taking over GGDS

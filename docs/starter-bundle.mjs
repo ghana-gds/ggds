@@ -10,10 +10,12 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 // [file in the folder, source, [import as written, import in the folder]]
 // Every file is .js in the folder: web servers that do not know .mjs send it with a type browsers refuse to run.
 const MODULES = [
-  ['starter.js', 'docs/starter.mjs', [['./parts.mjs', './parts.js'], ['../packages/tokens/institution.mjs', './institution.js'], ['./starter-hosting.mjs', './starter-hosting.js'], ['./starter-site.mjs', './starter-site.js'], ['./starter-stacks.mjs', './starter-stacks.js']]],
+  ['starter.js', 'docs/starter.mjs', [['./parts.mjs', './parts.js'], ['../packages/tokens/institution.mjs', './institution.js'], ['./starter-hosting.mjs', './starter-hosting.js'], ['./starter-site.mjs', './starter-site.js'], ['./starter-stacks.mjs', './starter-stacks.js'], ['./starter-wordpress.mjs', './starter-wordpress.js'], ['./starter-kinds.mjs', './starter-kinds.js']]],
+  ['starter-wordpress.js', 'docs/starter-wordpress.mjs', [['./parts.mjs', './parts.js'], ['./starter-site.mjs', './starter-site.js']]],
   ['starter-stacks.js', 'docs/starter-stacks.mjs', [['./parts.mjs', './parts.js'], ['./jsx.mjs', './jsx.js']]],
   ['jsx.js', 'docs/jsx.mjs', []],
-  ['starter-site.js', 'docs/starter-site.mjs', []],
+  ['starter-site.js', 'docs/starter-site.mjs', [['./starter-kinds.mjs', './starter-kinds.js']]],
+  ['starter-kinds.js', 'docs/starter-kinds.mjs', []],
   ['starter-hosting.js', 'docs/starter-hosting.mjs', []],
   ['parts.js', 'docs/parts.mjs', [['../packages/astro/icons.mjs', './icons.js']]],
   ['icons.js', 'packages/astro/icons.mjs', [['@ggds/icons/all', './icons/all.js']]],

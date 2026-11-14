@@ -180,12 +180,16 @@
   margin: 0 calc(-1 * var(--ggds-size-gutter));
   padding: 0 var(--ggds-size-gutter) var(--ggds-space-1);
   overflow-x: auto;
+  overscroll-behavior-x: contain; /* a swipe moves the row, never back a page */
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--ggds-size-gutter);
   list-style: none;
   font-size: var(--ggds-font-size-sm);
 }
 
 .ggds-hero__tasks > li {
   flex: none;
+  scroll-snap-align: start;
 }
 
 @media (min-width: 48rem) {

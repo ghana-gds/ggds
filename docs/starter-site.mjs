@@ -2,9 +2,15 @@
 // parts it needs. The starter (docs/starter.mjs) builds every page from these settings; the website builder
 // (docs/builder.js) asks for them; ggds-site.json in every download keeps them, so the same website can be made
 // again with a newer GGDS. Runs in the browser and in Node, so no Node imports.
+//
+// The words of the pages are settings too (services, fees, news, documents, jobs, about us), so a website made in
+// the builder keeps what the institution wrote. Left out, they are the words for its kind of institution
+// (docs/starter-kinds.mjs), so settings saved before they existed make the same website as before.
+import { KINDS, KIND_IDS, kindOf } from './starter-kinds.mjs';
 
 /** The made-up institution of the starter as published: the live preview and the release download. */
 export const DEFAULT_SITE = {
+  kind: 'agency',
   name: 'Example Agency',
   short: 'EA',
   purpose: 'We license communications services and protect the people who use them.',
@@ -23,22 +29,69 @@ export const DEFAULT_SITE = {
   logo: '',
 };
 
-/** The parts a website can leave out, with the pages each one brings. The other pages are on every website. */
+/** The parts a website can leave out. Their pages: partPages(). The other pages are on every website. */
 export const PARTS = [
-  { id: 'apply', label: 'Apply online', hint: 'A start page, a form, check your answers and a confirmation', pages: ['apply-for-a-licence.html', 'apply.html', 'apply-check.html', 'apply-done.html'] },
-  { id: 'fees', label: 'Fees and charges', hint: 'A table of what each service costs', pages: ['fees.html'] },
-  { id: 'complaint', label: 'Make a complaint', hint: 'A complaint form and a confirmation', pages: ['complaint.html', 'complaint-done.html'] },
-  { id: 'news', label: 'News and notices', hint: 'A list of news and an article', pages: ['news.html', 'news-article.html'] },
-  { id: 'publications', label: 'Rules and reports', hint: 'Documents people can download', pages: ['publications.html'] },
-  { id: 'jobs', label: 'Jobs and tenders', hint: 'Vacancies and tenders, with a warning about fees', pages: ['jobs.html'] },
+  { id: 'apply', label: 'Apply online', hint: 'For the service marked "online": a start page, a form, check your answers and a confirmation' },
+  { id: 'fees', label: 'Fees and charges', hint: 'A table of what each service costs' },
+  { id: 'complaint', label: 'Complaints and feedback', hint: 'A form and a confirmation' },
+  { id: 'news', label: 'News and notices', hint: 'A list of news and an article' },
+  { id: 'publications', label: 'Documents to download', hint: 'Rules, policies, plans and reports' },
+  { id: 'jobs', label: 'Jobs and tenders', hint: 'Vacancies and tenders, with a warning about fees' },
 ];
+const PART_PAGES = {
+  apply: ['apply.html', 'apply-check.html', 'apply-done.html'],
+  fees: ['fees.html'], complaint: ['complaint.html', 'complaint-done.html'], news: ['news.html', 'news-article.html'],
+  publications: ['publications.html'], jobs: ['jobs.html'],
+};
 
 /** Pages every website has: the law and GGDS ask for some of them (accessibility, privacy, disclaimer). */
 export const ALWAYS = ['index.html', 'services.html', 'about.html', 'contact.html', 'contact-done.html', 'search.html', '404.html', 'accessibility.html', 'privacy.html', 'disclaimer.html'];
 
 export const SITE_FILE = 'ggds-site.json';
+export { KINDS };
 
 const str = (v, fallback) => (typeof v === 'string' && v.trim() ? v.trim().replace(/\s+/g, ' ') : fallback);
+/** Paragraphs: blank lines between them are kept; other runs of spaces become one. */
+const para = (v, fallback) => (typeof v === 'string' && v.trim()
+  ? v.trim().split(/\n\s*\n/).map((x) => x.replace(/\s+/g, ' ').trim()).filter(Boolean).join('\n\n') : fallback);
+/** A list, from an array or one item a line. */
+const items = (v, fallback) => {
+  if (v === undefined || v === null) return fallback;
+  const raw = Array.isArray(v) ? v : String(v).split('\n');
+  return raw.map((x) => str(typeof x === 'string' ? x : '', '')).filter(Boolean);
+};
+const bool = (v, fallback) => (typeof v === 'boolean' ? v : fallback);
+
+/** A page's address from its title: "Apply for a licence" → apply-for-a-licence. */
+export const slugify = (t) => t.toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'service';
+
+/** A kind's words, in the shape the settings keep them. */
+function kindContent(kind) {
+  const k = kindOf(kind);
+  return {
+    question: k.question,
+    lede: k.lede,
+    services: k.services.map((x) => ({ ...x, who: [...x.who], need: [...x.need], options: [...x.options], steps: x.steps.map((st) => [...st]) })),
+    fees: { caption: k.fees.caption, lead: k.fees.lead, columns: [...k.fees.columns], rows: k.fees.rows.map((r) => [...r]) },
+    news: k.news.map(([title, type, date, summary, body = '']) => ({ title, type, date, summary, body })),
+    publications: k.publications.items.map(([title, type, date]) => ({ title, type, date })),
+    jobs: k.jobs.map(([title, place, terms, closes]) => ({ title, place, terms, closes })),
+    about: { what: [...k.about.what], who: k.about.who, funded: k.about.funded },
+  };
+}
+
+/** A service as typed or saved, with what is missing filled in. Null when it has no title. */
+function service(x, i) {
+  if (!x || typeof x !== 'object') return null;
+  const title = str(x.title, '');
+  if (!title) return null;
+  const steps = Array.isArray(x.steps) ? x.steps.map((st) => (Array.isArray(st) ? [str(st[0], ''), str(st[1], '')] : [str(st?.title, ''), str(st?.when, '')])).filter(([t]) => t) : [];
+  return {
+    title, summary: str(x.summary, ''), group: str(x.group, 'Services'), task: bool(x.task, i < 3), online: bool(x.online, false),
+    who: items(x.who, []), need: items(x.need, []), time: para(x.time, ''), cost: para(x.cost, ''), how: para(x.how, ''),
+    options: items(x.options, []), steps,
+  };
+}
 
 /** Fills in what is missing from saved or typed settings with the defaults. Never throws: check() says what is wrong. */
 export function normaliseSite(input = {}) {
@@ -49,7 +102,27 @@ export function normaliseSite(input = {}) {
     : d.offices;
   const parts = {};
   for (const p of PARTS) parts[p.id] = site.parts && typeof site.parts[p.id] === 'boolean' ? site.parts[p.id] : d.parts[p.id];
+  const kind = KIND_IDS.includes(site.kind) ? site.kind : d.kind;
+  const k = kindContent(kind);
+  let services = Array.isArray(site.services) ? site.services.map(service).filter(Boolean) : k.services;
+  if (!services.length) services = k.services;
+  // One online service at most: the first one marked.
+  let online = false;
+  services = services.map((x) => { const on = x.online && !online; online ||= on; return { ...x, online: on }; });
+  const fees = site.fees && typeof site.fees === 'object' ? {
+    caption: str(site.fees.caption, k.fees.caption), lead: para(site.fees.lead, k.fees.lead),
+    columns: items(site.fees.columns, k.fees.columns).slice(0, 4),
+    rows: Array.isArray(site.fees.rows) ? site.fees.rows.map((r) => (Array.isArray(r) ? r : String(r ?? '').split('|')).map((c) => str(String(c ?? ''), ''))).filter((r) => r[0]) : k.fees.rows,
+  } : k.fees;
+  fees.rows = fees.rows.map((r) => fees.columns.map((_, i) => r[i] ?? ''));
+  const list = (v, fallback, keys, need = 'title') => (Array.isArray(v)
+    ? v.map((x) => (x && typeof x === 'object' ? Object.fromEntries(keys.map((key) => [key, key === 'body' ? para(x[key], '') : str(x[key], '')])) : null)).filter((x) => x && x[need])
+    : fallback);
+  const about = site.about && typeof site.about === 'object'
+    ? { what: items(site.about.what, k.about.what), who: para(site.about.who, ''), funded: para(site.about.funded, '') }
+    : k.about;
   return {
+    kind,
     name: str(site.name, d.name),
     short: str(site.short, d.short).toUpperCase(),
     purpose: str(site.purpose, d.purpose),
@@ -63,7 +136,52 @@ export function normaliseSite(input = {}) {
     forms: str(site.forms, ''),
     live: site.live === true,
     logo: /^assets\/[\w.-]+\.(svg|png|jpe?g|webp)$/i.test(site.logo ?? '') ? site.logo : '',
+    question: str(site.question, k.question),
+    lede: str(site.lede, k.lede),
+    services,
+    fees,
+    news: list(site.news, k.news, ['title', 'type', 'date', 'summary', 'body']),
+    publications: list(site.publications, k.publications, ['title', 'type', 'date']),
+    jobs: list(site.jobs, k.jobs, ['title', 'place', 'terms', 'closes']),
+    about,
   };
+}
+
+/** The address of each service's page: from its title, never the same as another page's. */
+export function servicePages(site) {
+  const s = normaliseSite(site);
+  const taken = new Set([...ALWAYS, ...Object.values(PART_PAGES).flat()]);
+  return s.services.map((x) => {
+    let file = `${slugify(x.title)}.html`;
+    for (let n = 2; taken.has(file); n++) file = `${slugify(x.title)}-${n}.html`;
+    taken.add(file);
+    return file;
+  });
+}
+
+/** Whether the website has the online application: the part is on, and a service is marked online. */
+export const hasOnline = (site) => { const s = normaliseSite(site); return s.parts.apply && s.services.some((x) => x.online); };
+
+/**
+ * The words that are still the example's for this kind of institution, as plain labels for the builder and the
+ * README: [{ where, what }]. Each one should be rewritten before the website goes live.
+ */
+export function exampleWords(site) {
+  const s = normaliseSite(site);
+  const k = kindContent(s.kind);
+  const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+  const out = [];
+  if (s.question === k.question && s.lede === k.lede) out.push({ where: 'Homepage', what: 'the question and the line under it' });
+  for (const x of s.services) {
+    const ex = k.services.find((y) => y.title === x.title);
+    if (ex && same({ ...ex, task: 0, online: 0, group: 0 }, { ...x, task: 0, online: 0, group: 0 })) out.push({ where: x.title, what: 'the whole page' });
+  }
+  if (same(s.about, k.about)) out.push({ where: 'About us', what: 'what you do, who runs you and how you are funded' });
+  if (s.parts.fees && same(s.fees, k.fees)) out.push({ where: 'Fees and charges', what: 'the fees' });
+  if (s.parts.news && s.news.some((n) => k.news.some((m) => m.title === n.title))) out.push({ where: 'News and notices', what: 'the example news' });
+  if (s.parts.publications && s.publications.some((n) => k.publications.some((m) => m.title === n.title))) out.push({ where: kindOf(s.kind).publications.label, what: 'the example documents' });
+  if (s.parts.jobs && s.jobs.some((n) => k.jobs.some((m) => m.title === n.title))) out.push({ where: 'Jobs and tenders', what: 'the example jobs' });
+  return out;
 }
 
 const HOST = /^(?=.{4,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/;
@@ -98,7 +216,8 @@ export function checkSite(site, { themes = [] } = {}) {
 /** The pages this website has. */
 export const pagesFor = (site) => {
   const s = normaliseSite(site);
-  return new Set([...ALWAYS, ...PARTS.filter((p) => s.parts[p.id]).flatMap((p) => p.pages)]);
+  const parts = PARTS.filter((p) => s.parts[p.id] && (p.id !== 'apply' || hasOnline(s))).flatMap((p) => PART_PAGES[p.id]);
+  return new Set([...ALWAYS, ...servicePages(s), ...parts]);
 };
 
 /** The settings as they are saved in ggds-site.json. */
@@ -128,5 +247,19 @@ export const SITE_SCHEMA = {
     forms: { type: 'string', description: 'Where the forms send their answers, starting https://; empty: nowhere yet' },
     live: { type: 'boolean', description: 'Whether search engines may find the website' },
     logo: { type: 'string', pattern: '^(assets/[\\w.-]+\\.(svg|png|jpe?g|webp))?$', description: 'The logo file in the website, such as assets/logo.svg' },
+    kind: { enum: KIND_IDS, description: 'The kind of institution: the words the website starts from' },
+    question: { type: 'string', description: 'The question at the top of the homepage' },
+    lede: { type: 'string', description: 'The line under it' },
+    services: { type: 'array', description: 'What people come to do: each service has its own page', items: { type: 'object', required: ['title'], properties: {
+      title: { type: 'string' }, summary: { type: 'string' }, group: { type: 'string', description: 'Its heading on the Services page' },
+      task: { type: 'boolean', description: 'On the homepage as a common task' }, online: { type: 'boolean', description: 'Has the online application (one service at most)' },
+      who: { type: 'array', items: { type: 'string' } }, need: { type: 'array', items: { type: 'string' } }, time: { type: 'string' }, cost: { type: 'string' }, how: { type: 'string' },
+      options: { type: 'array', items: { type: 'string' }, description: 'What people choose on the online form' },
+      steps: { type: 'array', items: { type: 'array', items: { type: 'string' }, minItems: 2, maxItems: 2 }, description: 'What happens after they apply: [what, when]' } } } },
+    fees: { type: 'object', properties: { caption: { type: 'string' }, lead: { type: 'string' }, columns: { type: 'array', items: { type: 'string' }, maxItems: 4 }, rows: { type: 'array', items: { type: 'array', items: { type: 'string' } } } } },
+    news: { type: 'array', items: { type: 'object', required: ['title'], properties: { title: { type: 'string' }, type: { type: 'string' }, date: { type: 'string' }, summary: { type: 'string' }, body: { type: 'string', description: 'The first item\'s article: paragraphs separated by a blank line' } } } },
+    publications: { type: 'array', items: { type: 'object', required: ['title'], properties: { title: { type: 'string' }, type: { type: 'string' }, date: { type: 'string' } } } },
+    jobs: { type: 'array', items: { type: 'object', required: ['title'], properties: { title: { type: 'string' }, place: { type: 'string' }, terms: { type: 'string' }, closes: { type: 'string' } } } },
+    about: { type: 'object', properties: { what: { type: 'array', items: { type: 'string' } }, who: { type: 'string' }, funded: { type: 'string' } } },
   },
 };

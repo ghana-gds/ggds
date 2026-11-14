@@ -2,6 +2,9 @@
  * Header: the flag colours as a thin rule, then one row with the institution's logo,
  * name and country, the main navigation and Search. Sticky, white, with a rule in the institution's colour.
  *
+ * Its layout follows the header's own width, not the screen's (container queries): on a website the two are the same,
+ * and in a preview, a phone frame or a narrow column the header still lays itself out for the room it has.
+ *
  * Below 80rem the navigation does not fit beside the name. Without JavaScript it is a visible list under the row.
  * With @ggds/js a menu button shows and hides it in place: the menu pushes the page down instead of covering it,
  * so keyboard focus can never land on content hidden behind it (WCAG 2.4.11 Focus Not Obscured;
@@ -225,7 +228,7 @@
   box-shadow: inset 3px 0 0 var(--ggds-color-link);
 }
 
-@media (min-width: 48rem) {
+@container ggds-header (min-width: 48rem) {
   .ggds-header__inner {
     min-height: 4.5rem;
   }
@@ -240,7 +243,7 @@
 }
 
 /* Narrow screens with JavaScript: collapsed until the menu button opens it; long menus scroll inside it. */
-@media (max-width: 79.99rem) {
+@container ggds-header (max-width: 79.99rem) {
   .ggds-header__nav--collapsible:not(.is-open) {
     display: none;
   }
@@ -252,7 +255,7 @@
   }
 }
 
-@media (min-width: 80rem) {
+@container ggds-header (min-width: 80rem) {
   .ggds-header__inner {
     flex-wrap: nowrap;
   }

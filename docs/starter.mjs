@@ -8,8 +8,10 @@
 // the browser, so this file and the ones it imports must not import anything from Node.
 import { banner, esc, footer, header, hero, icon, mark, tabBar } from './parts.mjs';
 import { checkInstitutionColour, institutionCss } from '../packages/tokens/institution.mjs';
-import { hostingFiles, hostingGuide } from './starter-hosting.mjs';
-import { DEFAULT_SITE, PARTS, SITE_FILE, normaliseSite, pagesFor, siteJson } from './starter-site.mjs';
+import { handover, hostingFiles, hostingGuide } from './starter-hosting.mjs';
+import { DEFAULT_SITE, PARTS, SITE_FILE, exampleWords, hasOnline, normaliseSite, pagesFor, servicePages, siteJson, slugify } from './starter-site.mjs';
+import { kindOf } from './starter-kinds.mjs';
+import { wordpressFiles } from './starter-wordpress.mjs';
 import { stackFiles } from './starter-stacks.mjs';
 
 /** The made-up institution of the published starter. */
@@ -75,58 +77,53 @@ const progress = (label, current, total) => `<div class="ggds-progress">
 </div>`;
 const back = (href) => `<p><a class="ggds-with-icon" href="${href}">${ic('arrow-left')}<span>Back</span></a></p>`;
 
-const NEWS = [
-  ['news-article.html', '10 November 2026', 'Notice', 'info', 'Offices close early on Friday 13 November', 'Our offices close at 1pm for staff training. Online services stay open.'],
-  ['news-article.html', '3 November 2026', 'News', '', 'New rules for mobile money complaints', 'From 1 January, providers must answer a complaint within 10 working days.'],
-  ['news-article.html', '27 October 2026', 'Consultation', 'warning', 'Have your say on licence fees for 2027', 'Tell us what you think by 30 November 2026.'],
-];
-const newsItem = ([href, date, kind, cls, title, text]) => `<li class="ggds-card"><p class="st-meta">${tag(kind, cls)} <time>${date}</time></p><h3 class="ggds-card__title"><a class="ggds-card__link" href="${href}">${title}</a></h3><p class="ggds-card__body">${text}</p></li>`;
-
-const DOCS = [
-  ['annual-report-2025.txt', 'Annual report 2025', 'Report', '12 June 2026'],
-  ['licence-fees-2027-consultation.txt', 'Licence fees for 2027: consultation', 'Consultation', '27 October 2026'],
-  ['consumer-complaints-rules.txt', 'Consumer complaints rules', 'Regulation', '3 November 2026'],
-];
+/** A news item as a card. */
+const newsItem = (n) => `<li class="ggds-card"><p class="st-meta">${tag(n.type, TAG_KIND[n.type] ?? '')} <time>${n.date}</time></p><h3 class="ggds-card__title"><a class="ggds-card__link" href="news-article.html">${n.title}</a></h3><p class="ggds-card__body">${n.summary}</p></li>`;
+const TAG_KIND = { Notice: 'info', Consultation: 'warning' };
 
 /** A list of cards, links or tasks with the ones whose page this website does not have left out. */
 const only = (has, items, href = (x) => x[1]) => items.filter((x) => has(href(x)));
 /** A link to a page this website has, or just its words. */
 const linkIf = (has, href, text) => (has(href) ? `<a href="${href}">${text}</a>` : text);
+/** Paragraphs, from text with blank lines between them (already escaped). */
+const paras = (text, cls = '') => text.split('\n\n').filter(Boolean).map((t) => `<p${cls ? ` class="${cls}"` : ''}>${t}</p>`).join('\n      ');
+const lowerFirst = (t) => t.charAt(0).toLowerCase() + t.slice(1);
+
+/** An icon for a service, from the words of its title. */
+const ICON_WORDS = [[/emergenc/i, 'emergency'], [/appointment|book/i, 'calendar'], [/visit/i, 'clock'], [/nhis|insurance|health/i, 'health'],
+  [/admission|programme|course|school|student/i, 'education'], [/transcript|result|certificate/i, 'document-check'], [/report a|problem/i, 'warning'],
+  [/pay|rate|fee|tax/i, 'cedi'], [/information|ask/i, 'info'], [/polic|plan|law|rule/i, 'document'], [/agenc|ministry|meet/i, 'building'],
+  [/licen|permit|regist|renew/i, 'certificate']];
+const serviceIcon = (title) => ICON_WORDS.find(([re]) => re.test(title))?.[1] ?? 'services';
+
+/** What the online form asks people to choose, from the service's title: "Apply for a licence" → licence. */
+const chooseNoun = (title) => {
+  const m = /^(apply for|apply to|book|ask for|request|register for|get|renew|pay for)\s+(?:(?:an?|the|your)\s+)?(.+)$/i.exec(title);
+  return m ? m[2].toLowerCase() : '';
+};
 
 // ---------------------------------------------------------------------------------------------------------------
 // The pages: [file, title, section, body, extra scripts]. s: the settings, escaped for HTML; has(file): whether
-// this website has that page.
-const PAGES = (s, has) => [
+// this website has that page; c: the content (services with their pages, the kind's words), escaped.
+const PAGES = (s, has, c) => [
   ['index.html', 'Home', '', () => `${hero({
     purpose: s.raw.purpose,
-    title: 'What do you need to do?',
-    lede: 'Apply for a licence, make a complaint about a provider, or find our rules and reports.',
-    search: { action: 'search.html', label: `Search ${s.raw.name}`, placeholder: 'For example: licence fees' },
+    title: s.raw.question,
+    lede: s.raw.lede,
+    search: { action: 'search.html', label: `Search ${s.raw.name}`, placeholder: `For example: ${c.kind.searchExample}` },
     tasksLabel: 'Most people come to:',
-    tasks: only(has, [
-      { label: 'Apply for a licence', href: 'apply-for-a-licence.html' },
-      { label: 'Make a complaint', href: 'complaint.html' },
-      { label: 'See our fees', href: 'fees.html' },
-      { label: 'Contact us', href: 'contact.html' },
-    ], (t) => t.href),
+    tasks: [...c.services.filter((x) => x.task).slice(0, 5).map((x) => ({ label: x.raw.title, href: x.file })), { label: 'Contact us', href: 'contact.html' }],
   })}
 <div class="ggds-main ggds-container">
   <section class="st-section" aria-labelledby="services-h">
     <h2 id="services-h">Services</h2>
     <ul class="ggds-card-grid">
-      ${only(has, [
-        ['certificate', 'apply-for-a-licence.html', 'Apply for a licence', 'Who needs one, what it costs and how to apply online.'],
-        ['comment', 'complaint.html', 'Make a complaint', 'When a provider has not solved your problem.'],
-        ['cedi', 'fees.html', 'Fees and charges', 'What each licence costs, and how to pay.'],
-        ['document', 'publications.html', 'Rules and reports', 'Regulations, consultations and our annual reports.'],
-        ['briefcase', 'jobs.html', 'Jobs and tenders', 'Work for us, or bid to supply us.'],
-        ['phone', 'contact.html', 'Contact us', 'Phone, email, offices and opening hours.'],
-      ]).map((c) => card(...c)).join('\n      ')}
+      ${[...c.services.slice(0, 6).map((x) => [serviceIcon(x.raw.title), x.file, x.title, x.summary]), ...only(has, c.more)].map((x) => card(...x)).join('\n      ')}
     </ul>
-  </section>${has('news.html') ? `
+  </section>${has('news.html') && c.news.length ? `
   <section class="st-section" aria-labelledby="news-h">
     <div class="st-section-head"><h2 id="news-h">News and notices</h2><a class="ggds-with-icon" href="news.html"><span>All news and notices</span>${ic('arrow-right')}</a></div>
-    <ul class="ggds-card-grid">${NEWS.map(newsItem).join('')}</ul>
+    <ul class="ggds-card-grid">${c.news.slice(0, 3).map(newsItem).join('')}</ul>
   </section>` : ''}
 </div>`],
 
@@ -134,59 +131,66 @@ const PAGES = (s, has) => [
   ${crumbs([], 'Services')}
   <h1>Services</h1>
   <p class="ggds-lead ggds-measure">Everything you can do with ${s.name}, online or at our offices.</p>${[
-    ['Licences', [['certificate', 'apply-for-a-licence.html', 'Apply for a licence', 'Who needs one, what it costs and how to apply online.'], ['cedi', 'fees.html', 'Fees and charges', 'What each licence costs, and how to pay.']]],
-    ['Help for consumers', [['comment', 'complaint.html', 'Make a complaint', 'When a provider has not solved your problem.'], ['phone', 'contact.html', 'Contact us', 'Phone, email, offices and opening hours.']]],
-    ['Information', [['document', 'publications.html', 'Rules and reports', 'Regulations, consultations and our annual reports.'], ['briefcase', 'jobs.html', 'Jobs and tenders', 'Work for us, or bid to supply us.'], ['news', 'news.html', 'News and notices', 'What is new, and notices that affect you.']]],
-  ].map(([h, cards]) => [h, only(has, cards)]).filter(([, cards]) => cards.length).map(([h, cards]) => `
+    ...c.groups.map((g) => [g, c.services.filter((x) => x.group === g).map((x) => [serviceIcon(x.raw.title), x.file, x.title, x.summary])]),
+    ['Help and feedback', only(has, [c.complaintCard, ['phone', 'contact.html', 'Contact us', 'Phone, email, offices and opening hours.']])],
+    ['Information', only(has, [c.feesCard, c.docsCard, ['briefcase', 'jobs.html', 'Jobs and tenders', 'Work for us, or bid to supply us.'], ['news', 'news.html', 'News and notices', 'What is new, and notices that affect you.']])],
+  ].filter(([, cards]) => cards.length).map(([h, cards]) => `
   <h2>${h}</h2>
   <ul class="ggds-card-grid">
-    ${cards.map((c) => card(...c)).join('\n    ')}
+    ${cards.map((x) => card(...x)).join('\n    ')}
   </ul>`).join('')}
 </div>`],
 
-  ['apply-for-a-licence.html', 'Apply for a licence', 'services', () => `<div class="ggds-main ggds-container">
-  ${crumbs([['Services', 'services.html']], 'Apply for a licence')}
+  ...c.services.map((x) => [x.file, x.raw.title, 'services', () => `<div class="ggds-main ggds-container">
+  ${crumbs([['Services', 'services.html']], x.title)}
   <div class="st-layout">
     <div>
-      <h1>Apply for a licence</h1>
-      <p class="ggds-lead">Apply for a licence to run a communications service in Ghana. It takes about 15 minutes.</p>
-      <h2>Who needs a licence</h2>
-      <ul><li>internet service providers</li><li>radio and television stations</li><li>courier companies</li></ul>
+      <h1>${x.title}</h1>${x.summary ? `
+      <p class="ggds-lead">${x.summary}</p>` : ''}${x.who.length ? `
+      <h2>Who it is for</h2>
+      <ul>${x.who.map((w) => `<li>${w}</li>`).join('')}</ul>` : ''}${x.need.length ? `
       <h2>What you need</h2>
-      <ul><li>your Ghana Card number</li><li>your business registration number</li><li>the fee${has('fees.html') ? ': see <a href="fees.html">fees and charges</a>' : ''}</li></ul>
+      <ul>${x.need.map((w) => `<li>${w}</li>`).join('')}</ul>` : ''}${x.time ? `
       <h2>How long it takes</h2>
-      <p>We decide within 20 working days. We will tell you by SMS and email.</p>
-      <p><a class="ggds-button ggds-with-icon" href="apply.html"><span>Start now</span>${ic('arrow-right')}</a></p>
+      ${paras(x.time)}` : ''}${x.cost || (x.online && has('fees.html')) ? `
+      <h2>What it costs</h2>
+      ${x.cost ? paras(x.cost) : ''}${has('fees.html') ? `
+      <p>See <a href="fees.html">fees and charges</a>.</p>` : ''}` : ''}${x.how || x.startsOnline ? `
+      <h2>What to do</h2>
+      ${x.how ? paras(x.how) : ''}` : ''}${x.startsOnline ? `
+      <p><a class="ggds-button ggds-with-icon" href="apply.html"><span>Start now</span>${ic('arrow-right')}</a></p>` : ''}
     </div>
-    <aside class="st-aside" aria-labelledby="apply-help-h">
-      <h2 id="apply-help-h" class="st-aside__title">${ic('help')} Need help?</h2>
+    <aside class="st-aside" aria-labelledby="help-h">
+      <h2 id="help-h" class="st-aside__title">${ic('help')} Need help?</h2>
       <p>Call <strong>${s.phone}</strong>, ${s.hours}, or <a href="contact.html">visit an office</a>.</p>
     </aside>
   </div>
-</div>`],
+</div>`]),
 
-  ['apply.html', 'Your details', 'services', () => `<div class="ggds-main ggds-container st-narrow">
-  ${back('apply-for-a-licence.html')}
+  ...(c.online ? [
+    ['apply.html', 'Your details', 'services', () => `<div class="ggds-main ggds-container st-narrow">
+  ${back(c.online.file)}
   ${errorSummary}
   ${progress('Step 1 of 3: your details', 1, 3)}
   <h1>Your details</h1>
   <form action="apply-check.html" method="get" novalidate data-validate>
     ${field('name', 'Full name', { hint: 'As shown on your Ghana Card', width: 'long', autocomplete: 'name', spellcheck: false, required: 'Enter your full name' })}
     ${field('card', 'Ghana Card number', { hint: 'For example, GHA-123456789-0', width: 'medium', spellcheck: false, required: 'Enter your Ghana Card number', pattern: '^GHA-?\\d{9}-?\\d$', patternMessage: 'Enter a Ghana Card number in the right format, like GHA-123456789-0' })}
-    ${field('phone', 'Mobile phone number', { hint: 'We will text you about your application. For example, 024 123 4567', width: 'medium', type: 'tel', autocomplete: 'tel', inputmode: 'tel', required: 'Enter your mobile phone number', pattern: '^(\\+?233|0)\\s?\\d{2}\\s?\\d{3}\\s?\\d{4}$', patternMessage: 'Enter a mobile phone number with 10 digits, like 024 123 4567' })}
-    ${radios('licence', 'Which licence do you need?', [['internet', 'Internet service provider'], ['broadcast', 'Radio or television'], ['courier', 'Courier service']], 'Select the licence you need')}
+    ${field('phone', 'Mobile phone number', { hint: 'We will text you about your application. For example, 024 123 4567', width: 'medium', type: 'tel', autocomplete: 'tel', inputmode: 'tel', required: 'Enter your mobile phone number', pattern: '^(\\+?233|0)\\s?\\d{2}\\s?\\d{3}\\s?\\d{4}$', patternMessage: 'Enter a mobile phone number with 10 digits, like 024 123 4567' })}${c.online.options.length ? `
+    ${radios(c.choice.name, c.choice.which, c.online.options.map((o, i) => [slugify(c.online.raw.options[i]), o]), esc(c.choice.required))}` : ''}
     <div class="ggds-button-group"><button class="ggds-button" type="submit">Continue</button></div>
   </form>
 </div>`],
 
-  ['apply-check.html', 'Check your answers', 'services', () => `<div class="ggds-main ggds-container st-narrow">
+    ['apply-check.html', 'Check your answers', 'services', () => `<div class="ggds-main ggds-container st-narrow">
   ${back('apply.html')}
   ${progress('Step 2 of 3: check your answers', 2, 3)}
   <h1>Check your answers before you apply</h1>
-  ${summary([['Full name', '<span data-answer="name">Ama Owusu</span>'], ['Ghana Card number', '<span data-answer="card">GHA-000000000-0</span>'], ['Mobile phone number', '<span data-answer="phone">024 000 0000</span>'], ['Licence', '<span data-answer="licence">Internet service provider</span>']], 'apply.html')}
+  ${summary([['Full name', '<span data-answer="name">Ama Owusu</span>'], ['Ghana Card number', '<span data-answer="card">GHA-000000000-0</span>'], ['Mobile phone number', '<span data-answer="phone">024 000 0000</span>'],
+    ...(c.online.options.length ? [[c.choice.label, `<span data-answer="${c.choice.name}">${c.online.options[0]}</span>`]] : [])], 'apply.html')}
   ${s.form('apply-done.html', 'application')}
     ${errorSummary}${s.raw.forms ? `
-    ${['name', 'card', 'phone', 'licence'].map((n) => `<input type="hidden" name="${n}" value="" data-answer="${n}">`).join('\n    ')}` : ''}
+    ${['name', 'card', 'phone', ...(c.online.options.length ? [c.choice.name] : [])].map((n) => `<input type="hidden" name="${n}" value="" data-answer="${n}">`).join('\n    ')}` : ''}
     <div class="ggds-field">
       <fieldset class="ggds-fieldset" data-required="Confirm your answers are true">
         <legend class="ggds-fieldset__legend">Declaration</legend>
@@ -199,103 +203,96 @@ const PAGES = (s, has) => [
   </form>
 </div>`],
 
-  ['apply-done.html', 'Application sent', 'services', () => `<div class="ggds-main ggds-container st-narrow">
+    ['apply-done.html', 'Application sent', 'services', () => `<div class="ggds-main ggds-container st-narrow">
   <div class="ggds-panel">
     <h1 class="ggds-panel__title">Application sent</h1>
-    <p class="ggds-panel__body">Your reference number <strong class="ggds-panel__reference">${s.short}-LIC-2026-00412</strong></p>
+    <p class="ggds-panel__body">Your reference number <strong class="ggds-panel__reference">${s.short}-${c.kind.code}-2026-00412</strong></p>
   </div>
   <p>We have sent the reference to your phone by SMS. You will need it if you contact us.</p>
   <h2>What happens next</h2>
-  ${timeline([['done', 'Application received', 'Today'], ['current', 'We check your answers and documents', 'Within 10 working days'], ['', 'You pay the licence fee', 'We will text you how'], ['', 'Your licence arrives by email', 'Within 20 working days']])}
+  ${timeline([['done', 'Application received', 'Today'], ...c.online.steps.map(([t, w], i) => [i === 0 ? 'current' : '', t, w])])}
   <p><a href="index.html">Go to the homepage</a></p>
 </div>`],
+  ] : []),
 
   ['fees.html', 'Fees and charges', 'services', () => `<div class="ggds-main ggds-container">
   ${crumbs([['Services', 'services.html']], 'Fees and charges')}
   <h1>Fees and charges</h1>
-  <p class="ggds-lead ggds-measure">What each licence costs from 1 January 2027. Pay by mobile money, bank card or at an office.</p>
+  <p class="ggds-lead ggds-measure">${c.fees.lead}</p>
   <div class="ggds-table-wrap" role="region" aria-labelledby="fees-caption" tabindex="0">
     <table class="ggds-table">
-      <caption class="ggds-table__caption" id="fees-caption">Licence fees, in Ghana cedis</caption>
-      <thead><tr><th scope="col">Licence</th><th scope="col" class="ggds-table__numeric">To apply</th><th scope="col" class="ggds-table__numeric">Each year</th></tr></thead>
+      <caption class="ggds-table__caption" id="fees-caption">${c.fees.caption}</caption>
+      <thead><tr>${c.fees.columns.map((h, i) => `<th scope="col"${i ? ' class="ggds-table__numeric"' : ''}>${h}</th>`).join('')}</tr></thead>
       <tbody>
-        <tr><th scope="row">Internet service provider</th><td class="ggds-table__numeric">GH₵ 500</td><td class="ggds-table__numeric">GH₵ 2,000</td></tr>
-        <tr><th scope="row">Radio or television</th><td class="ggds-table__numeric">GH₵ 750</td><td class="ggds-table__numeric">GH₵ 3,500</td></tr>
-        <tr><th scope="row">Courier service</th><td class="ggds-table__numeric">GH₵ 250</td><td class="ggds-table__numeric">GH₵ 900</td></tr>
+        ${c.fees.rows.map((r) => `<tr>${r.map((v, i) => (i ? `<td class="ggds-table__numeric">${v}</td>` : `<th scope="row">${v}</th>`)).join('')}</tr>`).join('\n        ')}
       </tbody>
     </table>
-  </div>${has('news-article.html') ? `
+  </div>${has('news-article.html') && c.article?.raw.type === 'Consultation' ? `
   <div class="ggds-notice">
-    <p class="ggds-notice__title"><span class="ggds-visually-hidden">Information:</span> Fees may change in 2027</p>
-    <p><a href="news-article.html">Have your say on licence fees for 2027</a> by 30 November 2026.</p>
+    <p class="ggds-notice__title"><span class="ggds-visually-hidden">Information:</span> Have your say</p>
+    <p><a href="news-article.html">${c.article.title}</a>. ${c.article.summary}</p>
   </div>` : ''}
 </div>`],
 
-  ['complaint.html', 'Make a complaint', 'services', () => `<div class="ggds-main ggds-container st-narrow">
-  ${crumbs([['Services', 'services.html']], 'Make a complaint')}
+  ['complaint.html', c.complaint.raw.title, 'services', () => `<div class="ggds-main ggds-container st-narrow">
+  ${crumbs([['Services', 'services.html']], c.complaint.title)}
   ${errorSummary}
-  <h1>Make a complaint about a provider</h1>
-  <p>Complain to the company first. If it has not solved the problem within 10 working days, tell us.</p>
+  <h1>${c.complaint.title}</h1>
+  <p>${c.complaint.intro}</p>
   ${s.form('complaint-done.html', 'complaint')}
-    ${field('company', 'Which company is it about?', { width: 'long', required: 'Enter the name of the company' })}
-    ${field('problem', 'What happened?', { textarea: true, hint: 'Include dates and what the company told you. Do not include your PIN or passwords.', required: 'Tell us what happened' })}
-    ${radios('outcome', 'What would you like to happen?', [['fix', 'The problem is fixed'], ['refund', 'I get my money back'], ['other', 'Something else']], 'Select what you would like to happen')}
+    ${field('company', c.complaint.about, { width: 'long', required: c.complaint.raw.aboutRequired })}
+    ${field('problem', 'What happened?', { textarea: true, hint: 'Include dates and what you were told. Do not include your PIN or passwords.', required: 'Tell us what happened' })}
+    ${radios('outcome', 'What would you like to happen?', [['fix', 'The problem is put right'], ['refund', 'I get my money back'], ['other', 'Something else']], 'Select what you would like to happen')}
     ${field('contact-phone', 'Mobile phone number', { hint: 'So we can tell you what happens next', width: 'medium', type: 'tel', autocomplete: 'tel', inputmode: 'tel', required: 'Enter your mobile phone number', pattern: '^(\\+?233|0)\\s?\\d{2}\\s?\\d{3}\\s?\\d{4}$', patternMessage: 'Enter a mobile phone number with 10 digits, like 024 123 4567' })}
-    <div class="ggds-button-group"><button class="ggds-button" type="submit">Send complaint</button></div>
+    <div class="ggds-button-group"><button class="ggds-button" type="submit">Send</button></div>
   </form>
 </div>`],
 
-  ['complaint-done.html', 'Complaint sent', 'services', () => `<div class="ggds-main ggds-container st-narrow">
+  ['complaint-done.html', c.complaint.sent, 'services', () => `<div class="ggds-main ggds-container st-narrow">
   <div class="ggds-panel">
-    <h1 class="ggds-panel__title">Complaint sent</h1>
-    <p class="ggds-panel__body">Your reference number <strong class="ggds-panel__reference">${s.short}-CMP-2026-01187</strong></p>
+    <h1 class="ggds-panel__title">${c.complaint.sent}</h1>
+    <p class="ggds-panel__body">Your reference number <strong class="ggds-panel__reference">${s.short}-${c.complaint.raw.code}-2026-01187</strong></p>
   </div>
   <h2>What happens next</h2>
-  ${timeline([['done', 'Complaint received', 'Today'], ['current', 'We contact the company', 'Within 5 working days'], ['', 'We tell you what the company will do', 'Within 10 working days']])}
+  ${timeline([['done', 'We have it', 'Today'], ...c.complaint.steps.map(([t, w], i) => [i === 0 ? 'current' : '', t, w])])}
   <p><a href="index.html">Go to the homepage</a></p>
 </div>`],
 
   ['news.html', 'News and notices', 'news', () => `<div class="ggds-main ggds-container">
   ${crumbs([], 'News and notices')}
   <h1>News and notices</h1>
-  <p class="ggds-lead ggds-measure">News, notices and consultations from ${s.name}.</p>
-  <ul class="ggds-card-grid">${NEWS.map(newsItem).join('')}</ul>
-  <nav class="ggds-pagination" aria-label="Pages of news">
-    <ul class="ggds-pagination__list">
-      <li><a class="ggds-pagination__link" href="news.html" aria-label="Page 1" aria-current="page">1</a></li>
-      <li><a class="ggds-pagination__link" href="news.html" aria-label="Page 2">2</a></li>
-      <li><a class="ggds-pagination__link" href="news.html" rel="next">Next<span class="ggds-visually-hidden"> page</span></a></li>
-    </ul>
-  </nav>
+  <p class="ggds-lead ggds-measure">News, notices and consultations from ${s.name}.</p>${c.news.length ? `
+  <ul class="ggds-card-grid">${c.news.map(newsItem).join('')}</ul>` : `
+  <p>There is no news yet.</p>`}
 </div>`],
 
-  ['news-article.html', 'Have your say on licence fees for 2027', 'news', () => `<div class="ggds-main ggds-container">
-  ${crumbs([['News and notices', 'news.html']], 'Have your say on licence fees for 2027')}
-  <p class="st-meta">${tag('Consultation', 'warning')} <time>27 October 2026</time></p>
-  <h1>Have your say on licence fees for 2027</h1>
+  ['news-article.html', c.article?.raw.title ?? 'News', 'news', () => `<div class="ggds-main ggds-container">
+  ${crumbs([['News and notices', 'news.html']], c.article?.title ?? 'News')}${c.article ? `
+  <p class="st-meta">${tag(c.article.type, TAG_KIND[c.article.raw.type] ?? '')} <time>${c.article.date}</time></p>
+  <h1>${c.article.title}</h1>
   <div class="ggds-prose">
-    <p class="ggds-lead">We plan to change some licence fees from 1 January 2027. Tell us what you think by 30 November 2026.</p>
-    <h2>What we plan to change</h2>
-    <ul><li>Courier licences would cost GH₵ 900 a year, up from GH₵ 800.</li><li>Small internet providers, with fewer than 1,000 customers, would pay half the yearly fee.</li></ul>
-    <h2>How to respond</h2>
-    <p>Read the consultation, then email <a href="mailto:${s.mail('consultations')}">${s.mail('consultations')}</a> or write to us at our head office.</p>
-    <p><a class="ggds-with-icon" href="assets/files/licence-fees-2027-consultation.txt" download>${ic('download')}<span>Licence fees for 2027: consultation (TXT, 1 KB)</span></a></p>
-  </div>
+    <p class="ggds-lead">${c.article.summary}</p>
+    ${paras(c.article.body || c.article.summary)}${c.article.raw.type === 'Consultation' ? `
+    <p>Email <a href="mailto:${s.mail('consultations')}">${s.mail('consultations')}</a>, or write to us at our head office.</p>` : ''}
+  </div>` : `
+  <h1>News</h1>
+  <p>There is no news yet.</p>`}
 </div>`],
 
-  ['publications.html', 'Rules and reports', 'publications', () => `<div class="ggds-main ggds-container">
-  ${crumbs([], 'Rules and reports')}
-  <h1>Rules and reports</h1>
-  <p class="ggds-lead ggds-measure">Our regulations, consultations and reports. Each one is also a web page you can read on a phone.</p>
+  ['publications.html', c.docsLabel, 'publications', () => `<div class="ggds-main ggds-container">
+  ${crumbs([], esc(c.docsLabel))}
+  <h1>${esc(c.docsLabel)}</h1>
+  <p class="ggds-lead ggds-measure">${esc(c.kind.publications.lead)}</p>${c.docs.length ? `
   <div class="ggds-table-wrap" role="region" aria-labelledby="docs-caption" tabindex="0">
     <table class="ggds-table">
       <caption class="ggds-table__caption" id="docs-caption">Publications, newest first</caption>
       <thead><tr><th scope="col">Title</th><th scope="col">Type</th><th scope="col">Published</th></tr></thead>
       <tbody>
-        ${DOCS.slice().reverse().map(([file, title, kind, date]) => `<tr><th scope="row"><a class="ggds-with-icon" href="assets/files/${file}" download>${ic('download', 'ggds-icon ggds-icon--sm')}<span>${title} <span class="st-muted">(TXT, 1 KB)</span></span></a></th><td>${kind}</td><td>${date}</td></tr>`).join('\n        ')}
+        ${c.docs.map((d) => `<tr><th scope="row"><a class="ggds-with-icon" href="assets/files/${d.file}" download>${ic('download', 'ggds-icon ggds-icon--sm')}<span>${d.title} <span class="st-muted">(TXT, 1 KB)</span></span></a></th><td>${d.type}</td><td>${d.date}</td></tr>`).join('\n        ')}
       </tbody>
     </table>
-  </div>
+  </div>` : `
+  <p>There are no documents yet.</p>`}
 </div>`],
 
   ['jobs.html', 'Jobs and tenders', 'about', () => `<div class="ggds-main ggds-container">
@@ -305,11 +302,11 @@ const PAGES = (s, has) => [
     <p class="ggds-notice__title"><span class="ggds-visually-hidden">Important:</span> We never charge a fee to apply</p>
     <p>Not for a job and not for a tender. If anyone asks you for money, call ${s.phone}.</p>
   </div>
-  <h2 id="jobs">Jobs</h2>
+  <h2 id="jobs">Jobs</h2>${c.jobs.length ? `
   <ul class="ggds-card-grid">
-    <li class="ggds-card"><p class="st-meta">${tag('Closes 20 November', 'warning')}</p><h3 class="ggds-card__title"><a class="ggds-card__link" href="assets/files/job-licensing-officer.txt" download>Licensing officer</a></h3><p class="ggds-card__body">Accra · Grade 4 · Full time. Job description (TXT).</p></li>
-    <li class="ggds-card"><p class="st-meta">${tag('Closes 4 December', 'info')}</p><h3 class="ggds-card__title"><a class="ggds-card__link" href="assets/files/job-consumer-advisor.txt" download>Consumer advisor</a></h3><p class="ggds-card__body">Kumasi · Grade 3 · Full time. Job description (TXT).</p></li>
-  </ul>
+    ${c.jobs.map((j, i) => `<li class="ggds-card"><p class="st-meta">${tag(`Closes ${j.closes}`, i % 2 ? 'info' : 'warning')}</p><h3 class="ggds-card__title"><a class="ggds-card__link" href="assets/files/${j.file}" download>${j.title}</a></h3><p class="ggds-card__body">${[j.place, j.terms].filter(Boolean).join(' · ')}. Job description (TXT).</p></li>`).join('\n    ')}
+  </ul>` : `
+  <p>There are no jobs open now.</p>`}
   <h2 id="tenders">Tenders</h2>
   <p>We publish every tender under the public procurement law. There are no tenders open now.${has('news.html') ? ' <a href="news.html">See news and notices</a> for new ones.' : ''}</p>
 </div>`],
@@ -319,17 +316,18 @@ const PAGES = (s, has) => [
   <div class="st-layout">
     <div class="ggds-prose">
       <h1>About us</h1>
-      <p class="ggds-lead">${s.purpose}</p>
+      <p class="ggds-lead">${s.purpose}</p>${c.about.what.length ? `
       <h2>What we do</h2>
-      <ul><li>We license internet, broadcasting and courier services.</li><li>We set the rules they must follow, and check they do.</li><li>We help people whose provider has not solved a problem.</li></ul>
+      <ul>${c.about.what.map((w) => `<li>${w}</li>`).join('')}</ul>` : ''}${c.about.who ? `
       <h2>Who runs us</h2>
-      <p>A board of 7 members leads ${s.name}. A director-general runs it day to day.</p>
+      ${paras(c.about.who)}` : ''}${c.about.funded ? `
       <h2>How we are funded</h2>
-      <p>By licence fees. We publish what we spend in our ${linkIf(has, 'publications.html', 'annual report')}.</p>
+      ${paras(c.about.funded)}` : ''}${has('publications.html') ? `
+      <p>Our reports are on <a href="publications.html">${esc(c.docsLabel)}</a>.</p>` : ''}
     </div>
     <aside class="st-aside" aria-labelledby="about-more-h">
       <h2 id="about-more-h" class="st-aside__title">${ic('building')} More about us</h2>
-      <ul class="st-links">${only(has, [['Contact us', 'contact.html'], ['Jobs and tenders', 'jobs.html'], ['Annual reports', 'publications.html']]).map(([l, h]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul>
+      <ul class="st-links">${only(has, [['Contact us', 'contact.html'], ['Jobs and tenders', 'jobs.html'], [esc(c.docsLabel), 'publications.html']]).map(([l, h]) => `<li><a href="${h}">${l}</a></li>`).join('')}</ul>
     </aside>
   </div>
 </div>`],
@@ -337,10 +335,9 @@ const PAGES = (s, has) => [
   ['contact.html', 'Contact us', 'about', () => `<div class="ggds-main ggds-container">
   ${crumbs([['About us', 'about.html']], 'Contact us')}
   <h1>Contact us</h1>${(() => {
-    const online = only(has, [['apply for a licence', 'apply-for-a-licence.html'], ['make a complaint', 'complaint.html']]);
+    const online = [...(c.online ? [[lowerFirst(c.online.title), c.online.file]] : []), ...only(has, [[lowerFirst(c.complaint.title), 'complaint.html']])];
     if (!online.length) return '';
-    const ask = online.length === 2 ? 'Want to apply or complain?' : online[0][1] === 'complaint.html' ? 'Want to complain?' : 'Want to apply?';
-    return `\n  <p class="ggds-lead ggds-measure">${ask} It is quickest online: ${online.map(([l, h]) => `<a href="${h}">${l}</a>`).join(' or ')}.</p>`;
+    return `\n  <p class="ggds-lead ggds-measure">It is quickest online: ${online.map(([l, h]) => `<a href="${h}">${l}</a>`).join(' or ')}.</p>`;
   })()}
   <div class="st-layout">
     <div>
@@ -416,7 +413,7 @@ const PAGES = (s, has) => [
     <h1>Privacy</h1>
     <p class="ggds-lead">How we use the information you give us, under the Data Protection Act.</p>
     <h2>What we collect</h2>
-    <p>Only what each service needs: for example, your name, Ghana Card number and phone number when you apply for a licence.</p>
+    <p>Only what each service needs: for example, ${esc(c.kind.privacy)}.</p>
     <h2>How long we keep it</h2>
     <p>For as long as the law says, then we delete it.</p>
     <h2>Your rights</h2>
@@ -430,7 +427,7 @@ const PAGES = (s, has) => [
     <h1>Disclaimer</h1>
     <p class="ggds-lead">What you can rely on from this website, and what you cannot.</p>
     <h2>The information on this website</h2>
-    <p>We check what we publish and keep it up to date, but it is guidance, not a statement of the law. The laws and regulations themselves are ${has('publications.html') ? 'on <a href="publications.html">Publications</a>' : 'published by Parliament and in the Gazette'}. If something here differs from them, they apply.</p>
+    <p>We check what we publish and keep it up to date, but it is guidance, not a statement of the law. The laws and regulations themselves are ${has('publications.html') ? `on <a href="publications.html">${esc(c.docsLabel)}</a>` : 'published by Parliament and in the Gazette'}. If something here differs from them, they apply.</p>
     <h2>Links to other websites</h2>
     <p>We link to other websites when they help. We are not responsible for what they say or how they work.</p>
     <h2>If something is wrong</h2>
@@ -463,7 +460,35 @@ export function starterModel({ version, theme, site } = {}) {
       ? `<form action="${esc(raw.forms)}" method="post" novalidate data-validate>\n${indent}  <input type="hidden" name="form" value="${kind}">`
       : `<form action="${next}" method="get" novalidate data-validate>`),
   };
-  const pages = PAGES(s, has).filter(([file]) => has(file)).map(([file, title, section, body, scripts = []]) => ({ file, title, section, body: body(), scripts }));
+  // The content, escaped: services with the address of their pages, and the kind's words.
+  const kind = kindOf(raw.kind);
+  const e = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, typeof v === 'string' ? esc(v) : Array.isArray(v) ? v.map((x) => (typeof x === 'string' ? esc(x) : Array.isArray(x) ? x.map(esc) : x)) : v]));
+  const serviceFiles = servicePages(raw);
+  const online = hasOnline(raw);
+  const services = raw.services.map((x, i) => ({ ...e(x), raw: x, file: serviceFiles[i], startsOnline: online && x.online }));
+  const onlineService = services.find((x) => x.startsOnline) ?? null;
+  const noun = onlineService ? chooseNoun(onlineService.raw.title) : '';
+  const article = raw.news.find((n) => n.body) ?? raw.news[0];
+  const c = {
+    kind, services, online: onlineService, groups: [...new Set(services.map((x) => x.group))],
+    // What the form asks people to choose: "Which licence do you need?", or "Which one do you need?".
+    choice: noun ? { which: `Which ${esc(noun)} do you need?`, required: `Select the ${noun} you need`, name: slugify(noun), label: esc(noun.charAt(0).toUpperCase() + noun.slice(1)) }
+      : { which: 'Which one do you need?', required: 'Select one', name: 'choice', label: 'Your choice' },
+    complaint: { ...e(kind.complaint), raw: kind.complaint, sent: /feedback/i.test(kind.complaint.title) ? 'Feedback sent' : 'Complaint sent' },
+    fees: e({ ...raw.fees, rows: raw.fees.rows }),
+    news: raw.news.map((n) => ({ ...e(n), raw: n })),
+    article: article ? { ...e(article), raw: article } : null,
+    docs: raw.publications.map((d) => ({ ...e(d), raw: d, file: `${slugify(d.title)}.txt` })),
+    jobs: raw.jobs.map((j) => ({ ...e(j), raw: j, file: `job-${slugify(j.title)}.txt` })),
+    about: e(raw.about),
+    docsLabel: kind.publications.label,
+    complaintCard: ['comment', 'complaint.html', esc(kind.complaint.title), esc(kind.complaint.card)],
+    feesCard: ['cedi', 'fees.html', 'Fees and charges', 'What each service costs, and how to pay.'],
+    docsCard: ['document', 'publications.html', esc(kind.publications.label), esc(kind.publications.card)],
+  };
+  // The homepage's other cards, after the services.
+  c.more = [c.complaintCard, c.feesCard, c.docsCard, ['briefcase', 'jobs.html', 'Jobs and tenders', 'Work for us, or bid to supply us.'], ['phone', 'contact.html', 'Contact us', 'Phone, email, offices and opening hours.']];
+  const pages = PAGES(s, has, c).filter(([file]) => has(file)).map(([file, title, section, body, scripts = []]) => ({ file, title, section, body: body(), scripts }));
   const aToZ = pages.filter((p) => p.file !== '404.html').slice().sort((a, b) => a.title.localeCompare(b.title))
     .map((p) => `<li><a href="${p.file}">${esc(p.title)}</a></li>`).join('');
   // main: what goes inside <main>.
@@ -483,8 +508,8 @@ export function starterModel({ version, theme, site } = {}) {
       purpose: raw.purpose,
       contact: { address: footerAddress(raw.offices[0].lines), email: raw.email, phone: raw.phone, moreHref: 'contact.html' },
       sections: [
-        { label: 'Services', href: 'services.html', links: only(has, [{ label: 'Apply for a licence', href: 'apply-for-a-licence.html' }, { label: 'Make a complaint', href: 'complaint.html' }, { label: 'Fees and charges', href: 'fees.html' }], (l) => l.href) },
-        { label: 'Information', href: has('publications.html') ? 'publications.html' : 'search.html', links: only(has, [{ label: 'Rules and reports', href: 'publications.html' }, { label: 'News and notices', href: 'news.html' }, { label: 'Jobs and tenders', href: 'jobs.html' }], (l) => l.href) },
+        { label: 'Services', href: 'services.html', links: [...services.slice(0, 3).map((x) => ({ label: x.raw.title, href: x.file })), ...only(has, [{ label: kind.complaint.title, href: 'complaint.html' }, { label: 'Fees and charges', href: 'fees.html' }], (l) => l.href)].slice(0, 5) },
+        { label: 'Information', href: has('publications.html') ? 'publications.html' : 'search.html', links: only(has, [{ label: kind.publications.label, href: 'publications.html' }, { label: 'News and notices', href: 'news.html' }, { label: 'Jobs and tenders', href: 'jobs.html' }, { label: 'Search', href: 'search.html' }], (l) => l.href) },
         { label: 'About & contact', href: 'about.html', links: [{ label: 'About us', href: 'about.html' }, { label: 'Contact us', href: 'contact.html' }] },
       ].filter((sec) => sec.links.length),
       bar: [['Accessibility', 'accessibility.html'], ['Privacy', 'privacy.html'], ['Disclaimer', 'disclaimer.html'], ['Search', 'search.html']],
@@ -497,13 +522,10 @@ export function starterModel({ version, theme, site } = {}) {
       { label: 'Search', href: 'search.html', icon: 'search', current: p.file === 'search.html' },
     ],
   };
-  const doc = (title) => `${title}\n${raw.name} (an example organisation: this is not a real document)\n\nReplace this file with your own.\n`;
+  const doc = (title) => `${title}\n${raw.name} (an example document: replace this file with your own)\n\nReplace this file with your own.\n`;
   const documents = {};
-  if (has('publications.html') || has('news-article.html')) for (const [file, title] of DOCS) documents[`assets/files/${file}`] = doc(title);
-  if (has('jobs.html')) {
-    documents['assets/files/job-licensing-officer.txt'] = doc('Licensing officer, grade 4: job description');
-    documents['assets/files/job-consumer-advisor.txt'] = doc('Consumer advisor, grade 3: job description');
-  }
+  if (has('publications.html')) for (const d of c.docs) documents[`assets/files/${d.file}`] = doc(d.raw.title);
+  if (has('jobs.html')) for (const j of c.jobs) documents[`assets/files/${j.file}`] = doc(`${j.raw.title}: job description`);
   const colour = themeHref(raw.theme) === 'assets/theme.css' ? checkInstitutionColour(raw.theme) : null;
   const assets = {
     searchIndex: `${JSON.stringify(pages.filter((p) => !['404.html', 'search.html'].includes(p.file) && !/-done\.html$|apply(-check)?\.html$/.test(p.file))
@@ -516,7 +538,7 @@ export function starterModel({ version, theme, site } = {}) {
     hosting: hostingFiles({ host: raw.host, formsOrigin: raw.forms ? new URL(raw.forms).origin : '' }),
     siteJson: siteJson(raw, version),
   };
-  return { raw, s, has, pages, frame, assets };
+  return { raw, s, has, pages, frame, assets, content: c, examples: exampleWords(raw) };
 }
 
 /**
@@ -534,6 +556,8 @@ export function starterFiles({ version, theme, site, stack = 'html' } = {}) {
  */
 export function starterProject({ version, theme, site, stack = 'html' } = {}) {
   const model = starterModel({ version, theme, site });
+  // WordPress: an import for the GGDS theme; its logo goes at the top of the folder.
+  if (stack === 'wordpress') return { files: wordpressFiles(model, { version }), assetDir: '', ggds: false };
   if (stack !== 'html') return { ...stackFiles(model, stack, { version }), ggds: false };
   const { raw, s, pages, frame, assets } = model;
   const files = {};
@@ -576,6 +600,7 @@ ${tabBar(frame.tabs(p))}
   Object.assign(files, assets.hosting);
   files[SITE_FILE] = assets.siteJson;
   files['README.md'] = readme(version, raw, pages.length);
+  files['HANDOVER.md'] = handover(raw);
   return { files, assetDir: 'assets/', ggds: true };
 }
 
@@ -745,18 +770,18 @@ Everything works without a server, without JavaScript, and under a strict Conten
 ## Make it yours
 
 1. **Your name, address, contact details and colour.** These are already in every page${example ? ' (as the made-up example)' : ''}. To change
-   them, open https://ghana-gds.github.io/ggds/builder.html, choose "Start from my settings file", pick
-   \`${SITE_FILE}\`, change what you need, and download the website again. Or, with Node.js:
+   them, open https://ghana-gds.github.io/ggds/builder.html, open \`${SITE_FILE}\` there ("Made a website here
+   before?"), change what you need, and download the website again. Or, with Node.js:
    \`npx @ggds/create --from ${SITE_FILE}\`.
 2. **Your logo.** Until your logo is approved, your initials (${site.short}) are shown in a round badge.
-3. **Your content.** The words on each page are an example: rewrite each page in plain words for your own
-   services. Keep the parts in the same order. https://ghana-gds.github.io/ggds/get-started/content.html helps.
+3. **Your words.** Write them in the website builder: your services, each with its own page, your homepage, about
+   us, fees, news, documents and jobs. ${(() => { const left = exampleWords(site); return left.length ? `These are still the example's:\n${left.map((x) => `   - ${x.where}: ${x.what}`).join('\n')}\n  ` : 'They are all your own.'; })()} https://ghana-gds.github.io/ggds/get-started/content.html helps you write them.
 4. **Your documents.** Put them in \`assets/files/\` and link to them from the page they belong to.
 5. **Search.** \`search-index.json\` lists every page, its title and a little of its text. Update it when you add
    or change a page.
 
-When you have changed the words, keep your own copy of the pages: making the website again from \`${SITE_FILE}\`
-makes the example pages again. To move to a newer GGDS without losing your words, replace only the \`ggds/\` folder.
+If you change the words in the pages themselves, keep your own copy: making the website again from \`${SITE_FILE}\`
+makes the pages from the words in it. To move to a newer GGDS without losing your words, replace only the \`ggds/\` folder.
 
 ## Before you go live
 

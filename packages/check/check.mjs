@@ -25,6 +25,8 @@ import { GROUPS, RULES, SOURCES } from './rules.mjs';
 
 const here = fileURLToPath(new URL('./', import.meta.url));
 const { version: CHECKER_VERSION } = JSON.parse(readFileSync(join(here, 'package.json'), 'utf8'));
+/** Sample text, example content and "unfinished" phrases, shared with GGDS Switch's Tidy up content. */
+export const PLACEHOLDERS = JSON.parse(readFileSync(join(here, 'placeholders.json'), 'utf8'));
 const TIMEOUT = 20000;
 const UA = `ggds-check/${CHECKER_VERSION} (+https://github.com/ghana-gds/ggds)`;
 
@@ -49,6 +51,35 @@ function element(html, cls, name) {
     if (depth === 0) return html.slice(start, start + m.index + m[0].length);
   }
   return html.slice(start);
+}
+
+/** Text as the placeholder phrases are written: lower case, plain apostrophes and spaces. */
+const normalise = (s) => s.toLowerCase().replace(/[\u2018\u2019\u2032]/g, "'").replace(/[\u00a0\s]+/g, ' ').trim();
+
+/**
+ * The placeholder phrases in a piece of text (and, if given, a page's main heading), as
+ * [{ text, kind, label, fix }], one per phrase found. `fix` is false for phrases a person should check, such as
+ * "coming soon", which can be real.
+ */
+export function findPlaceholders(text, heading = '') {
+  const t = normalise(text);
+  const h = normalise(heading);
+  const found = [
+    ...PLACEHOLDERS.phrases.filter((p) => t.includes(p.text)),
+    ...PLACEHOLDERS.titles.filter((p) => h === p.text),
+    ...PLACEHOLDERS.titlePatterns.filter((p) => new RegExp(p.pattern, 'i').test(h)).map((p) => ({ ...p, text: h })),
+  ];
+  // "coming soon" is already said by "content coming soon".
+  const kept = found.filter((p) => !found.some((q) => q !== p && q.text.includes(p.text)));
+  return kept.map((p) => ({ ...p, ...PLACEHOLDERS.kinds[p.kind] }));
+}
+
+/** The content.placeholder result for what findPlaceholders found. */
+function placeholderResult(found) {
+  if (!found.length) return { status: 'pass', detail: '' };
+  const byKind = new Map();
+  for (const f of found) byKind.set(f.label, [...(byKind.get(f.label) ?? []), `"${f.text}"`]);
+  return { status: found.some((f) => f.fix) ? 'fail' : 'warn', detail: [...byKind].map(([label, ts]) => `${label}: ${ts.join(', ')}`).join('; ') };
 }
 
 /** The checks on one page's HTML. Returns { id: { status, detail } }. */
@@ -96,6 +127,9 @@ export function checkPage(raw) {
   const footerLinks = links(footer).map((l) => l.text.toLowerCase());
   const missing = ['accessibility', 'privacy', 'disclaimer'].filter((w) => !footerLinks.some((t) => t.includes(w)));
   set('page.footer-links', !footer ? 'fail' : missing.length ? 'fail' : 'pass', !footer ? 'no footer' : missing.length ? `missing: ${missing.join(', ')}` : '');
+
+  const h1 = text(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '');
+  r['content.placeholder'] = placeholderResult(findPlaceholders(text(body), h1));
   return r;
 }
 
@@ -154,6 +188,44 @@ async function checkWpUsers(origin) {
   } catch {
     return { status: 'pass', detail: 'no answer' };
   }
+}
+
+/**
+ * WordPress only: searches the whole website (its public search, /wp-json/wp/v2/search) for each sample-text and
+ * example-content phrase, so pages that nothing links to are found too, then reads each page found to confirm it.
+ */
+export async function checkWpSample(origin) {
+  const phrases = PLACEHOLDERS.phrases.filter((p) => PLACEHOLDERS.kinds[p.kind].fix);
+  const search = async (p) => {
+    const url = new URL('/wp-json/wp/v2/search', origin);
+    url.searchParams.set('search', `"${p.text}"`); // in quotes: WordPress looks for the phrase, not each word
+    url.searchParams.set('per_page', '10');
+    try {
+      const res = await get(url);
+      const body = res.ok && /json/.test(res.headers.get('content-type') ?? '') ? JSON.parse(await res.text()) : null;
+      return Array.isArray(body) ? body.filter((x) => typeof x?.url === 'string') : null;
+    } catch { return null; }
+  };
+  const answers = await Promise.all(phrases.map(search));
+  if (answers.every((a) => a === null)) return { status: 'skip', detail: 'not WordPress, or its search (wp-json) is off: only the pages checked were read' };
+  const urls = [...new Set(answers.flatMap((a) => (a ?? []).map((x) => x.url)))]
+    .filter((u) => { try { return new URL(u).origin === origin; } catch { return false; } }).slice(0, 20);
+  const found = (await Promise.all(urls.map(async (url) => {
+    try {
+      const res = await get(url);
+      if (!res.ok) return null;
+      const html = clean(await res.text());
+      const body = html.slice(Math.max(0, html.search(/<body\b/i)));
+      const hits = findPlaceholders(text(body), text(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? '')).filter((f) => f.fix);
+      return hits.length ? { path: new URL(res.url).pathname, hits } : null;
+    } catch { return null; }
+  }))).filter(Boolean);
+  if (!found.length) return { status: 'pass', detail: `searched the whole website for ${phrases.length} phrases` };
+  return {
+    status: 'fail',
+    detail: found.map((f) => `${f.path}: ${placeholderResult(f.hits).detail}`).join('\n'),
+    pages: found.map((f) => f.path),
+  };
 }
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -449,6 +521,7 @@ export async function check(target, { pages: maxPages = 10, dns = true, a11y = t
     results['web.https'] = await checkHttps(home.url);
     Object.assign(results, checkHeaders(home.res.headers));
     results['web.wp-users'] = await checkWpUsers(new URL(home.url).origin);
+    results['content.wp-sample'] = await checkWpSample(new URL(home.url).origin);
     const local = host === 'localhost' || /^[\d.]+$|^\[|\.(local|localhost|test|internal)$/.test(host);
     if (dns && !local) Object.assign(results, await checkDns(mailDomain(host)));
     else for (const id of ['dns.spf', 'dns.dmarc', 'dns.caa']) results[id] = { status: 'skip', detail: dns ? `${host} is not a public domain` : 'skipped (--no-dns)' };

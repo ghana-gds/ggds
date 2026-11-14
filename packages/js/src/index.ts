@@ -8,9 +8,10 @@ import { initDialog, initDialogOpener } from './dialog.js';
 import { initErrorSummary } from './error-summary.js';
 import { initMenu } from './menu.js';
 import { initPasswordInput } from './password-input.js';
+import { initStackedTable } from './table.js';
 import { initTimeoutWarning } from './timeout-warning.js';
 
-export { initCharacterCount, initDialog, initDialogOpener, initErrorSummary, initMenu, initPasswordInput, initTimeoutWarning };
+export { initCharacterCount, initDialog, initDialogOpener, initErrorSummary, initMenu, initPasswordInput, initStackedTable, initTimeoutWarning };
 
 /** Enhance every GGDS component inside `root` (default: the whole document). Safe to call more than once. */
 export function initAll(root: ParentNode = document): void {
@@ -22,4 +23,5 @@ export function initAll(root: ParentNode = document): void {
   root.querySelectorAll<HTMLElement>('[data-ggds-dialog]').forEach(initDialogOpener);
   root.querySelectorAll<HTMLDialogElement>('dialog.ggds-dialog').forEach(initDialog);
   root.querySelectorAll<HTMLElement>('[data-ggds-module="timeout-warning"]').forEach(initTimeoutWarning);
+  root.querySelectorAll<HTMLTableElement>('table.ggds-table--stack').forEach(initStackedTable);
 }
